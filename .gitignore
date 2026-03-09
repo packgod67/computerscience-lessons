@@ -14,3 +14,6 @@ games/clprecisionclient.html
 games/clgdwaveover100mb.html
 games/clundertale-gameboy(1).html
 games/clundertale-gameboy.html
+
+# Local Netlify folder
+.netlify

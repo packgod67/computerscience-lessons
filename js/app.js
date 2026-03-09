@@ -11,6 +11,7 @@
     let currentPage = 0;
     const PAGE_SIZE = 36;
     let loading = false;
+    let favBtnEl = null; // Favorites category button
 
     async function init() {
         try {
@@ -38,9 +39,82 @@
                 renderPage();
             }
         });
+
+        // Star button click delegation
+        gameGrid.addEventListener('click', (e) => {
+            const btn = e.target.closest('.fav-btn');
+            if (!btn) return;
+            e.preventDefault();
+            e.stopPropagation();
+
+            if (!ArcadeAuth.isLoggedIn()) return;
+
+            const gameId = btn.dataset.gameId;
+            ArcadeAuth.toggleFavorite(gameId).then((isFav) => {
+                btn.classList.toggle('fav-active', isFav);
+            });
+        });
+
+        // Bind auth UI
+        ArcadeAuth.bindAuthUI();
+
+        // When auth changes, show/hide favorites button and re-render cards
+        ArcadeAuth.onAuthChange((user) => {
+            if (favBtnEl) {
+                favBtnEl.style.display = user ? '' : 'none';
+            }
+            // If viewing favorites and logged out, switch to All
+            if (!user && activeCategory === '__favorites__') {
+                activeCategory = 'all';
+                updateCategoryButtons();
+            }
+            // Re-render all cards to add/remove star buttons
+            currentPage = 0;
+            gameGrid.innerHTML = '';
+            applyFilters();
+            renderPage();
+        });
+
+        // Active users listener
+        const activeUsersText = document.getElementById('activeUsersText');
+        if (activeUsersText) {
+            ArcadeAuth.listenActiveUsers((count) => {
+                activeUsersText.textContent = `${count} active user${count !== 1 ? 's' : ''}`;
+            });
+        }
+
+        // When favorites change, update all visible star buttons
+        ArcadeAuth.onFavoritesChange((favs) => {
+            document.querySelectorAll('.fav-btn').forEach(btn => {
+                btn.classList.toggle('fav-active', favs.has(btn.dataset.gameId));
+            });
+            // If viewing favorites tab, re-filter
+            if (activeCategory === '__favorites__') {
+                currentPage = 0;
+                gameGrid.innerHTML = '';
+                applyFilters();
+                renderPage();
+            }
+        });
     }
 
     function buildCategories() {
+        // Add Favorites button (hidden until logged in)
+        favBtnEl = document.createElement('button');
+        favBtnEl.className = 'cat-btn cat-btn-fav';
+        favBtnEl.dataset.category = '__favorites__';
+        favBtnEl.innerHTML = '&#9733; Favorites';
+        favBtnEl.style.display = 'none';
+        favBtnEl.addEventListener('click', () => {
+            activeCategory = '__favorites__';
+            updateCategoryButtons();
+            currentPage = 0;
+            gameGrid.innerHTML = '';
+            applyFilters();
+            renderPage();
+        });
+        categoriesContainer.appendChild(favBtnEl);
+
         const cats = [...new Set(games.map(g => g.category))].sort();
         cats.forEach(cat => {
             const btn = document.createElement('button');
@@ -78,7 +152,12 @@
         const query = searchInput.value.toLowerCase().trim();
         filtered = games.filter(g => {
             const matchesSearch = !query || g.title.toLowerCase().includes(query);
-            const matchesCategory = activeCategory === 'all' || g.category === activeCategory;
+            let matchesCategory;
+            if (activeCategory === '__favorites__') {
+                matchesCategory = ArcadeAuth.isFavorite(g.id);
+            } else {
+                matchesCategory = activeCategory === 'all' || g.category === activeCategory;
+            }
             return matchesSearch && matchesCategory;
         });
         if (gameCount) {
@@ -102,14 +181,18 @@
 
         loading = true;
 
-        // Build HTML string (faster than DOM creation for large lists)
+        const loggedIn = ArcadeAuth.isLoggedIn();
         let html = '';
         for (let i = 0; i < pageGames.length; i++) {
             const g = pageGames[i];
             const thumb = g.thumbnail
                 ? `<img class="card-thumbnail" src="${esc(g.thumbnail)}" alt="${esc(g.title)}" loading="lazy">`
                 : `<div class="card-thumbnail-placeholder"><span>${esc(g.title.charAt(0).toUpperCase())}</span></div>`;
-            html += `<a class="game-card" href="play.html?game=${encodeURIComponent(g.id)}">${thumb}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
+            const favClass = loggedIn && ArcadeAuth.isFavorite(g.id) ? ' fav-active' : '';
+            const favBtn = loggedIn
+                ? `<button class="fav-btn${favClass}" data-game-id="${esc(g.id)}" title="Favorite">&#9733;</button>`
+                : '';
+            html += `<a class="game-card" href="play.html?game=${encodeURIComponent(g.id)}">${thumb}${favBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
         }
 
         gameGrid.insertAdjacentHTML('beforeend', html);
@@ -128,7 +211,6 @@
         };
     }
 
-    // Build part navigation if ARCADE_PARTS config exists
     function buildPartNav() {
         const nav = document.getElementById('partNav');
         if (!nav || !window.ARCADE_PARTS) return;

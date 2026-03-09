@@ -8,10 +8,16 @@
     const errorDetail = document.getElementById('errorDetail');
     const fullscreenBtn = document.getElementById('fullscreenBtn');
     const playerContainer = document.getElementById('playerContainer');
+    const favBtn = document.getElementById('favBtn');
+
+    const LARGE_SIZE_MB = 30;
+    let currentGameId = null;
 
     async function init() {
         const params = new URLSearchParams(window.location.search);
         const gameId = params.get('game');
+        const forceLoad = params.get('force') === '1';
+        currentGameId = gameId;
 
         if (!gameId) {
             gameTitle.textContent = 'No game selected';
@@ -42,25 +48,65 @@
         gameCategory.textContent = game.category;
 
         // Check file size before loading
+        let sizeMB = 0;
         try {
             const head = await fetch(game.path, { method: 'HEAD' });
             const size = parseInt(head.headers.get('content-length') || '0', 10);
-            const sizeMB = (size / 1024 / 1024).toFixed(1);
-
-            if (size > 50 * 1024 * 1024) {
-                loadingText.innerHTML = `Loading game... <span style="color:#f59e0b;">(${sizeMB}MB - this may take a while)</span>`;
-            }
+            sizeMB = size / 1024 / 1024;
         } catch {
-            // Ignore - just load normally
+            // Can't determine size, load normally
         }
 
-        // Set a crash/timeout detection
+        // Large games — offer new tab (better performance) or iframe
+        if (sizeMB > LARGE_SIZE_MB && !forceLoad) {
+            showLargeGamePrompt(game, sizeMB, gameId);
+            return;
+        }
+
+        loadGame(game, sizeMB);
+    }
+
+    function showLargeGamePrompt(game, sizeMB, gameId) {
+        gameLoading.style.display = 'none';
+        gameError.style.display = 'flex';
+        errorDetail.textContent = `This game is ${sizeMB.toFixed(0)}MB. Large games run better in a new tab.`;
+
+        const actions = gameError.querySelector('.error-actions');
+        actions.innerHTML = '';
+
+        const newTabBtn = document.createElement('a');
+        newTabBtn.className = 'retry-btn';
+        newTabBtn.href = game.path;
+        newTabBtn.target = '_blank';
+        newTabBtn.textContent = 'Open in new tab';
+        actions.appendChild(newTabBtn);
+
+        const iframeBtn = document.createElement('a');
+        iframeBtn.className = 'retry-btn secondary';
+        iframeBtn.href = `play.html?game=${encodeURIComponent(gameId)}&force=1`;
+        iframeBtn.textContent = 'Load here (may crash)';
+        actions.appendChild(iframeBtn);
+
+        const backBtn = document.createElement('a');
+        backBtn.className = 'retry-btn secondary';
+        backBtn.href = 'index.html';
+        backBtn.textContent = 'Back to Arcade';
+        actions.appendChild(backBtn);
+    }
+
+    function loadGame(game, sizeMB) {
+        if (sizeMB > 15) {
+            loadingText.innerHTML = `Loading game... <span style="color:#f59e0b;">(${sizeMB.toFixed(0)}MB - this may take a while)</span>`;
+        } else {
+            loadingText.innerHTML = `Loading game... <span style="color:#888;">(some games download large assets and may take a minute)</span>`;
+        }
+
         let loaded = false;
         const crashTimeout = setTimeout(() => {
             if (!loaded) {
-                showError('The game is taking too long to load. It may be too large for your browser.');
+                showError('The game is taking too long to load. Try opening it in a new tab for better performance.');
             }
-        }, 60000); // 60 second timeout
+        }, 300000);
 
         gameFrame.addEventListener('load', () => {
             loaded = true;
@@ -93,6 +139,27 @@
             });
         }
     });
+
+    // Favorite button on player page
+    function updateFavBtn() {
+        if (!favBtn || !currentGameId) return;
+        if (!ArcadeAuth.isLoggedIn()) {
+            favBtn.style.display = 'none';
+            return;
+        }
+        favBtn.style.display = '';
+        favBtn.classList.toggle('fav-active', ArcadeAuth.isFavorite(currentGameId));
+    }
+
+    favBtn.addEventListener('click', () => {
+        if (!ArcadeAuth.isLoggedIn() || !currentGameId) return;
+        ArcadeAuth.toggleFavorite(currentGameId).then(() => updateFavBtn());
+    });
+
+    // Auth integration
+    ArcadeAuth.bindAuthUI();
+    ArcadeAuth.onAuthChange(() => updateFavBtn());
+    ArcadeAuth.onFavoritesChange(() => updateFavBtn());
 
     init();
 })();
