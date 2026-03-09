@@ -1,0 +1,16 @@
+node_modules/
+package.json
+package-lock.json
+import_games.py
+screenshot_games.js
+split_games.py
+deploy.py
+games/games_part*.json
+games/filelist_part*.txt
+.claude/
+
+# Games over 100MB (GitHub file limit)
+games/clprecisionclient.html
+games/clgdwaveover100mb.html
+games/clundertale-gameboy(1).html
+games/clundertale-gameboy.html

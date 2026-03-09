@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcade</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <span class="logo-icon">&#127918;</span>
+                <h1>ARCADE</h1>
+            </div>
+            <p class="tagline">Your personal game hub</p>
+        </div>
+    </header>
+
+    <main class="main">
+        <div class="controls">
+            <div class="search-wrapper">
+                <svg class="search-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="11" cy="11" r="8"/>
+                    <path d="m21 21-4.35-4.35"/>
+                </svg>
+                <input type="text" id="search" class="search-input" placeholder="Search games...">
+            </div>
+            <div class="controls-row">
+                <div class="categories" id="categories">
+                    <button class="cat-btn active" data-category="all">All</button>
+                </div>
+                <span class="game-count" id="gameCount"></span>
+            </div>
+        </div>
+
+        <div class="game-grid" id="gameGrid">
+            <!-- Game cards rendered by JS -->
+        </div>
+
+        <div class="empty-state" id="emptyState" style="display: none;">
+            <p>No games found.</p>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>Powered by you. Drop games into <code>/games</code> and play anywhere.</p>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

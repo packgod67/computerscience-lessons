@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sample Game</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #111;
+            color: #fff;
+            font-family: sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+        }
+        .container { padding: 2rem; }
+        h1 { font-size: 2rem; margin-bottom: 0.5rem; }
+        p { color: #888; margin-bottom: 2rem; }
+        .ball {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            border-radius: 50%;
+            margin: 0 auto;
+            animation: bounce 1s ease-in-out infinite;
+        }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-60px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Sample Game</h1>
+        <p>This is a placeholder. Replace this folder with your real game!</p>
+        <div class="ball"></div>
+    </div>
+</body>
+</html>
