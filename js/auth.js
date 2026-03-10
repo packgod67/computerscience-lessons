@@ -42,6 +42,18 @@
                 authCallbacks.forEach(cb => cb(null));
                 return;
             }
+            // Check if approved
+            if (doc.exists && !doc.data().approved && doc.data().role !== 'admin') {
+                await auth.signOut();
+                currentUser = null;
+                userRole = null;
+                favorites.clear();
+                showPendingApproval();
+                authReady = true;
+                authReadyResolve();
+                authCallbacks.forEach(cb => cb(null));
+                return;
+            }
         } else {
             favorites.clear();
             userRole = null;
@@ -76,8 +88,9 @@
                 userRole = role;
                 favorites = new Set();
                 userRoleIds = [];
+                const approved = role === 'admin';
                 await db.collection('users').doc(currentUser.uid).set({
-                    username, role, favorites: [], roleIds: []
+                    username, role, favorites: [], roleIds: [], approved
                 });
                 // Also ensure username reservation exists
                 await db.collection('usernames').doc(username).set({ uid: currentUser.uid }).catch(() => {});
@@ -117,12 +130,20 @@
         const cred = await auth.createUserWithEmailAndPassword(toEmail(username), password);
         // Reserve the username and set role
         const role = cleanName === ADMIN_USERNAME ? 'admin' : 'user';
+        const approved = role === 'admin';
         await db.collection('usernames').doc(cleanName).set({ uid: cred.user.uid });
         await db.collection('users').doc(cred.user.uid).set(
-            { username: cleanName, role: role, favorites: [] },
+            { username: cleanName, role: role, favorites: [], approved: approved },
             { merge: true }
         );
         userRole = role;
+        if (!approved) {
+            await auth.signOut();
+            currentUser = null;
+            userRole = null;
+            showPendingApproval();
+            throw new Error('__PENDING__');
+        }
         return cred;
     }
 
@@ -190,6 +211,91 @@
         favCallbacks.push(cb);
     }
 
+    function showPendingApproval() {
+        let el = document.getElementById('pendingApproval');
+        if (el) { el.style.display = 'flex'; return; }
+        el = document.createElement('div');
+        el.id = 'pendingApproval';
+        el.className = 'login-gate';
+        el.innerHTML = `
+            <div class="login-gate-box">
+                <div class="login-gate-logo">
+                    <span class="logo-icon">&#9203;</span>
+                    <h1>PENDING APPROVAL</h1>
+                </div>
+                <p class="login-gate-tagline">Your account is waiting for admin approval.<br>Please check back later.</p>
+                <button class="auth-submit" id="pendingBackBtn">Back to Login</button>
+            </div>`;
+        document.body.appendChild(el);
+        document.getElementById('pendingBackBtn').addEventListener('click', () => {
+            el.style.display = 'none';
+            showLoginGate();
+        });
+    }
+
+    function hidePendingApproval() {
+        const el = document.getElementById('pendingApproval');
+        if (el) el.style.display = 'none';
+    }
+
+    async function approveUser(uid, approve) {
+        await db.collection('users').doc(uid).set({ approved: !!approve }, { merge: true });
+    }
+
+    async function getPendingUsers() {
+        const snap = await db.collection('users').where('approved', '==', false).get();
+        return snap.docs.map(d => ({ uid: d.id, ...d.data() }));
+    }
+
+    function showApprovalPanel() {
+        let modal = document.getElementById('approvalModal');
+        if (modal) modal.remove();
+        modal = document.createElement('div');
+        modal.id = 'approvalModal';
+        modal.className = 'modal-overlay';
+        modal.innerHTML = `
+            <div class="modal-content" style="max-width:500px;">
+                <h2 style="margin:0 0 12px;">Pending Approvals</h2>
+                <div id="approvalList" style="max-height:400px;overflow-y:auto;">Loading...</div>
+                <button class="auth-submit" id="closeApprovalBtn" style="margin-top:12px;">Close</button>
+            </div>`;
+        document.body.appendChild(modal);
+        document.getElementById('closeApprovalBtn').addEventListener('click', () => modal.remove());
+        modal.addEventListener('click', (e) => { if (e.target === modal) modal.remove(); });
+        loadPendingUsers();
+    }
+
+    async function loadPendingUsers() {
+        const list = document.getElementById('approvalList');
+        if (!list) return;
+        const pending = await getPendingUsers();
+        if (pending.length === 0) {
+            list.innerHTML = '<p style="color:#aaa;">No pending users.</p>';
+            return;
+        }
+        list.innerHTML = pending.map(u => `
+            <div style="display:flex;align-items:center;justify-content:space-between;padding:8px;border-bottom:1px solid #333;">
+                <span style="color:#fff;font-weight:bold;">${u.username || u.uid}</span>
+                <div>
+                    <button class="auth-submit approve-btn" data-uid="${u.uid}" style="padding:4px 12px;font-size:13px;margin-right:6px;">Approve</button>
+                    <button class="auth-submit auth-secondary reject-btn" data-uid="${u.uid}" style="padding:4px 12px;font-size:13px;">Reject</button>
+                </div>
+            </div>
+        `).join('');
+        list.querySelectorAll('.approve-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                await approveUser(btn.dataset.uid, true);
+                loadPendingUsers();
+            });
+        });
+        list.querySelectorAll('.reject-btn').forEach(btn => {
+            btn.addEventListener('click', async () => {
+                await db.collection('users').doc(btn.dataset.uid).delete();
+                loadPendingUsers();
+            });
+        });
+    }
+
     function showLoginGate() {
         document.body.classList.add('auth-gated');
         let gate = document.getElementById('loginGate');
@@ -253,6 +359,7 @@
             try {
                 await register(userInput.value, passInput.value);
             } catch (e) {
+                if (e.message === '__PENDING__') return;
                 errorEl.textContent = cleanError(e.message);
             }
         }
@@ -291,13 +398,17 @@
 
         function renderLoggedIn() {
             const adminBadge = isAdmin() ? '<span class="auth-admin-badge">ADMIN</span>' : '';
+            const approvalBtn = isAdmin() ? '<button class="auth-btn" id="approvalBtn" title="Pending Approvals">&#9998; Approvals</button>' : '';
             authArea.innerHTML = `
                 <span class="auth-user-info">
                     ${adminBadge}
                     <span class="auth-username">${getUsername()}</span>
+                    ${approvalBtn}
                     <button class="auth-btn" id="logoutBtn">Log out</button>
                 </span>`;
             document.getElementById('logoutBtn').addEventListener('click', () => logout());
+            const appBtn = document.getElementById('approvalBtn');
+            if (appBtn) appBtn.addEventListener('click', showApprovalPanel);
             hideLoginGate();
         }
 
@@ -357,6 +468,7 @@
                     await register(userInput.value, passInput.value);
                     dropdown.classList.remove('open');
                 } catch (e) {
+                    if (e.message === '__PENDING__') return;
                     errorEl.textContent = cleanError(e.message);
                 }
             }
@@ -452,6 +564,6 @@
         listenActiveUsers,
         getUserRoleIds: () => userRoleIds,
         getDb: () => db,
-        banUser
+        banUser, approveUser, getPendingUsers, showApprovalPanel
     };
 })();
