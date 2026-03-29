@@ -24,8 +24,6 @@
     firebase.initializeApp(firebaseConfig);
     auth = firebase.auth();
     db = firebase.firestore();
-    let storage = null;
-    try { storage = firebase.storage(); } catch (e) {}
 
     auth.onAuthStateChanged(async (user) => {
         currentUser = user;
@@ -557,16 +555,17 @@
         await db.collection('users').doc(uid).set({ banned: !!ban }, { merge: true });
     }
 
-    // ===== Cloud Save =====
+    // ===== Cloud Save (Firestore) =====
+    // Firestore doc limit is ~1MB. Base64 SRAM saves are typically <512KB.
+    // We store save data directly in Firestore under saves/{userId}/{gameId}
     async function saveGameData(gameId, dataBase64) {
-        if (!currentUser || !storage) return false;
+        if (!currentUser) return false;
         try {
-            const ref = storage.ref(`saves/${currentUser.uid}/${gameId}.sav`);
-            await ref.putString(dataBase64, 'base64');
-            // Store metadata in Firestore for quick lookup
-            await db.collection('saves').doc(currentUser.uid).set({
-                [gameId]: { updatedAt: firebase.firestore.FieldValue.serverTimestamp() }
-            }, { merge: true });
+            await db.collection('saves').doc(currentUser.uid)
+                .collection('games').doc(gameId).set({
+                    data: dataBase64,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                });
             return true;
         } catch (e) {
             console.error('Cloud save failed:', e);
@@ -575,22 +574,15 @@
     }
 
     async function loadGameData(gameId) {
-        if (!currentUser || !storage) return null;
+        if (!currentUser) return null;
         try {
-            const ref = storage.ref(`saves/${currentUser.uid}/${gameId}.sav`);
-            const url = await ref.getDownloadURL();
-            const res = await fetch(url);
-            const blob = await res.blob();
-            return new Promise((resolve) => {
-                const reader = new FileReader();
-                reader.onloadend = () => {
-                    const b64 = reader.result.split(',')[1];
-                    resolve(b64);
-                };
-                reader.readAsDataURL(blob);
-            });
+            const doc = await db.collection('saves').doc(currentUser.uid)
+                .collection('games').doc(gameId).get();
+            if (doc.exists && doc.data().data) {
+                return doc.data().data;
+            }
+            return null;
         } catch (e) {
-            if (e.code === 'storage/object-not-found') return null;
             console.error('Cloud load failed:', e);
             return null;
         }
