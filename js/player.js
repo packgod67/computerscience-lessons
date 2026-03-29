@@ -156,6 +156,46 @@
         ArcadeAuth.toggleFavorite(currentGameId).then(() => updateFavBtn());
     });
 
+    // ===== Cloud Save Sync =====
+    let saveStatusEl = null;
+
+    function showSaveStatus(msg) {
+        if (!saveStatusEl) {
+            saveStatusEl = document.createElement('div');
+            saveStatusEl.style.cssText = 'position:fixed;bottom:12px;right:12px;background:#1a1a2e;color:#aaa;padding:6px 14px;border-radius:8px;font-size:13px;z-index:9999;transition:opacity 0.3s;';
+            document.body.appendChild(saveStatusEl);
+        }
+        saveStatusEl.textContent = msg;
+        saveStatusEl.style.opacity = '1';
+        clearTimeout(saveStatusEl._timer);
+        saveStatusEl._timer = setTimeout(() => { saveStatusEl.style.opacity = '0'; }, 3000);
+    }
+
+    window.addEventListener('message', async (e) => {
+        if (!e.data || !e.data.type) return;
+
+        if (e.data.type === 'emu-ready' && e.data.gameId) {
+            // Game emulator is ready — send cloud save if user is logged in
+            await ArcadeAuth.waitForAuth();
+            if (!ArcadeAuth.isLoggedIn()) return;
+            showSaveStatus('Loading cloud save...');
+            const data = await ArcadeAuth.loadGameData(e.data.gameId);
+            if (data) {
+                gameFrame.contentWindow.postMessage({ type: 'load-save', data: data }, '*');
+                showSaveStatus('Cloud save loaded!');
+            } else {
+                showSaveStatus('No cloud save found');
+            }
+        }
+
+        if (e.data.type === 'save-data' && e.data.gameId && e.data.data) {
+            if (!ArcadeAuth.isLoggedIn()) return;
+            showSaveStatus('Saving to cloud...');
+            const ok = await ArcadeAuth.saveGameData(e.data.gameId, e.data.data);
+            showSaveStatus(ok ? 'Saved to cloud!' : 'Cloud save failed');
+        }
+    });
+
     // Auth integration
     ArcadeAuth.bindAuthUI();
     ArcadeAuth.onAuthChange(() => updateFavBtn());

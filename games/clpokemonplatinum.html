@@ -111,12 +111,66 @@
           EJS_threads = true;
           EJS_VirtualGamepadEnabled = true;
           EJS_defaultControls = true;
-          EJS_Settings = {
-            "save-state-slot": 1,
-            "save-state-location": "browser",
-          };
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
+
+          // Cloud save: notify parent when emulator is ready
+          EJS_onGameStart = function() {
+            window.parent.postMessage({ type: 'emu-ready', gameId: 'clpokemonplatinum' }, '*');
+
+            // Auto-save to cloud every 60 seconds
+            setInterval(function() {
+              try {
+                var state = EJS_emulator.gameManager.getState();
+                if (state && state.byteLength > 0) {
+                  var bytes = new Uint8Array(state);
+                  var binary = '';
+                  for (var i = 0; i < bytes.length; i++) {
+                    binary += String.fromCharCode(bytes[i]);
+                  }
+                  window.parent.postMessage({
+                    type: 'save-data',
+                    gameId: 'clpokemonplatinum',
+                    data: btoa(binary)
+                  }, '*');
+                }
+              } catch(e) { console.error('Auto-save error:', e); }
+            }, 60000);
+          };
+
+          // Cloud save: listen for save data from parent
+          window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'load-save' && e.data.data) {
+              try {
+                var binary = atob(e.data.data);
+                var bytes = new Uint8Array(binary.length);
+                for (var i = 0; i < binary.length; i++) {
+                  bytes[i] = binary.charCodeAt(i);
+                }
+                EJS_emulator.gameManager.loadState(bytes.buffer);
+              } catch(e) { console.error('Cloud load error:', e); }
+            }
+          });
+
+          // Save to cloud on page close
+          window.addEventListener('beforeunload', function() {
+            try {
+              var state = EJS_emulator.gameManager.getState();
+              if (state && state.byteLength > 0) {
+                var bytes = new Uint8Array(state);
+                var binary = '';
+                for (var i = 0; i < bytes.length; i++) {
+                  binary += String.fromCharCode(bytes[i]);
+                }
+                window.parent.postMessage({
+                  type: 'save-data',
+                  gameId: 'clpokemonplatinum',
+                  data: btoa(binary)
+                }, '*');
+              }
+            } catch(e) {}
+          });
+
           const script = document.createElement("script");
           script.src =
             "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";

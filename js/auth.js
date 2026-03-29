@@ -24,6 +24,8 @@
     firebase.initializeApp(firebaseConfig);
     auth = firebase.auth();
     db = firebase.firestore();
+    let storage = null;
+    try { storage = firebase.storage(); } catch (e) {}
 
     auth.onAuthStateChanged(async (user) => {
         currentUser = user;
@@ -555,6 +557,45 @@
         await db.collection('users').doc(uid).set({ banned: !!ban }, { merge: true });
     }
 
+    // ===== Cloud Save =====
+    async function saveGameData(gameId, dataBase64) {
+        if (!currentUser || !storage) return false;
+        try {
+            const ref = storage.ref(`saves/${currentUser.uid}/${gameId}.sav`);
+            await ref.putString(dataBase64, 'base64');
+            // Store metadata in Firestore for quick lookup
+            await db.collection('saves').doc(currentUser.uid).set({
+                [gameId]: { updatedAt: firebase.firestore.FieldValue.serverTimestamp() }
+            }, { merge: true });
+            return true;
+        } catch (e) {
+            console.error('Cloud save failed:', e);
+            return false;
+        }
+    }
+
+    async function loadGameData(gameId) {
+        if (!currentUser || !storage) return null;
+        try {
+            const ref = storage.ref(`saves/${currentUser.uid}/${gameId}.sav`);
+            const url = await ref.getDownloadURL();
+            const res = await fetch(url);
+            const blob = await res.blob();
+            return new Promise((resolve) => {
+                const reader = new FileReader();
+                reader.onloadend = () => {
+                    const b64 = reader.result.split(',')[1];
+                    resolve(b64);
+                };
+                reader.readAsDataURL(blob);
+            });
+        } catch (e) {
+            if (e.code === 'storage/object-not-found') return null;
+            console.error('Cloud load failed:', e);
+            return null;
+        }
+    }
+
     window.ArcadeAuth = {
         register, login, logout,
         toggleFavorite, isFavorite, isLoggedIn, isAdmin, getUser, getUsername,
@@ -564,6 +605,7 @@
         listenActiveUsers,
         getUserRoleIds: () => userRoleIds,
         getDb: () => db,
-        banUser, approveUser, getPendingUsers, showApprovalPanel
+        banUser, approveUser, getPendingUsers, showApprovalPanel,
+        saveGameData, loadGameData
     };
 })();
