@@ -104,10 +104,11 @@
           document.getElementById("loading-progress").remove();
           document.getElementById("first-time").remove();
           EJS_player = "#game";
-          EJS_core = window.gameconfig.core;
+          EJS_core = "desmume2015";
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");
