@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Terraria</title>
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #121212;
+      color: white;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .container {
+      text-align: center;
+      max-width: 500px;
+      padding: 20px;
+    }
+    .container img {
+      max-width: 300px;
+      margin-bottom: 20px;
+    }
+    h1 {
+      font-size: 28px;
+      margin-bottom: 8px;
+    }
+    p {
+      color: #aaa;
+      font-size: 15px;
+      line-height: 1.5;
+      margin-bottom: 24px;
+    }
+    .play-btn {
+      display: inline-block;
+      padding: 14px 40px;
+      background: #4CAF50;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 18px;
+      font-weight: bold;
+      transition: background 0.2s;
+    }
+    .play-btn:hover {
+      background: #45a049;
+    }
+    .note {
+      color: #666;
+      font-size: 12px;
+      margin-top: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Terraria</h1>
+    <p>Terraria running in your browser via WebAssembly. This game opens in a new tab because it requires special browser features that don't work inside an iframe.</p>
+    <a href="https://terraria.mercurywork.shop/" target="_blank" rel="noopener" class="play-btn">Play Terraria</a>
+    <p class="note">Powered by <a href="https://github.com/MercuryWorkshop/terraria-wasm" target="_blank" style="color:#888;">terraria-wasm</a> by MercuryWorkshop</p>
+  </div>
+</body>
+</html>
