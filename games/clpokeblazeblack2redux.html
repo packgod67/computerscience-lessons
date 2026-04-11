@@ -6,6 +6,7 @@
 
 
   <head>
+    <script src="../js/ds-mode.js"></script>
     <script>
       window.gameconfig = {
         name: "Pokemon Blaze Black 2 Redux Complete (v1.4.1)",
@@ -109,6 +110,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          if (typeof EJS_VirtualGamepadEnabled === "undefined") EJS_VirtualGamepadEnabled = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

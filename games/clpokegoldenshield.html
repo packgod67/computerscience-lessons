@@ -6,6 +6,7 @@
 
 
   <head>
+    <script src="../js/ds-mode.js"></script>
     <script>
 alert("In the event you run into lag, try disabling v-sync by clicking the gear icon (bottom right), click Graphics Settings, Click VSync and change it from enabled to disabled.");
       window.gameconfig = {
@@ -110,6 +111,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          if (typeof EJS_VirtualGamepadEnabled === "undefined") EJS_VirtualGamepadEnabled = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");
