@@ -10,7 +10,7 @@
       window.gameconfig = {
         name: "Metroid Prime - Hunters",
         url: "https://cdn.jsdelivr.net/gh/samtheskeleton/roms@main/Metroid%20Prime%20-%20Hunters%20(USA).zip",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 3,
       };
@@ -109,6 +109,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

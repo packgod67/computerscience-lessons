@@ -10,7 +10,7 @@
       window.gameconfig = {
         name: "The Legend of Zelda - Phantom Hourglass",
         url: "https://cdn.jsdelivr.net/gh/samtheskeleton/the-legend-of-zelda-roms@main/Legend%20of%20Zelda%2C%20The%20-%20Phantom%20Hourglass%20(USA)%20(En%2CFr%2CEs).zip",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 3,
       };
@@ -109,6 +109,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

@@ -11,7 +11,7 @@
       window.gameconfig = {
         name: "Dragon Quest IX - Sentinels of the Starry Skies",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@8e3b436193bce848cb0bfca7cbb1e9543cfc8230/Dragon%20Quest%20IX%20-%20Sentinels%20of%20the%20Starry%20Skies%20(USA)%20(En%2CFr%2CEs)/Dragon%20Quest%20IX%20-%20Sentinels%20of%20the%20Starry%20Skies%20(USA)%20(En%2CFr%2CEs).zip",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 10,
       };
@@ -110,6 +110,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

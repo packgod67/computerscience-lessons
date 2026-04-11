@@ -10,7 +10,7 @@
       window.gameconfig = {
         name: "Ridge Racer DS (USA, Europe)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@69472561da3740f5e241805c91d7b406c62cf23d/Ridge%20Racer%20DS%20(USA%2C%20Europe)/Ridge%20Racer%20DS%20(USA%2C%20Europe).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 2,
       };
@@ -109,6 +109,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

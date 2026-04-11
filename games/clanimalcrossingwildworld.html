@@ -9,7 +9,7 @@
       window.gameconfig = {
         name: "Animal Crossing - Wild World (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@4cee1f0ea2fbd85800ca8d90804abe42ce8dfb33/Animal%20Crossing%20-%20Wild%20World%20(USA)%20(Rev%201)/Animal%20Crossing%20-%20Wild%20World%20(USA)%20(Rev%201).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 2,
       };
@@ -106,6 +106,7 @@
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

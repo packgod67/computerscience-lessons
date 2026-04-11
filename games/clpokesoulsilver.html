@@ -11,7 +11,7 @@
       window.gameconfig = {
         name: "Pokemon - SoulSilver Version",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@6ab07c4378b54786908fc0644fb2a3848eb5197b/soulilver/Pokemon%20-%20SoulSilver%20Version%20(USA%2C%20Australia).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 7,
       };
@@ -110,6 +110,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           if (typeof EJS_VirtualGamepadEnabled === "undefined") EJS_VirtualGamepadEnabled = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;

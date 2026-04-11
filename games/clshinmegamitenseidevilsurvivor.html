@@ -10,7 +10,7 @@
       window.gameconfig = {
         name: "Shin Megami Tensei - Devil Survivor (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@b4572496381789f92d85602c8526a3d105913589/Shin%20Megami%20Tensei%20-%20Devil%20Survivor%20(USA)/Shin%20Megami%20Tensei%20-%20Devil%20Survivor%20(USA).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 4,
       };
@@ -109,6 +109,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

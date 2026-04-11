@@ -10,7 +10,7 @@
       window.gameconfig = {
         name: "Legend of Zelda, The - Spirit Tracks (USA, Australia) (En,Fr,Es)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@500cf437cf330bbcb6af9dc7af99455dfc5a018b/Legend%20of%20Zelda%2C%20The%20-%20Spirit%20Tracks%20(USA%2C%20Australia)%20(En%2CFr%2CEs)/Legend%20of%20Zelda%2C%20The%20-%20Spirit%20Tracks%20(USA%2C%20Australia)%20(En%2CFr%2CEs).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 7,
       };
@@ -109,6 +109,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

@@ -9,7 +9,7 @@
       window.gameconfig = {
         name: "Call of Duty - Modern Warfare 3 - Defiance (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@4c25858073b5a7f49f7cf76969cc1f3a87a17fef/Call%20of%20Duty%20-%20Modern%20Warfare%203%20-%20Defiance%20(USA)/Call%20of%20Duty%20-%20Modern%20Warfare%203%20-%20Defiance%20(USA).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 4,
       };
@@ -106,6 +106,7 @@
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

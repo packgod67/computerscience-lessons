@@ -10,7 +10,7 @@
       window.gameconfig = {
         name: "LEGO Indiana Jones - The Original Adventures (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@8debb1d446ec3a0733e6b90f7b732abf6018dd6a/LEGO%20Indiana%20Jones%20-%20The%20Original%20Adventures%20(USA)%20(En%2CFr%2CDe%2CEs%2CIt%2CDa)/LEGO%20Indiana%20Jones%20-%20The%20Original%20Adventures%20(USA)%20(En%2CFr%2CDe%2CEs%2CIt%2CDa).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 4,
       };
@@ -109,6 +109,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

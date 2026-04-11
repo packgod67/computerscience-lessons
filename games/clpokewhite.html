@@ -11,7 +11,7 @@
       window.gameconfig = {
         name: "Pokemon - White Version (USA, Europe)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@45fb178adde3f147a1efc5f55d0635c0a3135b52/white/Pokemon%20-%20White%20Version%20(USA%2C%20Europe)%20(NDSi%20Enhanced).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 14,
       };
@@ -110,6 +110,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           if (typeof EJS_VirtualGamepadEnabled === "undefined") EJS_VirtualGamepadEnabled = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;

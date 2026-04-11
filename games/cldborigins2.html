@@ -9,7 +9,7 @@
       window.gameconfig = {
         name: "Dragon Ball - Origins 2 (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@68ec1b50dcfb029abb9514729e8bf08e67f1d837/Dragon%20Ball%20-%20Origins%202%20(USA)%20(En%2CFr%2CEs)/Dragon%20Ball%20-%20Origins%202%20(USA)%20(En%2CFr%2CEs).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 4,
       };
@@ -106,6 +106,7 @@
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

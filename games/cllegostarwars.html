@@ -10,7 +10,7 @@
       window.gameconfig = {
         name: "LEGO Star Wars - The Complete Saga (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@be3eda6572fba26d9575c87fd864392c7e19261c/LEGO%20Star%20Wars%20-%20The%20Complete%20Saga%20(USA)/LEGO%20Star%20Wars%20-%20The%20Complete%20Saga%20(USA).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 4,
       };
@@ -109,6 +109,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

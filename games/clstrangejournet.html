@@ -11,7 +11,7 @@
       window.gameconfig = {
         name: "Shin Megami Tensei - Strange Journey",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@72e249af350f88dcd9904e13041473318c923fcd/Shin%20Megami%20Tensei%20-%20Strange%20Journey%20(USA)/Shin%20Megami%20Tensei%20-%20Strange%20Journey%20(USA).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 7,
       };
@@ -110,6 +110,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

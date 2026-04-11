@@ -10,7 +10,7 @@
       window.gameconfig = {
         name: "LEGO Batman 2 - DC Super Heroes (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@4183685fe631b2e1735347d60fcf24a7d194bf6a/LEGO%20Batman%202%20-%20DC%20Super%20Heroes%20(USA)%20(En%2CFr%2CEs%2CPt)/LEGO%20Batman%202%20-%20DC%20Super%20Heroes%20(USA)%20(En%2CFr%2CEs%2CPt).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 7,
       };
@@ -109,6 +109,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

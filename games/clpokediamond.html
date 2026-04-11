@@ -11,7 +11,7 @@
       window.gameconfig = {
         name: "Pokemon - Diamond Version (USA) (Rev 5)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@c1ee7c5c6ee36389455d85874293c1e35c569e37/Pokemon%20-%20Diamond%20Version%20(USA)%20(Rev%205)/Pokemon%20-%20Diamond%20Version%20(USA)%20(Rev%205).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 4,
       };
@@ -110,6 +110,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           if (typeof EJS_VirtualGamepadEnabled === "undefined") EJS_VirtualGamepadEnabled = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;

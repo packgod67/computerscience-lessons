@@ -11,7 +11,7 @@
       window.gameconfig = {
         name: "Pokemon Volt White 2 Redux Complete (v1.4.1)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@c1286889f729281cf543c86ce59732b638cdaa86/volt%20white%20redux/Pokemon%20Volt%20White%202%20Redux%20Complete%20(v1.4.1).7z",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 4,
       };
@@ -110,6 +110,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           if (typeof EJS_VirtualGamepadEnabled === "undefined") EJS_VirtualGamepadEnabled = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;

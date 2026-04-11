@@ -10,7 +10,7 @@
       window.gameconfig = {
         name: "Taiko no Tatsujin DS - Touch de Dokodon! (Japan)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@7324b27ec693e5093bb8a6eb17ada5c9efc29100/Taiko%20no%20Tatsujin%20DS%20-%20Touch%20de%20Dokodon!%20(Japan)/Taiko%20no%20Tatsujin%20DS%20-%20Touch%20de%20Dokodon!%20(Japan).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 2,
       };
@@ -109,6 +109,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

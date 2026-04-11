@@ -9,7 +9,7 @@
       window.gameconfig = {
         name: "Call of Duty 4 - Modern Warfare (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@2aa8e49096f37352d81500a212e2215e044cb568/Call%20of%20Duty%204%20-%20Modern%20Warfare%20(USA)/Call%20of%20Duty%204%20-%20Modern%20Warfare%20(USA).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 4,
       };
@@ -106,6 +106,7 @@
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

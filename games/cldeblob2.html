@@ -9,7 +9,7 @@
       window.gameconfig = {
         name: "de Blob 2 (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@c57748430d4ccadc5b2e25f8ee2d78d3770bda76/de%20Blob%202%20(USA)%20(En%2CFr)%20(NDSi%20Enhanced)/de%20Blob%202%20(USA)%20(En%2CFr)%20(NDSi%20Enhanced).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 4,
       };
@@ -106,6 +106,7 @@
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

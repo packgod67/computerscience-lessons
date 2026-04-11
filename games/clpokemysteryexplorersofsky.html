@@ -11,7 +11,7 @@
       window.gameconfig = {
         name: "Pokemon Mystery Dungeon - Explorers of Sky (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@3f6c5d8b7096feb4013d7237d5944b759e5e29f4/Pokemon%20Mystery%20Dungeon%20-%20Explorers%20of%20Sky%20(USA)%20(1)/Pokemon%20Mystery%20Dungeon%20-%20Explorers%20of%20Sky%20(USA).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 7,
       };
@@ -110,6 +110,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           if (typeof EJS_VirtualGamepadEnabled === "undefined") EJS_VirtualGamepadEnabled = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;

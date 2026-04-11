@@ -7,7 +7,7 @@
       window.gameconfig = {
         name: "Kingdom Hearts - 358-2 Days (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@94ee2340b4c518226156d0f0f9e46da03de6d079/Kingdom%20Hearts%20-%20358-2%20Days%20(USA)%20(En%2CFr)/358days.nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 14,
       };
@@ -106,6 +106,7 @@ getParts("asd.js", 0, 100)
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

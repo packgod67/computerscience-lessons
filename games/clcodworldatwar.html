@@ -9,7 +9,7 @@
       window.gameconfig = {
         name: "Call of Duty - World at War (USA)",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@e1a24919f02b3fff28ea5453f70336b4d82daffe/Call%20of%20Duty%20-%20World%20at%20War%20(USA)/Call%20of%20Duty%20-%20World%20at%20War%20(USA).nds",
-        core: "nds",
+        core: "desmume2015",
         min: 1,
         max: 4,
       };
@@ -106,6 +106,7 @@
           EJS_gameName = window.gameconfig.name;
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");
