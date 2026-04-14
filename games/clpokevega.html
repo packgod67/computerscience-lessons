@@ -7,6 +7,7 @@
 
 <html>
   <head>
+    <script src="coi-serviceworker.js"></script>
     <style>
       body,
       html {
@@ -46,11 +47,12 @@
           document.getElementById("loading-progress").remove();
           document.getElementById("first-time").remove();
           EJS_player = "#game";
-          EJS_core = "gba";
+          EJS_core = "mgba";
           EJS_gameName = "i-forgot";
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
           EJS_cacheLimit = 0;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = "https://cdn.jsdelivr.net/gh/bubbls/UGS-file-encryption@ac811afe31c08e5bcbc35971c94519b01a957813/Vega_20190420.gba";
           const script = document.createElement("script");

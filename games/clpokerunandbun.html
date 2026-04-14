@@ -6,11 +6,12 @@
 
 
   <head>
+    <script src="coi-serviceworker.js"></script>
     <script>
       window.gameconfig = {
         name: "pokemon run and bun",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@2d9a17244b2c3da9794cedd2129cce2397df262e/run%20and%20bun/Pokemon%20-%20Emerald%20Version%20(USA%2C%20Europe)%20(patched)%20(1).gba",
-        core: "gba",
+        core: "mgba",
         min: 1,
         max: 2,
       };
@@ -110,6 +111,7 @@ getParts("asd.js", 0, 100)
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
           EJS_cacheLimit = 0;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

@@ -5,11 +5,12 @@
 
 
   <head>
+    <script src="coi-serviceworker.js"></script>
     <script>
       window.gameconfig = {
         name: "Pokemon energized emerald",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@b68f2454d5f4c30a2307c2fceb52750894929568/energized%20emerald/pokemonemerald%20(patched)%20(3).gba",
-        core: "gba",
+        core: "mgba",
         min: 1,
         max: 2,
       };
@@ -107,6 +108,7 @@
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
           EJS_cacheLimit = 0;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

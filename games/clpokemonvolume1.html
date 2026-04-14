@@ -6,11 +6,12 @@
 
 
   <head>
+    <script src="coi-serviceworker.js"></script>
     <script>
       window.gameconfig = {
         name: "Pokemon - Volume 1",
         url: "https://cdn.jsdelivr.net/gh/samtheskeleton/roms@main/Pokemon%20-%20Volume%201%20(U).zip",
-        core: "gba",
+        core: "mgba",
         min: 1,
         max: 2,
       };
@@ -110,6 +111,7 @@ getParts("asd.js", 0, 100)
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
           EJS_cacheLimit = 0;
+          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");
