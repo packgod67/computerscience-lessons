@@ -79,6 +79,7 @@
 				if (saveStarted) return;
 				saveStarted = true;
 				window.parent.postMessage({ type: 'emu-ready', gameId: GAME_ID }, '*');
+				setTimeout(saveToCloud, 10000);
 				setInterval(saveToCloud, 60000);
 			}
 

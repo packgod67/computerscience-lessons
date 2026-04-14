@@ -118,7 +118,18 @@ getParts("asd.js", 0, 100)
           // Cloud save: notify parent when emulator is ready
           EJS_onGameStart = function() {
             window.parent.postMessage({ type: 'emu-ready', gameId: 'clpokeplatinumrandomized' }, '*');
-            // Auto-save to cloud every 60 seconds
+            // First save after 10s, then every 60s
+            setTimeout(function() {
+              try {
+                var state = EJS_emulator.gameManager.getState();
+                if (state && state.byteLength > 0) {
+                  var bytes = new Uint8Array(state);
+                  var binary = '';
+                  for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+                  window.parent.postMessage({ type: 'save-data', gameId: 'clpokeplatinumrandomized', data: btoa(binary) }, '*');
+                }
+              } catch(e) {}
+            }, 10000);
             setInterval(function() {
               try {
                 var state = EJS_emulator.gameManager.getState();
