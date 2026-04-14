@@ -42,8 +42,9 @@
                 authCallbacks.forEach(cb => cb(null));
                 return;
             }
-            // Check if approved
-            if (doc.exists && !doc.data().approved && doc.data().role !== 'admin') {
+            // Check if approved — only block if explicitly set to false (new registrations)
+            // Users with approved:true, approved:undefined, or missing field can log in fine
+            if (doc.exists && doc.data().approved === false && doc.data().role !== 'admin') {
                 await auth.signOut();
                 currentUser = null;
                 userRole = null;
@@ -254,7 +255,7 @@
         modal.id = 'approvalModal';
         modal.className = 'modal-overlay';
         modal.innerHTML = `
-            <div class="modal-content" style="max-width:500px;">
+            <div class="modal-box" style="max-width:500px;">
                 <h2 style="margin:0 0 12px;">Pending Approvals</h2>
                 <div id="approvalList" style="max-height:400px;overflow-y:auto;">Loading...</div>
                 <button class="auth-submit" id="closeApprovalBtn" style="margin-top:12px;">Close</button>
