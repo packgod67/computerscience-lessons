@@ -55,6 +55,18 @@
             });
         });
 
+        // Info button click delegation
+        gameGrid.addEventListener('click', (e) => {
+            const btn = e.target.closest('.info-btn');
+            if (!btn) return;
+            e.preventDefault();
+            e.stopPropagation();
+            const idx = parseInt(btn.dataset.gameIdx, 10);
+            const g = filtered[idx];
+            if (!g || !g.description) return;
+            showGameInfo(g);
+        });
+
         // Bind auth UI
         ArcadeAuth.bindAuthUI();
 
@@ -192,7 +204,10 @@
             const favBtn = loggedIn
                 ? `<button class="fav-btn${favClass}" data-game-id="${esc(g.id)}" title="Favorite">&#9733;</button>`
                 : '';
-            html += `<a class="game-card" href="play.html?game=${encodeURIComponent(g.id)}">${thumb}${favBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
+            const infoBtn = g.description
+                ? `<button class="info-btn" data-game-idx="${start + i}" title="Game info">&#8942;</button>`
+                : '';
+            html += `<a class="game-card" href="play.html?game=${encodeURIComponent(g.id)}">${thumb}${favBtn}${infoBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
         }
 
         gameGrid.insertAdjacentHTML('beforeend', html);
@@ -209,6 +224,36 @@
             clearTimeout(timer);
             timer = setTimeout(() => fn(...args), ms);
         };
+    }
+
+    function showGameInfo(g) {
+        const existing = document.getElementById('gameInfoOverlay');
+        if (existing) existing.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'gameInfoOverlay';
+        overlay.className = 'game-info-overlay';
+
+        const thumb = g.thumbnail
+            ? `<img class="game-info-thumb" src="${esc(g.thumbnail)}" alt="${esc(g.title)}">`
+            : '';
+
+        overlay.innerHTML = `
+            <div class="game-info-modal">
+                <button class="game-info-close">&times;</button>
+                ${thumb}
+                <h2 class="game-info-title">${esc(g.title)}</h2>
+                <span class="game-info-category">${esc(g.category)}</span>
+                <p class="game-info-desc">${esc(g.description)}</p>
+                <a class="game-info-play" href="play.html?game=${encodeURIComponent(g.id)}">Play Now</a>
+            </div>`;
+
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) overlay.remove();
+        });
+        overlay.querySelector('.game-info-close').addEventListener('click', () => overlay.remove());
     }
 
     function buildPartNav() {
