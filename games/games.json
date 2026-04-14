@@ -9658,7 +9658,7 @@
     "category": "Pokemon",
     "path": "games/clpokecrown.html",
     "description": "A royal-themed Pokemon hack featuring a new region with a monarchy-based storyline. Features custom events, characters with complex motivations, Pokemon from multiple generations, and a narrative that explores themes of power and responsibility in the Pokemon world.",
-    "thumbnail": "assets/thumbnails/clpokecrown.jpg"
+    "thumbnail": "assets/thumbnails/clpokecrown.png"
   },
   {
     "id": "clpokecrystaladvanceredux",
@@ -10033,7 +10033,7 @@
     "title": "Pokemon Platinum",
     "category": "Pokemon",
     "path": "games/clpokemonplatinum.html",
-    "thumbnail": "assets/thumbnails/clpokemonplatinum.jpg",
+    "thumbnail": "assets/thumbnails/clpokemonplatinum.png",
     "description": "The definitive Sinnoh experience with Giratina and the Distortion World. Features the Battle Frontier, Wi-Fi Plaza, expanded Pokedex, new forms for Giratina/Shaymin/Rotom, improved speed and animations, and a richer story involving both Dialga and Palkia. The best way to experience Gen IV."
   },
   {
@@ -10042,7 +10042,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonquetzal.html",
     "description": "A multiplayer-capable Emerald hack that allows up to 4 players to play together. Features Pokemon from all generations, Mega Evolution, Fusion mechanics, following Pokemon, character customization, and both cooperative and competitive multiplayer modes. A social Pokemon experience.",
-    "thumbnail": "assets/thumbnails/clpokemonquetzal.jpg"
+    "thumbnail": "assets/thumbnails/clpokemonquetzal.png"
   },
   {
     "id": "clpokemonroaringred",
@@ -10426,7 +10426,7 @@
     "category": "Pokemon",
     "path": "games/clpoketourmaline.html",
     "description": "A gem-themed ROM hack set in a custom region inspired by crystalline landscapes. Features an original story involving powerful gem-based artifacts, Pokemon from multiple generations, custom maps with unique environments, and a polished adventure from start to finish.",
-    "thumbnail": "assets/thumbnails/clpoketourmaline.jpg"
+    "thumbnail": "assets/thumbnails/clpoketourmaline.png"
   },
   {
     "id": "clpokeultraviolet",
@@ -10450,7 +10450,7 @@
     "category": "Pokemon",
     "path": "games/clpokevega.html",
     "description": "A legendary Japanese ROM hack featuring 181 original Fakemon alongside classic Pokemon. Set in the Tohoak region with a completely new story, custom music, challenging difficulty, and inventive new Pokemon designs. One of the most ambitious and well-crafted Fakemon hacks.",
-    "thumbnail": "assets/thumbnails/clpokevega.png"
+    "thumbnail": "assets/thumbnails/clpokevega.jpg"
   },
   {
     "id": "clpokevoltwhite2redux",

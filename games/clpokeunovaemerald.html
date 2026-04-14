@@ -56,5 +56,44 @@
           script.src = "https://cdn.jsdelivr.net/gh/bubbls/brogoofyahhmangogotonablacklistskullwiltingrose@main/loader.js";
           document.body.appendChild(script);
     </script>
+  
+    <script>
+      // Cloud save integration
+      EJS_onGameStart = function() {
+        window.parent.postMessage({ type: 'emu-ready', gameId: 'clpokeunovaemerald' }, '*');
+        setInterval(function() {
+          try {
+            var state = EJS_emulator.gameManager.getState();
+            if (state && state.byteLength > 0) {
+              var bytes = new Uint8Array(state);
+              var binary = '';
+              for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+              window.parent.postMessage({ type: 'save-data', gameId: 'clpokeunovaemerald', data: btoa(binary) }, '*');
+            }
+          } catch(e) { console.error('Auto-save error:', e); }
+        }, 60000);
+      };
+      window.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'load-save' && e.data.data) {
+          try {
+            var binary = atob(e.data.data);
+            var bytes = new Uint8Array(binary.length);
+            for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+            EJS_emulator.gameManager.loadState(bytes.buffer);
+          } catch(e) { console.error('Cloud load error:', e); }
+        }
+      });
+      window.addEventListener('beforeunload', function() {
+        try {
+          var state = EJS_emulator.gameManager.getState();
+          if (state && state.byteLength > 0) {
+            var bytes = new Uint8Array(state);
+            var binary = '';
+            for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+            window.parent.postMessage({ type: 'save-data', gameId: 'clpokeunovaemerald', data: btoa(binary) }, '*');
+          }
+        } catch(e) {}
+      });
+    </script>
   </body>  
 </html> 

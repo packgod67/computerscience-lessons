@@ -95,8 +95,45 @@
                 var script = document.createElement("script");
                 script.src = "https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@main/data/loader.js";
                 document.body.appendChild(script);
-		var script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/gh/a456pur/seraph@ae2fcc6d6a9cd051654fcc0519080db1f79cf2a7/storage/js/cloak.js";
-                document.body.appendChild(script);
+
             }
 	</script>
+
+    <script>
+      // Cloud save integration
+      EJS_onGameStart = function() {
+        window.parent.postMessage({ type: 'emu-ready', gameId: 'clpokemonslgreen' }, '*');
+        setInterval(function() {
+          try {
+            var state = EJS_emulator.gameManager.getState();
+            if (state && state.byteLength > 0) {
+              var bytes = new Uint8Array(state);
+              var binary = '';
+              for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+              window.parent.postMessage({ type: 'save-data', gameId: 'clpokemonslgreen', data: btoa(binary) }, '*');
+            }
+          } catch(e) { console.error('Auto-save error:', e); }
+        }, 60000);
+      };
+      window.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'load-save' && e.data.data) {
+          try {
+            var binary = atob(e.data.data);
+            var bytes = new Uint8Array(binary.length);
+            for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+            EJS_emulator.gameManager.loadState(bytes.buffer);
+          } catch(e) { console.error('Cloud load error:', e); }
+        }
+      });
+      window.addEventListener('beforeunload', function() {
+        try {
+          var state = EJS_emulator.gameManager.getState();
+          if (state && state.byteLength > 0) {
+            var bytes = new Uint8Array(state);
+            var binary = '';
+            for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+            window.parent.postMessage({ type: 'save-data', gameId: 'clpokemonslgreen', data: btoa(binary) }, '*');
+          }
+        } catch(e) {}
+      });
+    </script>

@@ -83,14 +83,53 @@
                 EJS_core = "gba";
                 EJS_color = "#000000";
                 EJS_startOnLoaded = true;
-                EJS_pathtodata = "https://cdn.jsdelivr.net/gh/a456pur/seraph@81f551ca0aa8e3d6018d32d8ac5904ac9bc78f76/storage/emulatorjs/data";
+                EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
                 EJS_gameUrl = "https://cdn.jsdelivr.net/gh/bubbls/UGS-file-encryption@5d2962bac0559a992af290c540224f79260980a7/Clover%20v1.3.3.gba";
                 loadGame();
             }
             document.getElementById("startButton").addEventListener("click", startGame);
             function loadGame() {
                 var script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/gh/a456pur/seraph@81f551ca0aa8e3d6018d32d8ac5904ac9bc78f76/storage/emulatorjs/data/loader.js";
+                script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
                 document.body.appendChild(script);
             }
 	</script>
+
+    <script>
+      // Cloud save integration
+      EJS_onGameStart = function() {
+        window.parent.postMessage({ type: 'emu-ready', gameId: 'clpokemonclover' }, '*');
+        setInterval(function() {
+          try {
+            var state = EJS_emulator.gameManager.getState();
+            if (state && state.byteLength > 0) {
+              var bytes = new Uint8Array(state);
+              var binary = '';
+              for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+              window.parent.postMessage({ type: 'save-data', gameId: 'clpokemonclover', data: btoa(binary) }, '*');
+            }
+          } catch(e) { console.error('Auto-save error:', e); }
+        }, 60000);
+      };
+      window.addEventListener('message', function(e) {
+        if (e.data && e.data.type === 'load-save' && e.data.data) {
+          try {
+            var binary = atob(e.data.data);
+            var bytes = new Uint8Array(binary.length);
+            for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+            EJS_emulator.gameManager.loadState(bytes.buffer);
+          } catch(e) { console.error('Cloud load error:', e); }
+        }
+      });
+      window.addEventListener('beforeunload', function() {
+        try {
+          var state = EJS_emulator.gameManager.getState();
+          if (state && state.byteLength > 0) {
+            var bytes = new Uint8Array(state);
+            var binary = '';
+            for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+            window.parent.postMessage({ type: 'save-data', gameId: 'clpokemonclover', data: btoa(binary) }, '*');
+          }
+        } catch(e) {}
+      });
+    </script>
