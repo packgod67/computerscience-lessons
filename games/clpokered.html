@@ -100,40 +100,57 @@
             }
 	</script>
 	<script>
-		// Cloud save
-		EJS_onGameStart = function() {
-			window.parent.postMessage({ type: 'emu-ready', gameId: 'clpokered' }, '*');
-			setInterval(function() {
+		// Cloud save (robust - polls for emulator)
+		(function() {
+			var GAME_ID = 'clpokered';
+			var saveStarted = false;
+
+			function saveToCloud() {
 				try {
 					var state = EJS_emulator.gameManager.getState();
 					if (state && state.byteLength > 0) {
 						var bytes = new Uint8Array(state);
 						var binary = '';
 						for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-						window.parent.postMessage({ type: 'save-data', gameId: 'clpokered', data: btoa(binary) }, '*');
+						window.parent.postMessage({ type: 'save-data', gameId: GAME_ID, data: btoa(binary) }, '*');
 					}
-				} catch(e) { console.error('Auto-save error:', e); }
-			}, 60000);
-		};
-		window.addEventListener('message', function(e) {
-			if (e.data && e.data.type === 'load-save' && e.data.data) {
-				try {
-					var binary = atob(e.data.data);
-					var bytes = new Uint8Array(binary.length);
-					for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-					EJS_emulator.gameManager.loadState(bytes.buffer);
-				} catch(e) { console.error('Cloud load error:', e); }
+				} catch(e) {}
 			}
-		});
-		window.addEventListener('beforeunload', function() {
-			try {
-				var state = EJS_emulator.gameManager.getState();
-				if (state && state.byteLength > 0) {
-					var bytes = new Uint8Array(state);
-					var binary = '';
-					for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-					window.parent.postMessage({ type: 'save-data', gameId: 'clpokered', data: btoa(binary) }, '*');
+
+			function startCloudSave() {
+				if (saveStarted) return;
+				saveStarted = true;
+				window.parent.postMessage({ type: 'emu-ready', gameId: GAME_ID }, '*');
+				setInterval(saveToCloud, 60000);
+			}
+
+			// Method 1: EJS_onGameStart (newer EmulatorJS)
+			EJS_onGameStart = function() { startCloudSave(); };
+
+			// Method 2: Poll for emulator (older EmulatorJS fallback)
+			var poll = setInterval(function() {
+				try {
+					if (typeof EJS_emulator !== 'undefined' && EJS_emulator.gameManager) {
+						clearInterval(poll);
+						startCloudSave();
+					}
+				} catch(e) {}
+			}, 2000);
+			setTimeout(function() { clearInterval(poll); }, 300000);
+
+			// Load save from parent
+			window.addEventListener('message', function(e) {
+				if (e.data && e.data.type === 'load-save' && e.data.data) {
+					try {
+						var binary = atob(e.data.data);
+						var bytes = new Uint8Array(binary.length);
+						for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+						EJS_emulator.gameManager.loadState(bytes.buffer);
+					} catch(e) {}
 				}
-			} catch(e) {}
-		});
+			});
+
+			// Save on tab close
+			window.addEventListener('beforeunload', function() { saveToCloud(); });
+		})();
 	</script>
