@@ -9,6 +9,15 @@ games/games_part*.json
 games/filelist_part*.txt
 .claude/
 
+# Secrets & credentials — never commit these
+.env
+.env.*
+*.key
+*.pem
+credentials*.json
+serviceAccount*.json
+secrets.*
+
 # Games over 100MB (GitHub file limit)
 games/clprecisionclient.html
 games/clgdwaveover100mb.html
