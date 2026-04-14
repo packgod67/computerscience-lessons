@@ -5,12 +5,11 @@
 
 
   <head>
-    <script src="coi-serviceworker.js"></script>
     <script>
       window.gameconfig = {
         name: "Pokemon emerald crest",
         url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@25248458262fd04ef487d404a78912423ce4dfd4/emerald%20crest/Pokemon%20-%20Emerald%20Version%20(USA%2C%20Europe)%20(patched).gba",
-        core: "mgba",
+        core: "gba",
         min: 1,
         max: 2,
       };
@@ -108,7 +107,6 @@
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
           EJS_cacheLimit = 0;
-          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
           const script = document.createElement("script");

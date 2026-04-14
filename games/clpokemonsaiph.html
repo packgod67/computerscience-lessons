@@ -7,7 +7,6 @@
 
 <html>
   <head>
-    <script src="coi-serviceworker.js"></script>
     <style>
       body,
       html {
@@ -47,12 +46,11 @@
           document.getElementById("loading-progress").remove();
           document.getElementById("first-time").remove();
           EJS_player = "#game";
-          EJS_core = "mgba";
+          EJS_core = "gba";
           EJS_gameName = "i-forgot";
           EJS_color = "#0064ff";
           EJS_startOnLoaded = true;
           EJS_cacheLimit = 0;
-          EJS_threads = true;
           EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = "https://cdn.jsdelivr.net/gh/samtheskeleton/roms@main/PK%20Saiph%20Full%20v2020%20Patch.zip";
           const script = document.createElement("script");

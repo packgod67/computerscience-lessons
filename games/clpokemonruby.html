@@ -7,7 +7,6 @@
 
 
 <head>
-    <script src="coi-serviceworker.js"></script>
 	<script src="//www.google.com/jsapi"></script>
 	<script>
 		window.parent.maeExportApis_();
@@ -81,19 +80,18 @@
                 document.getElementById("game").style.display = "block";
                 document.getElementById("startButton").style.display = "none";
                 EJS_player = "#game";
-                EJS_core = "mgba";
+                EJS_core = "gba";
                 EJS_color = "#000000";
                 EJS_startOnLoaded = true;
                 EJS_cacheLimit = 0;
-                EJS_threads = true;
-                EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
+                EJS_pathtodata = "https://cdn.jsdelivr.net/gh/a456pur/seraph@81f551ca0aa8e3d6018d32d8ac5904ac9bc78f76/storage/emulatorjs/data";
                 EJS_gameUrl = "https://cdn.jsdelivr.net/gh/Cattn/gba-host@40ba0f3c559c90b9c6c5f33529f8ea11063c026e/gba-alt/pokemonruby.gba";
                 loadGame();
             }
             document.getElementById("startButton").addEventListener("click", startGame);
             function loadGame() {
                 var script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
+                script.src = "https://cdn.jsdelivr.net/gh/a456pur/seraph@81f551ca0aa8e3d6018d32d8ac5904ac9bc78f76/storage/emulatorjs/data/loader.js";
                 document.body.appendChild(script);
             }
 	</script>
