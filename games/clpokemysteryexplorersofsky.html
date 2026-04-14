@@ -112,9 +112,48 @@ getParts("asd.js", 0, 100)
           EJS_startOnLoaded = true;
           EJS_threads = true;
           if (typeof EJS_VirtualGamepadEnabled === "undefined") EJS_VirtualGamepadEnabled = true;
-          EJS_cacheLimit = 0;
-      EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
+          EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
           EJS_gameUrl = gameUrl;
+
+          // Cloud save: notify parent when emulator is ready
+          EJS_onGameStart = function() {
+            window.parent.postMessage({ type: 'emu-ready', gameId: 'clpokemysteryexplorersofsky' }, '*');
+            // Auto-save to cloud every 60 seconds
+            setInterval(function() {
+              try {
+                var state = EJS_emulator.gameManager.getState();
+                if (state && state.byteLength > 0) {
+                  var bytes = new Uint8Array(state);
+                  var binary = '';
+                  for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+                  window.parent.postMessage({ type: 'save-data', gameId: 'clpokemysteryexplorersofsky', data: btoa(binary) }, '*');
+                }
+              } catch(e) { console.error('Auto-save error:', e); }
+            }, 60000);
+          };
+          // Cloud save: listen for save data from parent
+          window.addEventListener('message', function(e) {
+            if (e.data && e.data.type === 'load-save' && e.data.data) {
+              try {
+                var binary = atob(e.data.data);
+                var bytes = new Uint8Array(binary.length);
+                for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+                EJS_emulator.gameManager.loadState(bytes.buffer);
+              } catch(e) { console.error('Cloud load error:', e); }
+            }
+          });
+          // Save to cloud on page close
+          window.addEventListener('beforeunload', function() {
+            try {
+              var state = EJS_emulator.gameManager.getState();
+              if (state && state.byteLength > 0) {
+                var bytes = new Uint8Array(state);
+                var binary = '';
+                for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+                window.parent.postMessage({ type: 'save-data', gameId: 'clpokemysteryexplorersofsky', data: btoa(binary) }, '*');
+              }
+            } catch(e) {}
+          });
           const script = document.createElement("script");
           script.src =
             "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
@@ -125,45 +164,6 @@ getParts("asd.js", 0, 100)
           document.getElementById("loading-progress").textContent =
             "Error loading game.";
         });
-    </script>
-  
-    <script>
-      // Cloud save integration
-      EJS_onGameStart = function() {
-        window.parent.postMessage({ type: 'emu-ready', gameId: 'clpokemysteryexplorersofsky' }, '*');
-        setInterval(function() {
-          try {
-            var state = EJS_emulator.gameManager.getState();
-            if (state && state.byteLength > 0) {
-              var bytes = new Uint8Array(state);
-              var binary = '';
-              for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-              window.parent.postMessage({ type: 'save-data', gameId: 'clpokemysteryexplorersofsky', data: btoa(binary) }, '*');
-            }
-          } catch(e) { console.error('Auto-save error:', e); }
-        }, 60000);
-      };
-      window.addEventListener('message', function(e) {
-        if (e.data && e.data.type === 'load-save' && e.data.data) {
-          try {
-            var binary = atob(e.data.data);
-            var bytes = new Uint8Array(binary.length);
-            for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-            EJS_emulator.gameManager.loadState(bytes.buffer);
-          } catch(e) { console.error('Cloud load error:', e); }
-        }
-      });
-      window.addEventListener('beforeunload', function() {
-        try {
-          var state = EJS_emulator.gameManager.getState();
-          if (state && state.byteLength > 0) {
-            var bytes = new Uint8Array(state);
-            var binary = '';
-            for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-            window.parent.postMessage({ type: 'save-data', gameId: 'clpokemysteryexplorersofsky', data: btoa(binary) }, '*');
-          }
-        } catch(e) {}
-      });
     </script>
   </body>
 </html> 
