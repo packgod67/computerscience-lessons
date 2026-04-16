@@ -177,19 +177,26 @@
         if (e.data.type === 'emu-ready' && e.data.gameId) {
             // Game emulator is ready — send cloud save if user is logged in
             await ArcadeAuth.waitForAuth();
-            if (!ArcadeAuth.isLoggedIn()) return;
+            if (!ArcadeAuth.isLoggedIn()) {
+                showSaveStatus('Not logged in — cloud save disabled');
+                return;
+            }
             showSaveStatus('Loading cloud save...');
             const data = await ArcadeAuth.loadGameData(e.data.gameId);
             if (data) {
                 gameFrame.contentWindow.postMessage({ type: 'load-save', data: data }, '*');
                 showSaveStatus('Cloud save loaded!');
             } else {
-                showSaveStatus('No cloud save found');
+                showSaveStatus('No cloud save found — will create one');
             }
         }
 
         if (e.data.type === 'save-data' && e.data.gameId && e.data.data) {
-            if (!ArcadeAuth.isLoggedIn()) return;
+            await ArcadeAuth.waitForAuth();
+            if (!ArcadeAuth.isLoggedIn()) {
+                showSaveStatus('Not logged in — save skipped');
+                return;
+            }
             showSaveStatus('Saving to cloud...');
             const ok = await ArcadeAuth.saveGameData(e.data.gameId, e.data.data);
             showSaveStatus(ok ? 'Saved to cloud!' : 'Cloud save failed');
