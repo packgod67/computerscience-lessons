@@ -106,6 +106,8 @@
     const WALLPAPER_DIM_KEY = 'arcade-wallpaper-dim';
     const WALLPAPER_BLUR_KEY = 'arcade-wallpaper-blur';
     const WALLPAPER_FIT_KEY = 'arcade-wallpaper-fit';
+    const BORDER_COLOR_KEY = 'arcade-border-color';
+    const BORDER_WIDTH_KEY = 'arcade-border-width';
     const COMMUNITY_CACHE_KEY = 'arcade-community-theme-img';
     const DEFAULT_THEME = 'midnight';
     const FIT_MODES = ['cover', 'contain', 'fill', 'tile'];
@@ -128,6 +130,36 @@
         if (!FIT_MODES.includes(mode)) return;
         localStorage.setItem(WALLPAPER_FIT_KEY, mode);
         document.body.setAttribute('data-wallpaper-fit', mode);
+    }
+
+    // Border customization — overrides the theme's --border variable.
+    // Stored as a hex string like '#2a2a3a', or empty/missing to use theme default.
+    function getBorderColor() {
+        return localStorage.getItem(BORDER_COLOR_KEY) || '';
+    }
+    function getBorderWidth() {
+        const v = parseFloat(localStorage.getItem(BORDER_WIDTH_KEY));
+        return Number.isFinite(v) ? v : 1;
+    }
+    function applyBorderOverrides() {
+        const root = document.documentElement;
+        const color = getBorderColor();
+        if (color) {
+            root.style.setProperty('--border', color);
+        } else {
+            // Remove our override so theme default takes over
+            root.style.removeProperty('--border');
+        }
+        root.style.setProperty('--border-width', getBorderWidth() + 'px');
+    }
+    function setBorderColor(hex) {
+        if (hex) localStorage.setItem(BORDER_COLOR_KEY, hex);
+        else localStorage.removeItem(BORDER_COLOR_KEY);
+        applyBorderOverrides();
+    }
+    function setBorderWidth(px) {
+        localStorage.setItem(BORDER_WIDTH_KEY, String(px));
+        applyBorderOverrides();
     }
 
     function applyWallpaper(dataUrl) {
@@ -208,6 +240,9 @@
 
         document.documentElement.setAttribute('data-theme', themeId);
         localStorage.setItem(STORAGE_KEY, themeId);
+
+        // Re-apply user border overrides after theme-level --border was set
+        applyBorderOverrides();
     }
 
     async function loadCommunityImage(docId) {
@@ -342,8 +377,9 @@
         tabs.className = 'theme-tabs';
         const tabColors = makeTab('Colors', true);
         const tabWallpaper = makeTab('Wallpaper');
+        const tabBorders = makeTab('Borders');
         const tabCommunity = makeTab('Community');
-        tabs.append(tabColors, tabWallpaper, tabCommunity);
+        tabs.append(tabColors, tabWallpaper, tabBorders, tabCommunity);
         popup.appendChild(tabs);
 
         // Panels
@@ -352,21 +388,27 @@
         const panelWallpaper = document.createElement('div');
         panelWallpaper.className = 'theme-panel';
         panelWallpaper.style.display = 'none';
+        const panelBorders = document.createElement('div');
+        panelBorders.className = 'theme-panel';
+        panelBorders.style.display = 'none';
         const panelCommunity = document.createElement('div');
         panelCommunity.className = 'theme-panel';
         panelCommunity.style.display = 'none';
-        popup.append(panelColors, panelWallpaper, panelCommunity);
+        popup.append(panelColors, panelWallpaper, panelBorders, panelCommunity);
 
         tabColors.addEventListener('click', () => switchTab(0));
         tabWallpaper.addEventListener('click', () => switchTab(1));
+        tabBorders.addEventListener('click', () => switchTab(2));
         tabCommunity.addEventListener('click', () => {
-            switchTab(2);
+            switchTab(3);
             refreshCommunitySection(popup);
         });
 
         function switchTab(idx) {
-            [tabColors, tabWallpaper, tabCommunity].forEach((t, i) => t.classList.toggle('active', i === idx));
-            [panelColors, panelWallpaper, panelCommunity].forEach((p, i) => p.style.display = i === idx ? '' : 'none');
+            const tabsArr = [tabColors, tabWallpaper, tabBorders, tabCommunity];
+            const panelsArr = [panelColors, panelWallpaper, panelBorders, panelCommunity];
+            tabsArr.forEach((t, i) => t.classList.toggle('active', i === idx));
+            panelsArr.forEach((p, i) => p.style.display = i === idx ? '' : 'none');
         }
 
         // ----- Colors panel -----
@@ -500,6 +542,96 @@
             updateWallpaperEffects();
         }));
         panelWallpaper.appendChild(sliderGroup);
+
+        // ----- Borders panel -----
+        const bordersHint = document.createElement('div');
+        bordersHint.className = 'theme-hint';
+        bordersHint.textContent = 'Pick a border color that stays visible across your wallpaper and themes. Applies everywhere the theme normally uses borders.';
+        panelBorders.appendChild(bordersHint);
+
+        // Palette of useful presets — covers the "stays visible on anything" use case
+        const borderPresets = [
+            { label: 'Theme default', value: '' },
+            { label: 'Soft dark', value: '#1f1f28' },
+            { label: 'Charcoal', value: '#3a3a46' },
+            { label: 'Cloud', value: '#6b7280' },
+            { label: 'Bright white', value: '#f4f4f7' },
+            { label: 'Neon cyan', value: '#06b6d4' },
+            { label: 'Neon magenta', value: '#ec4899' },
+            { label: 'Amber', value: '#f59e0b' },
+            { label: 'Lime', value: '#a3e635' },
+            { label: 'Crimson', value: '#ef4444' },
+            { label: 'Royal', value: '#7c3aed' },
+            { label: 'Sky', value: '#38bdf8' },
+        ];
+
+        const presetGrid = document.createElement('div');
+        presetGrid.className = 'theme-border-presets';
+        borderPresets.forEach(p => {
+            const item = document.createElement('button');
+            item.className = 'theme-border-preset';
+            item.title = p.label;
+            item.dataset.value = p.value;
+            if (getBorderColor() === p.value) item.classList.add('active');
+
+            const sw = document.createElement('span');
+            sw.className = 'theme-border-swatch';
+            if (p.value) {
+                sw.style.background = p.value;
+            } else {
+                sw.classList.add('theme-border-swatch-default');
+            }
+            const lbl = document.createElement('span');
+            lbl.className = 'theme-border-preset-label';
+            lbl.textContent = p.label;
+            item.append(sw, lbl);
+
+            item.addEventListener('click', (e) => {
+                e.stopPropagation();
+                setBorderColor(p.value);
+                customPicker.value = p.value || THEMES[getCurrentTheme()]?.vars?.['--border'] || '#2a2a3a';
+                presetGrid.querySelectorAll('.theme-border-preset').forEach(b => b.classList.remove('active'));
+                item.classList.add('active');
+            });
+            presetGrid.appendChild(item);
+        });
+        panelBorders.appendChild(presetGrid);
+
+        // Custom color picker row
+        const customRow = document.createElement('div');
+        customRow.className = 'theme-border-custom-row';
+        const customLbl = document.createElement('span');
+        customLbl.className = 'theme-border-custom-label';
+        customLbl.textContent = 'Custom';
+        const customPicker = document.createElement('input');
+        customPicker.type = 'color';
+        customPicker.className = 'theme-border-color-input';
+        customPicker.value = getBorderColor() || THEMES[getCurrentTheme()]?.vars?.['--border'] || '#2a2a3a';
+        customPicker.addEventListener('input', (e) => {
+            setBorderColor(e.target.value);
+            presetGrid.querySelectorAll('.theme-border-preset').forEach(b => b.classList.remove('active'));
+        });
+        const resetBtn = document.createElement('button');
+        resetBtn.className = 'theme-picker-action-btn';
+        resetBtn.textContent = 'Reset';
+        resetBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            setBorderColor('');
+            customPicker.value = THEMES[getCurrentTheme()]?.vars?.['--border'] || '#2a2a3a';
+            presetGrid.querySelectorAll('.theme-border-preset').forEach(b => {
+                b.classList.toggle('active', b.dataset.value === '');
+            });
+        });
+        customRow.append(customLbl, customPicker, resetBtn);
+        panelBorders.appendChild(customRow);
+
+        // Width slider
+        const widthGroup = document.createElement('div');
+        widthGroup.className = 'theme-sliders';
+        widthGroup.appendChild(makeSlider('Width', 0, 4, 0.5, getBorderWidth(), (v) => {
+            setBorderWidth(v);
+        }));
+        panelBorders.appendChild(widthGroup);
 
         // ----- Community panel -----
         const searchWrap = document.createElement('div');
@@ -679,6 +811,8 @@
         document.body && document.body.setAttribute('data-wallpaper-fit', getWallpaperFit());
     }
     applyTheme(getCurrentTheme());
+    // applyTheme already calls applyBorderOverrides, but call again defensively in case
+    applyBorderOverrides();
 
     // Insert picker into the page
     document.addEventListener('DOMContentLoaded', () => {
@@ -696,5 +830,7 @@
         publishTheme, loadCommunityThemes,
         getWallpaperDim, getWallpaperBlur,
         getWallpaperFit, setWallpaperFit,
+        getBorderColor, setBorderColor,
+        getBorderWidth, setBorderWidth,
     };
 })();

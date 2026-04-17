@@ -29,6 +29,9 @@
     --accent-cyan-glow: var(--accent-secondary-glow);
     --radius: 12px;
     --radius-sm: 8px;
+    /* User-customizable border width. Individual elements that care about width
+       can opt in via var(--border-width) or keep their hard-coded 1px. */
+    --border-width: 1px;
 }
 
 body {
@@ -1914,15 +1917,16 @@ body.auth-gated .player-container {
 
 .theme-tab {
     flex: 1;
-    padding: 6px 4px;
+    padding: 6px 2px;
     background: none;
     border: none;
     border-radius: calc(var(--radius-sm) - 2px);
     color: var(--text-secondary);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.15s;
+    white-space: nowrap;
 }
 
 .theme-tab:hover {
@@ -2057,6 +2061,97 @@ body.auth-gated .player-container {
     font-variant-numeric: tabular-nums;
 }
 
+/* ----- Border presets ----- */
+.theme-border-presets {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+}
+
+.theme-border-preset {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 5px 8px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.15s;
+}
+
+.theme-border-preset:hover {
+    color: var(--text-primary);
+    background: var(--bg-card);
+}
+
+.theme-border-preset.active {
+    border-color: var(--accent);
+    color: var(--text-primary);
+}
+
+.theme-border-swatch {
+    width: 14px;
+    height: 14px;
+    border-radius: 3px;
+    flex-shrink: 0;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.theme-border-swatch-default {
+    background: repeating-linear-gradient(
+        45deg,
+        #888, #888 2px,
+        #444 2px, #444 4px
+    );
+}
+
+.theme-border-preset-label {
+    font-size: 0.72rem;
+    font-weight: 500;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.theme-border-custom-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    margin-top: 4px;
+}
+
+.theme-border-custom-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+    flex-shrink: 0;
+}
+
+.theme-border-color-input {
+    flex: 1;
+    height: 32px;
+    padding: 0;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+}
+
+.theme-border-color-input::-webkit-color-swatch-wrapper {
+    padding: 3px;
+}
+
+.theme-border-color-input::-webkit-color-swatch {
+    border: none;
+    border-radius: 4px;
+}
+
 /* ----- Search box ----- */
 .theme-search-wrap {
     margin-bottom: 4px;
@@ -2185,64 +2280,35 @@ body.has-wallpaper .login-gate {
     -webkit-backdrop-filter: blur(14px);
 }
 
-/* ===== Adaptive-contrast borders in wallpaper mode =====
-   Solid theme borders often disappear on varied wallpaper colors. The trick:
-   stack a thin light ring INSIDE the border + a dark drop-shadow OUTSIDE.
-   At least one of the two always contrasts with whatever's behind it, no
-   matter what color the wallpaper image has at that pixel.
-
-   The inner ring sits on the card's own dark background so it reads light.
-   The outer ring sits on the wallpaper so it reads dark. Both always visible. */
-
-body.has-wallpaper .game-card,
-body.has-wallpaper .cat-btn,
-body.has-wallpaper .tab-btn,
-body.has-wallpaper .chat-container,
-body.has-wallpaper .chat-input,
-body.has-wallpaper .chat-send-btn,
-body.has-wallpaper .search-input,
-body.has-wallpaper .theme-picker-btn,
-body.has-wallpaper .theme-picker-popup,
-body.has-wallpaper .auth-btn,
-body.has-wallpaper .login-gate-box,
-body.has-wallpaper .login-form input,
-body.has-wallpaper .login-form button,
-body.has-wallpaper .retry-btn,
-body.has-wallpaper .user-card,
-body.has-wallpaper .gallery-card,
-body.has-wallpaper .game-info-panel {
-    border-color: rgba(0, 0, 0, 0.65);
-    box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.10),
-        0 0 0 1px rgba(0, 0, 0, 0.55),
-        0 3px 12px rgba(0, 0, 0, 0.35);
-}
-
-/* Hover amps the inner highlight so feedback stays visible */
-body.has-wallpaper .game-card:hover,
-body.has-wallpaper .cat-btn:hover,
-body.has-wallpaper .tab-btn:hover {
-    box-shadow:
-        inset 0 0 0 1px rgba(255, 255, 255, 0.25),
-        0 0 0 1px rgba(0, 0, 0, 0.55),
-        0 4px 20px rgba(0, 0, 0, 0.45);
-}
-
-/* Active/accent states keep their accent color but gain the dark halo */
-body.has-wallpaper .cat-btn.active,
-body.has-wallpaper .tab-btn.active,
-body.has-wallpaper .game-card.is-active {
-    box-shadow:
-        inset 0 0 0 1px var(--accent),
-        0 0 0 1px rgba(0, 0, 0, 0.6),
-        0 4px 16px var(--accent-glow);
-}
-
 /* Inputs need legible text background over wallpaper */
 body.has-wallpaper input,
 body.has-wallpaper textarea,
 body.has-wallpaper select {
     background-color: rgba(10, 10, 15, 0.75);
+}
+
+/* ===== User-customizable border width =====
+   Overrides the hard-coded 1px borders on the most prominent elements so the
+   Width slider in the Borders tab takes effect. */
+.game-card,
+.cat-btn,
+.tab-btn,
+.chat-container,
+.theme-picker-btn,
+.theme-picker-popup,
+.theme-picker-item,
+.theme-fit-btn,
+.theme-border-preset,
+.auth-btn,
+.retry-btn,
+.user-card,
+.gallery-card,
+.game-info-panel,
+.search-input,
+.chat-input,
+.login-gate-box,
+.login-form input {
+    border-width: var(--border-width);
 }
 
 /* ===== Smooth theme transitions =====
