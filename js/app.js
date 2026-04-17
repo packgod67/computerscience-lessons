@@ -29,16 +29,31 @@
             gameGrid.innerHTML = '';
             applyFilters();
             renderPage();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
         }, 250));
 
-        // Infinite scroll
-        window.addEventListener('scroll', () => {
-            if (loading) return;
-            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 800) {
-                currentPage++;
-                renderPage();
+        // Infinite scroll — use IntersectionObserver on a sentinel instead of a
+        // scroll listener. Much cheaper on mobile because it only fires when
+        // the sentinel crosses the viewport, not on every scroll tick.
+        let sentinel = document.getElementById('gridSentinel');
+        if (!sentinel) {
+            sentinel = document.createElement('div');
+            sentinel.id = 'gridSentinel';
+            sentinel.style.cssText = 'height:1px;width:100%;';
+            gameGrid.after(sentinel);
+        }
+        const io = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting && !loading) {
+                    const start = (currentPage + 1) * PAGE_SIZE;
+                    if (start < filtered.length) {
+                        currentPage++;
+                        renderPage();
+                    }
+                }
             }
-        });
+        }, { rootMargin: '800px 0px' });
+        io.observe(sentinel);
 
         // Star button click delegation
         gameGrid.addEventListener('click', (e) => {
@@ -85,15 +100,11 @@
             gameGrid.innerHTML = '';
             applyFilters();
             renderPage();
+            window.scrollTo({ top: 0, behavior: 'auto' });
         });
 
-        // Active users listener
-        const activeUsersText = document.getElementById('activeUsersText');
-        if (activeUsersText) {
-            ArcadeAuth.listenActiveUsers((count) => {
-                activeUsersText.textContent = `${count} active user${count !== 1 ? 's' : ''}`;
-            });
-        }
+        // Active users bar — expandable, shows currently-playing status per user
+        setupActiveUsersBar();
 
         // When favorites change, update all visible star buttons
         ArcadeAuth.onFavoritesChange((favs) => {
@@ -124,6 +135,7 @@
             gameGrid.innerHTML = '';
             applyFilters();
             renderPage();
+            window.scrollTo({ top: 0, behavior: 'auto' });
         });
         categoriesContainer.appendChild(favBtnEl);
 
@@ -139,6 +151,7 @@
             gameGrid.innerHTML = '';
             applyFilters();
             renderPage();
+            window.scrollTo({ top: 0, behavior: 'auto' });
         });
         categoriesContainer.appendChild(popBtn);
 
@@ -166,6 +179,7 @@
             gameGrid.innerHTML = '';
             applyFilters();
             renderPage();
+            window.scrollTo({ top: 0, behavior: 'auto' });
         });
     }
 
@@ -285,6 +299,97 @@
             html += `<a class="part-link${active}" href="${esc(p.url)}">Part ${p.part}</a>`;
         }
         nav.innerHTML = html;
+    }
+
+    // Games index by id — populated on first call of getGameById().
+    // Used to look up titles for the "playing X" label in the active users bar.
+    let gamesById = null;
+    function getGameById(id) {
+        if (!gamesById) {
+            gamesById = {};
+            games.forEach(g => { gamesById[g.id] = g; });
+        }
+        return gamesById[id];
+    }
+
+    function setupActiveUsersBar() {
+        const bar = document.getElementById('activeUsersBar');
+        const textEl = document.getElementById('activeUsersText');
+        if (!bar || !textEl) return;
+
+        // Insert expand caret + detail panel
+        let caret = bar.querySelector('.active-users-caret');
+        if (!caret) {
+            caret = document.createElement('span');
+            caret.className = 'active-users-caret';
+            caret.innerHTML = '&#9662;'; // ▾
+            bar.appendChild(caret);
+        }
+        bar.classList.add('active-users-bar-interactive');
+
+        let panel = document.getElementById('activeUsersPanel');
+        if (!panel) {
+            panel = document.createElement('div');
+            panel.id = 'activeUsersPanel';
+            panel.className = 'active-users-panel';
+            panel.style.display = 'none';
+            bar.insertAdjacentElement('afterend', panel);
+        }
+
+        let latestUsers = [];
+        let expanded = false;
+
+        function renderPanel() {
+            if (!latestUsers.length) {
+                panel.innerHTML = '<div class="active-users-empty">Nobody else is online right now.</div>';
+                return;
+            }
+            const self = ArcadeAuth.getUser()?.uid;
+            // Users with a currentGame first, then the rest
+            const sorted = latestUsers.slice().sort((a, b) => {
+                if (!!b.currentGame - !!a.currentGame) return !!b.currentGame - !!a.currentGame;
+                return (a.username || '').localeCompare(b.username || '');
+            });
+            let html = '';
+            for (const u of sorted) {
+                const isSelf = u.uid === self;
+                const game = u.currentGame ? getGameById(u.currentGame) : null;
+                const status = game
+                    ? `<span class="active-users-playing">Playing <a class="active-users-game" href="play.html?game=${encodeURIComponent(u.currentGame)}">${esc(game.title)}</a></span>`
+                    : '<span class="active-users-idle">Browsing</span>';
+                html += `<div class="active-users-row${isSelf ? ' is-self' : ''}">
+                    <span class="active-users-dot active-users-dot-small"></span>
+                    <span class="active-users-name" data-open-profile-uid="${esc(u.uid)}" role="button" tabindex="0">${esc(u.username || 'unknown')}${isSelf ? ' <span class="active-users-you">(you)</span>' : ''}</span>
+                    ${status}
+                </div>`;
+            }
+            panel.innerHTML = html;
+        }
+
+        bar.addEventListener('click', () => {
+            expanded = !expanded;
+            panel.style.display = expanded ? 'block' : 'none';
+            caret.classList.toggle('expanded', expanded);
+            if (expanded) renderPanel();
+        });
+
+        if (ArcadeAuth.listenActiveUsersDetailed) {
+            ArcadeAuth.listenActiveUsersDetailed((users) => {
+                latestUsers = users;
+                textEl.textContent = `${users.length} active user${users.length !== 1 ? 's' : ''}`;
+                // Count of users currently playing something
+                const playing = users.filter(u => u.currentGame).length;
+                if (playing > 0) {
+                    textEl.textContent += ` · ${playing} playing`;
+                }
+                if (expanded) renderPanel();
+            });
+        } else if (ArcadeAuth.listenActiveUsers) {
+            // Fallback for older code paths
+            ArcadeAuth.listenActiveUsers((count) => {
+                textEl.textContent = `${count} active user${count !== 1 ? 's' : ''}`;
+            });
+        }
     }
 
     buildPartNav();

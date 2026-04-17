@@ -22,10 +22,19 @@
         // Record the play in the user's profile (fire-and-forget)
         if (gameId) {
             ArcadeAuth.waitForAuth().then(() => {
-                if (ArcadeAuth.isLoggedIn() && ArcadeAuth.trackPlay) {
-                    ArcadeAuth.trackPlay(gameId);
+                if (ArcadeAuth.isLoggedIn()) {
+                    if (ArcadeAuth.trackPlay) ArcadeAuth.trackPlay(gameId);
+                    // Broadcast what we're playing to the presence listeners.
+                    // Cleared automatically when the user leaves the page.
+                    if (ArcadeAuth.setCurrentGame) ArcadeAuth.setCurrentGame(gameId);
                 }
             });
+
+            const clearPresenceGame = () => {
+                if (ArcadeAuth.setCurrentGame) ArcadeAuth.setCurrentGame(null);
+            };
+            window.addEventListener('pagehide', clearPresenceGame);
+            window.addEventListener('beforeunload', clearPresenceGame);
         }
 
         if (!gameId) {

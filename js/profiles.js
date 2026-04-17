@@ -20,18 +20,36 @@
             if (e.target === overlay) closeModal();
         });
 
-        // Load profile + games index + roles in parallel
-        const [profile, _games, _roles] = await Promise.all([
+        // Load profile + games index + roles + presence (currently playing) in parallel
+        const [profile, _games, _roles, presence] = await Promise.all([
             ArcadeAuth.getProfile(uid),
             ensureGamesIndex(),
             ensureRolesMap(),
+            fetchPresence(uid),
         ]);
 
         if (!profile) {
             overlay.innerHTML = '<div class="profile-modal-loading">User not found</div>';
             return;
         }
+        profile.currentGame = presence && presence.currentGame;
         renderProfile(overlay, profile);
+    }
+
+    async function fetchPresence(uid) {
+        try {
+            const db = ArcadeAuth.getDb();
+            if (!db) return null;
+            const doc = await db.collection('presence').doc(uid).get();
+            if (!doc.exists) return null;
+            const data = doc.data();
+            // Only count as "playing" if seen in last 2 minutes
+            const ts = data.lastSeen && data.lastSeen.toMillis ? data.lastSeen.toMillis() : 0;
+            if (Date.now() - ts > 2 * 60 * 1000) return null;
+            return data;
+        } catch (e) {
+            return null;
+        }
     }
 
     async function ensureGamesIndex() {
@@ -121,28 +139,35 @@
 
         const nameStyle = nameColor ? `style="color:${escape(nameColor)}"` : '';
 
+        const badgesHTML = (adminBadge || customBadges)
+            ? `<span class="profile-badges">${adminBadge}${customBadges}</span>`
+            : '';
+
         overlay.innerHTML = `
             <div class="profile-modal" ${accentStyle}>
                 <button class="modal-close profile-close" id="closeProfileModal">&times;</button>
                 <div class="profile-header" ${wallpaperStyle}>
                     <div class="profile-header-overlay"></div>
                 </div>
-                <div class="profile-body">
-                    <div class="profile-identity">
-                        <div class="profile-avatar">${avatarHTML}</div>
-                        <div class="profile-identity-text">
-                            <div class="profile-name" ${nameStyle}>${escape(profile.username || 'unknown')}</div>
-                            <div class="profile-badges">${adminBadge}${customBadges}</div>
-                            <div class="profile-meta">
-                                <span>Joined ${formatJoinDate(profile.joinedAt)}</span>
-                                <span>·</span>
-                                <span>${favs.length} favorite${favs.length === 1 ? '' : 's'}</span>
-                                <span>·</span>
-                                <span>${recent.length} played</span>
-                            </div>
-                        </div>
-                        ${isSelf ? '<button class="profile-edit-btn" id="editProfileBtn">Edit profile</button>' : ''}
+                <div class="profile-identity">
+                    <div class="profile-avatar">${avatarHTML}</div>
+                    <div class="profile-name" ${nameStyle}><span>${escape(profile.username || 'unknown')}</span>${badgesHTML}</div>
+                    <div class="profile-meta">
+                        <span>Joined ${formatJoinDate(profile.joinedAt)}</span>
+                        <span>·</span>
+                        <span>${favs.length} favorite${favs.length === 1 ? '' : 's'}</span>
+                        <span>·</span>
+                        <span>${recent.length} played</span>
                     </div>
+                    ${isSelf ? '<button class="profile-edit-btn" id="editProfileBtn">Edit profile</button>' : ''}
+                </div>
+                <div class="profile-body">
+                    ${profile.currentGame && gamesIndex[profile.currentGame] ? `
+                    <div class="profile-playing-now">
+                        <span class="profile-playing-dot"></span>
+                        Currently playing
+                        <a class="profile-playing-link" href="play.html?game=${encodeURIComponent(profile.currentGame)}">${escape(gamesIndex[profile.currentGame].title)}</a>
+                    </div>` : ''}
 
                     ${profile.bio ? `<div class="profile-section">
                         <h3 class="profile-section-title">About</h3>

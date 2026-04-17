@@ -492,6 +492,7 @@
 
     // ===== Active Users Presence =====
     let presenceInterval = null;
+    let currentGameId = null; // which game this tab is playing, if any
 
     function startPresence() {
         if (presenceInterval) return;
@@ -512,22 +513,50 @@
     async function sendHeartbeat() {
         if (!currentUser) return;
         try {
-            await db.collection('presence').doc(currentUser.uid).set({
+            const payload = {
                 username: toUsername(currentUser),
                 lastSeen: firebase.firestore.FieldValue.serverTimestamp()
-            });
+            };
+            if (currentGameId) payload.currentGame = currentGameId;
+            else payload.currentGame = firebase.firestore.FieldValue.delete();
+            await db.collection('presence').doc(currentUser.uid).set(payload, { merge: true });
         } catch {}
     }
 
+    // Set the game this tab is currently playing, e.g. from player.js
+    function setCurrentGame(gameId) {
+        currentGameId = gameId || null;
+        if (currentUser) sendHeartbeat();
+    }
+
     function listenActiveUsers(callback) {
-        // Listen for presence docs updated in last 2 minutes
+        // Legacy count-only listener (kept for backwards compat).
+        // listenActiveUsersDetailed is the preferred API.
+        return listenActiveUsersDetailed((users) => callback(users.length));
+    }
+
+    // Detailed listener — returns full user list including currentGame.
+    // Cleans out stale entries (>2min) client-side in case the where()
+    // filter misses server clock skew edges.
+    function listenActiveUsersDetailed(callback) {
         const twoMinAgo = new Date(Date.now() - 2 * 60 * 1000);
         return db.collection('presence')
             .where('lastSeen', '>', twoMinAgo)
             .onSnapshot((snap) => {
-                callback(snap.size);
+                const cutoff = Date.now() - 2 * 60 * 1000;
+                const users = snap.docs.map(doc => {
+                    const d = doc.data();
+                    const ts = d.lastSeen && d.lastSeen.toMillis ? d.lastSeen.toMillis() : 0;
+                    return {
+                        uid: doc.id,
+                        username: d.username || '',
+                        currentGame: d.currentGame || null,
+                        lastSeen: ts,
+                    };
+                }).filter(u => u.lastSeen >= cutoff);
+                callback(users);
             }, () => {
-                callback(0);
+                callback([]);
             });
     }
 
@@ -665,6 +694,7 @@
         getDb: () => db,
         banUser, approveUser, getPendingUsers, showApprovalPanel,
         saveGameData, loadGameData,
-        getProfile, updateProfile, trackPlay, ensureJoinedAt
+        getProfile, updateProfile, trackPlay, ensureJoinedAt,
+        setCurrentGame, listenActiveUsersDetailed
     };
 })();

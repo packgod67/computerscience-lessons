@@ -1588,14 +1588,16 @@
     "title": "Clbitlife",
     "category": "Other",
     "path": "games/clbitlife.html",
-    "thumbnail": "assets/thumbnails/clbitlife.jpg"
+    "thumbnail": "assets/thumbnails/clbitlife.jpg",
+    "popular": true
   },
   {
     "id": "clbitlifeencrypted",
     "title": "Clbitlifeencrypted",
     "category": "Other",
     "path": "games/clbitlifeencrypted.html",
-    "thumbnail": "assets/thumbnails/clbitlifeencrypted.jpg"
+    "thumbnail": "assets/thumbnails/clbitlifeencrypted.jpg",
+    "popular": true
   },
   {
     "id": "clbitplanes",
@@ -2723,7 +2725,8 @@
     "id": "clclusterrush",
     "title": "Clclusterrush",
     "category": "Other",
-    "path": "games/clclusterrush.html"
+    "path": "games/clclusterrush.html",
+    "popular": true
   },
   {
     "id": "clcoalllcdemo",
@@ -2909,14 +2912,16 @@
     "title": "Clcookieclickergood",
     "category": "Simulation",
     "path": "games/clcookieclickergood.html",
-    "thumbnail": "assets/thumbnails/clcookieclickergood.jpg"
+    "thumbnail": "assets/thumbnails/clcookieclickergood.jpg",
+    "popular": true
   },
   {
     "id": "clcookieclickermodmenu",
     "title": "Clcookieclickermodmenu",
     "category": "Simulation",
     "path": "games/clcookieclickermodmenu.html",
-    "thumbnail": "assets/thumbnails/clcookieclickermodmenu.jpg"
+    "thumbnail": "assets/thumbnails/clcookieclickermodmenu.jpg",
+    "popular": true
   },
   {
     "id": "clcookingmama",
@@ -4390,7 +4395,8 @@
     "id": "clextremerun3d",
     "title": "Clextremerun 3 D",
     "category": "Platformer",
-    "path": "games/clextremerun3d.html"
+    "path": "games/clextremerun3d.html",
+    "popular": true
   },
   {
     "id": "clfactoryballs",
@@ -4699,13 +4705,15 @@
     "id": "clfireboyandwatergirl5",
     "title": "Clfireboyandwatergirl 5",
     "category": "Other",
-    "path": "games/clfireboyandwatergirl5.html"
+    "path": "games/clfireboyandwatergirl5.html",
+    "popular": true
   },
   {
     "id": "clfireboyandwatergirl6",
     "title": "Clfireboyandwatergirl 6",
     "category": "Other",
-    "path": "games/clfireboyandwatergirl6.html"
+    "path": "games/clfireboyandwatergirl6.html",
+    "popular": true
   },
   {
     "id": "clfireemblem",
@@ -4856,7 +4864,8 @@
     "id": "clfnftwiddlefinger",
     "title": "Clfnf TWIDDLEFINGER",
     "category": "Other",
-    "path": "games/clfnfTWIDDLEFINGER.html"
+    "path": "games/clfnfTWIDDLEFINGER.html",
+    "popular": true
   },
   {
     "id": "clfnfaethos",
@@ -5799,7 +5808,8 @@
     "id": "clgoodmonkeymart",
     "title": "Clgoodmonkeymart",
     "category": "Other",
-    "path": "games/clgoodmonkeymart.html"
+    "path": "games/clgoodmonkeymart.html",
+    "popular": true
   },
   {
     "id": "clgooglebaseball",
@@ -8325,13 +8335,15 @@
     "id": "clmonkeymart",
     "title": "Clmonkeymart",
     "category": "Other",
-    "path": "games/clmonkeymart.html"
+    "path": "games/clmonkeymart.html",
+    "popular": true
   },
   {
     "id": "clmonkeymartenc",
     "title": "Clmonkeymartenc",
     "category": "Other",
-    "path": "games/clmonkeymartenc.html"
+    "path": "games/clmonkeymartenc.html",
+    "popular": true
   },
   {
     "id": "clmonsterderby",
@@ -8474,7 +8486,8 @@
     "id": "clmotox3mwinter",
     "title": "Clmotox 3 Mwinter",
     "category": "Racing",
-    "path": "games/clmotox3mwinter.html"
+    "path": "games/clmotox3mwinter.html",
+    "popular": true
   },
   {
     "id": "clmountainbikeracer",
@@ -9159,67 +9172,78 @@
     "id": "clpapasburgeriiiaaaaa",
     "title": "Clpapasburger IIIAAAAA",
     "category": "Other",
-    "path": "games/clpapasburgerIIIAAAAA.html"
+    "path": "games/clpapasburgerIIIAAAAA.html",
+    "popular": true
   },
   {
     "id": "clpapascheeseria",
     "title": "Clpapascheeseria",
     "category": "Other",
-    "path": "games/clpapascheeseria.html"
+    "path": "games/clpapascheeseria.html",
+    "popular": true
   },
   {
     "id": "clpapascupcakeria",
     "title": "Clpapascupcakeria",
     "category": "Other",
-    "path": "games/clpapascupcakeria.html"
+    "path": "games/clpapascupcakeria.html",
+    "popular": true
   },
   {
     "id": "clpapasfreezeria",
     "title": "Clpapasfreezeria",
     "category": "Other",
-    "path": "games/clpapasfreezeria.html"
+    "path": "games/clpapasfreezeria.html",
+    "popular": true
   },
   {
     "id": "clpapashotdoggeria",
     "title": "Clpapashotdoggeria",
     "category": "Strategy",
-    "path": "games/clpapashotdoggeria.html"
+    "path": "games/clpapashotdoggeria.html",
+    "popular": true
   },
   {
     "id": "clpapaspancakeria",
     "title": "Clpapaspancakeria",
     "category": "Other",
-    "path": "games/clpapaspancakeria.html"
+    "path": "games/clpapaspancakeria.html",
+    "popular": true
   },
   {
     "id": "clpapaspastaria",
     "title": "Clpapaspastaria",
     "category": "Other",
-    "path": "games/clpapaspastaria.html"
+    "path": "games/clpapaspastaria.html",
+    "popular": true
   },
   {
     "id": "clpapasscooperia",
     "title": "Clpapasscooperia",
     "category": "Other",
-    "path": "games/clpapasscooperia.html"
+    "path": "games/clpapasscooperia.html",
+    "popular": true
   },
   {
     "id": "clpapassushiria",
     "title": "Clpapassushiria",
     "category": "Other",
-    "path": "games/clpapassushiria.html"
+    "path": "games/clpapassushiria.html",
+    "popular": true
   },
   {
     "id": "clpapastacomia",
     "title": "Clpapastacomia",
     "category": "Other",
-    "path": "games/clpapastacomia.html"
+    "path": "games/clpapastacomia.html",
+    "popular": true
   },
   {
     "id": "clpapaswingeria",
     "title": "Clpapaswingeria",
     "category": "Other",
-    "path": "games/clpapaswingeria.html"
+    "path": "games/clpapaswingeria.html",
+    "popular": true
   },
   {
     "id": "clpaperio",
@@ -11490,13 +11514,15 @@
     "id": "clrooftopsnipers",
     "title": "Clrooftopsnipers",
     "category": "Other",
-    "path": "games/clrooftopsnipers.html"
+    "path": "games/clrooftopsnipers.html",
+    "popular": true
   },
   {
     "id": "clrooftopsnipers2",
     "title": "Clrooftopsnipers 2",
     "category": "Other",
-    "path": "games/clrooftopsnipers2.html"
+    "path": "games/clrooftopsnipers2.html",
+    "popular": true
   },
   {
     "id": "clroomclicker",
@@ -11556,7 +11582,8 @@
     "id": "clrun3",
     "title": "Clrun 3",
     "category": "Platformer",
-    "path": "games/clrun3.html"
+    "path": "games/clrun3.html",
+    "popular": true
   },
   {
     "id": "clrunningfred",
@@ -12240,7 +12267,8 @@
     "id": "clsmashkartsworking",
     "title": "Clsmashkartsworking",
     "category": "Racing",
-    "path": "games/clsmashkartsworking.html"
+    "path": "games/clsmashkartsworking.html",
+    "popular": true
   },
   {
     "id": "clsmashremix",
@@ -12397,19 +12425,22 @@
     "id": "clsnowrider",
     "title": "Clsnowrider",
     "category": "Other",
-    "path": "games/clsnowrider.html"
+    "path": "games/clsnowrider.html",
+    "popular": true
   },
   {
     "id": "clsnowridergoodygumdrops",
     "title": "Clsnowridergoodygumdrops",
     "category": "Other",
-    "path": "games/clsnowridergoodygumdrops.html"
+    "path": "games/clsnowridergoodygumdrops.html",
+    "popular": true
   },
   {
     "id": "clsnowriderrrr",
     "title": "Clsnowriderrrr",
     "category": "Other",
-    "path": "games/clsnowriderrrr.html"
+    "path": "games/clsnowriderrrr.html",
+    "popular": true
   },
   {
     "id": "clsnowroad",
@@ -13084,7 +13115,8 @@
     "id": "clstickmanhook",
     "title": "Clstickmanhook",
     "category": "Other",
-    "path": "games/clstickmanhook.html"
+    "path": "games/clstickmanhook.html",
+    "popular": true
   },
   {
     "id": "clstickmankombat2d",
@@ -14655,7 +14687,8 @@
     "id": "cltunnelrushbetter",
     "title": "Cltunnelrushbetter",
     "category": "Other",
-    "path": "games/cltunnelrushbetter.html"
+    "path": "games/cltunnelrushbetter.html",
+    "popular": true
   },
   {
     "id": "clturbostars",
@@ -14871,7 +14904,8 @@
     "id": "clusterrush",
     "title": "Clusterrush",
     "category": "Other",
-    "path": "games/clusterrush.html"
+    "path": "games/clusterrush.html",
+    "popular": true
   },
   {
     "id": "clvampiresurvivors",
@@ -15531,67 +15565,78 @@
     "id": "cleaglercraft-alpha-126-offline",
     "title": "Eaglercraft Alpha 126 Offline",
     "category": "Minecraft",
-    "path": "games/clEaglercraft-Alpha-126-Offline.html"
+    "path": "games/clEaglercraft-Alpha-126-Offline.html",
+    "popular": true
   },
   {
     "id": "cleaglercraft-beta-1-3-offline",
     "title": "Eaglercraft Beta 1.3 Offline",
     "category": "Minecraft",
-    "path": "games/clEaglercraft-Beta-1.3-Offline.html"
+    "path": "games/clEaglercraft-Beta-1.3-Offline.html",
+    "popular": true
   },
   {
     "id": "cleaglercraft-beta-13-offline",
     "title": "Eaglercraft Beta 13 Offline",
     "category": "Minecraft",
-    "path": "games/clEaglercraft-Beta-13-Offline.html"
+    "path": "games/clEaglercraft-Beta-13-Offline.html",
+    "popular": true
   },
   {
     "id": "cleaglercraft-indev-offline",
     "title": "Eaglercraft Indev Offline",
     "category": "Minecraft",
-    "path": "games/clEaglercraft-Indev-Offline.html"
+    "path": "games/clEaglercraft-Indev-Offline.html",
+    "popular": true
   },
   {
     "id": "eaglercraft-indev-offline-1",
     "title": "Eaglercraft Indev Offline (1)",
     "category": "Minecraft",
-    "path": "games/Eaglercraft-Indev-Offline (1).html"
+    "path": "games/Eaglercraft-Indev-Offline (1).html",
+    "popular": true
   },
   {
     "id": "cleaglercraft-indev-offline-1",
     "title": "Eaglercraft Indev Offline(1)",
     "category": "Minecraft",
-    "path": "games/clEaglercraft-Indev-Offline(1).html"
+    "path": "games/clEaglercraft-Indev-Offline(1).html",
+    "popular": true
   },
   {
     "id": "cleaglercraft-indev-offline-2",
     "title": "Eaglercraft Indev Offline(2)",
     "category": "Minecraft",
-    "path": "games/clEaglercraft-Indev-Offline(2).html"
+    "path": "games/clEaglercraft-Indev-Offline(2).html",
+    "popular": true
   },
   {
     "id": "cleaglercraftl-19-v0-7-0-offline-signed",
     "title": "Eaglercraft L 19 V 0 7 0 Offline Signed",
     "category": "Minecraft",
-    "path": "games/clEaglercraftL_19_v0_7_0_Offline_Signed.html"
+    "path": "games/clEaglercraftL_19_v0_7_0_Offline_Signed.html",
+    "popular": true
   },
   {
     "id": "cleaglercraftl-19-v0-7-0-offline-signed-1",
     "title": "Eaglercraft L 19 V 0 7 0 Offline Signed(1)",
     "category": "Minecraft",
-    "path": "games/clEaglercraftL_19_v0_7_0_Offline_Signed(1).html"
+    "path": "games/clEaglercraftL_19_v0_7_0_Offline_Signed(1).html",
+    "popular": true
   },
   {
     "id": "cleaglercraftx-188u29",
     "title": "Eaglercraft X 188 U 29",
     "category": "Minecraft",
-    "path": "games/clEaglercraftX-188u29.html"
+    "path": "games/clEaglercraftX-188u29.html",
+    "popular": true
   },
   {
     "id": "cleaglercraftx188-u29",
     "title": "Eaglercraft X 188(u 29)",
     "category": "Minecraft",
-    "path": "games/clEaglercraftX188(u29).html"
+    "path": "games/clEaglercraftX188(u29).html",
+    "popular": true
   },
   {
     "id": "clff3",
