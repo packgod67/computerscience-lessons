@@ -63,6 +63,10 @@
         authReadyResolve();
         authCallbacks.forEach(cb => cb(user));
         favCallbacks.forEach(cb => cb(favorites));
+
+        // Backfill joinedAt for existing users who registered before the field existed.
+        // Fire-and-forget so it doesn't block login.
+        if (user) ensureJoinedAt();
     });
 
     async function loadUserData() {
@@ -589,6 +593,67 @@
         }
     }
 
+    // ===== Profile: read/write profile fields on users/{uid} =====
+    // Fields: avatar, bio, wallpaper, accent, showcase[], recentPlays[], joinedAt
+    async function getProfile(uid) {
+        if (!uid) return null;
+        try {
+            const doc = await db.collection('users').doc(uid).get();
+            if (!doc.exists) return null;
+            return { uid, ...doc.data() };
+        } catch (e) {
+            console.error('getProfile failed:', e);
+            return null;
+        }
+    }
+
+    async function updateProfile(fields) {
+        if (!currentUser) throw new Error('Not logged in');
+        // Whitelist to prevent clients overwriting protected fields
+        const allowed = ['avatar', 'bio', 'wallpaper', 'accent', 'showcase'];
+        const safe = {};
+        for (const k of allowed) {
+            if (fields[k] !== undefined) safe[k] = fields[k];
+        }
+        if (Object.keys(safe).length === 0) return;
+        await db.collection('users').doc(currentUser.uid).set(safe, { merge: true });
+    }
+
+    async function trackPlay(gameId) {
+        if (!currentUser || !gameId) return;
+        try {
+            const ref = db.collection('users').doc(currentUser.uid);
+            const doc = await ref.get();
+            const data = doc.exists ? doc.data() : {};
+            let recent = Array.isArray(data.recentPlays) ? data.recentPlays.slice() : [];
+            // Remove existing entry so the new one moves to front
+            recent = recent.filter(e => e && e.gameId !== gameId);
+            recent.unshift({ gameId, at: Date.now() });
+            if (recent.length > 12) recent = recent.slice(0, 12);
+            const updates = { recentPlays: recent };
+            if (!data.joinedAt) {
+                updates.joinedAt = firebase.firestore.FieldValue.serverTimestamp();
+            }
+            await ref.set(updates, { merge: true });
+        } catch (e) {
+            console.error('trackPlay failed:', e);
+        }
+    }
+
+    // Also backfill joinedAt for users who existed before this field was added
+    async function ensureJoinedAt() {
+        if (!currentUser) return;
+        try {
+            const ref = db.collection('users').doc(currentUser.uid);
+            const doc = await ref.get();
+            if (doc.exists && !doc.data().joinedAt) {
+                await ref.set({
+                    joinedAt: firebase.firestore.FieldValue.serverTimestamp()
+                }, { merge: true });
+            }
+        } catch (e) {}
+    }
+
     window.ArcadeAuth = {
         register, login, logout,
         toggleFavorite, isFavorite, isLoggedIn, isAdmin, getUser, getUsername,
@@ -599,6 +664,7 @@
         getUserRoleIds: () => userRoleIds,
         getDb: () => db,
         banUser, approveUser, getPendingUsers, showApprovalPanel,
-        saveGameData, loadGameData
+        saveGameData, loadGameData,
+        getProfile, updateProfile, trackPlay, ensureJoinedAt
     };
 })();

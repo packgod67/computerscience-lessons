@@ -197,7 +197,7 @@
 
             html += `<div class="chat-msg${selfClass}">
                 <div class="chat-msg-header">
-                    <span class="chat-msg-user${isAdminMsg && !nameColor ? ' chat-msg-user-admin' : ''}"${nameStyle}>${esc(msg.username || 'unknown')}</span>${adminBadge}${roleBadges}
+                    <span class="chat-msg-user${isAdminMsg && !nameColor ? ' chat-msg-user-admin' : ''}" data-open-profile-uid="${esc(msg.uid || '')}" role="button" tabindex="0"${nameStyle}>${esc(msg.username || 'unknown')}</span>${adminBadge}${roleBadges}
                     <span class="chat-msg-time">${formatTime(msg.createdAt)}</span>
                     ${deleteBtn}
                 </div>

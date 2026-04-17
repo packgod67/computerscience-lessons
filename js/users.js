@@ -126,7 +126,7 @@
             const banBtn = (isAdmin && !isSelf && u.role !== 'admin') ? `<button class="ban-user-btn" data-uid="${esc(u.uid)}" data-banned="0">Ban</button>` : '';
             html += `<div class="user-row">
                 <div class="user-row-info">
-                    <span class="user-row-name"${nameStyle}>${esc(u.username || 'unknown')}</span>
+                    <span class="user-row-name" data-open-profile-uid="${esc(u.uid)}" role="button" tabindex="0"${nameStyle}>${esc(u.username || 'unknown')}</span>
                     ${assignBtn}
                     ${adminBadge}${customBadges}
                 </div>

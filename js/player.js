@@ -19,6 +19,15 @@
         const forceLoad = params.get('force') === '1';
         currentGameId = gameId;
 
+        // Record the play in the user's profile (fire-and-forget)
+        if (gameId) {
+            ArcadeAuth.waitForAuth().then(() => {
+                if (ArcadeAuth.isLoggedIn() && ArcadeAuth.trackPlay) {
+                    ArcadeAuth.trackPlay(gameId);
+                }
+            });
+        }
+
         if (!gameId) {
             gameTitle.textContent = 'No game selected';
             gameLoading.innerHTML = '<p>No game specified. <a href="index.html" style="color: #7c3aed;">Go back to arcade</a></p>';
