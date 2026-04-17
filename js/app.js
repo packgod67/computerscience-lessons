@@ -8,10 +8,28 @@
     let games = [];
     let filtered = [];
     let activeCategory = 'all';
+    let activeRomPlatform = 'all'; // sub-filter inside ROMs tab
     let currentPage = 0;
     const PAGE_SIZE = 36;
     let loading = false;
     let favBtnEl = null; // Favorites category button
+    let romSubBar = null;
+
+    // Platform buckets displayed as ROM sub-tabs, in display order
+    const ROM_PLATFORMS = [
+        ['all',     'All'],
+        ['gba',     'GBA'],
+        ['nes',     'NES'],
+        ['snes',    'SNES'],
+        ['genesis', 'Genesis'],
+        ['n64',     'N64'],
+        ['ds',      'DS'],
+        ['psx',     'PlayStation'],
+        ['arcade',  'Arcade'],
+        ['atari',   'Atari/Lynx/Jaguar'],
+        ['oldsega', 'Older Sega'],
+        ['misc',    'Misc'],
+    ];
 
     async function init() {
         try {
@@ -21,6 +39,7 @@
             games = [];
         }
         buildCategories();
+        buildRomSubBar();
         applyFilters();
         renderPage();
 
@@ -155,6 +174,24 @@
         });
         categoriesContainer.appendChild(popBtn);
 
+        // Add ROMs button. When active it surfaces a secondary bar of platform
+        // sub-tabs (GBA / NES / SNES / etc.) that further narrows the filter.
+        const romBtn = document.createElement('button');
+        romBtn.className = 'cat-btn cat-btn-roms';
+        romBtn.dataset.category = '__roms__';
+        romBtn.innerHTML = '&#127918; ROMs';
+        romBtn.addEventListener('click', () => {
+            activeCategory = '__roms__';
+            // Keep any previously selected platform sub-tab; default to "all"
+            updateCategoryButtons();
+            currentPage = 0;
+            gameGrid.innerHTML = '';
+            applyFilters();
+            renderPage();
+            window.scrollTo({ top: 0, behavior: 'auto' });
+        });
+        categoriesContainer.appendChild(romBtn);
+
         const cats = [...new Set(games.map(g => g.category))].sort();
         cats.forEach(cat => {
             const btn = document.createElement('button');
@@ -198,6 +235,11 @@
                 matchesCategory = ArcadeAuth.isFavorite(g.id);
             } else if (activeCategory === '__popular__') {
                 matchesCategory = !!g.popular;
+            } else if (activeCategory === '__roms__') {
+                // Only games with a rom platform tag; apply sub-platform filter too
+                if (!g.rom) matchesCategory = false;
+                else if (activeRomPlatform === 'all') matchesCategory = true;
+                else matchesCategory = g.rom === activeRomPlatform;
             } else {
                 matchesCategory = activeCategory === 'all' || g.category === activeCategory;
             }
@@ -205,6 +247,46 @@
         });
         if (gameCount) {
             gameCount.textContent = `${filtered.length} game${filtered.length !== 1 ? 's' : ''}`;
+        }
+        // Show/hide ROM sub-tab bar based on active category
+        if (romSubBar) {
+            romSubBar.style.display = activeCategory === '__roms__' ? '' : 'none';
+        }
+    }
+
+    function buildRomSubBar() {
+        // Insert sub-tab bar right after the main categories row.
+        romSubBar = document.createElement('div');
+        romSubBar.className = 'rom-subbar';
+        romSubBar.style.display = 'none';
+        // Count per platform for the labels
+        const counts = {};
+        for (const g of games) if (g.rom) counts[g.rom] = (counts[g.rom] || 0) + 1;
+        const total = Object.values(counts).reduce((a, b) => a + b, 0);
+
+        for (const [key, label] of ROM_PLATFORMS) {
+            const btn = document.createElement('button');
+            btn.className = 'rom-sub-btn' + (key === activeRomPlatform ? ' active' : '');
+            btn.dataset.platform = key;
+            const count = key === 'all' ? total : (counts[key] || 0);
+            btn.innerHTML = `${label} <span class="rom-sub-count">${count}</span>`;
+            btn.addEventListener('click', () => {
+                activeRomPlatform = key;
+                romSubBar.querySelectorAll('.rom-sub-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.platform === key);
+                });
+                currentPage = 0;
+                gameGrid.innerHTML = '';
+                applyFilters();
+                renderPage();
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            });
+            romSubBar.appendChild(btn);
+        }
+        // Place after the .controls block, above the game grid
+        const controls = document.querySelector('.controls');
+        if (controls && controls.parentNode) {
+            controls.parentNode.insertBefore(romSubBar, controls.nextSibling);
         }
     }
 

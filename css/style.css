@@ -711,6 +711,77 @@ body.auth-gated .player-container {
     color: #fff;
 }
 
+/* ===== ROMs Category Button ===== */
+.cat-btn-roms {
+    color: #8b5cf6;
+    border-color: rgba(139, 92, 246, 0.4);
+}
+
+.cat-btn-roms:hover {
+    border-color: #8b5cf6;
+}
+
+.cat-btn-roms.active {
+    background: linear-gradient(135deg, #7c3aed, #2563eb);
+    border-color: #7c3aed;
+    color: #fff;
+}
+
+/* ===== ROM Sub-tab Bar =====
+   Appears below the main category row only when the ROMs tab is active.
+   Scrollable horizontally on mobile. */
+.rom-subbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    padding: 10px 12px;
+    margin-bottom: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+}
+
+.rom-sub-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.rom-sub-btn:hover {
+    color: var(--text-primary);
+    border-color: var(--accent);
+}
+
+.rom-sub-btn.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+.rom-sub-count {
+    font-size: 0.72rem;
+    font-weight: 500;
+    opacity: 0.7;
+    padding: 2px 6px;
+    background: rgba(0, 0, 0, 0.25);
+    border-radius: 10px;
+    min-width: 24px;
+    text-align: center;
+}
+
+.rom-sub-btn.active .rom-sub-count {
+    background: rgba(255, 255, 255, 0.2);
+}
+
 /* ===== Favorite on Player Page ===== */
 .fav-btn-player {
     font-size: 1.2rem;
@@ -2693,6 +2764,19 @@ body.theme-transitioning * {
         padding: 7px 13px;
         font-size: 0.82rem;
         scroll-snap-align: start;
+    }
+
+    /* ROM sub-bar: also horizontal-scroll on phones */
+    .rom-subbar {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        padding: 8px 10px;
+    }
+    .rom-subbar::-webkit-scrollbar { display: none; }
+    .rom-sub-btn {
+        flex: 0 0 auto;
     }
 
     .controls-row {
