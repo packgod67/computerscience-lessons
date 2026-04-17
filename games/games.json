@@ -18,7 +18,8 @@
     "title": "1 V 1 Lol",
     "category": "Other",
     "path": "games/cl1v1lol.html",
-    "thumbnail": "assets/thumbnails/cl1v1lol.jpg"
+    "thumbnail": "assets/thumbnails/cl1v1lol.jpg",
+    "popular": true
   },
   {
     "id": "cl1v1tennis",
@@ -95,7 +96,8 @@
     "title": "2048",
     "category": "Puzzle",
     "path": "games/cl2048.html",
-    "thumbnail": "assets/thumbnails/cl2048.jpg"
+    "thumbnail": "assets/thumbnails/cl2048.jpg",
+    "popular": true
   },
   {
     "id": "cl2048cupcakes",
@@ -546,7 +548,8 @@
     "title": "Clagariolite",
     "category": "Other",
     "path": "games/clagariolite.html",
-    "thumbnail": "assets/thumbnails/clagariolite.jpg"
+    "thumbnail": "assets/thumbnails/clagariolite.jpg",
+    "popular": true
   },
   {
     "id": "clageofwar",
@@ -734,7 +737,8 @@
     "title": "Clamongus",
     "category": "Other",
     "path": "games/clamongus.html",
-    "thumbnail": "assets/thumbnails/clamongus.jpg"
+    "thumbnail": "assets/thumbnails/clamongus.jpg",
+    "popular": true
   },
   {
     "id": "clamorphous",
@@ -1312,7 +1316,8 @@
     "title": "Clbasketballlegends",
     "category": "Sports",
     "path": "games/clbasketballlegends.html",
-    "thumbnail": "assets/thumbnails/clbasketballlegends.jpg"
+    "thumbnail": "assets/thumbnails/clbasketballlegends.jpg",
+    "popular": true
   },
   {
     "id": "clbasketballlegends-1",
@@ -1326,7 +1331,8 @@
     "title": "Clbasketballstars",
     "category": "Sports",
     "path": "games/clbasketballstars.html",
-    "thumbnail": "assets/thumbnails/clbasketballstars.jpg"
+    "thumbnail": "assets/thumbnails/clbasketballstars.jpg",
+    "popular": true
   },
   {
     "id": "clbasketballsuperstars",
@@ -1518,7 +1524,8 @@
     "title": "Clbigflappytowertinysquare",
     "category": "Other",
     "path": "games/clbigflappytowertinysquare.html",
-    "thumbnail": "assets/thumbnails/clbigflappytowertinysquare.jpg"
+    "thumbnail": "assets/thumbnails/clbigflappytowertinysquare.jpg",
+    "popular": true
   },
   {
     "id": "clbigicetowertinysquare",
@@ -1750,7 +1757,8 @@
     "title": "Clbloons",
     "category": "Other",
     "path": "games/clbloons.html",
-    "thumbnail": "assets/thumbnails/clbloons.jpg"
+    "thumbnail": "assets/thumbnails/clbloons.jpg",
+    "popular": true
   },
   {
     "id": "clbloons2",
@@ -1764,35 +1772,40 @@
     "title": "Clbloons TD 1",
     "category": "Strategy",
     "path": "games/clbloonsTD1.html",
-    "thumbnail": "assets/thumbnails/clbloonstd1.jpg"
+    "thumbnail": "assets/thumbnails/clbloonstd1.jpg",
+    "popular": true
   },
   {
     "id": "clbloonstd2",
     "title": "Clbloons TD 2",
     "category": "Strategy",
     "path": "games/clbloonsTD2.html",
-    "thumbnail": "assets/thumbnails/clbloonstd2.jpg"
+    "thumbnail": "assets/thumbnails/clbloonstd2.jpg",
+    "popular": true
   },
   {
     "id": "clbloonstd3",
     "title": "Clbloons TD 3",
     "category": "Strategy",
     "path": "games/clbloonsTD3.html",
-    "thumbnail": "assets/thumbnails/clbloonstd3.jpg"
+    "thumbnail": "assets/thumbnails/clbloonstd3.jpg",
+    "popular": true
   },
   {
     "id": "clbloonstd4",
     "title": "Clbloons TD 4",
     "category": "Strategy",
     "path": "games/clbloonsTD4.html",
-    "thumbnail": "assets/thumbnails/clbloonstd4.jpg"
+    "thumbnail": "assets/thumbnails/clbloonstd4.jpg",
+    "popular": true
   },
   {
     "id": "clbloonstd5",
     "title": "Clbloons TD 5",
     "category": "Strategy",
     "path": "games/clbloonsTD5.html",
-    "thumbnail": "assets/thumbnails/clbloonstd5.jpg"
+    "thumbnail": "assets/thumbnails/clbloonstd5.jpg",
+    "popular": true
   },
   {
     "id": "clbloonstd6scratch",
@@ -2376,7 +2389,8 @@
     "title": "Clcastlevania",
     "category": "Other",
     "path": "games/clcastlevania.html",
-    "thumbnail": "assets/thumbnails/clcastlevania.jpg"
+    "thumbnail": "assets/thumbnails/clcastlevania.jpg",
+    "popular": true
   },
   {
     "id": "clcastlevania2",
@@ -2887,7 +2901,8 @@
     "title": "Clcookieclicker",
     "category": "Simulation",
     "path": "games/clcookieclicker.html",
-    "thumbnail": "assets/thumbnails/clcookieclicker.jpg"
+    "thumbnail": "assets/thumbnails/clcookieclicker.jpg",
+    "popular": true
   },
   {
     "id": "clcookieclickergood",
@@ -3142,7 +3157,8 @@
     "id": "clcrossyroad",
     "title": "Clcrossyroad",
     "category": "Other",
-    "path": "games/clcrossyroad.html"
+    "path": "games/clcrossyroad.html",
+    "popular": true
   },
   {
     "id": "clcrunchball3000",
@@ -3523,6 +3539,15 @@
     "path": "games/cldieinthedungeon.html"
   },
   {
+    "id": "cldiepio",
+    "title": "Diep.io",
+    "category": "Shooting",
+    "path": "games/cldiepio.html",
+    "description": "Multiplayer top-down tank shooter. Shoot shapes and enemy tanks to level up, pick upgrades, and dominate the leaderboard. Simple controls, deep tank progression.",
+    "popular": true,
+    "thumbnail": "assets/thumbnails/cldiepio.png"
+  },
+  {
     "id": "cldigdeep",
     "title": "Cldigdeep",
     "category": "Other",
@@ -3688,7 +3713,8 @@
     "id": "cldoodlejump",
     "title": "Cldoodlejump",
     "category": "Platformer",
-    "path": "games/cldoodlejump.html"
+    "path": "games/cldoodlejump.html",
+    "popular": true
   },
   {
     "id": "cldoodlejumpgoober",
@@ -3700,13 +3726,15 @@
     "id": "cldoom",
     "title": "Cldoom",
     "category": "Shooting",
-    "path": "games/cldoom.html"
+    "path": "games/cldoom.html",
+    "popular": true
   },
   {
     "id": "cldoom2",
     "title": "Cldoom 2",
     "category": "Shooting",
-    "path": "games/cldoom2.html"
+    "path": "games/cldoom2.html",
+    "popular": true
   },
   {
     "id": "cldoom2d",
@@ -3850,13 +3878,24 @@
     "id": "cldriftboss",
     "title": "Cldriftboss",
     "category": "Racing",
-    "path": "games/cldriftboss.html"
+    "path": "games/cldriftboss.html",
+    "popular": true
+  },
+  {
+    "id": "cldrifthunters",
+    "title": "Drift Hunters",
+    "category": "Racing",
+    "path": "games/cldrifthunters.html",
+    "description": "Classic browser drift racing game. Upgrade and customize cars, drift around tracks, and rack up points. Features many real-world cars and tracks.",
+    "popular": true,
+    "thumbnail": "assets/thumbnails/cldrifthunters.jpg"
   },
   {
     "id": "cldrifthuntersmerge",
     "title": "Cldrifthuntersmerge",
     "category": "Racing",
-    "path": "games/cldrifthuntersmerge.html"
+    "path": "games/cldrifthuntersmerge.html",
+    "popular": true
   },
   {
     "id": "cldriftsimulator",
@@ -4048,19 +4087,22 @@
     "id": "cleaglercraft152",
     "title": "Cleaglercraft 152",
     "category": "Minecraft",
-    "path": "games/cleaglercraft152.html"
+    "path": "games/cleaglercraft152.html",
+    "popular": true
   },
   {
     "id": "cleaglercraftnebula",
     "title": "Cleaglercraftnebula",
     "category": "Minecraft",
-    "path": "games/cleaglercraftnebula.html"
+    "path": "games/cleaglercraftnebula.html",
+    "popular": true
   },
   {
     "id": "cleaglercraftshadow",
     "title": "Cleaglercraftshadow",
     "category": "Minecraft",
-    "path": "games/cleaglercraftshadow.html"
+    "path": "games/cleaglercraftshadow.html",
+    "popular": true
   },
   {
     "id": "cleagleride",
@@ -4636,19 +4678,22 @@
     "id": "clfireboyandwatergirl",
     "title": "Clfireboyandwatergirl",
     "category": "Other",
-    "path": "games/clfireboyandwatergirl.html"
+    "path": "games/clfireboyandwatergirl.html",
+    "popular": true
   },
   {
     "id": "clfireboyandwatergirl2",
     "title": "Clfireboyandwatergirl 2",
     "category": "Other",
-    "path": "games/clfireboyandwatergirl2.html"
+    "path": "games/clfireboyandwatergirl2.html",
+    "popular": true
   },
   {
     "id": "clfireboyandwatergirl3",
     "title": "Clfireboyandwatergirl 3",
     "category": "Other",
-    "path": "games/clfireboyandwatergirl3.html"
+    "path": "games/clfireboyandwatergirl3.html",
+    "popular": true
   },
   {
     "id": "clfireboyandwatergirl5",
@@ -4708,7 +4753,8 @@
     "id": "clflappybird",
     "title": "Clflappybird",
     "category": "Other",
-    "path": "games/clflappybird.html"
+    "path": "games/clflappybird.html",
+    "popular": true
   },
   {
     "id": "clflashsonic",
@@ -5553,16 +5599,27 @@
     "path": "games/clgenericfightermaybe.html"
   },
   {
+    "id": "clgeometrydashonline",
+    "title": "Geometry Dash Online",
+    "category": "Platformer",
+    "path": "games/clgeometrydashonline.html",
+    "description": "Rhythm-based platformer. Jump and fly through dangerous passages synced to music. Precise timing required. The original online version.",
+    "thumbnail": "assets/thumbnails/clgeometrydashonline.png",
+    "popular": true
+  },
+  {
     "id": "clgeometrydashscratch",
     "title": "Clgeometrydashscratch",
     "category": "Platformer",
-    "path": "games/clgeometrydashscratch.html"
+    "path": "games/clgeometrydashscratch.html",
+    "popular": true
   },
   {
     "id": "clgeometryvibes",
     "title": "Clgeometryvibes",
     "category": "Other",
-    "path": "games/clgeometryvibes.html"
+    "path": "games/clgeometryvibes.html",
+    "popular": true
   },
   {
     "id": "clgeorgeandtheprinter",
@@ -5922,7 +5979,8 @@
     "id": "clgta",
     "title": "Clgta",
     "category": "Other",
-    "path": "games/clgta.html"
+    "path": "games/clgta.html",
+    "popular": true
   },
   {
     "id": "clgta2",
@@ -6132,7 +6190,8 @@
     "id": "clhappywheels",
     "title": "Clhappywheels",
     "category": "Other",
-    "path": "games/clhappywheels.html"
+    "path": "games/clhappywheels.html",
+    "popular": true
   },
   {
     "id": "clhardwaretycoon",
@@ -6198,7 +6257,8 @@
     "id": "clhelixjump",
     "title": "Clhelixjump",
     "category": "Platformer",
-    "path": "games/clhelixjump.html"
+    "path": "games/clhelixjump.html",
+    "popular": true
   },
   {
     "id": "clhellron",
@@ -6456,7 +6516,8 @@
     "id": "clidlebreakout",
     "title": "Clidlebreakout",
     "category": "Simulation",
-    "path": "games/clidlebreakout.html"
+    "path": "games/clidlebreakout.html",
+    "popular": true
   },
   {
     "id": "clidledice",
@@ -6492,7 +6553,8 @@
     "id": "climpossiblequiz",
     "title": "Climpossiblequiz",
     "category": "Other",
-    "path": "games/climpossiblequiz.html"
+    "path": "games/climpossiblequiz.html",
+    "popular": true
   },
   {
     "id": "climpossiblequiz-1",
@@ -6900,7 +6962,8 @@
     "id": "clkirby64",
     "title": "Clkirby 64",
     "category": "Other",
-    "path": "games/clkirby64.html"
+    "path": "games/clkirby64.html",
+    "popular": true
   },
   {
     "id": "clkirby64crystalshards",
@@ -6912,7 +6975,8 @@
     "id": "clkirbyandtheamzingmirror",
     "title": "Clkirbyandtheamzingmirror",
     "category": "Other",
-    "path": "games/clkirbyandtheamzingmirror.html"
+    "path": "games/clkirbyandtheamzingmirror.html",
+    "popular": true
   },
   {
     "id": "clkirbycanvascurse",
@@ -7009,6 +7073,15 @@
     "title": "Clkourio",
     "category": "Other",
     "path": "games/clkourio.html"
+  },
+  {
+    "id": "clkrunker",
+    "title": "Krunker",
+    "category": "Shooting",
+    "path": "games/clkrunker.html",
+    "description": "Fast-paced pixel-style browser FPS. Multiple classes, competitive movement, and quick rounds. One of the most popular browser shooters.",
+    "popular": true,
+    "thumbnail": "assets/thumbnails/clkrunker.png"
   },
   {
     "id": "clks2teams",
@@ -7578,7 +7651,8 @@
     "id": "clmariokart64",
     "title": "Clmariokart 64",
     "category": "Mario",
-    "path": "games/clmariokart64.html"
+    "path": "games/clmariokart64.html",
+    "popular": true
   },
   {
     "id": "clmariokartds",
@@ -7980,7 +8054,8 @@
     "id": "clmetroidfusion",
     "title": "Clmetroidfusion",
     "category": "Other",
-    "path": "games/clmetroidfusion.html"
+    "path": "games/clmetroidfusion.html",
+    "popular": true
   },
   {
     "id": "clmetroidprimehunters",
@@ -8364,31 +8439,36 @@
     "id": "clmotox3m2",
     "title": "Clmotox 3 M 2",
     "category": "Racing",
-    "path": "games/clmotox3m2.html"
+    "path": "games/clmotox3m2.html",
+    "popular": true
   },
   {
     "id": "clmotox3m3",
     "title": "Clmotox 3 M 3",
     "category": "Racing",
-    "path": "games/clmotox3m3.html"
+    "path": "games/clmotox3m3.html",
+    "popular": true
   },
   {
     "id": "clmotox3mm",
     "title": "Clmotox 3 Mm",
     "category": "Racing",
-    "path": "games/clmotox3mm.html"
+    "path": "games/clmotox3mm.html",
+    "popular": true
   },
   {
     "id": "clmotox3mpoolparty",
     "title": "Clmotox 3 Mpoolparty",
     "category": "Racing",
-    "path": "games/clmotox3mpoolparty.html"
+    "path": "games/clmotox3mpoolparty.html",
+    "popular": true
   },
   {
     "id": "clmotox3mspookyland",
     "title": "Clmotox 3 Mspookyland",
     "category": "Racing",
-    "path": "games/clmotox3mspookyland.html"
+    "path": "games/clmotox3mspookyland.html",
+    "popular": true
   },
   {
     "id": "clmotox3mwinter",
@@ -8982,7 +9062,8 @@
     "id": "clpacman",
     "title": "Clpacman",
     "category": "Other",
-    "path": "games/clpacman.html"
+    "path": "games/clpacman.html",
+    "popular": true
   },
   {
     "id": "clpacmana",
@@ -9602,7 +9683,8 @@
     "category": "Pokemon",
     "path": "games/clpokeblack.html",
     "description": "Set in the New York-inspired Unova region with 156 entirely new Pokemon. Features a compelling story about the morality of capturing Pokemon, animated battle sprites, seasonal changes, Triple and Rotation Battles, and the enigmatic N. Only new Pokemon are available until post-game.",
-    "thumbnail": "assets/thumbnails/clpokeblack.png"
+    "thumbnail": "assets/thumbnails/clpokeblack.png",
+    "popular": true
   },
   {
     "id": "clpokeblack2alt",
@@ -9617,7 +9699,7 @@
     "title": "Pokemon Black 2",
     "category": "Pokemon",
     "path": "games/clpokeblack2.html.html",
-    "description": "A direct sequel set two years after Black/White — a first for the series. Features a new protagonist, new areas in Unova, the Pokemon World Tournament where you battle every past Champion, the Challenge Mode difficulty, and a mix of old and new Pokemon from the start.",
+    "description": "A direct sequel set two years after Black/White â€” a first for the series. Features a new protagonist, new areas in Unova, the Pokemon World Tournament where you battle every past Champion, the Challenge Mode difficulty, and a mix of old and new Pokemon from the start.",
     "thumbnail": "assets/thumbnails/clpokeblack2-html.png"
   },
   {
@@ -9642,7 +9724,8 @@
     "category": "Pokemon",
     "path": "games/clpokeblue.html",
     "description": "The companion game to Pokemon Red set in the Kanto region. Features the same core adventure with different wild Pokemon availability. Catch, train, and battle 151 Pokemon as you travel across Kanto, defeat Team Rocket, and challenge the Pokemon League.",
-    "thumbnail": "assets/thumbnails/clpokeblue.png"
+    "thumbnail": "assets/thumbnails/clpokeblue.png",
+    "popular": true
   },
   {
     "id": "clpokeclassic",
@@ -9673,7 +9756,7 @@
     "title": "Pokemon Crystal Clear",
     "category": "Pokemon",
     "path": "games/clpokecrystalclear.html",
-    "description": "A groundbreaking open-world hack of Pokemon Crystal. Start in any town, choose from 24 starters, tackle Gyms in any order, and customize your character. Gyms scale to your badge count. Features both Johto and Kanto with complete freedom of exploration — a true open-world Pokemon game.",
+    "description": "A groundbreaking open-world hack of Pokemon Crystal. Start in any town, choose from 24 starters, tackle Gyms in any order, and customize your character. Gyms scale to your badge count. Features both Johto and Kanto with complete freedom of exploration â€” a true open-world Pokemon game.",
     "thumbnail": "assets/thumbnails/clpokecrystalclear.png"
   },
   {
@@ -9682,7 +9765,8 @@
     "category": "Pokemon",
     "path": "games/clpokediamond.html",
     "description": "Explore the Sinnoh region in this Generation IV NDS title. Features 107 new Pokemon, the physical/special split that revolutionized competitive play, Wi-Fi trading and battling, the Underground for mining, and the legendary Dialga that controls time. A beloved entry in the series.",
-    "thumbnail": "assets/thumbnails/clpokediamond.jpg"
+    "thumbnail": "assets/thumbnails/clpokediamond.jpg",
+    "popular": true
   },
   {
     "id": "clpokedarkrising",
@@ -9761,7 +9845,7 @@
     "title": "Pokemon Emerald Randomized",
     "category": "Pokemon",
     "path": "games/clpokeemeraldrandom.html",
-    "description": "Pokemon Emerald with fully randomized wild encounters, trainer teams, items, and abilities. Every playthrough is unique — your starter, wild Pokemon, and opponent teams are all shuffled. A chaotic and replayable way to experience Hoenn where anything can happen.",
+    "description": "Pokemon Emerald with fully randomized wild encounters, trainer teams, items, and abilities. Every playthrough is unique â€” your starter, wild Pokemon, and opponent teams are all shuffled. A chaotic and replayable way to experience Hoenn where anything can happen.",
     "thumbnail": "assets/thumbnails/clpokeemeraldrandom.jpg"
   },
   {
@@ -9818,7 +9902,8 @@
     "category": "Pokemon",
     "path": "games/clpokegaia.html",
     "description": "A critically acclaimed ROM hack set in the Orbtus region with an original story about ancient earthquakes threatening the land. Features Pokemon up to Gen 6, Mega Evolution, updated mechanics, Rock Climb HM, underground mining, and some of the best custom mapping in any hack.",
-    "thumbnail": "assets/thumbnails/clpokegaia.png"
+    "thumbnail": "assets/thumbnails/clpokegaia.png",
+    "popular": true
   },
   {
     "id": "clpokegoldenshield",
@@ -9842,7 +9927,8 @@
     "category": "Pokemon",
     "path": "games/clpokeheartgold.html",
     "description": "The beloved DS remake of Pokemon Gold with stunning updated graphics, your lead Pokemon walking behind you, the Pokeathlon mini-games, and the PokeWalker accessory support. Explore both Johto and Kanto with 16 Gym Badges and challenge Red atop Mt. Silver once more.",
-    "thumbnail": "assets/thumbnails/clpokeheartgold.jpg"
+    "thumbnail": "assets/thumbnails/clpokeheartgold.jpg",
+    "popular": true
   },
   {
     "id": "clpokelightplatinum",
@@ -9898,7 +9984,8 @@
     "category": "Pokemon",
     "path": "games/clpokemoncrystal.html",
     "description": "The enhanced version of Gold and Silver, and the first Pokemon game to let you play as a female trainer. Features animated Pokemon sprites, the Battle Tower, an expanded Suicune storyline, and the Odd Egg event. Widely considered the definitive Gen II experience.",
-    "thumbnail": "assets/thumbnails/clpokemoncrystal.png"
+    "thumbnail": "assets/thumbnails/clpokemoncrystal.png",
+    "popular": true
   },
   {
     "id": "clpokemonemerald",
@@ -9906,7 +9993,8 @@
     "category": "Pokemon",
     "path": "games/clpokemonemerald.html",
     "description": "The definitive Hoenn experience combining Ruby and Sapphire's stories. Features the legendary Rayquaza, the Battle Frontier with seven challenging facilities, Pokemon Animations in battle, and an expanded post-game. Both Team Magma and Team Aqua appear as antagonists in this enhanced version.",
-    "thumbnail": "assets/thumbnails/clpokemonemerald.jpg"
+    "thumbnail": "assets/thumbnails/clpokemonemerald.jpg",
+    "popular": true
   },
   {
     "id": "clpokemonemeraldcrest",
@@ -9929,7 +10017,7 @@
     "title": "Pokemon Emerald Kaizo",
     "category": "Pokemon",
     "path": "games/clpokemonemeraldkaizo.html",
-    "description": "An extremely challenging difficulty hack of Pokemon Emerald designed for expert players. Every trainer has competitively optimized teams with perfect IVs and strategic movesets. Gym Leaders and the Elite Four are brutally difficult. Not for the faint of heart — this is Pokemon at its hardest.",
+    "description": "An extremely challenging difficulty hack of Pokemon Emerald designed for expert players. Every trainer has competitively optimized teams with perfect IVs and strategic movesets. Gym Leaders and the Elite Four are brutally difficult. Not for the faint of heart â€” this is Pokemon at its hardest.",
     "thumbnail": "assets/thumbnails/clpokemonemeraldkaizo.jpg"
   },
   {
@@ -10074,7 +10162,8 @@
     "category": "Pokemon",
     "path": "games/clpokemonruby.html",
     "description": "Explore the tropical Hoenn region in this Generation III adventure. Features 135 new Pokemon, Double Battles, Abilities, Natures, Pokemon Contests, and Secret Bases. Lead Team Magma's quest to expand the land with the legendary Groudon. A massive leap in graphics and gameplay depth.",
-    "thumbnail": "assets/thumbnails/clpokemonruby.png"
+    "thumbnail": "assets/thumbnails/clpokemonruby.png",
+    "popular": true
   },
   {
     "id": "clpokemonsaiph",
@@ -10098,7 +10187,8 @@
     "category": "Pokemon",
     "path": "games/clpokemonsapphire.html",
     "description": "The companion to Pokemon Ruby set in Hoenn. Features Team Aqua as the villainous team seeking to expand the sea using the legendary Kyogre. Enjoy the same rich gameplay with different Pokemon encounters, Double Battles, Contests, and the vast underwater diving routes.",
-    "thumbnail": "assets/thumbnails/clpokemonsapphire.png"
+    "thumbnail": "assets/thumbnails/clpokemonsapphire.png",
+    "popular": true
   },
   {
     "id": "clpokemonshinsigma",
@@ -10186,7 +10276,8 @@
     "category": "Pokemon",
     "path": "games/clpokemonunbound.html",
     "description": "Widely considered the best Pokemon ROM hack ever made. Set in the Borrius region with a brand-new story, 900+ Pokemon from all generations, Mega Evolution, Z-Moves, Dynamax, a mission system, character customization, difficulty modes, and a massive post-game. Incredible production quality.",
-    "thumbnail": "assets/thumbnails/clpokemonunbound.png"
+    "thumbnail": "assets/thumbnails/clpokemonunbound.png",
+    "popular": true
   },
   {
     "id": "clpokemonvolume1",
@@ -10257,7 +10348,7 @@
     "title": "Pokemon Pasta",
     "category": "Pokemon",
     "path": "games/clpokepasta.html",
-    "description": "A creepypasta-inspired Pokemon hack with horror elements woven into the familiar Pokemon formula. Features unsettling events, dark storylines, and eerie twists on classic Pokemon gameplay. Not your typical Pokemon adventure — expect the unexpected and the disturbing.",
+    "description": "A creepypasta-inspired Pokemon hack with horror elements woven into the familiar Pokemon formula. Features unsettling events, dark storylines, and eerie twists on classic Pokemon gameplay. Not your typical Pokemon adventure â€” expect the unexpected and the disturbing.",
     "thumbnail": "assets/thumbnails/clpokepasta.png"
   },
   {
@@ -10298,7 +10389,8 @@
     "category": "Pokemon",
     "path": "games/clpokeplatinum.html",
     "description": "An alternate version of Pokemon Platinum for the Nintendo DS. Journey through Sinnoh, encounter the legendary Giratina in the Distortion World, challenge the Battle Frontier, and become the Pokemon Champion. Features the physical/special split and Wi-Fi connectivity.",
-    "thumbnail": "assets/thumbnails/clpokeplatinum.png"
+    "thumbnail": "assets/thumbnails/clpokeplatinum.png",
+    "popular": true
   },
   {
     "id": "clpokeplatinumrandomized",
@@ -10346,7 +10438,8 @@
     "category": "Pokemon",
     "path": "games/clpokeradicalred.html",
     "description": "A challenging FireRed-based hack with competitive difficulty, modern battle mechanics, and all Pokemon through Gen 8. Features updated AI, tough gym leaders, and a complete Pokedex overhaul. Perfect for players seeking a hardcore experience.",
-    "thumbnail": "assets/thumbnails/clpokeradicalred.png"
+    "thumbnail": "assets/thumbnails/clpokeradicalred.png",
+    "popular": true
   },
   {
     "id": "clpokerechargedpink",
@@ -10378,7 +10471,8 @@
     "category": "Pokemon",
     "path": "games/clpokered.html",
     "description": "The original Pokemon RPG that started it all. Journey through the Kanto region as a young trainer, catch and train 151 Pokemon, battle eight Gym Leaders, and take on the Elite Four to become the Pokemon Champion. Choose between Bulbasaur, Charmander, or Squirtle as your starter.",
-    "thumbnail": "assets/thumbnails/clpokered.png"
+    "thumbnail": "assets/thumbnails/clpokered.png",
+    "popular": true
   },
   {
     "id": "clpokerenegadeplat",
@@ -10434,14 +10528,15 @@
     "category": "Pokemon",
     "path": "games/clpokesoulsilver.html",
     "description": "The DS remake of Pokemon Silver featuring the legendary Lugia. Your Pokemon follows you in the overworld, enjoy the Pokeathlon, Safari Zone customization, and the massive dual-region adventure. Widely regarded as one of the best Pokemon games ever made with incredible post-game content.",
-    "thumbnail": "assets/thumbnails/clpokesoulsilver.jpg"
+    "thumbnail": "assets/thumbnails/clpokesoulsilver.jpg",
+    "popular": true
   },
   {
     "id": "clpokethepit",
     "title": "Pokemon The Pit",
     "category": "Pokemon",
     "path": "games/clpokethepit.html",
-    "description": "A survival-style Pokemon hack where you're trapped in a dungeon-like pit and must battle your way out. Features increasingly difficult floors, limited resources, strategic team building, and a claustrophobic atmosphere. How deep can you go — or can you escape?",
+    "description": "A survival-style Pokemon hack where you're trapped in a dungeon-like pit and must battle your way out. Features increasingly difficult floors, limited resources, strategic team building, and a claustrophobic atmosphere. How deep can you go â€” or can you escape?",
     "thumbnail": "assets/thumbnails/clpokethepit.png"
   },
   {
@@ -10538,7 +10633,8 @@
     "category": "Pokemon",
     "path": "games/clpokeyellow.html",
     "description": "The special Pikachu Edition inspired by the anime. Pikachu follows you outside its Poke Ball and you can check its mood. All three original starters (Bulbasaur, Charmander, Squirtle) can be obtained in-game. Features updated sprites and the iconic Team Rocket duo Jessie and James.",
-    "thumbnail": "assets/thumbnails/clpokeyellow.png"
+    "thumbnail": "assets/thumbnails/clpokeyellow.png",
+    "popular": true
   },
   {
     "id": "clpolicepursuit2",
@@ -10598,7 +10694,8 @@
     "id": "clportal",
     "title": "Clportal",
     "category": "Other",
-    "path": "games/clportal.html"
+    "path": "games/clportal.html",
+    "popular": true
   },
   {
     "id": "clportal2d",
@@ -11126,13 +11223,15 @@
     "id": "clretrobowl",
     "title": "Clretrobowl",
     "category": "Retro",
-    "path": "games/clretrobowl.html"
+    "path": "games/clretrobowl.html",
+    "popular": true
   },
   {
     "id": "clretrobowlcollege",
     "title": "Clretrobowlcollege",
     "category": "Retro",
-    "path": "games/clretrobowlcollege.html"
+    "path": "games/clretrobowlcollege.html",
+    "popular": true
   },
   {
     "id": "clretrohighway",
@@ -11324,7 +11423,8 @@
     "id": "clrocketleague",
     "title": "Clrocketleague",
     "category": "Other",
-    "path": "games/clrocketleague.html"
+    "path": "games/clrocketleague.html",
+    "popular": true
   },
   {
     "id": "clrocketpult",
@@ -11771,6 +11871,15 @@
     "path": "games/clshc3.html"
   },
   {
+    "id": "clshellshockers",
+    "title": "Shell Shockers",
+    "category": "Shooting",
+    "path": "games/clshellshockers.html",
+    "description": "Multiplayer egg-themed FPS. Play as an egg with a machine gun, pistol, sniper or more, across FFA, teams, and capture the spatula modes.",
+    "popular": true,
+    "thumbnail": "assets/thumbnails/clshellshockers.png"
+  },
+  {
     "id": "clshift",
     "title": "Clshift",
     "category": "Other",
@@ -12032,31 +12141,36 @@
     "id": "clslitherio",
     "title": "Clslitherio",
     "category": "Other",
-    "path": "games/clslitherio.html"
+    "path": "games/clslitherio.html",
+    "popular": true
   },
   {
     "id": "clslope",
     "title": "Clslope",
     "category": "Other",
-    "path": "games/clslope.html"
+    "path": "games/clslope.html",
+    "popular": true
   },
   {
     "id": "clslope2player",
     "title": "Clslope 2 Player",
     "category": "Other",
-    "path": "games/clslope2player.html"
+    "path": "games/clslope2player.html",
+    "popular": true
   },
   {
     "id": "clslope3",
     "title": "Clslope 3",
     "category": "Other",
-    "path": "games/clslope3.html"
+    "path": "games/clslope3.html",
+    "popular": true
   },
   {
     "id": "clslopeplus",
     "title": "Clslopeplus",
     "category": "Other",
-    "path": "games/clslopeplus.html"
+    "path": "games/clslopeplus.html",
+    "popular": true
   },
   {
     "id": "clslotornot",
@@ -12110,7 +12224,17 @@
     "id": "clsmashkarts",
     "title": "Clsmashkarts",
     "category": "Racing",
-    "path": "games/clsmashkarts.html"
+    "path": "games/clsmashkarts.html",
+    "popular": true
+  },
+  {
+    "id": "clsmashkartsio",
+    "title": "Smash Karts",
+    "category": "Racing",
+    "path": "games/clsmashkartsio.html",
+    "description": "Multiplayer kart battle game. Pick up weapons, dodge missiles, and race through arenas. 3-minute matches, tons of unlockables.",
+    "popular": true,
+    "thumbnail": "assets/thumbnails/clsmashkartsio.jpg"
   },
   {
     "id": "clsmashkartsworking",
@@ -12122,7 +12246,8 @@
     "id": "clsmashremix",
     "title": "Clsmashremix",
     "category": "Fighting",
-    "path": "games/clsmashremix.html"
+    "path": "games/clsmashremix.html",
+    "popular": true
   },
   {
     "id": "clsmb12",
@@ -12410,7 +12535,8 @@
     "id": "clsonicadvance",
     "title": "Clsonicadvance",
     "category": "Sonic",
-    "path": "games/clsonicadvance.html"
+    "path": "games/clsonicadvance.html",
+    "popular": true
   },
   {
     "id": "clsonicadvance2",
@@ -12536,7 +12662,8 @@
     "id": "clsonicmania",
     "title": "Clsonicmania",
     "category": "Sonic",
-    "path": "games/clsonicmania.html"
+    "path": "games/clsonicmania.html",
+    "popular": true
   },
   {
     "id": "clsonicmaniaplus",
@@ -12608,7 +12735,8 @@
     "id": "clsonicthehedgehog",
     "title": "Clsonicthehedgehog",
     "category": "Sonic",
-    "path": "games/clsonicthehedgehog.html"
+    "path": "games/clsonicthehedgehog.html",
+    "popular": true
   },
   {
     "id": "clsonicthehedgehog2",
@@ -13016,13 +13144,15 @@
     "id": "clstickwar",
     "title": "Clstickwar",
     "category": "Other",
-    "path": "games/clstickwar.html"
+    "path": "games/clstickwar.html",
+    "popular": true
   },
   {
     "id": "clstickwar2",
     "title": "Clstickwar 2",
     "category": "Other",
-    "path": "games/clstickwar2.html"
+    "path": "games/clstickwar2.html",
+    "popular": true
   },
   {
     "id": "clstickwithit",
@@ -13136,19 +13266,22 @@
     "id": "clsubwaysurfersbarcelona",
     "title": "Clsubwaysurfersbarcelona",
     "category": "Other",
-    "path": "games/clsubwaysurfersbarcelona.html"
+    "path": "games/clsubwaysurfersbarcelona.html",
+    "popular": true
   },
   {
     "id": "clsubwaysurfersbeijing",
     "title": "Clsubwaysurfersbeijing",
     "category": "Other",
-    "path": "games/clsubwaysurfersbeijing.html"
+    "path": "games/clsubwaysurfersbeijing.html",
+    "popular": true
   },
   {
     "id": "clsubwaysurfersberlin",
     "title": "Clsubwaysurfersberlin",
     "category": "Other",
-    "path": "games/clsubwaysurfersberlin.html"
+    "path": "games/clsubwaysurfersberlin.html",
+    "popular": true
   },
   {
     "id": "clsubwaysurfersbuenosaires",
@@ -13412,7 +13545,8 @@
     "id": "clsupermario",
     "title": "Clsupermario",
     "category": "Mario",
-    "path": "games/clsupermario.html"
+    "path": "games/clsupermario.html",
+    "popular": true
   },
   {
     "id": "clsupermario3mix",
@@ -13430,7 +13564,8 @@
     "id": "clsupermario64",
     "title": "Clsupermario 64",
     "category": "Mario",
-    "path": "games/clsupermario64.html"
+    "path": "games/clsupermario64.html",
+    "popular": true
   },
   {
     "id": "clsupermario64ds",
@@ -13892,7 +14027,8 @@
     "id": "cltekken2ps1",
     "title": "Cltekken 2 Ps 1",
     "category": "Other",
-    "path": "games/cltekken2ps1.html"
+    "path": "games/cltekken2ps1.html",
+    "popular": true
   },
   {
     "id": "cltelephonetrouble",
@@ -13977,7 +14113,8 @@
     "id": "cltetris",
     "title": "Cltetris",
     "category": "Puzzle",
-    "path": "games/cltetris.html"
+    "path": "games/cltetris.html",
+    "popular": true
   },
   {
     "id": "cltetrisattack",
@@ -14511,7 +14648,8 @@
     "id": "cltunnelrush",
     "title": "Cltunnelrush",
     "category": "Other",
-    "path": "games/cltunnelrush.html"
+    "path": "games/cltunnelrush.html",
+    "popular": true
   },
   {
     "id": "cltunnelrushbetter",
@@ -14769,7 +14907,8 @@
     "id": "clvex3",
     "title": "Clvex 3",
     "category": "Other",
-    "path": "games/clvex3.html"
+    "path": "games/clvex3.html",
+    "popular": true
   },
   {
     "id": "clvex3xmas",
@@ -14781,13 +14920,15 @@
     "id": "clvex4",
     "title": "Clvex 4",
     "category": "Other",
-    "path": "games/clvex4.html"
+    "path": "games/clvex4.html",
+    "popular": true
   },
   {
     "id": "clvex5",
     "title": "Clvex 5",
     "category": "Other",
-    "path": "games/clvex5.html"
+    "path": "games/clvex5.html",
+    "popular": true
   },
   {
     "id": "clvex6",
@@ -15129,7 +15270,8 @@
     "id": "clworldshardestgame",
     "title": "Clworldshardestgame",
     "category": "Other",
-    "path": "games/clworldshardestgame.html"
+    "path": "games/clworldshardestgame.html",
+    "popular": true
   },
   {
     "id": "clworldshardestgame2",
@@ -15249,13 +15391,15 @@
     "id": "clzelda2thelegendoflink",
     "title": "Clzelda 2 Thelegendoflink",
     "category": "Other",
-    "path": "games/clzelda2thelegendoflink.html"
+    "path": "games/clzelda2thelegendoflink.html",
+    "popular": true
   },
   {
     "id": "clzeldaminishcap",
     "title": "Clzeldaminishcap",
     "category": "Other",
-    "path": "games/clzeldaminishcap.html"
+    "path": "games/clzeldaminishcap.html",
+    "popular": true
   },
   {
     "id": "clzenword",
@@ -15337,9 +15481,9 @@
   },
   {
     "id": "cl",
-    "title": "ClÊ˜",
+    "title": "ClÃŠËœ",
     "category": "Other",
-    "path": "games/clÊ˜.html"
+    "path": "games/clÃŠËœ.html"
   },
   {
     "id": "codeorg",
@@ -15573,25 +15717,29 @@
     "id": "clfnaf",
     "title": "FNAF",
     "category": "Horror",
-    "path": "games/clFNAF.html"
+    "path": "games/clFNAF.html",
+    "popular": true
   },
   {
     "id": "clfnaf2",
     "title": "FNAF 2",
     "category": "Horror",
-    "path": "games/clFNAF2.html"
+    "path": "games/clFNAF2.html",
+    "popular": true
   },
   {
     "id": "clfnaf3",
     "title": "FNAF 3",
     "category": "Horror",
-    "path": "games/clFNAF3.html"
+    "path": "games/clFNAF3.html",
+    "popular": true
   },
   {
     "id": "clfnaf4",
     "title": "FNAF 4",
     "category": "Horror",
-    "path": "games/clFNAF4.html"
+    "path": "games/clFNAF4.html",
+    "popular": true
   },
   {
     "id": "clgain-ground",
@@ -15897,27 +16045,27 @@
   },
   {
     "id": "clpok-mon-emerald-rush-edition-2-0",
-    "title": "PokÃ©mon Emerald Rush Edition (2.0)",
+    "title": "PokÃƒÂ©mon Emerald Rush Edition (2.0)",
     "category": "Other",
-    "path": "games/clPokÃ©mon Emerald Rush Edition (2.0).html"
+    "path": "games/clPokÃƒÂ©mon Emerald Rush Edition (2.0).html"
   },
   {
     "id": "clpok-mon-trade-stache-v1-1",
-    "title": "PokÃ©mon Trade& Stache (V 1.1)",
+    "title": "PokÃƒÂ©mon Trade& Stache (V 1.1)",
     "category": "Other",
-    "path": "games/clPokÃ©mon Trade&_Stache (V1.1).html"
+    "path": "games/clPokÃƒÂ©mon Trade&_Stache (V1.1).html"
   },
   {
     "id": "clpok-mon-two-v1-1",
-    "title": "PokÃ©mon TWO (v 1.1)",
+    "title": "PokÃƒÂ©mon TWO (v 1.1)",
     "category": "Other",
-    "path": "games/clPokÃ©mon TWO (v1.1).html"
+    "path": "games/clPokÃƒÂ©mon TWO (v1.1).html"
   },
   {
     "id": "clpok-monstunningsteel",
-    "title": "PokÃ©monstunningsteel",
+    "title": "PokÃƒÂ©monstunningsteel",
     "category": "Other",
-    "path": "games/clPokÃ©monstunningsteel.html"
+    "path": "games/clPokÃƒÂ©monstunningsteel.html"
   },
   {
     "id": "clpou",
@@ -16103,7 +16251,8 @@
     "id": "clstreetfighter2arcade",
     "title": "Street Fighter 2 Arcade",
     "category": "Fighting",
-    "path": "games/clStreetFighter2Arcade.html"
+    "path": "games/clStreetFighter2Arcade.html",
+    "popular": true
   },
   {
     "id": "clstreetfighter2cearcade",
@@ -16227,8 +16376,8 @@
   },
   {
     "id": "cl-oo",
-    "title": "Ã–oo",
+    "title": "Ãƒâ€“oo",
     "category": "Other",
-    "path": "games/clÃ–oo.html"
+    "path": "games/clÃƒâ€“oo.html"
   }
 ]

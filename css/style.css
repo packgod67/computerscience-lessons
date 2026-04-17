@@ -574,6 +574,22 @@ body.auth-gated .player-container {
     color: #000;
 }
 
+/* ===== Popular Category Button ===== */
+.cat-btn-popular {
+    color: #fb923c;
+    border-color: rgba(251, 146, 60, 0.4);
+}
+
+.cat-btn-popular:hover {
+    border-color: #fb923c;
+}
+
+.cat-btn-popular.active {
+    background: linear-gradient(135deg, #f97316, #ef4444);
+    border-color: #f97316;
+    color: #fff;
+}
+
 /* ===== Favorite on Player Page ===== */
 .fav-btn-player {
     font-size: 1.2rem;

@@ -127,6 +127,21 @@
         });
         categoriesContainer.appendChild(favBtnEl);
 
+        // Add Popular button (always visible, shown right after Favorites/All)
+        const popBtn = document.createElement('button');
+        popBtn.className = 'cat-btn cat-btn-popular';
+        popBtn.dataset.category = '__popular__';
+        popBtn.innerHTML = '&#128293; Popular';
+        popBtn.addEventListener('click', () => {
+            activeCategory = '__popular__';
+            updateCategoryButtons();
+            currentPage = 0;
+            gameGrid.innerHTML = '';
+            applyFilters();
+            renderPage();
+        });
+        categoriesContainer.appendChild(popBtn);
+
         const cats = [...new Set(games.map(g => g.category))].sort();
         cats.forEach(cat => {
             const btn = document.createElement('button');
@@ -167,6 +182,8 @@
             let matchesCategory;
             if (activeCategory === '__favorites__') {
                 matchesCategory = ArcadeAuth.isFavorite(g.id);
+            } else if (activeCategory === '__popular__') {
+                matchesCategory = !!g.popular;
             } else {
                 matchesCategory = activeCategory === 'all' || g.category === activeCategory;
             }
