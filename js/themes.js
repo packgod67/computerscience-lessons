@@ -105,8 +105,10 @@
     const WALLPAPER_KEY = 'arcade-wallpaper';
     const WALLPAPER_DIM_KEY = 'arcade-wallpaper-dim';
     const WALLPAPER_BLUR_KEY = 'arcade-wallpaper-blur';
+    const WALLPAPER_FIT_KEY = 'arcade-wallpaper-fit';
     const COMMUNITY_CACHE_KEY = 'arcade-community-theme-img';
     const DEFAULT_THEME = 'midnight';
+    const FIT_MODES = ['cover', 'contain', 'fill', 'tile'];
 
     let communityThemes = [];
 
@@ -117,6 +119,15 @@
     function getWallpaperBlur() {
         const v = parseFloat(localStorage.getItem(WALLPAPER_BLUR_KEY));
         return Number.isFinite(v) ? v : 2;
+    }
+    function getWallpaperFit() {
+        const v = localStorage.getItem(WALLPAPER_FIT_KEY);
+        return FIT_MODES.includes(v) ? v : 'cover';
+    }
+    function setWallpaperFit(mode) {
+        if (!FIT_MODES.includes(mode)) return;
+        localStorage.setItem(WALLPAPER_FIT_KEY, mode);
+        document.body.setAttribute('data-wallpaper-fit', mode);
     }
 
     function applyWallpaper(dataUrl) {
@@ -140,11 +151,14 @@
             overlay.style.background = `rgba(0, 0, 0, ${getWallpaperDim()})`;
             overlay.style.display = 'block';
             document.body.classList.add('has-wallpaper');
+            // Apply stored fit mode as a data attribute so CSS rules take effect
+            document.body.setAttribute('data-wallpaper-fit', getWallpaperFit());
         } else {
             el.style.backgroundImage = '';
             el.style.display = 'none';
             overlay.style.display = 'none';
             document.body.classList.remove('has-wallpaper');
+            document.body.removeAttribute('data-wallpaper-fit');
         }
     }
 
@@ -444,6 +458,36 @@
         customActions.appendChild(publishBtn);
         panelWallpaper.appendChild(customActions);
 
+        // Fit mode picker — how the image maps onto the viewport
+        const fitGroup = document.createElement('div');
+        fitGroup.className = 'theme-fit-group';
+        const fitLabel = document.createElement('div');
+        fitLabel.className = 'theme-fit-label';
+        fitLabel.textContent = 'Fit';
+        fitGroup.appendChild(fitLabel);
+        const fitButtons = document.createElement('div');
+        fitButtons.className = 'theme-fit-buttons';
+        FIT_MODES.forEach(mode => {
+            const b = document.createElement('button');
+            b.className = 'theme-fit-btn' + (getWallpaperFit() === mode ? ' active' : '');
+            b.textContent = mode.charAt(0).toUpperCase() + mode.slice(1);
+            b.title = {
+                cover: 'Fill the screen, crop edges if needed',
+                contain: 'Show the whole image, letterbox if needed',
+                fill: 'Stretch to fill (may distort)',
+                tile: 'Repeat at original size',
+            }[mode];
+            b.addEventListener('click', (e) => {
+                e.stopPropagation();
+                setWallpaperFit(mode);
+                fitButtons.querySelectorAll('.theme-fit-btn').forEach(btn => btn.classList.remove('active'));
+                b.classList.add('active');
+            });
+            fitButtons.appendChild(b);
+        });
+        fitGroup.appendChild(fitButtons);
+        panelWallpaper.appendChild(fitGroup);
+
         // Dim/blur sliders
         const sliderGroup = document.createElement('div');
         sliderGroup.className = 'theme-sliders';
@@ -630,7 +674,10 @@
         });
     }
 
-    // Apply saved theme immediately
+    // Apply saved fit mode and theme immediately (runs before DOM ready)
+    if (getCurrentTheme() === 'custom' || (getCurrentTheme() || '').startsWith('community:')) {
+        document.body && document.body.setAttribute('data-wallpaper-fit', getWallpaperFit());
+    }
     applyTheme(getCurrentTheme());
 
     // Insert picker into the page
@@ -647,6 +694,7 @@
     window.ArcadeThemes = {
         applyTheme, getCurrentTheme, THEMES,
         publishTheme, loadCommunityThemes,
-        getWallpaperDim, getWallpaperBlur
+        getWallpaperDim, getWallpaperBlur,
+        getWallpaperFit, setWallpaperFit,
     };
 })();
