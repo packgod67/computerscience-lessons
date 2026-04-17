@@ -404,10 +404,13 @@
         function renderLoggedIn() {
             const adminBadge = isAdmin() ? '<span class="auth-admin-badge">ADMIN</span>' : '';
             const approvalBtn = isAdmin() ? '<button class="auth-btn" id="approvalBtn" title="Pending Approvals">&#9998; Approvals</button>' : '';
+            const uid = currentUser ? currentUser.uid : '';
+            // data-open-profile-uid hooks into profiles.js's delegated click handler
+            // so the username opens your own profile modal when clicked.
             authArea.innerHTML = `
                 <span class="auth-user-info">
                     ${adminBadge}
-                    <span class="auth-username">${getUsername()}</span>
+                    <span class="auth-username" data-open-profile-uid="${uid}" role="button" tabindex="0" title="View my profile">${getUsername()}</span>
                     ${approvalBtn}
                     <button class="auth-btn" id="logoutBtn">Log out</button>
                 </span>`;

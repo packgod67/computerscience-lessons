@@ -177,6 +177,14 @@ body::before {
     color: var(--accent-cyan);
     font-size: 0.85rem;
     font-weight: 600;
+    cursor: pointer;
+    text-decoration: underline transparent;
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.15s;
+}
+
+.auth-username[data-open-profile-uid]:hover {
+    text-decoration-color: currentColor;
 }
 
 .auth-dropdown {
