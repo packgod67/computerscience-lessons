@@ -1,5 +1,17 @@
 [
   {
+    "id": "cl",
+    "title": "ClÃŠËœ",
+    "category": "Other",
+    "path": "games/clÃŠËœ.html"
+  },
+  {
+    "id": "cl-oo",
+    "title": "Ãƒâ€“oo",
+    "category": "Other",
+    "path": "games/clÃƒâ€“oo.html"
+  },
+  {
     "id": "cl1",
     "title": "1",
     "category": "Other",
@@ -7,26 +19,11 @@
     "thumbnail": "assets/thumbnails/cl1.jpg"
   },
   {
-    "id": "cl1on1soccer",
-    "title": "1 On 1 Soccer",
-    "category": "Sports",
-    "path": "games/cl1on1soccer.html",
-    "thumbnail": "assets/thumbnails/cl1on1soccer.jpg"
-  },
-  {
-    "id": "cl1v1lol",
-    "title": "1 V 1 Lol",
+    "id": "cl100roomsofenemies",
+    "title": "100 Rooms Of Enemies",
     "category": "Other",
-    "path": "games/cl1v1lol.html",
-    "thumbnail": "assets/thumbnails/cl1v1lol.jpg",
-    "popular": true
-  },
-  {
-    "id": "cl1v1tennis",
-    "title": "1 V 1 Tennis",
-    "category": "Sports",
-    "path": "games/cl1v1tennis.html",
-    "thumbnail": "assets/thumbnails/cl1v1tennis.jpg"
+    "path": "games/cl100RoomsOfEnemies.html",
+    "thumbnail": "assets/thumbnails/cl100roomsofenemies.jpg"
   },
   {
     "id": "cl10bullets",
@@ -50,13 +47,6 @@
     "thumbnail": "assets/thumbnails/cl10morebullets.jpg"
   },
   {
-    "id": "cl100roomsofenemies",
-    "title": "100 Rooms Of Enemies",
-    "category": "Other",
-    "path": "games/cl100RoomsOfEnemies.html",
-    "thumbnail": "assets/thumbnails/cl100roomsofenemies.jpg"
-  },
-  {
     "id": "cl12minibattles",
     "title": "12 Minibattles",
     "category": "Other",
@@ -71,25 +61,35 @@
     "thumbnail": "assets/thumbnails/cl13bones.jpg"
   },
   {
-    "id": "cl2doom",
-    "title": "2 Doom",
-    "category": "Shooting",
-    "path": "games/cl2doom.html",
-    "thumbnail": "assets/thumbnails/cl2doom.jpg"
+    "id": "cl1on1soccer",
+    "title": "1 On 1 Soccer",
+    "category": "Sports",
+    "path": "games/cl1on1soccer.html",
+    "thumbnail": "assets/thumbnails/cl1on1soccer.jpg"
   },
   {
-    "id": "cl2dshooting",
-    "title": "2 Dshooting",
-    "category": "Shooting",
-    "path": "games/cl2Dshooting.html",
-    "thumbnail": "assets/thumbnails/cl2dshooting.jpg"
+    "id": "cl1v1lol",
+    "title": "1 V 1 Lol",
+    "category": "Other",
+    "path": "games/cl1v1lol.html",
+    "thumbnail": "assets/thumbnails/cl1v1lol.jpg",
+    "popular": true
   },
   {
-    "id": "cl20smallmazes",
-    "title": "20 Smallmazes",
-    "category": "Puzzle",
-    "path": "games/cl20smallmazes.html",
-    "thumbnail": "assets/thumbnails/cl20smallmazes.jpg"
+    "id": "cl1v1space",
+    "title": "1v1 Space",
+    "category": "Other",
+    "path": "games/cl1v1space.html",
+    "description": "A 1v1 shooter with building mechanics, space edition.",
+    "thumbnail": "assets/thumbnails/cl1v1space.png",
+    "popular": true
+  },
+  {
+    "id": "cl1v1tennis",
+    "title": "1 V 1 Tennis",
+    "category": "Sports",
+    "path": "games/cl1v1tennis.html",
+    "thumbnail": "assets/thumbnails/cl1v1tennis.jpg"
   },
   {
     "id": "cl2048",
@@ -107,11 +107,32 @@
     "thumbnail": "assets/thumbnails/cl2048cupcakes.jpg"
   },
   {
+    "id": "cl20smallmazes",
+    "title": "20 Smallmazes",
+    "category": "Puzzle",
+    "path": "games/cl20smallmazes.html",
+    "thumbnail": "assets/thumbnails/cl20smallmazes.jpg"
+  },
+  {
     "id": "cl234playergame",
     "title": "234 Playergame",
     "category": "Other",
     "path": "games/cl234playergame.html",
     "thumbnail": "assets/thumbnails/cl234playergame.jpg"
+  },
+  {
+    "id": "cl2doom",
+    "title": "2 Doom",
+    "category": "Shooting",
+    "path": "games/cl2doom.html",
+    "thumbnail": "assets/thumbnails/cl2doom.jpg"
+  },
+  {
+    "id": "cl2dshooting",
+    "title": "2 Dshooting",
+    "category": "Shooting",
+    "path": "games/cl2Dshooting.html",
+    "thumbnail": "assets/thumbnails/cl2dshooting.jpg"
   },
   {
     "id": "cl3dash",
@@ -177,18 +198,18 @@
     "thumbnail": "assets/thumbnails/cl3slices2.jpg"
   },
   {
-    "id": "cl4thandgoal",
-    "title": "4 Thandgoal",
-    "category": "Other",
-    "path": "games/cl4thandgoal.html",
-    "thumbnail": "assets/thumbnails/cl4thandgoal.jpg"
-  },
-  {
     "id": "cl40xescape",
     "title": "40 Xescape",
     "category": "Other",
     "path": "games/cl40xescape.html",
     "thumbnail": "assets/thumbnails/cl40xescape.jpg"
+  },
+  {
+    "id": "cl4thandgoal",
+    "title": "4 Thandgoal",
+    "category": "Other",
+    "path": "games/cl4thandgoal.html",
+    "thumbnail": "assets/thumbnails/cl4thandgoal.jpg"
   },
   {
     "id": "cl500calibercontractz",
@@ -233,18 +254,18 @@
     "thumbnail": "assets/thumbnails/cl8ballpool.jpg"
   },
   {
-    "id": "cl90in1nes",
-    "title": "90 In 1 Nes",
-    "category": "Retro",
-    "path": "games/cl90in1nes.html",
-    "thumbnail": "assets/thumbnails/cl90in1nes.jpg"
-  },
-  {
     "id": "cl9007199254740992",
     "title": "9007199254740992",
     "category": "Other",
     "path": "games/cl9007199254740992.html",
     "thumbnail": "assets/thumbnails/cl9007199254740992.jpg"
+  },
+  {
+    "id": "cl90in1nes",
+    "title": "90 In 1 Nes",
+    "category": "Retro",
+    "path": "games/cl90in1nes.html",
+    "thumbnail": "assets/thumbnails/cl90in1nes.jpg"
   },
   {
     "id": "cl99balls",
@@ -266,150 +287,6 @@
     "category": "Other",
     "path": "games/clA Walk in The Forest (v1.0).html",
     "thumbnail": "assets/thumbnails/cla-walk-in-the-forest-v1-0.jpg"
-  },
-  {
-    "id": "clacko-s-mach-bike-challenge-v1-0",
-    "title": "Acko S Mach Bike Challenge (v 1.0)",
-    "category": "Racing",
-    "path": "games/clAcko_s Mach Bike Challenge (v1.0).html",
-    "thumbnail": "assets/thumbnails/clacko-s-mach-bike-challenge-v1-0.jpg"
-  },
-  {
-    "id": "cladarkroom",
-    "title": "Adark Room",
-    "category": "Other",
-    "path": "games/clADarkRoom.html",
-    "thumbnail": "assets/thumbnails/cladarkroom.jpg"
-  },
-  {
-    "id": "cladofai",
-    "title": "ADOFAI",
-    "category": "Other",
-    "path": "games/clADOFAI.html",
-    "thumbnail": "assets/thumbnails/cladofai.jpg"
-  },
-  {
-    "id": "cladventurecapatalist",
-    "title": "Adventure Capatalist",
-    "category": "Platformer",
-    "path": "games/clAdventureCapatalist.html"
-  },
-  {
-    "id": "claltered-beast",
-    "title": "Altered Beast",
-    "category": "Other",
-    "path": "games/clAltered Beast.html",
-    "thumbnail": "assets/thumbnails/claltered-beast.jpg"
-  },
-  {
-    "id": "clastrosdreamland",
-    "title": "Astros Dreamland",
-    "category": "Other",
-    "path": "games/clAstrosDreamland.html",
-    "thumbnail": "assets/thumbnails/clastrosdreamland.jpg"
-  },
-  {
-    "id": "clawesomepirates",
-    "title": "Awesome Pirates",
-    "category": "Other",
-    "path": "games/clAwesomePirates.html",
-    "thumbnail": "assets/thumbnails/clawesomepirates.jpg"
-  },
-  {
-    "id": "clb3313",
-    "title": "B 3313",
-    "category": "Other",
-    "path": "games/clB3313.html",
-    "thumbnail": "assets/thumbnails/clb3313.jpg"
-  },
-  {
-    "id": "clbfdibranches",
-    "title": "Bfdibranches",
-    "category": "Other",
-    "path": "games/clBFDIBranches.html",
-    "thumbnail": "assets/thumbnails/clbfdibranches.jpg"
-  },
-  {
-    "id": "clbig-time-butter-baron",
-    "title": "Big Time Butter Baron",
-    "category": "Other",
-    "path": "games/clBig_Time_Butter_Baron.html",
-    "thumbnail": "assets/thumbnails/clbig-time-butter-baron.jpg"
-  },
-  {
-    "id": "clbmx2",
-    "title": "BMX 2",
-    "category": "Racing",
-    "path": "games/clBMX2.html",
-    "thumbnail": "assets/thumbnails/clbmx2.jpg"
-  },
-  {
-    "id": "clbonanza-bros",
-    "title": "Bonanza Bros",
-    "category": "Other",
-    "path": "games/clBonanza-Bros.html",
-    "thumbnail": "assets/thumbnails/clbonanza-bros.jpg"
-  },
-  {
-    "id": "clbountyofone",
-    "title": "Bounty Of One",
-    "category": "Other",
-    "path": "games/clBountyOfOne.html"
-  },
-  {
-    "id": "clbrawlstars",
-    "title": "Brawlstars",
-    "category": "Fighting",
-    "path": "games/clBrawlstars.html"
-  },
-  {
-    "id": "clbtd1",
-    "title": "BTD 1",
-    "category": "Strategy",
-    "path": "games/clBTD1.html",
-    "thumbnail": "assets/thumbnails/clbtd1.jpg"
-  },
-  {
-    "id": "clbusterjam",
-    "title": "Buster Jam",
-    "category": "Other",
-    "path": "games/clBusterJam.html",
-    "thumbnail": "assets/thumbnails/clbusterjam.jpg"
-  },
-  {
-    "id": "clcartoonnetworktabletennisultimatetournament",
-    "title": "Cartoon Network Table Tennis Ultimate Tournament",
-    "category": "Racing",
-    "path": "games/clCartoonNetworkTableTennisUltimateTournament.html",
-    "thumbnail": "assets/thumbnails/clcartoonnetworktabletennisultimatetournament.jpg"
-  },
-  {
-    "id": "clceliasstupidromhack",
-    "title": "Celias Stupid Romhack",
-    "category": "Other",
-    "path": "games/clCeliasStupidROMHack.html",
-    "thumbnail": "assets/thumbnails/clceliasstupidromhack.jpg"
-  },
-  {
-    "id": "clcelltosingularity",
-    "title": "Cell To Singularity",
-    "category": "Other",
-    "path": "games/clCellToSingularity.html",
-    "thumbnail": "assets/thumbnails/clcelltosingularity.jpg"
-  },
-  {
-    "id": "clchickencs",
-    "title": "Chicken CS",
-    "category": "Other",
-    "path": "games/clChickenCS.html",
-    "thumbnail": "assets/thumbnails/clchickencs.jpg"
-  },
-  {
-    "id": "clcircloo2",
-    "title": "Circlo O 2",
-    "category": "Other",
-    "path": "games/clCircloO2.html",
-    "thumbnail": "assets/thumbnails/clcircloo2.jpg"
   },
   {
     "id": "clabandoned3",
@@ -489,6 +366,20 @@
     "thumbnail": "assets/thumbnails/clachillies2.jpg"
   },
   {
+    "id": "clacko-s-mach-bike-challenge-v1-0",
+    "title": "Acko S Mach Bike Challenge (v 1.0)",
+    "category": "Racing",
+    "path": "games/clAcko_s Mach Bike Challenge (v1.0).html",
+    "thumbnail": "assets/thumbnails/clacko-s-mach-bike-challenge-v1-0.jpg"
+  },
+  {
+    "id": "cladarkroom",
+    "title": "Adark Room",
+    "category": "Other",
+    "path": "games/clADarkRoom.html",
+    "thumbnail": "assets/thumbnails/cladarkroom.jpg"
+  },
+  {
     "id": "cladatewithdeath",
     "title": "Cladatewithdeath",
     "category": "Other",
@@ -501,6 +392,13 @@
     "category": "Other",
     "path": "games/cladayintheoffice.html",
     "thumbnail": "assets/thumbnails/cladayintheoffice.jpg"
+  },
+  {
+    "id": "cladofai",
+    "title": "ADOFAI",
+    "category": "Other",
+    "path": "games/clADOFAI.html",
+    "thumbnail": "assets/thumbnails/cladofai.jpg"
   },
   {
     "id": "cladvancewars",
@@ -522,6 +420,12 @@
     "category": "Other",
     "path": "games/cladventneon.html",
     "thumbnail": "assets/thumbnails/cladventneon.jpg"
+  },
+  {
+    "id": "cladventurecapatalist",
+    "title": "Adventure Capatalist",
+    "category": "Platformer",
+    "path": "games/clAdventureCapatalist.html"
   },
   {
     "id": "cladventurecapitalist",
@@ -668,6 +572,13 @@
     "category": "Other",
     "path": "games/clallocation.html",
     "thumbnail": "assets/thumbnails/clallocation.jpg"
+  },
+  {
+    "id": "claltered-beast",
+    "title": "Altered Beast",
+    "category": "Other",
+    "path": "games/clAltered Beast.html",
+    "thumbnail": "assets/thumbnails/claltered-beast.jpg"
   },
   {
     "id": "clamaze",
@@ -942,6 +853,13 @@
     "thumbnail": "assets/thumbnails/clasteroidsalt.jpg"
   },
   {
+    "id": "clastrosdreamland",
+    "title": "Astros Dreamland",
+    "category": "Other",
+    "path": "games/clAstrosDreamland.html",
+    "thumbnail": "assets/thumbnails/clastrosdreamland.jpg"
+  },
+  {
     "id": "clastynax",
     "title": "Clastynax",
     "category": "Other",
@@ -980,6 +898,13 @@
     "path": "games/claviamastersbuggy.html"
   },
   {
+    "id": "clawesomepirates",
+    "title": "Awesome Pirates",
+    "category": "Other",
+    "path": "games/clAwesomePirates.html",
+    "thumbnail": "assets/thumbnails/clawesomepirates.jpg"
+  },
+  {
     "id": "clawesomeplanes",
     "title": "Clawesomeplanes",
     "category": "Retro",
@@ -1013,6 +938,13 @@
     "category": "Sports",
     "path": "games/claxisfootballleague.html",
     "thumbnail": "assets/thumbnails/claxisfootballleague.jpg"
+  },
+  {
+    "id": "clb3313",
+    "title": "B 3313",
+    "category": "Other",
+    "path": "games/clB3313.html",
+    "thumbnail": "assets/thumbnails/clb3313.jpg"
   },
   {
     "id": "clb3313unabandoneda2",
@@ -1520,6 +1452,20 @@
     "thumbnail": "assets/thumbnails/clbfdia5b.jpg"
   },
   {
+    "id": "clbfdibranches",
+    "title": "Bfdibranches",
+    "category": "Other",
+    "path": "games/clBFDIBranches.html",
+    "thumbnail": "assets/thumbnails/clbfdibranches.jpg"
+  },
+  {
+    "id": "clbig-time-butter-baron",
+    "title": "Big Time Butter Baron",
+    "category": "Other",
+    "path": "games/clBig_Time_Butter_Baron.html",
+    "thumbnail": "assets/thumbnails/clbig-time-butter-baron.jpg"
+  },
+  {
     "id": "clbigflappytowertinysquare",
     "title": "Clbigflappytowertinysquare",
     "category": "Other",
@@ -1540,6 +1486,14 @@
     "category": "Other",
     "path": "games/clbigneontowertinysquare.html",
     "thumbnail": "assets/thumbnails/clbigneontowertinysquare.jpg"
+  },
+  {
+    "id": "clbigredbutton",
+    "title": "The Big Red Button",
+    "category": "Other",
+    "path": "games/clbigredbutton.html",
+    "description": "Do NOT press the big red button. Or do. It is up to you.",
+    "thumbnail": "assets/thumbnails/clbigredbutton.png"
   },
   {
     "id": "clbigshotboxing2",
@@ -1770,6 +1724,50 @@
     "thumbnail": "assets/thumbnails/clbloons2.jpg"
   },
   {
+    "id": "clbloonspp1",
+    "title": "Clbloonspp 1",
+    "category": "Other",
+    "path": "games/clbloonspp1.html",
+    "thumbnail": "assets/thumbnails/clbloonspp1.jpg"
+  },
+  {
+    "id": "clbloonspp2",
+    "title": "Clbloonspp 2",
+    "category": "Other",
+    "path": "games/clbloonspp2.html",
+    "thumbnail": "assets/thumbnails/clbloonspp2.jpg"
+  },
+  {
+    "id": "clbloonspp3",
+    "title": "Clbloonspp 3",
+    "category": "Other",
+    "path": "games/clbloonspp3.html",
+    "thumbnail": "assets/thumbnails/clbloonspp3.jpg"
+  },
+  {
+    "id": "clbloonspp4",
+    "title": "Clbloonspp 4",
+    "category": "Other",
+    "path": "games/clbloonspp4.html",
+    "thumbnail": "assets/thumbnails/clbloonspp4.jpg"
+  },
+  {
+    "id": "clbloonspp5",
+    "title": "Clbloonspp 5",
+    "category": "Other",
+    "path": "games/clbloonspp5.html",
+    "thumbnail": "assets/thumbnails/clbloonspp5.jpg"
+  },
+  {
+    "id": "clbloonstd",
+    "title": "Bloons TD",
+    "category": "Strategy",
+    "path": "games/clbloonstd.html",
+    "description": "The original Bloons Tower Defense. Pop balloons before they escape your gauntlet of towers.",
+    "thumbnail": "assets/thumbnails/clbloonstd.png",
+    "popular": true
+  },
+  {
     "id": "clbloonstd1",
     "title": "Clbloons TD 1",
     "category": "Strategy",
@@ -1817,41 +1815,6 @@
     "thumbnail": "assets/thumbnails/clbloonstd6scratch.jpg"
   },
   {
-    "id": "clbloonspp1",
-    "title": "Clbloonspp 1",
-    "category": "Other",
-    "path": "games/clbloonspp1.html",
-    "thumbnail": "assets/thumbnails/clbloonspp1.jpg"
-  },
-  {
-    "id": "clbloonspp2",
-    "title": "Clbloonspp 2",
-    "category": "Other",
-    "path": "games/clbloonspp2.html",
-    "thumbnail": "assets/thumbnails/clbloonspp2.jpg"
-  },
-  {
-    "id": "clbloonspp3",
-    "title": "Clbloonspp 3",
-    "category": "Other",
-    "path": "games/clbloonspp3.html",
-    "thumbnail": "assets/thumbnails/clbloonspp3.jpg"
-  },
-  {
-    "id": "clbloonspp4",
-    "title": "Clbloonspp 4",
-    "category": "Other",
-    "path": "games/clbloonspp4.html",
-    "thumbnail": "assets/thumbnails/clbloonspp4.jpg"
-  },
-  {
-    "id": "clbloonspp5",
-    "title": "Clbloonspp 5",
-    "category": "Other",
-    "path": "games/clbloonspp5.html",
-    "thumbnail": "assets/thumbnails/clbloonspp5.jpg"
-  },
-  {
     "id": "clbloxorz",
     "title": "Clbloxorz",
     "category": "Other",
@@ -1871,6 +1834,13 @@
     "category": "Other",
     "path": "games/clblumgirocket.html",
     "thumbnail": "assets/thumbnails/clblumgirocket.jpg"
+  },
+  {
+    "id": "clbmx2",
+    "title": "BMX 2",
+    "category": "Racing",
+    "path": "games/clBMX2.html",
+    "thumbnail": "assets/thumbnails/clbmx2.jpg"
   },
   {
     "id": "clbntts",
@@ -1943,6 +1913,13 @@
     "thumbnail": "assets/thumbnails/clbombermanworld.jpg"
   },
   {
+    "id": "clbonanza-bros",
+    "title": "Bonanza Bros",
+    "category": "Other",
+    "path": "games/clBonanza-Bros.html",
+    "thumbnail": "assets/thumbnails/clbonanza-bros.jpg"
+  },
+  {
     "id": "clboomslingers",
     "title": "Clboomslingers",
     "category": "Other",
@@ -1995,6 +1972,12 @@
     "thumbnail": "assets/thumbnails/clbouncymotors.jpg"
   },
   {
+    "id": "clbountyofone",
+    "title": "Bounty Of One",
+    "category": "Other",
+    "path": "games/clBountyOfOne.html"
+  },
+  {
     "id": "clbowlalt",
     "title": "Clbowlalt",
     "category": "Other",
@@ -2007,6 +1990,14 @@
     "category": "Other",
     "path": "games/clbowmaster.html",
     "thumbnail": "assets/thumbnails/clbowmaster.jpg"
+  },
+  {
+    "id": "clboxhead2play",
+    "title": "Boxhead 2 Play",
+    "category": "Shooting",
+    "path": "games/clboxhead2play.html",
+    "description": "Classic 2-player zombie shooter with endless waves of boxy undead.",
+    "thumbnail": "assets/thumbnails/clboxhead2play.png"
   },
   {
     "id": "clboxhead2playrooms",
@@ -2051,6 +2042,12 @@
     "thumbnail": "assets/thumbnails/clbrainrot.jpg"
   },
   {
+    "id": "clbrawlstars",
+    "title": "Brawlstars",
+    "category": "Fighting",
+    "path": "games/clBrawlstars.html"
+  },
+  {
     "id": "clbreadskate",
     "title": "Clbreadskate",
     "category": "Other",
@@ -2058,11 +2055,26 @@
     "thumbnail": "assets/thumbnails/clbreadskate.jpg"
   },
   {
+    "id": "clbreakingthebank",
+    "title": "Breaking the Bank",
+    "category": "Puzzle",
+    "path": "games/clbreakingthebank.html",
+    "description": "Henry Stickmin is breaking into a bank. Choose wisely or face comedic failure.",
+    "thumbnail": "assets/thumbnails/clbreakingthebank.png"
+  },
+  {
     "id": "clbridgerace",
     "title": "Clbridgerace",
     "category": "Racing",
     "path": "games/clbridgerace.html",
     "thumbnail": "assets/thumbnails/clbridgerace.jpg"
+  },
+  {
+    "id": "clbtd1",
+    "title": "BTD 1",
+    "category": "Strategy",
+    "path": "games/clBTD1.html",
+    "thumbnail": "assets/thumbnails/clbtd1.jpg"
   },
   {
     "id": "clbtd5",
@@ -2226,11 +2238,25 @@
     "thumbnail": "assets/thumbnails/clbushidoblade.jpg"
   },
   {
+    "id": "clbusterjam",
+    "title": "Buster Jam",
+    "category": "Other",
+    "path": "games/clBusterJam.html",
+    "thumbnail": "assets/thumbnails/clbusterjam.jpg"
+  },
+  {
     "id": "clcactusmccoy",
     "title": "Clcactusmccoy",
     "category": "Other",
     "path": "games/clcactusmccoy.html",
     "thumbnail": "assets/thumbnails/clcactusmccoy.jpg"
+  },
+  {
+    "id": "clcactusmccoy-1",
+    "title": "Clcactusmccoy(1)",
+    "category": "Other",
+    "path": "games/clcactusmccoy(1).html",
+    "thumbnail": "assets/thumbnails/clcactusmccoy-1.jpg"
   },
   {
     "id": "clcactusmccoy2",
@@ -2252,13 +2278,6 @@
     "category": "Other",
     "path": "games/clcactusmccoy2(2).html",
     "thumbnail": "assets/thumbnails/clcactusmccoy2-2.jpg"
-  },
-  {
-    "id": "clcactusmccoy-1",
-    "title": "Clcactusmccoy(1)",
-    "category": "Other",
-    "path": "games/clcactusmccoy(1).html",
-    "thumbnail": "assets/thumbnails/clcactusmccoy-1.jpg"
   },
   {
     "id": "clcallofbattle",
@@ -2289,11 +2308,27 @@
     "thumbnail": "assets/thumbnails/clcannonballs3d.jpg"
   },
   {
+    "id": "clcannonbasketball4",
+    "title": "Cannon Basketball 4",
+    "category": "Sports",
+    "path": "games/clcannonbasketball4.html",
+    "description": "Launch a basketball through physics puzzles to score in the hoop.",
+    "thumbnail": "assets/thumbnails/clcannonbasketball4.png"
+  },
+  {
     "id": "clcannonfodder",
     "title": "Clcannonfodder",
     "category": "Other",
     "path": "games/clcannonfodder.html",
     "thumbnail": "assets/thumbnails/clcannonfodder.jpg"
+  },
+  {
+    "id": "clcanyondefense",
+    "title": "Canyon Defense",
+    "category": "Strategy",
+    "path": "games/clcanyondefense.html",
+    "description": "Defend the canyon from waves of enemy tanks with your own tower placements.",
+    "thumbnail": "assets/thumbnails/clcanyondefense.png"
   },
   {
     "id": "clcaptainlang",
@@ -2364,6 +2399,13 @@
     "category": "Racing",
     "path": "games/clcarstuntsdriving.html",
     "thumbnail": "assets/thumbnails/clcarstuntsdriving.jpg"
+  },
+  {
+    "id": "clcartoonnetworktabletennisultimatetournament",
+    "title": "Cartoon Network Table Tennis Ultimate Tournament",
+    "category": "Racing",
+    "path": "games/clCartoonNetworkTableTennisUltimateTournament.html",
+    "thumbnail": "assets/thumbnails/clcartoonnetworktabletennisultimatetournament.jpg"
   },
   {
     "id": "clcastaway",
@@ -2493,6 +2535,13 @@
     "thumbnail": "assets/thumbnails/clcelestemariodx.jpg"
   },
   {
+    "id": "clceliasstupidromhack",
+    "title": "Celias Stupid Romhack",
+    "category": "Other",
+    "path": "games/clCeliasStupidROMHack.html",
+    "thumbnail": "assets/thumbnails/clceliasstupidromhack.jpg"
+  },
+  {
     "id": "clcellardoor",
     "title": "Clcellardoor",
     "category": "Other",
@@ -2500,11 +2549,35 @@
     "thumbnail": "assets/thumbnails/clcellardoor.jpg"
   },
   {
+    "id": "clcellmachine",
+    "title": "Cell Machine",
+    "category": "Puzzle",
+    "path": "games/clcellmachine.html",
+    "description": "Sandbox puzzle game where cells with different behaviors interact. Viral indie hit.",
+    "thumbnail": "assets/thumbnails/clcellmachine.png",
+    "popular": true
+  },
+  {
+    "id": "clcelltosingularity",
+    "title": "Cell To Singularity",
+    "category": "Other",
+    "path": "games/clCellToSingularity.html",
+    "thumbnail": "assets/thumbnails/clcelltosingularity.jpg"
+  },
+  {
     "id": "clchainofmemories",
     "title": "Clchainofmemories",
     "category": "Other",
     "path": "games/clchainofmemories.html",
     "thumbnail": "assets/thumbnails/clchainofmemories.jpg"
+  },
+  {
+    "id": "clchampionarcher",
+    "title": "Champion Archer",
+    "category": "Other",
+    "path": "games/clchampionarcher.html",
+    "description": "Medieval arrow-shooting tournament game. Upgrade your bow, defeat the champion.",
+    "thumbnail": "assets/thumbnails/clchampionarcher.png"
   },
   {
     "id": "clchaosfaction2",
@@ -2563,6 +2636,13 @@
     "thumbnail": "assets/thumbnails/clchibiknight.jpg"
   },
   {
+    "id": "clchickencs",
+    "title": "Chicken CS",
+    "category": "Other",
+    "path": "games/clChickenCS.html",
+    "thumbnail": "assets/thumbnails/clchickencs.jpg"
+  },
+  {
     "id": "clchickenscream",
     "title": "Clchickenscream",
     "category": "Other",
@@ -2603,6 +2683,21 @@
     "category": "Other",
     "path": "games/clchuzzle.html",
     "thumbnail": "assets/thumbnails/clchuzzle.jpg"
+  },
+  {
+    "id": "clcirclo",
+    "title": "Circlo",
+    "category": "Puzzle",
+    "path": "games/clcirclo.html",
+    "description": "Minimalist circular puzzle game.",
+    "thumbnail": "assets/thumbnails/clcirclo.png"
+  },
+  {
+    "id": "clcircloo2",
+    "title": "Circlo O 2",
+    "category": "Other",
+    "path": "games/clCircloO2.html",
+    "thumbnail": "assets/thumbnails/clcircloo2.jpg"
   },
   {
     "id": "clciviballs",
@@ -2879,6 +2974,14 @@
     "thumbnail": "assets/thumbnails/clconkersbadfurday.jpg"
   },
   {
+    "id": "clconnect3",
+    "title": "Connect 3",
+    "category": "Puzzle",
+    "path": "games/clconnect3.html",
+    "description": "Four-in-a-row style board game, simplified to three.",
+    "thumbnail": "assets/thumbnails/clconnect3.png"
+  },
+  {
     "id": "clcontra",
     "title": "Clcontra",
     "category": "Other",
@@ -3129,6 +3232,15 @@
     "path": "games/clcrazytaxigba.html"
   },
   {
+    "id": "clcreativekillchamber",
+    "title": "Creative Kill Chamber",
+    "category": "Shooting",
+    "path": "games/clcreativekillchamber.html",
+    "description": "Point-and-click chamber escape. Take out the guards with creativity.",
+    "thumbnail": "assets/thumbnails/clcreativekillchamber.png",
+    "popular": true
+  },
+  {
     "id": "clcreaturecardidle",
     "title": "Clcreaturecardidle",
     "category": "Racing",
@@ -3172,6 +3284,12 @@
     "path": "games/clcrunchball3000.html"
   },
   {
+    "id": "clcrystalcastles",
+    "title": "Crystal Castles",
+    "category": "Other",
+    "path": "games/clCrystalCastles.html"
+  },
+  {
     "id": "clcs1-6",
     "title": "Clcs 1.6",
     "category": "Other",
@@ -3200,6 +3318,23 @@
     "title": "Clctgpnitro",
     "category": "Other",
     "path": "games/clctgpnitro.html"
+  },
+  {
+    "id": "clctr",
+    "title": "CTR",
+    "category": "Racing",
+    "path": "games/clctr.html",
+    "description": "Crash Team Racing style kart combat.",
+    "thumbnail": "assets/thumbnails/clctr.png"
+  },
+  {
+    "id": "clcubefield",
+    "title": "Cubefield",
+    "category": "Other",
+    "path": "games/clcubefield.html",
+    "description": "The iconic endless cube-dodging game. Reflex-testing and hypnotic.",
+    "thumbnail": "assets/thumbnails/clcubefield.png",
+    "popular": true
   },
   {
     "id": "clcurveball",
@@ -3400,6 +3535,15 @@
     "path": "games/cldeadzed2.html"
   },
   {
+    "id": "cldealornodeal",
+    "title": "Deal or No Deal",
+    "category": "Other",
+    "path": "games/cldealornodeal.html",
+    "description": "The classic TV briefcase gameshow. Deal, or no deal?",
+    "thumbnail": "assets/thumbnails/cldealornodeal.png",
+    "popular": true
+  },
+  {
     "id": "cldeathchase",
     "title": "Cldeathchase",
     "category": "Other",
@@ -3410,6 +3554,15 @@
     "title": "Cldeathrun",
     "category": "Platformer",
     "path": "games/cldeathrun.html"
+  },
+  {
+    "id": "cldeathrun3d",
+    "title": "Death Run 3D",
+    "category": "Platformer",
+    "path": "games/cldeathrun3d.html",
+    "description": "Endless runner through a neon tunnel of spikes. Fast and brutal.",
+    "thumbnail": "assets/thumbnails/cldeathrun3d.png",
+    "popular": true
   },
   {
     "id": "cldeblob2",
@@ -3458,6 +3611,14 @@
     "title": "Cldeepsleep",
     "category": "Other",
     "path": "games/cldeepsleep.html"
+  },
+  {
+    "id": "cldefendthetank",
+    "title": "Defend the Tank",
+    "category": "Strategy",
+    "path": "games/cldefendthetank.html",
+    "description": "Protect your tank from waves of enemies.",
+    "thumbnail": "assets/thumbnails/cldefendthetank.png"
   },
   {
     "id": "cldefendyourcastle",
@@ -3623,6 +3784,12 @@
     "title": "Cldkccompetitioncart",
     "category": "Racing",
     "path": "games/cldkccompetitioncart.html"
+  },
+  {
+    "id": "cldknescollection",
+    "title": "Dknescollection",
+    "category": "Retro",
+    "path": "games/clDKNESCollection.html"
   },
   {
     "id": "cldoblox",
@@ -3820,6 +3987,14 @@
     "path": "games/cldoubledribble.html"
   },
   {
+    "id": "cldoublewires",
+    "title": "Double Wires",
+    "category": "Platformer",
+    "path": "games/cldoublewires.html",
+    "description": "Swing through platformer levels using two grappling hooks.",
+    "thumbnail": "assets/thumbnails/cldoublewires.png"
+  },
+  {
     "id": "cldouchebaglife",
     "title": "Cldouchebaglife",
     "category": "Other",
@@ -3844,6 +4019,24 @@
     "path": "games/cldragonballadvance.html"
   },
   {
+    "id": "cldragonballzthelegacyofgoku",
+    "title": "Dragon Ball Zthe Legacyof Goku",
+    "category": "Fighting",
+    "path": "games/clDragonBallZTheLegacyofGoku.html"
+  },
+  {
+    "id": "cldragonquestix",
+    "title": "Dragon Quest IX",
+    "category": "Other",
+    "path": "games/clDragonQuestIX.html"
+  },
+  {
+    "id": "cldragonxclient",
+    "title": "Dragonxclient",
+    "category": "Other",
+    "path": "games/clDragonxclient.html"
+  },
+  {
     "id": "cldrawclimber",
     "title": "Cldrawclimber",
     "category": "Other",
@@ -3860,6 +4053,14 @@
     "title": "Cldrawntolife 2",
     "category": "Other",
     "path": "games/cldrawntolife2.html"
+  },
+  {
+    "id": "cldrawthehill",
+    "title": "Draw the Hill",
+    "category": "Other",
+    "path": "games/cldrawthehill.html",
+    "description": "Draw a hill to roll your character to the finish.",
+    "thumbnail": "assets/thumbnails/cldrawthehill.png"
   },
   {
     "id": "cldrawtheline",
@@ -3961,6 +4162,15 @@
     "title": "Clducklife",
     "category": "Other",
     "path": "games/clducklife.html"
+  },
+  {
+    "id": "clducklife1",
+    "title": "Duck Life",
+    "category": "Simulation",
+    "path": "games/clducklife1.html",
+    "description": "Train your duckling to run, swim, fly and climb, then compete in the championship.",
+    "thumbnail": "assets/thumbnails/clducklife1.png",
+    "popular": true
   },
   {
     "id": "clducklife2",
@@ -4089,10 +4299,66 @@
     "path": "games/cldynamiteheaddy.html"
   },
   {
+    "id": "cleaglercraft-alpha-126-offline",
+    "title": "Eaglercraft Alpha 126 Offline",
+    "category": "Minecraft",
+    "path": "games/clEaglercraft-Alpha-126-Offline.html",
+    "popular": true
+  },
+  {
+    "id": "cleaglercraft-beta-1-3-offline",
+    "title": "Eaglercraft Beta 1.3 Offline",
+    "category": "Minecraft",
+    "path": "games/clEaglercraft-Beta-1.3-Offline.html",
+    "popular": true
+  },
+  {
+    "id": "cleaglercraft-beta-13-offline",
+    "title": "Eaglercraft Beta 13 Offline",
+    "category": "Minecraft",
+    "path": "games/clEaglercraft-Beta-13-Offline.html",
+    "popular": true
+  },
+  {
+    "id": "cleaglercraft-indev-offline",
+    "title": "Eaglercraft Indev Offline",
+    "category": "Minecraft",
+    "path": "games/clEaglercraft-Indev-Offline.html",
+    "popular": true
+  },
+  {
+    "id": "cleaglercraft-indev-offline-1",
+    "title": "Eaglercraft Indev Offline(1)",
+    "category": "Minecraft",
+    "path": "games/clEaglercraft-Indev-Offline(1).html",
+    "popular": true
+  },
+  {
+    "id": "cleaglercraft-indev-offline-2",
+    "title": "Eaglercraft Indev Offline(2)",
+    "category": "Minecraft",
+    "path": "games/clEaglercraft-Indev-Offline(2).html",
+    "popular": true
+  },
+  {
     "id": "cleaglercraft152",
     "title": "Cleaglercraft 152",
     "category": "Minecraft",
     "path": "games/cleaglercraft152.html",
+    "popular": true
+  },
+  {
+    "id": "cleaglercraftl-19-v0-7-0-offline-signed",
+    "title": "Eaglercraft L 19 V 0 7 0 Offline Signed",
+    "category": "Minecraft",
+    "path": "games/clEaglercraftL_19_v0_7_0_Offline_Signed.html",
+    "popular": true
+  },
+  {
+    "id": "cleaglercraftl-19-v0-7-0-offline-signed-1",
+    "title": "Eaglercraft L 19 V 0 7 0 Offline Signed(1)",
+    "category": "Minecraft",
+    "path": "games/clEaglercraftL_19_v0_7_0_Offline_Signed(1).html",
     "popular": true
   },
   {
@@ -4107,6 +4373,20 @@
     "title": "Cleaglercraftshadow",
     "category": "Minecraft",
     "path": "games/cleaglercraftshadow.html",
+    "popular": true
+  },
+  {
+    "id": "cleaglercraftx-188u29",
+    "title": "Eaglercraft X 188 U 29",
+    "category": "Minecraft",
+    "path": "games/clEaglercraftX-188u29.html",
+    "popular": true
+  },
+  {
+    "id": "cleaglercraftx188-u29",
+    "title": "Eaglercraft X 188(u 29)",
+    "category": "Minecraft",
+    "path": "games/clEaglercraftX188(u29).html",
     "popular": true
   },
   {
@@ -4248,6 +4528,15 @@
     "path": "games/clelasticface.html"
   },
   {
+    "id": "clelasticman",
+    "title": "Elastic Man",
+    "category": "Simulation",
+    "path": "games/clelasticman.html",
+    "description": "Stretch and pull a face that is unreasonably elastic. Oddly satisfying.",
+    "thumbnail": "assets/thumbnails/clelasticman.png",
+    "popular": true
+  },
+  {
     "id": "clelectricman2",
     "title": "Clelectricman 2",
     "category": "Other",
@@ -4282,6 +4571,14 @@
     "title": "Clendacopia",
     "category": "Other",
     "path": "games/clendacopia.html"
+  },
+  {
+    "id": "clendlesswar3",
+    "title": "Endless War 3",
+    "category": "Shooting",
+    "path": "games/clendlesswar3.html",
+    "description": "WWII endless-wave shooter.",
+    "thumbnail": "assets/thumbnails/clendlesswar3.png"
   },
   {
     "id": "clendlesswar4",
@@ -4567,6 +4864,12 @@
     "path": "games/clfeedus5.html"
   },
   {
+    "id": "clff3",
+    "title": "FF 3",
+    "category": "Other",
+    "path": "games/clFF3.html"
+  },
+  {
     "id": "clff6",
     "title": "Clff 6",
     "category": "Other",
@@ -4585,10 +4888,124 @@
     "path": "games/clffmysticquest.html"
   },
   {
+    "id": "clffsonic1",
+    "title": "Ffsonic 1",
+    "category": "Sonic",
+    "path": "games/clFFsonic1.html"
+  },
+  {
+    "id": "clffsonic2",
+    "title": "Ffsonic 2",
+    "category": "Sonic",
+    "path": "games/clFFsonic2.html"
+  },
+  {
+    "id": "clffsonic3",
+    "title": "Ffsonic 3",
+    "category": "Sonic",
+    "path": "games/clFFsonic3.html"
+  },
+  {
+    "id": "clffsonic4",
+    "title": "Ffsonic 4",
+    "category": "Sonic",
+    "path": "games/clFFsonic4.html"
+  },
+  {
+    "id": "clffsonic5",
+    "title": "Ffsonic 5",
+    "category": "Sonic",
+    "path": "games/clFFsonic5.html"
+  },
+  {
+    "id": "clffsonic61",
+    "title": "Ffsonic 61",
+    "category": "Sonic",
+    "path": "games/clFFsonic61.html"
+  },
+  {
+    "id": "clffsonic62",
+    "title": "Ffsonic 62",
+    "category": "Sonic",
+    "path": "games/clFFsonic62.html"
+  },
+  {
+    "id": "clfifa07",
+    "title": "FIFA 07",
+    "category": "Other",
+    "path": "games/clFIFA07.html"
+  },
+  {
+    "id": "clfifa10",
+    "title": "FIFA 10",
+    "category": "Other",
+    "path": "games/clFIFA10.html"
+  },
+  {
+    "id": "clfifa11",
+    "title": "FIFA 11",
+    "category": "Other",
+    "path": "games/clFIFA11.html"
+  },
+  {
     "id": "clfifa2000",
     "title": "Clfifa 2000",
     "category": "Other",
     "path": "games/clfifa2000.html"
+  },
+  {
+    "id": "clfifa2000-1",
+    "title": "FIFA 2000(1)",
+    "category": "Other",
+    "path": "games/clFIFA2000(1).html"
+  },
+  {
+    "id": "clfifa99",
+    "title": "FIFA 99",
+    "category": "Other",
+    "path": "games/clFIFA99.html"
+  },
+  {
+    "id": "clfifainternationalsoccer",
+    "title": "Fifainternationalsoccer",
+    "category": "Sports",
+    "path": "games/clFIFAinternationalsoccer.html"
+  },
+  {
+    "id": "clfifaroadtoworldcup98",
+    "title": "Fifaroadtoworldcup 98",
+    "category": "Other",
+    "path": "games/clFIFAroadtoworldcup98.html"
+  },
+  {
+    "id": "clfifasoccer06",
+    "title": "Fifasoccer 06",
+    "category": "Sports",
+    "path": "games/clFIFAsoccer06.html"
+  },
+  {
+    "id": "clfifasoccer95",
+    "title": "Fifasoccer 95",
+    "category": "Sports",
+    "path": "games/clFIFAsoccer95.html"
+  },
+  {
+    "id": "clfifasoccer96",
+    "title": "Fifasoccer 96",
+    "category": "Sports",
+    "path": "games/clFIFAsoccer96.html"
+  },
+  {
+    "id": "clfifasoccer97",
+    "title": "Fifasoccer 97",
+    "category": "Sports",
+    "path": "games/clFIFAsoccer97.html"
+  },
+  {
+    "id": "clfifastreet2",
+    "title": "Fifastreet 2",
+    "category": "Other",
+    "path": "games/clFIFAstreet2.html"
   },
   {
     "id": "clfinalearth2",
@@ -4627,6 +5044,12 @@
     "path": "games/clfinalfantasyIX.html"
   },
   {
+    "id": "clfinalfantasytactics",
+    "title": "Clfinalfantasytactics",
+    "category": "Other",
+    "path": "games/clfinalfantasytactics.html"
+  },
+  {
     "id": "clfinalfantasyvi",
     "title": "Clfinalfantasy VI",
     "category": "Other",
@@ -4655,12 +5078,6 @@
     "title": "Clfinalfantasy Viitheothertetrr",
     "category": "Other",
     "path": "games/clfinalfantasyVIItheothertetrr.html"
-  },
-  {
-    "id": "clfinalfantasytactics",
-    "title": "Clfinalfantasytactics",
-    "category": "Other",
-    "path": "games/clfinalfantasytactics.html"
   },
   {
     "id": "clfinalninja",
@@ -4758,6 +5175,14 @@
     "path": "games/clfivenightsatshrekshotel.html"
   },
   {
+    "id": "clflappy2048",
+    "title": "Flappy 2048",
+    "category": "Other",
+    "path": "games/clflappy2048.html",
+    "description": "Flappy Bird meets 2048. Double the frustration.",
+    "thumbnail": "assets/thumbnails/clflappy2048.png"
+  },
+  {
     "id": "clflappybird",
     "title": "Clflappybird",
     "category": "Other",
@@ -4769,6 +5194,15 @@
     "title": "Clflashsonic",
     "category": "Sonic",
     "path": "games/clflashsonic.html"
+  },
+  {
+    "id": "clflashtetris",
+    "title": "Flash Tetris",
+    "category": "Puzzle",
+    "path": "games/clflashtetris.html",
+    "description": "Classic Tetris with a Flash-era coat of paint.",
+    "thumbnail": "assets/thumbnails/clflashtetris.png",
+    "popular": true
   },
   {
     "id": "clfloodrunner",
@@ -4807,10 +5241,38 @@
     "path": "games/clfnac2.html"
   },
   {
+    "id": "clfnaf",
+    "title": "FNAF",
+    "category": "Horror",
+    "path": "games/clFNAF.html",
+    "popular": true
+  },
+  {
+    "id": "clfnaf2",
+    "title": "FNAF 2",
+    "category": "Horror",
+    "path": "games/clFNAF2.html",
+    "popular": true
+  },
+  {
+    "id": "clfnaf3",
+    "title": "FNAF 3",
+    "category": "Horror",
+    "path": "games/clFNAF3.html",
+    "popular": true
+  },
+  {
     "id": "clfnaf3remastered",
     "title": "Clfnaf 3 Remastered",
     "category": "Horror",
     "path": "games/clfnaf3remastered.html"
+  },
+  {
+    "id": "clfnaf4",
+    "title": "FNAF 4",
+    "category": "Horror",
+    "path": "games/clFNAF4.html",
+    "popular": true
   },
   {
     "id": "clfnaf4halloween",
@@ -4859,13 +5321,6 @@
     "title": "Clfnaw",
     "category": "Other",
     "path": "games/clfnaw.html"
-  },
-  {
-    "id": "clfnftwiddlefinger",
-    "title": "Clfnf TWIDDLEFINGER",
-    "category": "Other",
-    "path": "games/clfnfTWIDDLEFINGER.html",
-    "popular": true
   },
   {
     "id": "clfnfaethos",
@@ -5344,6 +5799,13 @@
     "path": "games/clfnftricky.html"
   },
   {
+    "id": "clfnftwiddlefinger",
+    "title": "Clfnf TWIDDLEFINGER",
+    "category": "Other",
+    "path": "games/clfnfTWIDDLEFINGER.html",
+    "popular": true
+  },
+  {
     "id": "clfnfundertale",
     "title": "Clfnfundertale",
     "category": "Other",
@@ -5542,6 +6004,12 @@
     "path": "games/clgachaverse.html"
   },
   {
+    "id": "clgain-ground",
+    "title": "Gain Ground",
+    "category": "Other",
+    "path": "games/clGain Ground.html"
+  },
+  {
     "id": "clgalaga",
     "title": "Clgalaga",
     "category": "Other",
@@ -5608,6 +6076,15 @@
     "path": "games/clgenericfightermaybe.html"
   },
   {
+    "id": "clgeodash",
+    "title": "Geometry Dash",
+    "category": "Platformer",
+    "path": "games/clgeodash.html",
+    "description": "The famous rhythm-platformer. Jump to the beat and survive the obstacle course.",
+    "thumbnail": "assets/thumbnails/clgeodash.png",
+    "popular": true
+  },
+  {
     "id": "clgeometrydashonline",
     "title": "Geometry Dash Online",
     "category": "Platformer",
@@ -5647,6 +6124,12 @@
     "title": "Clgetontop",
     "category": "Other",
     "path": "games/clgetontop.html"
+  },
+  {
+    "id": "clgettothetopalthoughthereisnotop",
+    "title": "Gettothetopalthoughthereisnotop",
+    "category": "Other",
+    "path": "games/clGettothetopalthoughthereisnotop.html"
   },
   {
     "id": "clgetyoked",
@@ -5761,6 +6244,12 @@
     "title": "Clgoldensunnds",
     "category": "Other",
     "path": "games/clgoldensunnds.html"
+  },
+  {
+    "id": "clgoldensunthelostage",
+    "title": "Golden Sun The Lost Age",
+    "category": "Other",
+    "path": "games/clGoldenSunTheLostAge.html"
   },
   {
     "id": "clgoldminer",
@@ -5999,16 +6488,16 @@
     "path": "games/clgta2.html"
   },
   {
-    "id": "clgta2alt",
-    "title": "Clgta 2 Alt",
-    "category": "Other",
-    "path": "games/clgta2alt.html"
-  },
-  {
     "id": "clgta22",
     "title": "Clgta 22",
     "category": "Other",
     "path": "games/clgta22.html"
+  },
+  {
+    "id": "clgta2alt",
+    "title": "Clgta 2 Alt",
+    "category": "Other",
+    "path": "games/clgta2alt.html"
   },
   {
     "id": "clgtaalty",
@@ -6119,6 +6608,14 @@
     "path": "games/clgyromite.html"
   },
   {
+    "id": "clhackertype",
+    "title": "Hacker Typer",
+    "category": "Simulation",
+    "path": "games/clhackertype.html",
+    "description": "Pretend to be an elite hacker. Mash keys to generate convincing screen output.",
+    "thumbnail": "assets/thumbnails/clhackertype.png"
+  },
+  {
     "id": "clhacx",
     "title": "Clhacx",
     "category": "Other",
@@ -6216,6 +6713,12 @@
     "path": "games/clharmonyofdissonance.html"
   },
   {
+    "id": "clharoldsbadday",
+    "title": "Haroldsbadday",
+    "category": "Other",
+    "path": "games/clHaroldsbadday.html"
+  },
+  {
     "id": "clharvestio",
     "title": "Clharvestio",
     "category": "Other",
@@ -6264,6 +6767,12 @@
     "path": "games/clhei$t.html"
   },
   {
+    "id": "clhelios-offline-1",
+    "title": "Helios Offline (1)",
+    "category": "Other",
+    "path": "games/clHelios-Offline (1).html"
+  },
+  {
     "id": "clhelixjump",
     "title": "Clhelixjump",
     "category": "Platformer",
@@ -6301,10 +6810,32 @@
     "path": "games/clherobrinereborn.html"
   },
   {
+    "id": "clhexempire",
+    "title": "Hex Empire",
+    "category": "Strategy",
+    "path": "games/clhexempire.html",
+    "description": "Turn-based territorial war game on a hex grid.",
+    "thumbnail": "assets/thumbnails/clhexempire.png"
+  },
+  {
+    "id": "clhexgl",
+    "title": "HexGL",
+    "category": "Racing",
+    "path": "games/clhexgl.html",
+    "description": "Futuristic WebGL racing inspired by Wipeout. Fast, gorgeous, and free.",
+    "thumbnail": "assets/thumbnails/clhexgl.png"
+  },
+  {
     "id": "clhextris",
     "title": "Clhextris",
     "category": "Other",
     "path": "games/clhextris.html"
+  },
+  {
+    "id": "clhighspeed",
+    "title": "High Speed",
+    "category": "Other",
+    "path": "games/clHighSpeed.html"
   },
   {
     "id": "clhighstakes",
@@ -6329,6 +6860,12 @@
     "title": "Clhillclimbracinglite",
     "category": "Racing",
     "path": "games/clhillclimbracinglite.html"
+  },
+  {
+    "id": "clhinohomo",
+    "title": "Hi No Homo",
+    "category": "Other",
+    "path": "games/clHiNoHomo.html"
   },
   {
     "id": "clhipsterkickball",
@@ -6407,6 +6944,12 @@
     "title": "Clhobovszombies",
     "category": "Other",
     "path": "games/clhobovszombies.html"
+  },
+  {
+    "id": "clhoennslastwish",
+    "title": "Hoenns Last Wish",
+    "category": "Other",
+    "path": "games/clHoennsLastWish.html"
   },
   {
     "id": "clholebattle",
@@ -6560,6 +7103,14 @@
     "path": "games/clidleminorzamnshes12.html"
   },
   {
+    "id": "clidleshark",
+    "title": "Idle Shark",
+    "category": "Simulation",
+    "path": "games/clidleshark.html",
+    "description": "Idle/clicker game about a hungry shark. Eat fish, grow bigger.",
+    "thumbnail": "assets/thumbnails/clidleshark.png"
+  },
+  {
     "id": "climpossiblequiz",
     "title": "Climpossiblequiz",
     "category": "Other",
@@ -6601,6 +7152,12 @@
     "title": "Clinkgame",
     "category": "Other",
     "path": "games/clinkgame.html"
+  },
+  {
+    "id": "clinkwell-v1-04",
+    "title": "Inkwell (v 1.04)",
+    "category": "Other",
+    "path": "games/clInkwell (v1.04).html"
   },
   {
     "id": "clinnkeeper",
@@ -6843,6 +7400,12 @@
     "path": "games/cljumbomario.html"
   },
   {
+    "id": "cljump",
+    "title": "JUMP",
+    "category": "Platformer",
+    "path": "games/clJUMP.html"
+  },
+  {
     "id": "cljumpingshell",
     "title": "Cljumpingshell",
     "category": "Platformer",
@@ -6919,6 +7482,12 @@
     "title": "Clkartbros",
     "category": "Racing",
     "path": "games/clkartbros.html"
+  },
+  {
+    "id": "clkengriffeyjrpresentsmajorleaguebaseball",
+    "title": "Ken Griffey Jr Presents Major League Baseball",
+    "category": "Sports",
+    "path": "games/clKenGriffeyJrPresentsMajorLeagueBaseball.html"
   },
   {
     "id": "clkeroseneclient",
@@ -7166,6 +7735,12 @@
     "path": "games/cllearntofly3.html"
   },
   {
+    "id": "cllearntofly3debug",
+    "title": "Learn To Fly 3 Debug",
+    "category": "Other",
+    "path": "games/clLearnToFly3Debug.html"
+  },
+  {
     "id": "cllearntoflyidle",
     "title": "Cllearntoflyidle",
     "category": "Simulation",
@@ -7176,6 +7751,12 @@
     "title": "Cllearntoflyidlehack",
     "category": "Simulation",
     "path": "games/cllearntoflyidlehack.html"
+  },
+  {
+    "id": "cllegacyofgoku",
+    "title": "Legacy Of Goku",
+    "category": "Other",
+    "path": "games/clLegacyOfGoku.html"
   },
   {
     "id": "cllegobatman",
@@ -7364,6 +7945,12 @@
     "path": "games/cllozspirittracks.html"
   },
   {
+    "id": "cllse",
+    "title": "LSE",
+    "category": "Other",
+    "path": "games/clLSE.html"
+  },
+  {
     "id": "clluckyblocks",
     "title": "Clluckyblocks",
     "category": "Other",
@@ -7386,6 +7973,24 @@
     "title": "Clmadalinstuntcars",
     "category": "Racing",
     "path": "games/clmadalinstuntcars.html"
+  },
+  {
+    "id": "clmadalinstuntcars2",
+    "title": "Madalin Stunt Cars 2",
+    "category": "Racing",
+    "path": "games/clmadalinstuntcars2.html",
+    "description": "Open-world supercar stunt driving with friends online.",
+    "thumbnail": "assets/thumbnails/clmadalinstuntcars2.png",
+    "popular": true
+  },
+  {
+    "id": "clmadalinstuntcars3",
+    "title": "Madalin Stunt Cars 3",
+    "category": "Racing",
+    "path": "games/clmadalinstuntcars3.html",
+    "description": "Sequel to the stunt car hit, with more cars and bigger maps.",
+    "thumbnail": "assets/thumbnails/clmadalinstuntcars3.png",
+    "popular": true
   },
   {
     "id": "clmadalinstuntcarsgood",
@@ -7616,6 +8221,21 @@
     "path": "games/clmari0.html"
   },
   {
+    "id": "clmario",
+    "title": "Mario",
+    "category": "Mario",
+    "path": "games/clmario.html",
+    "description": "Classic Super Mario game in the browser.",
+    "thumbnail": "assets/thumbnails/clmario.png",
+    "popular": true
+  },
+  {
+    "id": "clmario-party-advance",
+    "title": "Mario Party Advance",
+    "category": "Mario",
+    "path": "games/clMario Party Advance.html"
+  },
+  {
     "id": "clmario3",
     "title": "Clmario 3",
     "category": "Mario",
@@ -7656,6 +8276,12 @@
     "title": "Clmariogolf",
     "category": "Mario",
     "path": "games/clmariogolf.html"
+  },
+  {
+    "id": "clmarioismissingdoneright",
+    "title": "Mariois Missing Done Right",
+    "category": "Mario",
+    "path": "games/clMarioisMissingDoneRight.html"
   },
   {
     "id": "clmariokart64",
@@ -7747,6 +8373,24 @@
     "title": "Clmariovsluigi",
     "category": "Mario",
     "path": "games/clmariovsluigi.html"
+  },
+  {
+    "id": "clmarvelsuperheroesarcade",
+    "title": "Marvel Super Heroes Arcade",
+    "category": "Retro",
+    "path": "games/clMarvelSuperHeroesArcade.html"
+  },
+  {
+    "id": "clmarvelvscapcomps1",
+    "title": "Marvel Vs Capcom PS 1",
+    "category": "Other",
+    "path": "games/clMarvelVsCapcomPS1.html"
+  },
+  {
+    "id": "clmarvelvsstreetfighter",
+    "title": "Marvel Vs Street Fighter",
+    "category": "Fighting",
+    "path": "games/clMarvelVsStreetFighter.html"
   },
   {
     "id": "clmarvelvsstreetfighterjp",
@@ -8049,6 +8693,12 @@
     "path": "games/clmetalslugmission2.html"
   },
   {
+    "id": "clmetalsonichyperdrive",
+    "title": "Metal Sonic Hyperdrive",
+    "category": "Sonic",
+    "path": "games/clMetalSonicHyperdrive.html"
+  },
+  {
     "id": "clmetroid",
     "title": "Clmetroid",
     "category": "Other",
@@ -8116,6 +8766,18 @@
     "path": "games/clmimic.html"
   },
   {
+    "id": "clminceraft-i-notmine-v6",
+    "title": "Minceraft I Not Mine V 6",
+    "category": "Other",
+    "path": "games/clMinceraft-I-NotMine_V6.html"
+  },
+  {
+    "id": "clminceraft-i-notmine-v6-1",
+    "title": "Minceraft I Not Mine V 6(1)",
+    "category": "Other",
+    "path": "games/clMinceraft-I-NotMine_V6(1).html"
+  },
+  {
     "id": "clmindscape",
     "title": "Clmindscape",
     "category": "Other",
@@ -8134,6 +8796,15 @@
     "path": "games/clminecaves.html"
   },
   {
+    "id": "clminecraft",
+    "title": "Minecraft",
+    "category": "Minecraft",
+    "path": "games/clminecraft.html",
+    "description": "Browser-playable Minecraft client.",
+    "thumbnail": "assets/thumbnails/clminecraft.png",
+    "popular": true
+  },
+  {
     "id": "clminecraft1-8-8",
     "title": "Clminecraft 1 8 8",
     "category": "Minecraft",
@@ -8146,6 +8817,15 @@
     "path": "games/clminecraftcasesim.html"
   },
   {
+    "id": "clminecraftclassic",
+    "title": "Minecraft Classic",
+    "category": "Minecraft",
+    "path": "games/clminecraftclassic.html",
+    "description": "The original 2009 Minecraft Classic playable in-browser. 32 blocks, endless creativity.",
+    "thumbnail": "assets/thumbnails/clminecraftclassic.png",
+    "popular": true
+  },
+  {
     "id": "clminecraftshooter",
     "title": "Clminecraftshooter",
     "category": "Minecraft",
@@ -8156,6 +8836,15 @@
     "title": "Clmineshooter",
     "category": "Shooting",
     "path": "games/clmineshooter.html"
+  },
+  {
+    "id": "clminesweeper",
+    "title": "Minesweeper",
+    "category": "Puzzle",
+    "path": "games/clminesweeper.html",
+    "description": "The classic grid of numbers and mines. Click carefully.",
+    "thumbnail": "assets/thumbnails/clminesweeper.png",
+    "popular": true
   },
   {
     "id": "clminesweeperplus",
@@ -8186,6 +8875,14 @@
     "title": "Clminimart",
     "category": "Other",
     "path": "games/clminimart.html"
+  },
+  {
+    "id": "clminiputt",
+    "title": "Mini Putt",
+    "category": "Sports",
+    "path": "games/clminiputt.html",
+    "description": "Cartoon mini-golf with silly obstacles and precision aiming.",
+    "thumbnail": "assets/thumbnails/clminiputt.png"
   },
   {
     "id": "clminishooters",
@@ -8312,6 +9009,12 @@
     "title": "Clmobiusrevolution",
     "category": "Other",
     "path": "games/clmobiusrevolution.html"
+  },
+  {
+    "id": "clmoemon-emerald-vanilla-v1-1-0",
+    "title": "Moemon Emerald Vanilla+ (v 1.1.0)",
+    "category": "Other",
+    "path": "games/clMoemon Emerald Vanilla+ (v1.1.0).html"
   },
   {
     "id": "clmomimsleeping",
@@ -8448,6 +9151,15 @@
     "path": "games/clmotoroadrash.html"
   },
   {
+    "id": "clmotox3m",
+    "title": "Moto X3M",
+    "category": "Racing",
+    "path": "games/clmotox3m.html",
+    "description": "The classic Moto X3M stunt bike platformer.",
+    "thumbnail": "assets/thumbnails/clmotox3m.png",
+    "popular": true
+  },
+  {
     "id": "clmotox3m2",
     "title": "Clmotox 3 M 2",
     "category": "Racing",
@@ -8469,10 +9181,28 @@
     "popular": true
   },
   {
+    "id": "clmotox3mpool",
+    "title": "Moto X3M: Pool Party",
+    "category": "Racing",
+    "path": "games/clmotox3mpool.html",
+    "description": "Moto X3M pool-themed levels with water slides and inflatable obstacles.",
+    "thumbnail": "assets/thumbnails/clmotox3mpool.png",
+    "popular": true
+  },
+  {
     "id": "clmotox3mpoolparty",
     "title": "Clmotox 3 Mpoolparty",
     "category": "Racing",
     "path": "games/clmotox3mpoolparty.html",
+    "popular": true
+  },
+  {
+    "id": "clmotox3mspooky",
+    "title": "Moto X3M: Spooky",
+    "category": "Racing",
+    "path": "games/clmotox3mspooky.html",
+    "description": "Halloween-themed Moto X3M with spooky hazards.",
+    "thumbnail": "assets/thumbnails/clmotox3mspooky.png",
     "popular": true
   },
   {
@@ -8586,6 +9316,30 @@
     "path": "games/clnaturalselection.html"
   },
   {
+    "id": "clnautilusos",
+    "title": "Nautilus OS",
+    "category": "Other",
+    "path": "games/clNautilusOS.html"
+  },
+  {
+    "id": "clnautilusos-1",
+    "title": "Nautilus OS(1)",
+    "category": "Other",
+    "path": "games/clNautilusOS(1).html"
+  },
+  {
+    "id": "clnbahangtime",
+    "title": "Nbahangtime",
+    "category": "Other",
+    "path": "games/clNBAhangtime.html"
+  },
+  {
+    "id": "clnbajam",
+    "title": "Nbajam",
+    "category": "Other",
+    "path": "games/clNBAjam.html"
+  },
+  {
     "id": "clnbajamte",
     "title": "Clnbajam TE",
     "category": "Other",
@@ -8650,6 +9404,12 @@
     "title": "Clnewsupermariobros",
     "category": "Mario",
     "path": "games/clnewsupermariobros.html"
+  },
+  {
+    "id": "clnewsupermarioworld2aroundtheworld",
+    "title": "New Super Mario World 2 Aroundthe World",
+    "category": "Mario",
+    "path": "games/clNewSuperMarioWorld2AroundtheWorld.html"
   },
   {
     "id": "clnewyorkshark",
@@ -8736,6 +9496,12 @@
     "path": "games/clnickelodeonsuperbrawl2.html"
   },
   {
+    "id": "clnicktoonsfreezeframefrenzy",
+    "title": "Nicktoons Freeze Frame Frenzy",
+    "category": "Other",
+    "path": "games/clNicktoonsFreezeFrameFrenzy.html"
+  },
+  {
     "id": "clnightcatsurvival",
     "title": "Clnightcatsurvival",
     "category": "Horror",
@@ -8764,6 +9530,15 @@
     "title": "Clnimrods",
     "category": "Other",
     "path": "games/clnimrods.html"
+  },
+  {
+    "id": "clninja",
+    "title": "Ninja",
+    "category": "Fighting",
+    "path": "games/clninja.html",
+    "description": "Fast-paced ninja action game.",
+    "thumbnail": "assets/thumbnails/clninja.png",
+    "popular": true
   },
   {
     "id": "clninjabrawl",
@@ -8844,10 +9619,22 @@
     "path": "games/clnullkevin.html"
   },
   {
+    "id": "clnutsandboltsscrewingpuzzle",
+    "title": "Nutsand Bolts Screwing Puzzle",
+    "category": "Puzzle",
+    "path": "games/clNutsandBoltsScrewingPuzzle.html"
+  },
+  {
     "id": "clnzp",
     "title": "Clnzp",
     "category": "Other",
     "path": "games/clnzp.html"
+  },
+  {
+    "id": "clobby-99-will-lose",
+    "title": "Clobby 99 Will Lose",
+    "category": "Other",
+    "path": "games/clobby-99-will-lose.html"
   },
   {
     "id": "clobby1jumpperclick",
@@ -8860,12 +9647,6 @@
     "title": "Clobby 456",
     "category": "Other",
     "path": "games/clobby456.html"
-  },
-  {
-    "id": "clobby-99-will-lose",
-    "title": "Clobby 99 Will Lose",
-    "category": "Other",
-    "path": "games/clobby-99-will-lose.html"
   },
   {
     "id": "clobbybike",
@@ -9006,6 +9787,12 @@
     "path": "games/clopposumcountry.html"
   },
   {
+    "id": "clorangeroulette",
+    "title": "Orange Roulette",
+    "category": "Other",
+    "path": "games/clOrangeRoulette.html"
+  },
+  {
     "id": "clorbofcreation",
     "title": "Clorbofcreation",
     "category": "Other",
@@ -9046,6 +9833,18 @@
     "title": "Clourpleguy",
     "category": "Other",
     "path": "games/clourpleguy.html"
+  },
+  {
+    "id": "cloutrunarcade",
+    "title": "Outrun Arcade",
+    "category": "Platformer",
+    "path": "games/clOutrunArcade.html"
+  },
+  {
+    "id": "cloutrungenesis",
+    "title": "Outrun Genesis",
+    "category": "Platformer",
+    "path": "games/clOutrunGenesis.html"
   },
   {
     "id": "clovo",
@@ -9218,6 +10017,15 @@
     "popular": true
   },
   {
+    "id": "clpapaspizzaria",
+    "title": "Papas Pizzeria",
+    "category": "Simulation",
+    "path": "games/clpapaspizzaria.html",
+    "description": "Make pizzas for picky customers in this iconic time-management series entry.",
+    "thumbnail": "assets/thumbnails/clpapaspizzaria.png",
+    "popular": true
+  },
+  {
     "id": "clpapasscooperia",
     "title": "Clpapasscooperia",
     "category": "Other",
@@ -9252,6 +10060,15 @@
     "path": "games/clpaperio.html"
   },
   {
+    "id": "clpaperio2",
+    "title": "Paper.io 2",
+    "category": "Other",
+    "path": "games/clpaperio2.html",
+    "description": "Expand your territory by drawing paper-like lines. Do not let anyone cross yours.",
+    "thumbnail": "assets/thumbnails/clpaperio2.png",
+    "popular": true
+  },
+  {
     "id": "clpaperio3d",
     "title": "Clpaperio 3 D",
     "category": "Other",
@@ -9270,6 +10087,18 @@
     "path": "games/clpapermario.html"
   },
   {
+    "id": "clpapermariodse",
+    "title": "Paper Mario DSE",
+    "category": "Mario",
+    "path": "games/clPaperMarioDSE.html"
+  },
+  {
+    "id": "clpapermariopracticehack",
+    "title": "Paper Mario Practice Hack",
+    "category": "Mario",
+    "path": "games/clPaperMarioPracticeHack.html"
+  },
+  {
     "id": "clpapermariopromode",
     "title": "Clpapermariopromode",
     "category": "Mario",
@@ -9280,6 +10109,14 @@
     "title": "Clpapermariottyd",
     "category": "Mario",
     "path": "games/clpapermariottyd.html"
+  },
+  {
+    "id": "clpaperyplanes",
+    "title": "Papery Planes",
+    "category": "Other",
+    "path": "games/clpaperyplanes.html",
+    "description": "Fly paper airplanes through sketched obstacle courses.",
+    "thumbnail": "assets/thumbnails/clpaperyplanes.png"
   },
   {
     "id": "clparappatherapper",
@@ -9316,6 +10153,14 @@
     "title": "Clparkingrush",
     "category": "Other",
     "path": "games/clparkingrush.html"
+  },
+  {
+    "id": "clparticleclicker",
+    "title": "Particle Clicker",
+    "category": "Simulation",
+    "path": "games/clparticleclicker.html",
+    "description": "Idle-clicker physics simulator. Collect particles, fund research, advance science.",
+    "thumbnail": "assets/thumbnails/clparticleclicker.png"
   },
   {
     "id": "clpartnersintime",
@@ -9678,6 +10523,30 @@
     "path": "games/clpogo3D.html"
   },
   {
+    "id": "clpok-mon-emerald-rush-edition-2-0",
+    "title": "PokÃƒÂ©mon Emerald Rush Edition (2.0)",
+    "category": "Other",
+    "path": "games/clPokÃƒÂ©mon Emerald Rush Edition (2.0).html"
+  },
+  {
+    "id": "clpok-mon-trade-stache-v1-1",
+    "title": "PokÃƒÂ©mon Trade& Stache (V 1.1)",
+    "category": "Other",
+    "path": "games/clPokÃƒÂ©mon Trade&_Stache (V1.1).html"
+  },
+  {
+    "id": "clpok-mon-two-v1-1",
+    "title": "PokÃƒÂ©mon TWO (v 1.1)",
+    "category": "Other",
+    "path": "games/clPokÃƒÂ©mon TWO (v1.1).html"
+  },
+  {
+    "id": "clpok-monstunningsteel",
+    "title": "PokÃƒÂ©monstunningsteel",
+    "category": "Other",
+    "path": "games/clPokÃƒÂ©monstunningsteel.html"
+  },
+  {
     "id": "clpokeacademylifeforever",
     "title": "Pokemon Academy Life Forever",
     "category": "Pokemon",
@@ -9692,6 +10561,14 @@
     "path": "games/clpokeallin.html",
     "description": "A comprehensive ROM hack that goes all in on content. Features Pokemon from all generations, multiple difficulty options, expanded areas, quality-of-life improvements, and a wealth of content. Designed for players who want everything Pokemon has to offer in one game.",
     "thumbnail": "assets/thumbnails/clpokeallin.png"
+  },
+  {
+    "id": "clpokeambrosia",
+    "title": "Pokemon Ambrosia",
+    "category": "Pokemon",
+    "path": "games/clPokeAmbrosia.html",
+    "description": "A mythologically inspired ROM hack set in a region based on ancient legends. Features an original story involving divine Pokemon and mortal conflicts, custom maps, Pokemon from multiple generations, and a narrative steeped in mythology and wonder.",
+    "thumbnail": "assets/thumbnails/clpokeambrosia.jpg"
   },
   {
     "id": "clpokebattlefact",
@@ -9711,20 +10588,20 @@
     "popular": true
   },
   {
-    "id": "clpokeblack2alt",
-    "title": "Pokemon Black 2 (Alt)",
-    "category": "Pokemon",
-    "path": "games/clpokeblack2alt.html",
-    "description": "An alternate version of the direct sequel to Pokemon Black. Set two years later in a changed Unova with new cities, the Pokemon World Tournament featuring past Champions, Memory Link to connect with your Black/White save, and an expanded Unova Pokedex.",
-    "thumbnail": "assets/thumbnails/clpokeblack2alt.png"
-  },
-  {
     "id": "clpokeblack2-html",
     "title": "Pokemon Black 2",
     "category": "Pokemon",
     "path": "games/clpokeblack2.html.html",
     "description": "A direct sequel set two years after Black/White â€” a first for the series. Features a new protagonist, new areas in Unova, the Pokemon World Tournament where you battle every past Champion, the Challenge Mode difficulty, and a mix of old and new Pokemon from the start.",
     "thumbnail": "assets/thumbnails/clpokeblack2-html.png"
+  },
+  {
+    "id": "clpokeblack2alt",
+    "title": "Pokemon Black 2 (Alt)",
+    "category": "Pokemon",
+    "path": "games/clpokeblack2alt.html",
+    "description": "An alternate version of the direct sequel to Pokemon Black. Set two years later in a changed Unova with new cities, the Pokemon World Tournament featuring past Champions, Memory Link to connect with your Black/White save, and an expanded Unova Pokedex.",
+    "thumbnail": "assets/thumbnails/clpokeblack2alt.png"
   },
   {
     "id": "clpokeblackalt",
@@ -9784,6 +10661,14 @@
     "thumbnail": "assets/thumbnails/clpokecrystalclear.png"
   },
   {
+    "id": "clpokedarkrising",
+    "title": "Pokemon Dark Rising",
+    "category": "Pokemon",
+    "path": "games/clpokedarkrising.html",
+    "description": "A challenging FireRed-based hack set in the Core region where you must rescue your father and save the world from Darugis. Features a gripping story, Pokemon from multiple generations, tough trainers, unique abilities, and increased difficulty. One of the classic ROM hacks beloved by the community.",
+    "thumbnail": "assets/thumbnails/clpokedarkrising.png"
+  },
+  {
     "id": "clpokediamond",
     "title": "Pokemon Diamond",
     "category": "Pokemon",
@@ -9791,14 +10676,6 @@
     "description": "Explore the Sinnoh region in this Generation IV NDS title. Features 107 new Pokemon, the physical/special split that revolutionized competitive play, Wi-Fi trading and battling, the Underground for mining, and the legendary Dialga that controls time. A beloved entry in the series.",
     "thumbnail": "assets/thumbnails/clpokediamond.jpg",
     "popular": true
-  },
-  {
-    "id": "clpokedarkrising",
-    "title": "Pokemon Dark Rising",
-    "category": "Pokemon",
-    "path": "games/clpokedarkrising.html",
-    "description": "A challenging FireRed-based hack set in the Core region where you must rescue your father and save the world from Darugis. Features a gripping story, Pokemon from multiple generations, tough trainers, unique abilities, and increased difficulty. One of the classic ROM hacks beloved by the community.",
-    "thumbnail": "assets/thumbnails/clpokedarkrising.png"
   },
   {
     "id": "clpokedreamstone",
@@ -9881,6 +10758,14 @@
     "thumbnail": "assets/thumbnails/clpokeemeraldrogue.png"
   },
   {
+    "id": "clpokeemeraldrogueex",
+    "title": "Pokemon Emerald Rogue EX",
+    "category": "Pokemon",
+    "path": "games/clPokeEmeraldRogueEX.html",
+    "description": "The expanded edition of Emerald Rogue with even more Pokemon, items, challenges, and unlockables. This roguelike experience generates a new adventure each run with random routes, trainers, and wild encounters. Features enhanced difficulty modes and more strategic depth.",
+    "thumbnail": "assets/thumbnails/clpokeemeraldrogueex.png"
+  },
+  {
     "id": "clpokeemeraldz",
     "title": "Pokemon Emerald Z",
     "category": "Pokemon",
@@ -9921,6 +10806,14 @@
     "thumbnail": "assets/thumbnails/clpokefuseddimension.png"
   },
   {
+    "id": "clpokefusion3",
+    "title": "Pokemon Fusion 3",
+    "category": "Pokemon",
+    "path": "games/clPokeFusion3.html",
+    "description": "The third installment in the Pokemon Fusion series with even more fusion combinations. Fuse any two Pokemon together to create unique hybrids. Features improved fusion sprites, a new region, updated mechanics, and thousands of possible fusion combinations to discover.",
+    "thumbnail": "assets/thumbnails/clpokefusion3.png"
+  },
+  {
     "id": "clpokegaia",
     "title": "Pokemon Gaia",
     "category": "Pokemon",
@@ -9953,6 +10846,14 @@
     "description": "The beloved DS remake of Pokemon Gold with stunning updated graphics, your lead Pokemon walking behind you, the Pokeathlon mini-games, and the PokeWalker accessory support. Explore both Johto and Kanto with 16 Gym Badges and challenge Red atop Mt. Silver once more.",
     "thumbnail": "assets/thumbnails/clpokeheartgold.jpg",
     "popular": true
+  },
+  {
+    "id": "clpokeheartgoldgenerations",
+    "title": "Pokemon HeartGold Generations",
+    "category": "Pokemon",
+    "path": "games/clPokeHeartgoldGenerations.html",
+    "description": "A HeartGold hack that adds Pokemon from all generations into the Johto and Kanto adventure. Catch Gen 1-8 Pokemon, enjoy updated movesets and abilities, and experience the beloved HGSS adventure with a massively expanded Pokedex and modern Pokemon.",
+    "thumbnail": "assets/thumbnails/clpokeheartgoldgenerations.jpg"
   },
   {
     "id": "clpokelightplatinum",
@@ -10051,6 +10952,14 @@
     "path": "games/clpokemonemeraldmini.html",
     "description": "A condensed version of Pokemon Emerald designed for quicker playthroughs. The core Hoenn experience is streamlined with reduced grinding, faster level progression, and trimmed filler content while preserving the essential story beats and key battles.",
     "thumbnail": "assets/thumbnails/clpokemonemeraldmini.jpg"
+  },
+  {
+    "id": "clpokemonemeraldrouge",
+    "title": "Pokemon Emerald Rogue (Alt)",
+    "category": "Pokemon",
+    "path": "games/clPokemonemeraldrouge.html",
+    "description": "An alternate build of the popular Emerald Rogue roguelike hack. Procedurally generated routes and encounters make every run unique. Build your team strategically, defeat Gym Leaders, and try to complete the Pokemon League before your run ends.",
+    "thumbnail": "assets/thumbnails/clpokemonemeraldrouge.png"
   },
   {
     "id": "clpokemonemeraldseaglass",
@@ -10179,6 +11088,14 @@
     "path": "games/clpokemonroaringred.html",
     "description": "A FireRed hack that cranks up the intensity with a tougher difficulty, expanded Pokemon roster, new events, and enhanced trainer battles. Experience a more challenging and content-rich Kanto adventure with updated mechanics and surprises around every corner.",
     "thumbnail": "assets/thumbnails/clpokemonroaringred.png"
+  },
+  {
+    "id": "clpokemonrocketedition",
+    "title": "Pokemon Rocket Edition (Alt)",
+    "category": "Pokemon",
+    "path": "games/clPokemonrocketedition.html",
+    "description": "An alternate version of the Team Rocket role-reversal hack. Join Team Rocket, steal from trainers, and work your way up through the criminal organization. Features the Kanto story retold from the villain's perspective with unique missions and moral dilemmas.",
+    "thumbnail": "assets/thumbnails/clpokemonrocketedition.png"
   },
   {
     "id": "clpokemonruby",
@@ -10564,6 +11481,14 @@
     "thumbnail": "assets/thumbnails/clpokethepit.png"
   },
   {
+    "id": "clpokethetaemeraldex",
+    "title": "Pokemon Theta Emerald EX",
+    "category": "Pokemon",
+    "path": "games/clPokeThetaEmeraldEX.html",
+    "description": "One of the most comprehensive Emerald hacks featuring 721 Pokemon from Gens 1-6, Mega Evolutions, Primal Reversion, updated moves and abilities, Fairy type, reusable TMs, and the Exp. Share as an on/off toggle. A must-play for fans wanting the complete Pokemon experience on GBA.",
+    "thumbnail": "assets/thumbnails/clpokethetaemeraldex.jpg"
+  },
+  {
     "id": "clpoketoomanytypes2",
     "title": "Pokemon Too Many Types 2",
     "category": "Pokemon",
@@ -10673,6 +11598,14 @@
     "path": "games/clpolishedcrystal.html"
   },
   {
+    "id": "clpolybranch",
+    "title": "PolyBranch",
+    "category": "Racing",
+    "path": "games/clpolybranch.html",
+    "description": "Low-poly branching racetrack. Pick your path at high speed.",
+    "thumbnail": "assets/thumbnails/clpolybranch.png"
+  },
+  {
     "id": "clpolytrackbutnotflagged",
     "title": "Clpolytrackbutnotflagged",
     "category": "Other",
@@ -10728,16 +11661,16 @@
     "path": "games/clportal2d.html"
   },
   {
-    "id": "clportaldefenderstd",
-    "title": "Clportaldefenders TD",
-    "category": "Strategy",
-    "path": "games/clportaldefendersTD.html"
-  },
-  {
     "id": "clportaldefendersfastbreak",
     "title": "Clportaldefendersfastbreak",
     "category": "Other",
     "path": "games/clportaldefendersfastbreak.html"
+  },
+  {
+    "id": "clportaldefenderstd",
+    "title": "Clportaldefenders TD",
+    "category": "Strategy",
+    "path": "games/clportaldefendersTD.html"
   },
   {
     "id": "clportalflash",
@@ -10768,6 +11701,12 @@
     "title": "Clpotatomanseeksthetroof",
     "category": "Other",
     "path": "games/clpotatomanseeksthetroof.html"
+  },
+  {
+    "id": "clpou",
+    "title": "Pou",
+    "category": "Other",
+    "path": "games/clPou.html"
   },
   {
     "id": "clpou-1",
@@ -10870,6 +11809,14 @@
     "title": "Clpuppetmaster",
     "category": "Other",
     "path": "games/clpuppetmaster.html"
+  },
+  {
+    "id": "clpushthesquare",
+    "title": "Push the Square",
+    "category": "Puzzle",
+    "path": "games/clpushthesquare.html",
+    "description": "Minimalist puzzle: push the square into the goal.",
+    "thumbnail": "assets/thumbnails/clpushthesquare.png"
   },
   {
     "id": "clpushyourluck",
@@ -11154,6 +12101,18 @@
     "path": "games/clredball3.html"
   },
   {
+    "id": "clredball4",
+    "title": "Red Ball 4",
+    "category": "Other",
+    "path": "games/clRedBall4.html"
+  },
+  {
+    "id": "clredball4-1",
+    "title": "Clredball 4(1)",
+    "category": "Other",
+    "path": "games/clredball4(1).html"
+  },
+  {
     "id": "clredball4vol2",
     "title": "Clredball 4 Vol 2",
     "category": "Other",
@@ -11164,12 +12123,6 @@
     "title": "Clredball 4 Vol 3",
     "category": "Other",
     "path": "games/clredball4vol3.html"
-  },
-  {
-    "id": "clredball4-1",
-    "title": "Clredball 4(1)",
-    "category": "Other",
-    "path": "games/clredball4(1).html"
   },
   {
     "id": "clredhanded",
@@ -11622,6 +12575,14 @@
     "path": "games/clsandboxels.html"
   },
   {
+    "id": "clsandgame",
+    "title": "Sand Game",
+    "category": "Simulation",
+    "path": "games/clsandgame.html",
+    "description": "Falling-sand particle playground. Draw sand, water, fire, and watch chaos unfold.",
+    "thumbnail": "assets/thumbnails/clsandgame.png"
+  },
+  {
     "id": "clsandsofthecoliseum",
     "title": "Clsandsofthecoliseum",
     "category": "Other",
@@ -11692,6 +12653,12 @@
     "title": "Clscalethedepths",
     "category": "Other",
     "path": "games/clscalethedepths.html"
+  },
+  {
+    "id": "clscamptonthegreatfightrecreate",
+    "title": "Scampton The Great Fight Recreate",
+    "category": "Fighting",
+    "path": "games/clScamptonTheGreatFightRecreate.html"
   },
   {
     "id": "clscarletandviolet",
@@ -11782,6 +12749,12 @@
     "title": "Clsega 2 Gg",
     "category": "Other",
     "path": "games/clsega2gg.html"
+  },
+  {
+    "id": "clsegasonicthehedgehog",
+    "title": "Sega Sonic The Hedgehog",
+    "category": "Sonic",
+    "path": "games/clSegaSonicTheHedgehog.html"
   },
   {
     "id": "clself",
@@ -12063,6 +13036,12 @@
     "path": "games/clsimpsonsarcade.html"
   },
   {
+    "id": "clsinglefile",
+    "title": "SINGLEFILE",
+    "category": "Other",
+    "path": "games/clSINGLEFILE.html"
+  },
+  {
     "id": "clsixwaystodie",
     "title": "Clsixwaystodie",
     "category": "Other",
@@ -12115,6 +13094,12 @@
     "title": "Clskyrace 3 D",
     "category": "Racing",
     "path": "games/clskyrace-3d.html"
+  },
+  {
+    "id": "clskyriders",
+    "title": "Sky Riders",
+    "category": "Other",
+    "path": "games/clSkyRiders.html"
   },
   {
     "id": "clskywire",
@@ -12218,10 +13203,25 @@
     "path": "games/clsm63redux.html"
   },
   {
+    "id": "clsm64",
+    "title": "Super Mario 64",
+    "category": "Mario",
+    "path": "games/clsm64.html",
+    "description": "Super Mario 64 playable in-browser via WebAssembly.",
+    "thumbnail": "assets/thumbnails/clsm64.png",
+    "popular": true
+  },
+  {
     "id": "clsm64hiddenstars",
     "title": "Clsm 64 Hiddenstars",
     "category": "Other",
     "path": "games/clsm64hiddenstars.html"
+  },
+  {
+    "id": "clsm64land",
+    "title": "SM 64 Land",
+    "category": "Other",
+    "path": "games/clSM64Land.html"
   },
   {
     "id": "clsm64lastimpact",
@@ -12320,6 +13320,14 @@
     "path": "games/clsmgds.html"
   },
   {
+    "id": "clsmokingbarrels",
+    "title": "Smoking Barrels",
+    "category": "Shooting",
+    "path": "games/clsmokingbarrels.html",
+    "description": "Wild-west quick-draw duel game. Who fires first?",
+    "thumbnail": "assets/thumbnails/clsmokingbarrels.png"
+  },
+  {
     "id": "clsnailbob",
     "title": "Clsnailbob",
     "category": "Other",
@@ -12380,6 +13388,14 @@
     "path": "games/clsnowballio.html"
   },
   {
+    "id": "clsnowbattle",
+    "title": "Snow Battle",
+    "category": "Fighting",
+    "path": "games/clsnowbattle.html",
+    "description": "Frosty snowball fight in 2D.",
+    "thumbnail": "assets/thumbnails/clsnowbattle.png"
+  },
+  {
     "id": "clsnowboardobby",
     "title": "Clsnowboardobby",
     "category": "Other",
@@ -12396,6 +13412,12 @@
     "title": "Clsnowbros(1)",
     "category": "Other",
     "path": "games/clsnowbros(1).html"
+  },
+  {
+    "id": "clsnowbrosgenesis",
+    "title": "Snow Bros Genesis",
+    "category": "Retro",
+    "path": "games/clSnowBrosGenesis.html"
   },
   {
     "id": "clsnowbrothers",
@@ -12497,6 +13519,14 @@
     "path": "games/clsolatrobo.html"
   },
   {
+    "id": "clsoldierlegend",
+    "title": "Soldier Legend",
+    "category": "Shooting",
+    "path": "games/clsoldierlegend.html",
+    "description": "Retro side-scrolling soldier shooter.",
+    "thumbnail": "assets/thumbnails/clsoldierlegend.png"
+  },
+  {
     "id": "clsolitaire",
     "title": "Clsolitaire",
     "category": "Other",
@@ -12515,16 +13545,40 @@
     "path": "games/clsomari64.html"
   },
   {
+    "id": "clsonic-knuckles-sonic-the-hedgehog-3",
+    "title": "Sonic & Knuckles + Sonic The Hedgehog 3",
+    "category": "Sonic",
+    "path": "games/clSonic & Knuckles + Sonic The Hedgehog 3.html"
+  },
+  {
     "id": "clsonic1contemporary",
     "title": "Clsonic 1 Contemporary",
     "category": "Sonic",
     "path": "games/clsonic1contemporary.html"
   },
   {
+    "id": "clsonic1scorerush",
+    "title": "Sonic 1 Score Rush",
+    "category": "Sonic",
+    "path": "games/clSonic1ScoreRush.html"
+  },
+  {
+    "id": "clsonic1thesuperchallenges",
+    "title": "Sonic 1 The Super Challenges",
+    "category": "Sonic",
+    "path": "games/clSonic1TheSuperChallenges.html"
+  },
+  {
     "id": "clsonic2pinkedition",
     "title": "Clsonic 2 Pinkedition",
     "category": "Sonic",
     "path": "games/clsonic2pinkedition.html"
+  },
+  {
+    "id": "clsonic2scorerush",
+    "title": "Sonic 2 Score Rush",
+    "category": "Sonic",
+    "path": "games/clSonic2ScoreRush.html"
   },
   {
     "id": "clsonic2timeandplace",
@@ -12648,6 +13702,12 @@
     "path": "games/clsonicclassicheroes.html"
   },
   {
+    "id": "clsonicclassics",
+    "title": "Sonic Classics",
+    "category": "Sonic",
+    "path": "games/clSonicClassics.html"
+  },
+  {
     "id": "clsoniccolors",
     "title": "Clsoniccolors",
     "category": "Sonic",
@@ -12676,6 +13736,12 @@
     "title": "Clsonicgg",
     "category": "Sonic",
     "path": "games/clsonicgg.html"
+  },
+  {
+    "id": "clsonichellfiresaga",
+    "title": "Sonic Hellfire Saga",
+    "category": "Sonic",
+    "path": "games/clSonicHellfireSaga.html"
   },
   {
     "id": "clsonicjam",
@@ -12818,6 +13884,12 @@
     "path": "games/clsouthparkn64.html"
   },
   {
+    "id": "clsovereignoftheskys",
+    "title": "Sovereignoftheskys",
+    "category": "Other",
+    "path": "games/clSovereignoftheskys.html"
+  },
+  {
     "id": "clspacebarclicker",
     "title": "Clspacebarclicker",
     "category": "Simulation",
@@ -12920,6 +13992,18 @@
     "path": "games/clspiritsofhell.html"
   },
   {
+    "id": "clspongebobpowerkartgrandprix",
+    "title": "Spongebob Power Kart Grand Prix",
+    "category": "Racing",
+    "path": "games/clSpongebobPowerKartGrandPrix.html"
+  },
+  {
+    "id": "clsportsheadsicehockey",
+    "title": "Sports Heads Ice Hockey",
+    "category": "Sports",
+    "path": "games/clSportsHeadsIceHockey.html"
+  },
+  {
     "id": "clsprinter",
     "title": "Clsprinter",
     "category": "Other",
@@ -12956,10 +14040,39 @@
     "path": "games/clsquidplayground.html"
   },
   {
+    "id": "clssf2arcade",
+    "title": "SSF 2 Arcade",
+    "category": "Retro",
+    "path": "games/clSSF2Arcade.html"
+  },
+  {
+    "id": "clssf2tarcade",
+    "title": "SSF 2 Tarcade",
+    "category": "Retro",
+    "path": "games/clSSF2TArcade.html"
+  },
+  {
+    "id": "clstack",
+    "title": "Stack",
+    "category": "Other",
+    "path": "games/clstack.html",
+    "description": "Stack falling blocks as high as you can. Simple but addictive.",
+    "thumbnail": "assets/thumbnails/clstack.png",
+    "popular": true
+  },
+  {
     "id": "clstackballio",
     "title": "Clstackballio",
     "category": "Other",
     "path": "games/clstackballio.html"
+  },
+  {
+    "id": "clstackbump3d",
+    "title": "Stack Bump 3D",
+    "category": "Other",
+    "path": "games/clstackbump3d.html",
+    "description": "3D stacking puzzle with ball physics.",
+    "thumbnail": "assets/thumbnails/clstackbump3d.png"
   },
   {
     "id": "clstacktris",
@@ -13032,6 +14145,15 @@
     "title": "Clstealbrainrotonline",
     "category": "Other",
     "path": "games/clstealbrainrotonline.html"
+  },
+  {
+    "id": "clstealingthediamond",
+    "title": "Stealing the Diamond",
+    "category": "Puzzle",
+    "path": "games/clstealingthediamond.html",
+    "description": "Henry Stickmin heist: steal the giant diamond. Pick options, laugh at fails.",
+    "thumbnail": "assets/thumbnails/clstealingthediamond.png",
+    "popular": true
   },
   {
     "id": "clstealthassassin",
@@ -13117,6 +14239,12 @@
     "category": "Other",
     "path": "games/clstickmanhook.html",
     "popular": true
+  },
+  {
+    "id": "clstickmankingdomclash",
+    "title": "Stickman Kingdomclash",
+    "category": "Other",
+    "path": "games/clStickmanKingdomclash.html"
   },
   {
     "id": "clstickmankombat2d",
@@ -13223,10 +14351,35 @@
     "path": "games/clstreangeropepolice.html"
   },
   {
+    "id": "clstreetfighter1arcade",
+    "title": "Street Fighter 1 Arcade",
+    "category": "Fighting",
+    "path": "games/clStreetFighter1Arcade.html"
+  },
+  {
     "id": "clstreetfighter2",
     "title": "Clstreetfighter 2",
     "category": "Fighting",
     "path": "games/clstreetfighter2.html"
+  },
+  {
+    "id": "clstreetfighter2arcade",
+    "title": "Street Fighter 2 Arcade",
+    "category": "Fighting",
+    "path": "games/clStreetFighter2Arcade.html",
+    "popular": true
+  },
+  {
+    "id": "clstreetfighter2cearcade",
+    "title": "Street Fighter 2 Cearcade",
+    "category": "Fighting",
+    "path": "games/clStreetFighter2CEArcade.html"
+  },
+  {
+    "id": "clstreetfighter2hfarcade",
+    "title": "Street Fighter 2 Hfarcade",
+    "category": "Fighting",
+    "path": "games/clStreetFighter2HFArcade.html"
   },
   {
     "id": "clstreetfighter2turbo",
@@ -13293,6 +14446,15 @@
     "title": "Clstylesavvy",
     "category": "Other",
     "path": "games/clstylesavvy.html"
+  },
+  {
+    "id": "clsubwaysurfers",
+    "title": "Subway Surfers",
+    "category": "Racing",
+    "path": "games/clsubwaysurfers.html",
+    "description": "The mobile hit. Run, dodge trains, collect coins through urban streets.",
+    "thumbnail": "assets/thumbnails/clsubwaysurfers.png",
+    "popular": true
   },
   {
     "id": "clsubwaysurfersbarcelona",
@@ -13708,6 +14870,12 @@
     "path": "games/clsupermarioworld2.html"
   },
   {
+    "id": "clsupermarioworldthe-secretofthe7goldenstatues",
+    "title": "Super Mario World The Secret Of The 7 Golden Statues",
+    "category": "Mario",
+    "path": "games/clSuperMarioWorldThe SecretOfThe7GoldenStatues.html"
+  },
+  {
     "id": "clsupermetroid",
     "title": "Clsupermetroid",
     "category": "Other",
@@ -13748,6 +14916,12 @@
     "title": "Clsuperpunchout",
     "category": "Other",
     "path": "games/clsuperpunchout.html"
+  },
+  {
+    "id": "clsuperpunchouten",
+    "title": "Super Punch Out EN",
+    "category": "Other",
+    "path": "games/clSuperPunchOutEN.html"
   },
   {
     "id": "clsuperpuzzlefighter2turbo",
@@ -13832,6 +15006,12 @@
     "title": "Clsupremeduelist",
     "category": "Other",
     "path": "games/clsupremeduelist.html"
+  },
+  {
+    "id": "clsupremeduelist2019",
+    "title": "Supreme Duelist 2019",
+    "category": "Other",
+    "path": "games/clSupremeDuelist2019.html"
   },
   {
     "id": "clsurvevio",
@@ -13948,6 +15128,14 @@
     "path": "games/cltacostand.html"
   },
   {
+    "id": "cltacticalassasin2",
+    "title": "Tactical Assassin 2",
+    "category": "Shooting",
+    "path": "games/cltacticalassasin2.html",
+    "description": "Sniper-rifle mission game. Read the brief, line up the shot.",
+    "thumbnail": "assets/thumbnails/cltacticalassasin2.png"
+  },
+  {
     "id": "cltag",
     "title": "Cltag",
     "category": "Other",
@@ -13964,6 +15152,12 @@
     "title": "Cltagcm",
     "category": "Other",
     "path": "games/cltagcm.html"
+  },
+  {
+    "id": "cltaikonotatsujin",
+    "title": "Taikono Tatsujin",
+    "category": "Other",
+    "path": "games/clTaikonoTatsujin.html"
   },
   {
     "id": "cltailofthedragon",
@@ -14012,6 +15206,15 @@
     "title": "Cltanktrouble",
     "category": "Other",
     "path": "games/cltanktrouble.html"
+  },
+  {
+    "id": "cltanktrouble2",
+    "title": "Tank Trouble 2",
+    "category": "Fighting",
+    "path": "games/cltanktrouble2.html",
+    "description": "Classic 2-3 player tank maze combat.",
+    "thumbnail": "assets/thumbnails/cltanktrouble2.png",
+    "popular": true
   },
   {
     "id": "cltanukisunset",
@@ -14173,6 +15376,14 @@
     "path": "games/clthanksforremindingmeihadtofixthis.html"
   },
   {
+    "id": "clthebattle",
+    "title": "The Battle",
+    "category": "Strategy",
+    "path": "games/clthebattle.html",
+    "description": "Medieval battle simulator with unit upgrades.",
+    "thumbnail": "assets/thumbnails/clthebattle.png"
+  },
+  {
     "id": "cltheclassroom",
     "title": "Cltheclassroom",
     "category": "Other",
@@ -14215,6 +15426,23 @@
     "path": "games/cltheenchantedcave2.html"
   },
   {
+    "id": "clthefinalearth",
+    "title": "The Final Earth",
+    "category": "Simulation",
+    "path": "games/clthefinalearth.html",
+    "description": "Build a post-apocalyptic city on a floating chunk of rock.",
+    "thumbnail": "assets/thumbnails/clthefinalearth.png"
+  },
+  {
+    "id": "cltheheist",
+    "title": "The Heist",
+    "category": "Puzzle",
+    "path": "games/cltheheist.html",
+    "description": "Henry Stickmin heist: break into the bank. Bad choices lead to funny deaths.",
+    "thumbnail": "assets/thumbnails/cltheheist.png",
+    "popular": true
+  },
+  {
     "id": "cltheimpossiblegame",
     "title": "Cltheimpossiblegame",
     "category": "Other",
@@ -14245,6 +15473,12 @@
     "path": "games/clthelaststandunioncity (1).html"
   },
   {
+    "id": "cltheloneranger",
+    "title": "The Lone Ranger",
+    "category": "Other",
+    "path": "games/clTheLoneRanger.html"
+  },
+  {
     "id": "clthemaninthewindow",
     "title": "Clthemaninthewindow",
     "category": "Other",
@@ -14269,6 +15503,15 @@
     "path": "games/clthereisnofile.html"
   },
   {
+    "id": "clthereisnogame",
+    "title": "There Is No Game",
+    "category": "Puzzle",
+    "path": "games/clthereisnogame.html",
+    "description": "Hilarious anti-game puzzle experience. You will have to see it to believe it.",
+    "thumbnail": "assets/thumbnails/clthereisnogame.png",
+    "popular": true
+  },
+  {
     "id": "clthermomorph",
     "title": "Clthermomorph",
     "category": "Other",
@@ -14279,6 +15522,12 @@
     "title": "Clthesodorrace",
     "category": "Racing",
     "path": "games/clthesodorrace.html"
+  },
+  {
+    "id": "clthesunforthevampire",
+    "title": "The Sun For The Vampire",
+    "category": "Other",
+    "path": "games/clTheSunForTheVampire.html"
   },
   {
     "id": "cltheyarecoming",
@@ -14509,6 +15758,15 @@
     "path": "games/cltowerwizard.html"
   },
   {
+    "id": "cltownscaper",
+    "title": "Townscaper",
+    "category": "Simulation",
+    "path": "games/cltownscaper.html",
+    "description": "Click to build a charming seaside town. No goals, just zen.",
+    "thumbnail": "assets/thumbnails/cltownscaper.png",
+    "popular": true
+  },
+  {
     "id": "cltownscraper",
     "title": "Cltownscraper",
     "category": "Other",
@@ -14703,6 +15961,14 @@
     "path": "games/clturokdinosaurhunter.html"
   },
   {
+    "id": "cltvstatic",
+    "title": "TV Static",
+    "category": "Other",
+    "path": "games/cltvstatic.html",
+    "description": "Stare at the static. That is it. Cursed meme game.",
+    "thumbnail": "assets/thumbnails/cltvstatic.png"
+  },
+  {
     "id": "cltwinshot",
     "title": "Cltwinshot",
     "category": "Other",
@@ -14773,6 +16039,12 @@
     "title": "Clultimateassassian 3",
     "category": "Other",
     "path": "games/clultimateassassian3.html"
+  },
+  {
+    "id": "clultimatecardrivingsimulator",
+    "title": "Ultimatecardrivingsimulator",
+    "category": "Racing",
+    "path": "games/clUltimatecardrivingsimulator.html"
   },
   {
     "id": "clultimatemortalkombat",
@@ -14906,6 +16178,12 @@
     "category": "Other",
     "path": "games/clusterrush.html",
     "popular": true
+  },
+  {
+    "id": "cluzg",
+    "title": "UZG",
+    "category": "Other",
+    "path": "games/clUZG.html"
   },
   {
     "id": "clvampiresurvivors",
@@ -15047,6 +16325,12 @@
     "title": "Clvsnonsense",
     "category": "Other",
     "path": "games/clvsnonsense.html"
+  },
+  {
+    "id": "clvssmb",
+    "title": "VSSMB",
+    "category": "Mario",
+    "path": "games/clVSSMB.html"
   },
   {
     "id": "clvvvvvv",
@@ -15271,6 +16555,15 @@
     "path": "games/clwitchcrafttd.html"
   },
   {
+    "id": "clwolf3d",
+    "title": "Wolfenstein 3D",
+    "category": "Shooting",
+    "path": "games/clwolf3d.html",
+    "description": "Play the 1992 FPS classic directly in your browser.",
+    "thumbnail": "assets/thumbnails/clwolf3d.png",
+    "popular": true
+  },
+  {
     "id": "clwolfenstein",
     "title": "Clwolfenstein",
     "category": "Other",
@@ -15356,10 +16649,28 @@
     "path": "games/clxevent.html"
   },
   {
+    "id": "clxevious",
+    "title": "Xevious",
+    "category": "Other",
+    "path": "games/clXevious.html"
+  },
+  {
     "id": "clxmenarcade",
     "title": "Clxmenarcade",
     "category": "Retro",
     "path": "games/clxmenarcade.html"
+  },
+  {
+    "id": "clxmenchildrenoftheatomarcade",
+    "title": "Xmen Children Of The Atom Arcade",
+    "category": "Retro",
+    "path": "games/clXMenChildrenOfTheAtomArcade.html"
+  },
+  {
+    "id": "clxmenvsstreetfighter",
+    "title": "Xmen Vsstreet Fighter",
+    "category": "Fighting",
+    "path": "games/clXMenVSStreetFighter.html"
   },
   {
     "id": "clyanderesimulator",
@@ -15384,6 +16695,21 @@
     "title": "Clyohohoio",
     "category": "Other",
     "path": "games/clyohohoio.html"
+  },
+  {
+    "id": "clyoshisstrangequest",
+    "title": "Yoshis Strange Quest",
+    "category": "Other",
+    "path": "games/clYoshisStrangeQuest.html"
+  },
+  {
+    "id": "clyouarebezos",
+    "title": "You Are Bezos",
+    "category": "Simulation",
+    "path": "games/clyouarebezos.html",
+    "description": "Spend Jeff Bezos's fortune on ridiculous purchases. Good luck running out.",
+    "thumbnail": "assets/thumbnails/clyouarebezos.png",
+    "popular": true
   },
   {
     "id": "clyouarelucky",
@@ -15442,6 +16768,12 @@
     "path": "games/clzenword.html"
   },
   {
+    "id": "clzetaclient",
+    "title": "Zeta Client",
+    "category": "Other",
+    "path": "games/clZetaClient.html"
+  },
+  {
     "id": "clzoinkz",
     "title": "Clzoinkz",
     "category": "Other",
@@ -15496,6 +16828,15 @@
     "path": "games/clzombotronreboot.html"
   },
   {
+    "id": "clzombsroyale",
+    "title": "Zombs Royale",
+    "category": "Shooting",
+    "path": "games/clzombsroyale.html",
+    "description": "2D top-down battle royale. 100 players, one winner.",
+    "thumbnail": "assets/thumbnails/clzombsroyale.png",
+    "popular": true
+  },
+  {
     "id": "clzrist",
     "title": "Clzrist",
     "category": "Other",
@@ -15514,80 +16855,16 @@
     "path": "games/clzumashooter.html"
   },
   {
-    "id": "cl",
-    "title": "ClÃŠËœ",
-    "category": "Other",
-    "path": "games/clÃŠËœ.html"
-  },
-  {
     "id": "codeorg",
     "title": "Codeorg",
     "category": "Other",
     "path": "games/codeorg.html"
   },
   {
-    "id": "clcrystalcastles",
-    "title": "Crystal Castles",
-    "category": "Other",
-    "path": "games/clCrystalCastles.html"
-  },
-  {
-    "id": "cldknescollection",
-    "title": "Dknescollection",
-    "category": "Retro",
-    "path": "games/clDKNESCollection.html"
-  },
-  {
-    "id": "cldragonballzthelegacyofgoku",
-    "title": "Dragon Ball Zthe Legacyof Goku",
-    "category": "Fighting",
-    "path": "games/clDragonBallZTheLegacyofGoku.html"
-  },
-  {
-    "id": "cldragonquestix",
-    "title": "Dragon Quest IX",
-    "category": "Other",
-    "path": "games/clDragonQuestIX.html"
-  },
-  {
-    "id": "cldragonxclient",
-    "title": "Dragonxclient",
-    "category": "Other",
-    "path": "games/clDragonxclient.html"
-  },
-  {
     "id": "dta6",
     "title": "Dta 6",
     "category": "Other",
     "path": "games/dta6.html"
-  },
-  {
-    "id": "cleaglercraft-alpha-126-offline",
-    "title": "Eaglercraft Alpha 126 Offline",
-    "category": "Minecraft",
-    "path": "games/clEaglercraft-Alpha-126-Offline.html",
-    "popular": true
-  },
-  {
-    "id": "cleaglercraft-beta-1-3-offline",
-    "title": "Eaglercraft Beta 1.3 Offline",
-    "category": "Minecraft",
-    "path": "games/clEaglercraft-Beta-1.3-Offline.html",
-    "popular": true
-  },
-  {
-    "id": "cleaglercraft-beta-13-offline",
-    "title": "Eaglercraft Beta 13 Offline",
-    "category": "Minecraft",
-    "path": "games/clEaglercraft-Beta-13-Offline.html",
-    "popular": true
-  },
-  {
-    "id": "cleaglercraft-indev-offline",
-    "title": "Eaglercraft Indev Offline",
-    "category": "Minecraft",
-    "path": "games/clEaglercraft-Indev-Offline.html",
-    "popular": true
   },
   {
     "id": "eaglercraft-indev-offline-1",
@@ -15597,278 +16874,10 @@
     "popular": true
   },
   {
-    "id": "cleaglercraft-indev-offline-1",
-    "title": "Eaglercraft Indev Offline(1)",
-    "category": "Minecraft",
-    "path": "games/clEaglercraft-Indev-Offline(1).html",
-    "popular": true
-  },
-  {
-    "id": "cleaglercraft-indev-offline-2",
-    "title": "Eaglercraft Indev Offline(2)",
-    "category": "Minecraft",
-    "path": "games/clEaglercraft-Indev-Offline(2).html",
-    "popular": true
-  },
-  {
-    "id": "cleaglercraftl-19-v0-7-0-offline-signed",
-    "title": "Eaglercraft L 19 V 0 7 0 Offline Signed",
-    "category": "Minecraft",
-    "path": "games/clEaglercraftL_19_v0_7_0_Offline_Signed.html",
-    "popular": true
-  },
-  {
-    "id": "cleaglercraftl-19-v0-7-0-offline-signed-1",
-    "title": "Eaglercraft L 19 V 0 7 0 Offline Signed(1)",
-    "category": "Minecraft",
-    "path": "games/clEaglercraftL_19_v0_7_0_Offline_Signed(1).html",
-    "popular": true
-  },
-  {
-    "id": "cleaglercraftx-188u29",
-    "title": "Eaglercraft X 188 U 29",
-    "category": "Minecraft",
-    "path": "games/clEaglercraftX-188u29.html",
-    "popular": true
-  },
-  {
-    "id": "cleaglercraftx188-u29",
-    "title": "Eaglercraft X 188(u 29)",
-    "category": "Minecraft",
-    "path": "games/clEaglercraftX188(u29).html",
-    "popular": true
-  },
-  {
-    "id": "clff3",
-    "title": "FF 3",
-    "category": "Other",
-    "path": "games/clFF3.html"
-  },
-  {
-    "id": "clffsonic1",
-    "title": "Ffsonic 1",
-    "category": "Sonic",
-    "path": "games/clFFsonic1.html"
-  },
-  {
-    "id": "clffsonic2",
-    "title": "Ffsonic 2",
-    "category": "Sonic",
-    "path": "games/clFFsonic2.html"
-  },
-  {
-    "id": "clffsonic3",
-    "title": "Ffsonic 3",
-    "category": "Sonic",
-    "path": "games/clFFsonic3.html"
-  },
-  {
-    "id": "clffsonic4",
-    "title": "Ffsonic 4",
-    "category": "Sonic",
-    "path": "games/clFFsonic4.html"
-  },
-  {
-    "id": "clffsonic5",
-    "title": "Ffsonic 5",
-    "category": "Sonic",
-    "path": "games/clFFsonic5.html"
-  },
-  {
-    "id": "clffsonic61",
-    "title": "Ffsonic 61",
-    "category": "Sonic",
-    "path": "games/clFFsonic61.html"
-  },
-  {
-    "id": "clffsonic62",
-    "title": "Ffsonic 62",
-    "category": "Sonic",
-    "path": "games/clFFsonic62.html"
-  },
-  {
-    "id": "clfifa07",
-    "title": "FIFA 07",
-    "category": "Other",
-    "path": "games/clFIFA07.html"
-  },
-  {
-    "id": "clfifa10",
-    "title": "FIFA 10",
-    "category": "Other",
-    "path": "games/clFIFA10.html"
-  },
-  {
-    "id": "clfifa11",
-    "title": "FIFA 11",
-    "category": "Other",
-    "path": "games/clFIFA11.html"
-  },
-  {
-    "id": "clfifa2000-1",
-    "title": "FIFA 2000(1)",
-    "category": "Other",
-    "path": "games/clFIFA2000(1).html"
-  },
-  {
-    "id": "clfifa99",
-    "title": "FIFA 99",
-    "category": "Other",
-    "path": "games/clFIFA99.html"
-  },
-  {
-    "id": "clfifainternationalsoccer",
-    "title": "Fifainternationalsoccer",
-    "category": "Sports",
-    "path": "games/clFIFAinternationalsoccer.html"
-  },
-  {
-    "id": "clfifaroadtoworldcup98",
-    "title": "Fifaroadtoworldcup 98",
-    "category": "Other",
-    "path": "games/clFIFAroadtoworldcup98.html"
-  },
-  {
-    "id": "clfifasoccer06",
-    "title": "Fifasoccer 06",
-    "category": "Sports",
-    "path": "games/clFIFAsoccer06.html"
-  },
-  {
-    "id": "clfifasoccer95",
-    "title": "Fifasoccer 95",
-    "category": "Sports",
-    "path": "games/clFIFAsoccer95.html"
-  },
-  {
-    "id": "clfifasoccer96",
-    "title": "Fifasoccer 96",
-    "category": "Sports",
-    "path": "games/clFIFAsoccer96.html"
-  },
-  {
-    "id": "clfifasoccer97",
-    "title": "Fifasoccer 97",
-    "category": "Sports",
-    "path": "games/clFIFAsoccer97.html"
-  },
-  {
-    "id": "clfifastreet2",
-    "title": "Fifastreet 2",
-    "category": "Other",
-    "path": "games/clFIFAstreet2.html"
-  },
-  {
-    "id": "clfnaf",
-    "title": "FNAF",
-    "category": "Horror",
-    "path": "games/clFNAF.html",
-    "popular": true
-  },
-  {
-    "id": "clfnaf2",
-    "title": "FNAF 2",
-    "category": "Horror",
-    "path": "games/clFNAF2.html",
-    "popular": true
-  },
-  {
-    "id": "clfnaf3",
-    "title": "FNAF 3",
-    "category": "Horror",
-    "path": "games/clFNAF3.html",
-    "popular": true
-  },
-  {
-    "id": "clfnaf4",
-    "title": "FNAF 4",
-    "category": "Horror",
-    "path": "games/clFNAF4.html",
-    "popular": true
-  },
-  {
-    "id": "clgain-ground",
-    "title": "Gain Ground",
-    "category": "Other",
-    "path": "games/clGain Ground.html"
-  },
-  {
-    "id": "clgettothetopalthoughthereisnotop",
-    "title": "Gettothetopalthoughthereisnotop",
-    "category": "Other",
-    "path": "games/clGettothetopalthoughthereisnotop.html"
-  },
-  {
-    "id": "clgoldensunthelostage",
-    "title": "Golden Sun The Lost Age",
-    "category": "Other",
-    "path": "games/clGoldenSunTheLostAge.html"
-  },
-  {
-    "id": "clharoldsbadday",
-    "title": "Haroldsbadday",
-    "category": "Other",
-    "path": "games/clHaroldsbadday.html"
-  },
-  {
-    "id": "clhelios-offline-1",
-    "title": "Helios Offline (1)",
-    "category": "Other",
-    "path": "games/clHelios-Offline (1).html"
-  },
-  {
     "id": "helios-offline-1",
     "title": "Helios Offline (1)",
     "category": "Other",
     "path": "games/Helios-Offline (1).html"
-  },
-  {
-    "id": "clhinohomo",
-    "title": "Hi No Homo",
-    "category": "Other",
-    "path": "games/clHiNoHomo.html"
-  },
-  {
-    "id": "clhighspeed",
-    "title": "High Speed",
-    "category": "Other",
-    "path": "games/clHighSpeed.html"
-  },
-  {
-    "id": "clhoennslastwish",
-    "title": "Hoenns Last Wish",
-    "category": "Other",
-    "path": "games/clHoennsLastWish.html"
-  },
-  {
-    "id": "clinkwell-v1-04",
-    "title": "Inkwell (v 1.04)",
-    "category": "Other",
-    "path": "games/clInkwell (v1.04).html"
-  },
-  {
-    "id": "cljump",
-    "title": "JUMP",
-    "category": "Platformer",
-    "path": "games/clJUMP.html"
-  },
-  {
-    "id": "clkengriffeyjrpresentsmajorleaguebaseball",
-    "title": "Ken Griffey Jr Presents Major League Baseball",
-    "category": "Sports",
-    "path": "games/clKenGriffeyJrPresentsMajorLeagueBaseball.html"
-  },
-  {
-    "id": "cllearntofly3debug",
-    "title": "Learn To Fly 3 Debug",
-    "category": "Other",
-    "path": "games/clLearnToFly3Debug.html"
-  },
-  {
-    "id": "cllegacyofgoku",
-    "title": "Legacy Of Goku",
-    "category": "Other",
-    "path": "games/clLegacyOfGoku.html"
   },
   {
     "id": "lime",
@@ -15877,64 +16886,10 @@
     "path": "games/lime.html"
   },
   {
-    "id": "cllse",
-    "title": "LSE",
-    "category": "Other",
-    "path": "games/clLSE.html"
-  },
-  {
     "id": "lucid",
     "title": "Lucid",
     "category": "Other",
     "path": "games/lucid.html"
-  },
-  {
-    "id": "clmario-party-advance",
-    "title": "Mario Party Advance",
-    "category": "Mario",
-    "path": "games/clMario Party Advance.html"
-  },
-  {
-    "id": "clmarioismissingdoneright",
-    "title": "Mariois Missing Done Right",
-    "category": "Mario",
-    "path": "games/clMarioisMissingDoneRight.html"
-  },
-  {
-    "id": "clmarvelsuperheroesarcade",
-    "title": "Marvel Super Heroes Arcade",
-    "category": "Retro",
-    "path": "games/clMarvelSuperHeroesArcade.html"
-  },
-  {
-    "id": "clmarvelvscapcomps1",
-    "title": "Marvel Vs Capcom PS 1",
-    "category": "Other",
-    "path": "games/clMarvelVsCapcomPS1.html"
-  },
-  {
-    "id": "clmarvelvsstreetfighter",
-    "title": "Marvel Vs Street Fighter",
-    "category": "Fighting",
-    "path": "games/clMarvelVsStreetFighter.html"
-  },
-  {
-    "id": "clmetalsonichyperdrive",
-    "title": "Metal Sonic Hyperdrive",
-    "category": "Sonic",
-    "path": "games/clMetalSonicHyperdrive.html"
-  },
-  {
-    "id": "clminceraft-i-notmine-v6",
-    "title": "Minceraft I Not Mine V 6",
-    "category": "Other",
-    "path": "games/clMinceraft-I-NotMine_V6.html"
-  },
-  {
-    "id": "clminceraft-i-notmine-v6-1",
-    "title": "Minceraft I Not Mine V 6(1)",
-    "category": "Other",
-    "path": "games/clMinceraft-I-NotMine_V6(1).html"
   },
   {
     "id": "minecrafttowerdefense",
@@ -15943,88 +16898,10 @@
     "path": "games/MINECRAFTTOWERDEFENSE.html"
   },
   {
-    "id": "clmoemon-emerald-vanilla-v1-1-0",
-    "title": "Moemon Emerald Vanilla+ (v 1.1.0)",
-    "category": "Other",
-    "path": "games/clMoemon Emerald Vanilla+ (v1.1.0).html"
-  },
-  {
-    "id": "clnautilusos",
-    "title": "Nautilus OS",
-    "category": "Other",
-    "path": "games/clNautilusOS.html"
-  },
-  {
-    "id": "clnautilusos-1",
-    "title": "Nautilus OS(1)",
-    "category": "Other",
-    "path": "games/clNautilusOS(1).html"
-  },
-  {
-    "id": "clnbahangtime",
-    "title": "Nbahangtime",
-    "category": "Other",
-    "path": "games/clNBAhangtime.html"
-  },
-  {
-    "id": "clnbajam",
-    "title": "Nbajam",
-    "category": "Other",
-    "path": "games/clNBAjam.html"
-  },
-  {
-    "id": "clnewsupermarioworld2aroundtheworld",
-    "title": "New Super Mario World 2 Aroundthe World",
-    "category": "Mario",
-    "path": "games/clNewSuperMarioWorld2AroundtheWorld.html"
-  },
-  {
-    "id": "clnicktoonsfreezeframefrenzy",
-    "title": "Nicktoons Freeze Frame Frenzy",
-    "category": "Other",
-    "path": "games/clNicktoonsFreezeFrameFrenzy.html"
-  },
-  {
     "id": "nikehub",
     "title": "Nikehub",
     "category": "Other",
     "path": "games/nikehub.html"
-  },
-  {
-    "id": "clnutsandboltsscrewingpuzzle",
-    "title": "Nutsand Bolts Screwing Puzzle",
-    "category": "Puzzle",
-    "path": "games/clNutsandBoltsScrewingPuzzle.html"
-  },
-  {
-    "id": "clorangeroulette",
-    "title": "Orange Roulette",
-    "category": "Other",
-    "path": "games/clOrangeRoulette.html"
-  },
-  {
-    "id": "cloutrunarcade",
-    "title": "Outrun Arcade",
-    "category": "Platformer",
-    "path": "games/clOutrunArcade.html"
-  },
-  {
-    "id": "cloutrungenesis",
-    "title": "Outrun Genesis",
-    "category": "Platformer",
-    "path": "games/clOutrunGenesis.html"
-  },
-  {
-    "id": "clpapermariodse",
-    "title": "Paper Mario DSE",
-    "category": "Mario",
-    "path": "games/clPaperMarioDSE.html"
-  },
-  {
-    "id": "clpapermariopracticehack",
-    "title": "Paper Mario Practice Hack",
-    "category": "Mario",
-    "path": "games/clPaperMarioPracticeHack.html"
   },
   {
     "id": "peach",
@@ -16033,102 +16910,10 @@
     "path": "games/peach.html"
   },
   {
-    "id": "clpokeambrosia",
-    "title": "Pokemon Ambrosia",
-    "category": "Pokemon",
-    "path": "games/clPokeAmbrosia.html",
-    "description": "A mythologically inspired ROM hack set in a region based on ancient legends. Features an original story involving divine Pokemon and mortal conflicts, custom maps, Pokemon from multiple generations, and a narrative steeped in mythology and wonder.",
-    "thumbnail": "assets/thumbnails/clpokeambrosia.jpg"
-  },
-  {
-    "id": "clpokeemeraldrogueex",
-    "title": "Pokemon Emerald Rogue EX",
-    "category": "Pokemon",
-    "path": "games/clPokeEmeraldRogueEX.html",
-    "description": "The expanded edition of Emerald Rogue with even more Pokemon, items, challenges, and unlockables. This roguelike experience generates a new adventure each run with random routes, trainers, and wild encounters. Features enhanced difficulty modes and more strategic depth.",
-    "thumbnail": "assets/thumbnails/clpokeemeraldrogueex.png"
-  },
-  {
-    "id": "clpokefusion3",
-    "title": "Pokemon Fusion 3",
-    "category": "Pokemon",
-    "path": "games/clPokeFusion3.html",
-    "description": "The third installment in the Pokemon Fusion series with even more fusion combinations. Fuse any two Pokemon together to create unique hybrids. Features improved fusion sprites, a new region, updated mechanics, and thousands of possible fusion combinations to discover.",
-    "thumbnail": "assets/thumbnails/clpokefusion3.png"
-  },
-  {
-    "id": "clpokeheartgoldgenerations",
-    "title": "Pokemon HeartGold Generations",
-    "category": "Pokemon",
-    "path": "games/clPokeHeartgoldGenerations.html",
-    "description": "A HeartGold hack that adds Pokemon from all generations into the Johto and Kanto adventure. Catch Gen 1-8 Pokemon, enjoy updated movesets and abilities, and experience the beloved HGSS adventure with a massively expanded Pokedex and modern Pokemon.",
-    "thumbnail": "assets/thumbnails/clpokeheartgoldgenerations.jpg"
-  },
-  {
-    "id": "clpokethetaemeraldex",
-    "title": "Pokemon Theta Emerald EX",
-    "category": "Pokemon",
-    "path": "games/clPokeThetaEmeraldEX.html",
-    "description": "One of the most comprehensive Emerald hacks featuring 721 Pokemon from Gens 1-6, Mega Evolutions, Primal Reversion, updated moves and abilities, Fairy type, reusable TMs, and the Exp. Share as an on/off toggle. A must-play for fans wanting the complete Pokemon experience on GBA.",
-    "thumbnail": "assets/thumbnails/clpokethetaemeraldex.jpg"
-  },
-  {
-    "id": "clpokemonemeraldrouge",
-    "title": "Pokemon Emerald Rogue (Alt)",
-    "category": "Pokemon",
-    "path": "games/clPokemonemeraldrouge.html",
-    "description": "An alternate build of the popular Emerald Rogue roguelike hack. Procedurally generated routes and encounters make every run unique. Build your team strategically, defeat Gym Leaders, and try to complete the Pokemon League before your run ends.",
-    "thumbnail": "assets/thumbnails/clpokemonemeraldrouge.png"
-  },
-  {
-    "id": "clpokemonrocketedition",
-    "title": "Pokemon Rocket Edition (Alt)",
-    "category": "Pokemon",
-    "path": "games/clPokemonrocketedition.html",
-    "description": "An alternate version of the Team Rocket role-reversal hack. Join Team Rocket, steal from trainers, and work your way up through the criminal organization. Features the Kanto story retold from the villain's perspective with unique missions and moral dilemmas.",
-    "thumbnail": "assets/thumbnails/clpokemonrocketedition.png"
-  },
-  {
-    "id": "clpok-mon-emerald-rush-edition-2-0",
-    "title": "PokÃƒÂ©mon Emerald Rush Edition (2.0)",
-    "category": "Other",
-    "path": "games/clPokÃƒÂ©mon Emerald Rush Edition (2.0).html"
-  },
-  {
-    "id": "clpok-mon-trade-stache-v1-1",
-    "title": "PokÃƒÂ©mon Trade& Stache (V 1.1)",
-    "category": "Other",
-    "path": "games/clPokÃƒÂ©mon Trade&_Stache (V1.1).html"
-  },
-  {
-    "id": "clpok-mon-two-v1-1",
-    "title": "PokÃƒÂ©mon TWO (v 1.1)",
-    "category": "Other",
-    "path": "games/clPokÃƒÂ©mon TWO (v1.1).html"
-  },
-  {
-    "id": "clpok-monstunningsteel",
-    "title": "PokÃƒÂ©monstunningsteel",
-    "category": "Other",
-    "path": "games/clPokÃƒÂ©monstunningsteel.html"
-  },
-  {
-    "id": "clpou",
-    "title": "Pou",
-    "category": "Other",
-    "path": "games/clPou.html"
-  },
-  {
     "id": "pvzm",
     "title": "PVZM",
     "category": "Other",
     "path": "games/PVZM.html"
-  },
-  {
-    "id": "clredball4",
-    "title": "Red Ball 4",
-    "category": "Other",
-    "path": "games/clRedBall4.html"
   },
   {
     "id": "redvbluefix",
@@ -16155,22 +16940,10 @@
     "path": "games/riddleuneversityfix.html"
   },
   {
-    "id": "clscamptonthegreatfightrecreate",
-    "title": "Scampton The Great Fight Recreate",
-    "category": "Fighting",
-    "path": "games/clScamptonTheGreatFightRecreate.html"
-  },
-  {
     "id": "sdf",
     "title": "Sdf",
     "category": "Other",
     "path": "games/sdf.html"
-  },
-  {
-    "id": "clsegasonicthehedgehog",
-    "title": "Sega Sonic The Hedgehog",
-    "category": "Sonic",
-    "path": "games/clSegaSonicTheHedgehog.html"
   },
   {
     "id": "shortlife",
@@ -16179,34 +16952,10 @@
     "path": "games/shortlife.html"
   },
   {
-    "id": "clsinglefile",
-    "title": "SINGLEFILE",
-    "category": "Other",
-    "path": "games/clSINGLEFILE.html"
-  },
-  {
-    "id": "clskyriders",
-    "title": "Sky Riders",
-    "category": "Other",
-    "path": "games/clSkyRiders.html"
-  },
-  {
-    "id": "clsm64land",
-    "title": "SM 64 Land",
-    "category": "Other",
-    "path": "games/clSM64Land.html"
-  },
-  {
     "id": "smash-hit-ripoff",
     "title": "Smash Hit Ripoff",
     "category": "Fighting",
     "path": "games/Smash Hit Ripoff.html"
-  },
-  {
-    "id": "clsnowbrosgenesis",
-    "title": "Snow Bros Genesis",
-    "category": "Retro",
-    "path": "games/clSnowBrosGenesis.html"
   },
   {
     "id": "snowwhite",
@@ -16215,167 +16964,16 @@
     "path": "games/snowwhite.html"
   },
   {
-    "id": "clsonic-knuckles-sonic-the-hedgehog-3",
-    "title": "Sonic & Knuckles + Sonic The Hedgehog 3",
-    "category": "Sonic",
-    "path": "games/clSonic & Knuckles + Sonic The Hedgehog 3.html"
-  },
-  {
-    "id": "clsonic1scorerush",
-    "title": "Sonic 1 Score Rush",
-    "category": "Sonic",
-    "path": "games/clSonic1ScoreRush.html"
-  },
-  {
-    "id": "clsonic1thesuperchallenges",
-    "title": "Sonic 1 The Super Challenges",
-    "category": "Sonic",
-    "path": "games/clSonic1TheSuperChallenges.html"
-  },
-  {
-    "id": "clsonic2scorerush",
-    "title": "Sonic 2 Score Rush",
-    "category": "Sonic",
-    "path": "games/clSonic2ScoreRush.html"
-  },
-  {
-    "id": "clsonicclassics",
-    "title": "Sonic Classics",
-    "category": "Sonic",
-    "path": "games/clSonicClassics.html"
-  },
-  {
-    "id": "clsonichellfiresaga",
-    "title": "Sonic Hellfire Saga",
-    "category": "Sonic",
-    "path": "games/clSonicHellfireSaga.html"
-  },
-  {
-    "id": "clsovereignoftheskys",
-    "title": "Sovereignoftheskys",
-    "category": "Other",
-    "path": "games/clSovereignoftheskys.html"
-  },
-  {
-    "id": "clspongebobpowerkartgrandprix",
-    "title": "Spongebob Power Kart Grand Prix",
-    "category": "Racing",
-    "path": "games/clSpongebobPowerKartGrandPrix.html"
-  },
-  {
-    "id": "clsportsheadsicehockey",
-    "title": "Sports Heads Ice Hockey",
-    "category": "Sports",
-    "path": "games/clSportsHeadsIceHockey.html"
-  },
-  {
-    "id": "clssf2arcade",
-    "title": "SSF 2 Arcade",
-    "category": "Retro",
-    "path": "games/clSSF2Arcade.html"
-  },
-  {
-    "id": "clssf2tarcade",
-    "title": "SSF 2 Tarcade",
-    "category": "Retro",
-    "path": "games/clSSF2TArcade.html"
-  },
-  {
-    "id": "clstickmankingdomclash",
-    "title": "Stickman Kingdomclash",
-    "category": "Other",
-    "path": "games/clStickmanKingdomclash.html"
-  },
-  {
-    "id": "clstreetfighter1arcade",
-    "title": "Street Fighter 1 Arcade",
-    "category": "Fighting",
-    "path": "games/clStreetFighter1Arcade.html"
-  },
-  {
-    "id": "clstreetfighter2arcade",
-    "title": "Street Fighter 2 Arcade",
-    "category": "Fighting",
-    "path": "games/clStreetFighter2Arcade.html",
-    "popular": true
-  },
-  {
-    "id": "clstreetfighter2cearcade",
-    "title": "Street Fighter 2 Cearcade",
-    "category": "Fighting",
-    "path": "games/clStreetFighter2CEArcade.html"
-  },
-  {
-    "id": "clstreetfighter2hfarcade",
-    "title": "Street Fighter 2 Hfarcade",
-    "category": "Fighting",
-    "path": "games/clStreetFighter2HFArcade.html"
-  },
-  {
-    "id": "clsupermarioworldthe-secretofthe7goldenstatues",
-    "title": "Super Mario World The Secret Of The 7 Golden Statues",
-    "category": "Mario",
-    "path": "games/clSuperMarioWorldThe SecretOfThe7GoldenStatues.html"
-  },
-  {
-    "id": "clsuperpunchouten",
-    "title": "Super Punch Out EN",
-    "category": "Other",
-    "path": "games/clSuperPunchOutEN.html"
-  },
-  {
-    "id": "clsupremeduelist2019",
-    "title": "Supreme Duelist 2019",
-    "category": "Other",
-    "path": "games/clSupremeDuelist2019.html"
-  },
-  {
-    "id": "cltaikonotatsujin",
-    "title": "Taikono Tatsujin",
-    "category": "Other",
-    "path": "games/clTaikonoTatsujin.html"
-  },
-  {
-    "id": "cltheloneranger",
-    "title": "The Lone Ranger",
-    "category": "Other",
-    "path": "games/clTheLoneRanger.html"
-  },
-  {
-    "id": "clthesunforthevampire",
-    "title": "The Sun For The Vampire",
-    "category": "Other",
-    "path": "games/clTheSunForTheVampire.html"
-  },
-  {
     "id": "tinyfishing",
     "title": "Tinyfishing",
     "category": "Other",
     "path": "games/tinyfishing.html"
   },
   {
-    "id": "clultimatecardrivingsimulator",
-    "title": "Ultimatecardrivingsimulator",
-    "category": "Racing",
-    "path": "games/clUltimatecardrivingsimulator.html"
-  },
-  {
     "id": "unownking",
     "title": "Unownking",
     "category": "Other",
     "path": "games/unownking.html"
-  },
-  {
-    "id": "cluzg",
-    "title": "UZG",
-    "category": "Other",
-    "path": "games/clUZG.html"
-  },
-  {
-    "id": "clvssmb",
-    "title": "VSSMB",
-    "category": "Mario",
-    "path": "games/clVSSMB.html"
   },
   {
     "id": "winterolympics",
@@ -16388,41 +16986,5 @@
     "title": "Wolfchild",
     "category": "Other",
     "path": "games/wolfchild.html"
-  },
-  {
-    "id": "clxevious",
-    "title": "Xevious",
-    "category": "Other",
-    "path": "games/clXevious.html"
-  },
-  {
-    "id": "clxmenchildrenoftheatomarcade",
-    "title": "Xmen Children Of The Atom Arcade",
-    "category": "Retro",
-    "path": "games/clXMenChildrenOfTheAtomArcade.html"
-  },
-  {
-    "id": "clxmenvsstreetfighter",
-    "title": "Xmen Vsstreet Fighter",
-    "category": "Fighting",
-    "path": "games/clXMenVSStreetFighter.html"
-  },
-  {
-    "id": "clyoshisstrangequest",
-    "title": "Yoshis Strange Quest",
-    "category": "Other",
-    "path": "games/clYoshisStrangeQuest.html"
-  },
-  {
-    "id": "clzetaclient",
-    "title": "Zeta Client",
-    "category": "Other",
-    "path": "games/clZetaClient.html"
-  },
-  {
-    "id": "cl-oo",
-    "title": "Ãƒâ€“oo",
-    "category": "Other",
-    "path": "games/clÃƒâ€“oo.html"
   }
 ]
