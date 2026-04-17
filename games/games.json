@@ -9685,6 +9685,14 @@
     "thumbnail": "assets/thumbnails/clpokediamond.jpg"
   },
   {
+    "id": "clpokedarkrising",
+    "title": "Pokemon Dark Rising",
+    "category": "Pokemon",
+    "path": "games/clpokedarkrising.html",
+    "description": "A challenging FireRed-based hack set in the Core region where you must rescue your father and save the world from Darugis. Features a gripping story, Pokemon from multiple generations, tough trainers, unique abilities, and increased difficulty. One of the classic ROM hacks beloved by the community.",
+    "thumbnail": "assets/thumbnails/clpokedarkrising.png"
+  },
+  {
     "id": "clpokedreamstone",
     "title": "Pokemon Dream Stone",
     "category": "Pokemon",
@@ -9859,6 +9867,14 @@
     "path": "games/clpokemegamoemon.html",
     "description": "A ROM hack where all Pokemon are replaced with anime-style girl sprites (Moemon) featuring Mega Evolutions. The same core gameplay with a unique aesthetic twist. All Pokemon are reimagined as cute character designs with their own Mega Evolution forms.",
     "thumbnail": "assets/thumbnails/clpokemegamoemon.png"
+  },
+  {
+    "id": "clpokemegapower",
+    "title": "Pokemon Mega Power",
+    "category": "Pokemon",
+    "path": "games/clpokemegapower.html",
+    "description": "An Emerald-based hack where you play as a scientist seeking to create the most powerful Pokemon. Features Mega Evolutions, Pokemon from multiple generations, custom maps, a unique story about scientific ambition and ethics, and updated battle mechanics. Part of the beloved Pokemon Ruby Destiny series.",
+    "thumbnail": "assets/thumbnails/clpokemegapower.png"
   },
   {
     "id": "clpokemonamnesia",
@@ -10293,6 +10309,14 @@
     "thumbnail": "assets/thumbnails/clpokeplatinumrandomized.png"
   },
   {
+    "id": "clpokepolishedcrystal",
+    "title": "Pokemon Polished Crystal",
+    "category": "Pokemon",
+    "path": "games/clpokepolishedcrystal.html",
+    "description": "An ambitious overhaul of Pokemon Crystal featuring all 251 original Pokemon plus new additions, updated graphics, quality-of-life improvements, the physical/special split, new areas, expanded post-game content, and modernized mechanics. One of the most polished GBC ROM hacks ever made.",
+    "thumbnail": "assets/thumbnails/clpokepolishedcrystal.png"
+  },
+  {
     "id": "clpokepureblue",
     "title": "Pokemon Pure Blue",
     "category": "Pokemon",
@@ -10315,6 +10339,14 @@
     "path": "games/clpokepurered.html",
     "description": "A polished version of Pokemon Red with quality-of-life improvements, bug fixes, and balanced gameplay. Stays faithful to the original Kanto adventure while smoothing out rough edges for a clean, enjoyable retro experience.",
     "thumbnail": "assets/thumbnails/clpokepurered.png"
+  },
+  {
+    "id": "clpokeradicalred",
+    "title": "Pokemon Radical Red",
+    "category": "Pokemon",
+    "path": "games/clpokeradicalred.html",
+    "description": "A challenging FireRed-based hack with competitive difficulty, modern battle mechanics, and all Pokemon through Gen 8. Features updated AI, tough gym leaders, and a complete Pokedex overhaul. Perfect for players seeking a hardcore experience.",
+    "thumbnail": "assets/thumbnails/clpokeradicalred.png"
   },
   {
     "id": "clpokerechargedpink",
@@ -10427,6 +10459,14 @@
     "path": "games/clpoketourmaline.html",
     "description": "A gem-themed ROM hack set in a custom region inspired by crystalline landscapes. Features an original story involving powerful gem-based artifacts, Pokemon from multiple generations, custom maps with unique environments, and a polished adventure from start to finish.",
     "thumbnail": "assets/thumbnails/clpoketourmaline.png"
+  },
+  {
+    "id": "clpokeultrashinygoldsigma",
+    "title": "Pokemon Ultra Shiny Gold Sigma",
+    "category": "Pokemon",
+    "path": "games/clpokeultrashinygoldsigma.html",
+    "description": "The ultimate Shiny Gold Sigma experience, a FireRed-based remake of Pokemon Gold. Features all 386 Gen I-III Pokemon, updated graphics, the physical/special split, the Orange Islands, post-game content, and a faithful Johto adventure with modern mechanics. One of the best Johto remakes on GBA.",
+    "thumbnail": "assets/thumbnails/clpokeultrashinygoldsigma.png"
   },
   {
     "id": "clpokeultraviolet",
@@ -10799,12 +10839,6 @@
     "title": "Clracingarena",
     "category": "Racing",
     "path": "games/clracingarena.html"
-  },
-  {
-    "id": "clradicalred",
-    "title": "Clradicalred",
-    "category": "Other",
-    "path": "games/clradicalred.html"
   },
   {
     "id": "clradracer",
