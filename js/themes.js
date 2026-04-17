@@ -1,141 +1,123 @@
-// ===== Theme System =====
+// ===== Theme System v2 =====
+// - 10 built-in color themes
+// - Custom wallpaper with dim + blur controls
+// - Community themes with search
+// - Tabbed picker UI (Colors / Wallpaper / Community)
+// - Smooth transitions between themes
 (function () {
-    const THEMES = {
-        midnight: {
-            label: 'Midnight',
-            vars: {
-                '--bg-primary': '#0a0a0f',
-                '--bg-secondary': '#12121a',
-                '--bg-card': '#16161f',
-                '--bg-card-hover': '#1c1c28',
-                '--border': '#2a2a3a',
-                '--text-primary': '#e8e8f0',
-                '--text-secondary': '#8888a0',
-                '--accent': '#7c3aed',
-                '--accent-secondary': '#06b6d4',
-                '--accent-glow': 'rgba(124, 58, 237, 0.4)',
-                '--accent-secondary-glow': 'rgba(6, 182, 212, 0.3)',
-                '--accent-subtle': 'rgba(124, 58, 237, 0.15)',
-                '--accent-grid': 'rgba(124, 58, 237, 0.03)',
-                '--accent-header': 'rgba(124, 58, 237, 0.08)',
-                '--chat-self-bg': 'rgba(124, 58, 237, 0.15)',
-                '--chat-self-border': 'rgba(124, 58, 237, 0.2)',
-            }
-        },
-        ocean: {
-            label: 'Ocean',
-            vars: {
-                '--bg-primary': '#0a0f14',
-                '--bg-secondary': '#101a22',
-                '--bg-card': '#142028',
-                '--bg-card-hover': '#1a2830',
-                '--border': '#1e3a4a',
-                '--text-primary': '#e0f0f8',
-                '--text-secondary': '#7a9ab0',
-                '--accent': '#0ea5e9',
-                '--accent-secondary': '#22d3ee',
-                '--accent-glow': 'rgba(14, 165, 233, 0.4)',
-                '--accent-secondary-glow': 'rgba(34, 211, 238, 0.3)',
-                '--accent-subtle': 'rgba(14, 165, 233, 0.15)',
-                '--accent-grid': 'rgba(14, 165, 233, 0.03)',
-                '--accent-header': 'rgba(14, 165, 233, 0.08)',
-                '--chat-self-bg': 'rgba(14, 165, 233, 0.15)',
-                '--chat-self-border': 'rgba(14, 165, 233, 0.2)',
-            }
-        },
-        crimson: {
-            label: 'Crimson',
-            vars: {
-                '--bg-primary': '#0f0a0a',
-                '--bg-secondary': '#1a1212',
-                '--bg-card': '#1f1616',
-                '--bg-card-hover': '#281c1c',
-                '--border': '#3a2a2a',
-                '--text-primary': '#f0e8e8',
-                '--text-secondary': '#a08888',
-                '--accent': '#ef4444',
-                '--accent-secondary': '#f97316',
-                '--accent-glow': 'rgba(239, 68, 68, 0.4)',
-                '--accent-secondary-glow': 'rgba(249, 115, 22, 0.3)',
-                '--accent-subtle': 'rgba(239, 68, 68, 0.15)',
-                '--accent-grid': 'rgba(239, 68, 68, 0.03)',
-                '--accent-header': 'rgba(239, 68, 68, 0.08)',
-                '--chat-self-bg': 'rgba(239, 68, 68, 0.15)',
-                '--chat-self-border': 'rgba(239, 68, 68, 0.2)',
-            }
-        },
-        forest: {
-            label: 'Forest',
-            vars: {
-                '--bg-primary': '#0a0f0a',
-                '--bg-secondary': '#121a12',
-                '--bg-card': '#161f16',
-                '--bg-card-hover': '#1c281c',
-                '--border': '#2a3a2a',
-                '--text-primary': '#e8f0e8',
-                '--text-secondary': '#88a088',
-                '--accent': '#22c55e',
-                '--accent-secondary': '#84cc16',
-                '--accent-glow': 'rgba(34, 197, 94, 0.4)',
-                '--accent-secondary-glow': 'rgba(132, 204, 22, 0.3)',
-                '--accent-subtle': 'rgba(34, 197, 94, 0.15)',
-                '--accent-grid': 'rgba(34, 197, 94, 0.03)',
-                '--accent-header': 'rgba(34, 197, 94, 0.08)',
-                '--chat-self-bg': 'rgba(34, 197, 94, 0.15)',
-                '--chat-self-border': 'rgba(34, 197, 94, 0.2)',
-            }
-        },
-        sunset: {
-            label: 'Sunset',
-            vars: {
-                '--bg-primary': '#0f0c0a',
-                '--bg-secondary': '#1a1510',
-                '--bg-card': '#1f1a14',
-                '--bg-card-hover': '#28201a',
-                '--border': '#3a3028',
-                '--text-primary': '#f0ece8',
-                '--text-secondary': '#a09888',
-                '--accent': '#f59e0b',
-                '--accent-secondary': '#ec4899',
-                '--accent-glow': 'rgba(245, 158, 11, 0.4)',
-                '--accent-secondary-glow': 'rgba(236, 72, 153, 0.3)',
-                '--accent-subtle': 'rgba(245, 158, 11, 0.15)',
-                '--accent-grid': 'rgba(245, 158, 11, 0.03)',
-                '--accent-header': 'rgba(245, 158, 11, 0.08)',
-                '--chat-self-bg': 'rgba(245, 158, 11, 0.15)',
-                '--chat-self-border': 'rgba(245, 158, 11, 0.2)',
-            }
-        },
-        light: {
-            label: 'Light',
-            vars: {
-                '--bg-primary': '#f5f5f7',
-                '--bg-secondary': '#ffffff',
-                '--bg-card': '#ffffff',
-                '--bg-card-hover': '#f0f0f5',
-                '--border': '#d4d4dc',
-                '--text-primary': '#1a1a2e',
-                '--text-secondary': '#64648a',
-                '--accent': '#7c3aed',
-                '--accent-secondary': '#0891b2',
-                '--accent-glow': 'rgba(124, 58, 237, 0.25)',
-                '--accent-secondary-glow': 'rgba(8, 145, 178, 0.2)',
-                '--accent-subtle': 'rgba(124, 58, 237, 0.1)',
-                '--accent-grid': 'rgba(124, 58, 237, 0.04)',
-                '--accent-header': 'rgba(124, 58, 237, 0.06)',
-                '--chat-self-bg': 'rgba(124, 58, 237, 0.1)',
-                '--chat-self-border': 'rgba(124, 58, 237, 0.15)',
-            }
+    // Small helper that builds a theme's vars from a concise config.
+    // Avoids the repetitive copy-paste from v1.
+    function buildTheme(label, cfg) {
+        const bg = cfg.bg;
+        const accent = cfg.accent;
+        const accent2 = cfg.accent2 || accent;
+        const text = cfg.text;
+        // Parse the accent hex into rgba() with alpha for translucent derivatives.
+        function rgba(hex, a) {
+            const h = hex.replace('#', '');
+            const r = parseInt(h.substring(0, 2), 16);
+            const g = parseInt(h.substring(2, 4), 16);
+            const b = parseInt(h.substring(4, 6), 16);
+            return `rgba(${r}, ${g}, ${b}, ${a})`;
         }
+        return {
+            label,
+            vars: {
+                '--bg-primary': bg[0],
+                '--bg-secondary': bg[1],
+                '--bg-card': bg[2],
+                '--bg-card-hover': bg[3],
+                '--border': bg[4],
+                '--text-primary': text[0],
+                '--text-secondary': text[1],
+                '--accent': accent,
+                '--accent-secondary': accent2,
+                '--accent-glow': rgba(accent, 0.4),
+                '--accent-secondary-glow': rgba(accent2, 0.3),
+                '--accent-subtle': rgba(accent, 0.15),
+                '--accent-grid': rgba(accent, 0.03),
+                '--accent-header': rgba(accent, 0.08),
+                '--chat-self-bg': rgba(accent, 0.15),
+                '--chat-self-border': rgba(accent, 0.2),
+            }
+        };
+    }
+
+    const THEMES = {
+        midnight: buildTheme('Midnight', {
+            bg: ['#0a0a0f', '#12121a', '#16161f', '#1c1c28', '#2a2a3a'],
+            text: ['#e8e8f0', '#8888a0'],
+            accent: '#7c3aed', accent2: '#06b6d4',
+        }),
+        ocean: buildTheme('Ocean', {
+            bg: ['#0a0f14', '#101a22', '#142028', '#1a2830', '#1e3a4a'],
+            text: ['#e0f0f8', '#7a9ab0'],
+            accent: '#0ea5e9', accent2: '#22d3ee',
+        }),
+        crimson: buildTheme('Crimson', {
+            bg: ['#0f0a0a', '#1a1212', '#1f1616', '#281c1c', '#3a2a2a'],
+            text: ['#f0e8e8', '#a08888'],
+            accent: '#ef4444', accent2: '#f97316',
+        }),
+        forest: buildTheme('Forest', {
+            bg: ['#0a0f0a', '#121a12', '#161f16', '#1c281c', '#2a3a2a'],
+            text: ['#e8f0e8', '#88a088'],
+            accent: '#22c55e', accent2: '#84cc16',
+        }),
+        sunset: buildTheme('Sunset', {
+            bg: ['#0f0c0a', '#1a1510', '#1f1a14', '#28201a', '#3a3028'],
+            text: ['#f0ece8', '#a09888'],
+            accent: '#f59e0b', accent2: '#ec4899',
+        }),
+        synthwave: buildTheme('Synthwave', {
+            bg: ['#0d081a', '#170e2b', '#1d1235', '#261745', '#3b2464'],
+            text: ['#f1e4ff', '#a890c8'],
+            accent: '#ff2e9a', accent2: '#01f9ff',
+        }),
+        sakura: buildTheme('Sakura', {
+            bg: ['#1a0f15', '#25161e', '#2e1b25', '#3a2230', '#4a2c3e'],
+            text: ['#fce7ef', '#c497a9'],
+            accent: '#ec4899', accent2: '#fb7185',
+        }),
+        oled: buildTheme('OLED Black', {
+            bg: ['#000000', '#050505', '#0a0a0a', '#121212', '#262626'],
+            text: ['#ffffff', '#9ca3af'],
+            accent: '#a78bfa', accent2: '#22d3ee',
+        }),
+        nord: buildTheme('Nord', {
+            bg: ['#2e3440', '#3b4252', '#434c5e', '#4c566a', '#5e6779'],
+            text: ['#eceff4', '#a9b2c0'],
+            accent: '#88c0d0', accent2: '#81a1c1',
+        }),
+        monokai: buildTheme('Monokai', {
+            bg: ['#1e1f1c', '#272822', '#2d2e27', '#383931', '#49483e'],
+            text: ['#f8f8f2', '#a6a29a'],
+            accent: '#a6e22e', accent2: '#f92672',
+        }),
+        light: buildTheme('Light', {
+            bg: ['#f5f5f7', '#ffffff', '#ffffff', '#f0f0f5', '#d4d4dc'],
+            text: ['#1a1a2e', '#64648a'],
+            accent: '#7c3aed', accent2: '#0891b2',
+        }),
     };
 
     const STORAGE_KEY = 'arcade-theme';
     const WALLPAPER_KEY = 'arcade-wallpaper';
+    const WALLPAPER_DIM_KEY = 'arcade-wallpaper-dim';
+    const WALLPAPER_BLUR_KEY = 'arcade-wallpaper-blur';
     const COMMUNITY_CACHE_KEY = 'arcade-community-theme-img';
     const DEFAULT_THEME = 'midnight';
 
-    // Cache of loaded community themes
     let communityThemes = [];
+
+    function getWallpaperDim() {
+        const v = parseFloat(localStorage.getItem(WALLPAPER_DIM_KEY));
+        return Number.isFinite(v) ? v : 0.5;
+    }
+    function getWallpaperBlur() {
+        const v = parseFloat(localStorage.getItem(WALLPAPER_BLUR_KEY));
+        return Number.isFinite(v) ? v : 2;
+    }
 
     function applyWallpaper(dataUrl) {
         let el = document.getElementById('custom-wallpaper');
@@ -144,26 +126,46 @@
             el.id = 'custom-wallpaper';
             document.body.prepend(el);
         }
+        let overlay = document.getElementById('custom-wallpaper-overlay');
+        if (!overlay) {
+            overlay = document.createElement('div');
+            overlay.id = 'custom-wallpaper-overlay';
+            document.body.prepend(overlay);
+        }
+
         if (dataUrl) {
             el.style.backgroundImage = `url(${dataUrl})`;
+            el.style.filter = `blur(${getWallpaperBlur()}px)`;
             el.style.display = 'block';
+            overlay.style.background = `rgba(0, 0, 0, ${getWallpaperDim()})`;
+            overlay.style.display = 'block';
             document.body.classList.add('has-wallpaper');
         } else {
             el.style.backgroundImage = '';
             el.style.display = 'none';
+            overlay.style.display = 'none';
             document.body.classList.remove('has-wallpaper');
         }
+    }
+
+    // Allow live tweaking of dim/blur without reloading the image
+    function updateWallpaperEffects() {
+        const el = document.getElementById('custom-wallpaper');
+        const overlay = document.getElementById('custom-wallpaper-overlay');
+        if (el) el.style.filter = `blur(${getWallpaperBlur()}px)`;
+        if (overlay) overlay.style.background = `rgba(0, 0, 0, ${getWallpaperDim()})`;
     }
 
     function applyTheme(themeId) {
         const root = document.documentElement;
 
+        // Add transition class briefly so color changes are smooth
+        document.body.classList.add('theme-transitioning');
+        setTimeout(() => document.body.classList.remove('theme-transitioning'), 400);
+
         if (themeId === 'custom') {
-            // Custom local wallpaper — midnight colors with transparency
             const base = THEMES.midnight.vars;
-            for (const [prop, val] of Object.entries(base)) {
-                root.style.setProperty(prop, val);
-            }
+            for (const [prop, val] of Object.entries(base)) root.style.setProperty(prop, val);
             root.style.setProperty('--bg-primary', 'rgba(10, 10, 15, 0.7)');
             root.style.setProperty('--bg-secondary', 'rgba(18, 18, 26, 0.85)');
             root.style.setProperty('--bg-card', 'rgba(22, 22, 31, 0.85)');
@@ -171,24 +173,16 @@
             const wallpaper = localStorage.getItem(WALLPAPER_KEY);
             applyWallpaper(wallpaper);
         } else if (themeId && themeId.startsWith('community:')) {
-            // Community theme
             const docId = themeId.replace('community:', '');
             const base = THEMES.midnight.vars;
-            for (const [prop, val] of Object.entries(base)) {
-                root.style.setProperty(prop, val);
-            }
+            for (const [prop, val] of Object.entries(base)) root.style.setProperty(prop, val);
             root.style.setProperty('--bg-primary', 'rgba(10, 10, 15, 0.7)');
             root.style.setProperty('--bg-secondary', 'rgba(18, 18, 26, 0.85)');
             root.style.setProperty('--bg-card', 'rgba(22, 22, 31, 0.85)');
             root.style.setProperty('--bg-card-hover', 'rgba(28, 28, 40, 0.9)');
-            // Check cache first
             const cached = localStorage.getItem(COMMUNITY_CACHE_KEY + ':' + docId);
-            if (cached) {
-                applyWallpaper(cached);
-            } else {
-                // Load from Firestore
-                loadCommunityImage(docId);
-            }
+            if (cached) applyWallpaper(cached);
+            else loadCommunityImage(docId);
         } else {
             const theme = THEMES[themeId];
             if (!theme) return;
@@ -210,12 +204,9 @@
             if (doc.exists && doc.data().image) {
                 const imgData = doc.data().image;
                 applyWallpaper(imgData);
-                // Cache it locally
                 try { localStorage.setItem(COMMUNITY_CACHE_KEY + ':' + docId, imgData); } catch (e) {}
             }
-        } catch (e) {
-            console.error('Failed to load community theme:', e);
-        }
+        } catch (e) { console.error('Failed to load community theme:', e); }
     }
 
     function getCurrentTheme() {
@@ -235,8 +226,7 @@
                         h = Math.round(h * scale);
                     }
                     const canvas = document.createElement('canvas');
-                    canvas.width = w;
-                    canvas.height = h;
+                    canvas.width = w; canvas.height = h;
                     canvas.getContext('2d').drawImage(img, 0, 0, w, h);
                     resolve(canvas.toDataURL('image/jpeg', quality));
                 };
@@ -257,16 +247,13 @@
             if (!file) return;
             try {
                 let dataUrl = await resizeImage(file, 1920, 1080, 0.8);
-                try {
-                    localStorage.setItem(WALLPAPER_KEY, dataUrl);
-                } catch (e) {
+                try { localStorage.setItem(WALLPAPER_KEY, dataUrl); }
+                catch (e) {
                     dataUrl = await resizeImage(file, 1280, 720, 0.5);
-                    try {
-                        localStorage.setItem(WALLPAPER_KEY, dataUrl);
-                    } catch (e2) {
+                    try { localStorage.setItem(WALLPAPER_KEY, dataUrl); }
+                    catch (e2) {
                         alert('Image is too large. Try a smaller image.');
-                        callback(false);
-                        return;
+                        callback(false); return;
                     }
                 }
                 callback(true);
@@ -278,7 +265,6 @@
         input.click();
     }
 
-    // Publish current wallpaper as a community theme
     async function publishTheme(name) {
         const db = window.ArcadeAuth && window.ArcadeAuth.getDb();
         const user = window.ArcadeAuth && window.ArcadeAuth.getUser();
@@ -288,7 +274,6 @@
         const wallpaper = localStorage.getItem(WALLPAPER_KEY);
         if (!wallpaper) throw new Error('No wallpaper set');
 
-        // Resize smaller for Firestore (keep under ~700KB base64)
         const blob = await fetch(wallpaper).then(r => r.blob());
         const file = new File([blob], 'wallpaper.jpg', { type: 'image/jpeg' });
         const image = await resizeImage(file, 1280, 720, 0.6);
@@ -300,11 +285,9 @@
             createdByName: username || 'Unknown',
             createdAt: firebase.firestore.FieldValue.serverTimestamp()
         });
-
         return docRef.id;
     }
 
-    // Delete a community theme (only by creator or admin)
     async function deleteCommunityTheme(docId) {
         const db = window.ArcadeAuth && window.ArcadeAuth.getDb();
         if (!db) return;
@@ -312,12 +295,11 @@
         try { localStorage.removeItem(COMMUNITY_CACHE_KEY + ':' + docId); } catch (e) {}
     }
 
-    // Load community themes list from Firestore
     async function loadCommunityThemes() {
         try {
             const db = window.ArcadeAuth && window.ArcadeAuth.getDb();
             if (!db) return [];
-            const snap = await db.collection('themes').orderBy('createdAt', 'desc').limit(50).get();
+            const snap = await db.collection('themes').orderBy('createdAt', 'desc').limit(100).get();
             communityThemes = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
             return communityThemes;
         } catch (e) {
@@ -326,31 +308,70 @@
         }
     }
 
+    // ===== Picker UI =====
+
     function createThemePicker() {
+        const wrapper = document.createElement('div');
+        wrapper.className = 'theme-picker-wrapper';
+
         const btn = document.createElement('button');
         btn.className = 'theme-picker-btn';
-        btn.title = 'Change Theme';
-        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>';
+        btn.title = 'Change theme';
+        btn.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5" fill="currentColor"/><circle cx="17.5" cy="10.5" r=".5" fill="currentColor"/><circle cx="8.5" cy="7.5" r=".5" fill="currentColor"/><circle cx="6.5" cy="12.5" r=".5" fill="currentColor"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.5 0 1-.5 1-1v-1c0-.5-.5-1-1-1-.5 0-1-.5-1-1v-1c0-.5.5-1 1-1h3c3.3 0 6-2.7 6-6 0-5.5-4.5-10-9-10z"/></svg>';
 
         const popup = document.createElement('div');
         popup.className = 'theme-picker-popup';
         popup.style.display = 'none';
 
-        const current = getCurrentTheme();
+        // Tab bar
+        const tabs = document.createElement('div');
+        tabs.className = 'theme-tabs';
+        const tabColors = makeTab('Colors', true);
+        const tabWallpaper = makeTab('Wallpaper');
+        const tabCommunity = makeTab('Community');
+        tabs.append(tabColors, tabWallpaper, tabCommunity);
+        popup.appendChild(tabs);
 
-        // Built-in themes
+        // Panels
+        const panelColors = document.createElement('div');
+        panelColors.className = 'theme-panel';
+        const panelWallpaper = document.createElement('div');
+        panelWallpaper.className = 'theme-panel';
+        panelWallpaper.style.display = 'none';
+        const panelCommunity = document.createElement('div');
+        panelCommunity.className = 'theme-panel';
+        panelCommunity.style.display = 'none';
+        popup.append(panelColors, panelWallpaper, panelCommunity);
+
+        tabColors.addEventListener('click', () => switchTab(0));
+        tabWallpaper.addEventListener('click', () => switchTab(1));
+        tabCommunity.addEventListener('click', () => {
+            switchTab(2);
+            refreshCommunitySection(popup);
+        });
+
+        function switchTab(idx) {
+            [tabColors, tabWallpaper, tabCommunity].forEach((t, i) => t.classList.toggle('active', i === idx));
+            [panelColors, panelWallpaper, panelCommunity].forEach((p, i) => p.style.display = i === idx ? '' : 'none');
+        }
+
+        // ----- Colors panel -----
+        const current = getCurrentTheme();
+        const colorsGrid = document.createElement('div');
+        colorsGrid.className = 'theme-color-grid';
         for (const [id, theme] of Object.entries(THEMES)) {
-            popup.appendChild(createThemeItem(id, theme.label,
+            colorsGrid.appendChild(createThemeItem(id, theme.label,
                 `linear-gradient(135deg, ${theme.vars['--accent']}, ${theme.vars['--accent-secondary']})`,
                 id === current, popup));
         }
+        panelColors.appendChild(colorsGrid);
 
-        // Divider
-        const divider = document.createElement('div');
-        divider.className = 'theme-picker-divider';
-        popup.appendChild(divider);
+        // ----- Wallpaper panel -----
+        const customHint = document.createElement('div');
+        customHint.className = 'theme-hint';
+        customHint.textContent = 'Use your own image as a background, tune dim and blur, then optionally publish it for everyone.';
+        panelWallpaper.appendChild(customHint);
 
-        // Custom wallpaper option
         const customItem = document.createElement('button');
         customItem.className = 'theme-picker-item theme-picker-custom' + (current === 'custom' ? ' active' : '');
         customItem.setAttribute('data-theme-id', 'custom');
@@ -360,20 +381,14 @@
             if (localStorage.getItem(WALLPAPER_KEY)) {
                 applyTheme('custom');
                 setActive(popup, customItem);
-                setTimeout(() => { popup.style.display = 'none'; }, 150);
             } else {
                 promptWallpaperUpload((ok) => {
-                    if (ok) {
-                        applyTheme('custom');
-                        setActive(popup, customItem);
-                        setTimeout(() => { popup.style.display = 'none'; }, 150);
-                    }
+                    if (ok) { applyTheme('custom'); setActive(popup, customItem); }
                 });
             }
         });
-        popup.appendChild(customItem);
+        panelWallpaper.appendChild(customItem);
 
-        // Change / Publish row for custom wallpaper
         const customActions = document.createElement('div');
         customActions.className = 'theme-custom-actions';
 
@@ -383,13 +398,21 @@
         changeBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             promptWallpaperUpload((ok) => {
-                if (ok) {
-                    applyTheme('custom');
-                    setActive(popup, customItem);
-                }
+                if (ok) { applyTheme('custom'); setActive(popup, customItem); }
             });
         });
         customActions.appendChild(changeBtn);
+
+        const removeBtn = document.createElement('button');
+        removeBtn.className = 'theme-picker-action-btn';
+        removeBtn.textContent = 'Remove';
+        removeBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            localStorage.removeItem(WALLPAPER_KEY);
+            if (getCurrentTheme() === 'custom') applyTheme(DEFAULT_THEME);
+            applyWallpaper(null);
+        });
+        customActions.appendChild(removeBtn);
 
         const publishBtn = document.createElement('button');
         publishBtn.className = 'theme-picker-action-btn theme-picker-publish-btn';
@@ -397,12 +420,10 @@
         publishBtn.addEventListener('click', (e) => {
             e.stopPropagation();
             if (!window.ArcadeAuth || !window.ArcadeAuth.isLoggedIn()) {
-                alert('Log in to publish themes');
-                return;
+                alert('Log in to publish themes'); return;
             }
             if (!localStorage.getItem(WALLPAPER_KEY)) {
-                alert('Set a wallpaper first');
-                return;
+                alert('Set a wallpaper first'); return;
             }
             const name = prompt('Name your theme:');
             if (!name || !name.trim()) return;
@@ -413,7 +434,6 @@
                 setTimeout(() => {
                     publishBtn.textContent = 'Publish';
                     publishBtn.disabled = false;
-                    refreshCommunitySection(popup);
                 }, 1500);
             }).catch(err => {
                 alert('Failed to publish: ' + err.message);
@@ -422,46 +442,85 @@
             });
         });
         customActions.appendChild(publishBtn);
-        popup.appendChild(customActions);
+        panelWallpaper.appendChild(customActions);
 
-        // Community themes section
-        const communityDivider = document.createElement('div');
-        communityDivider.className = 'theme-picker-divider';
-        popup.appendChild(communityDivider);
+        // Dim/blur sliders
+        const sliderGroup = document.createElement('div');
+        sliderGroup.className = 'theme-sliders';
+        sliderGroup.appendChild(makeSlider('Dim', 0, 0.9, 0.05, getWallpaperDim(), (v) => {
+            localStorage.setItem(WALLPAPER_DIM_KEY, String(v));
+            updateWallpaperEffects();
+        }));
+        sliderGroup.appendChild(makeSlider('Blur', 0, 12, 0.5, getWallpaperBlur(), (v) => {
+            localStorage.setItem(WALLPAPER_BLUR_KEY, String(v));
+            updateWallpaperEffects();
+        }));
+        panelWallpaper.appendChild(sliderGroup);
 
-        const communityHeader = document.createElement('div');
-        communityHeader.className = 'theme-community-header';
-        communityHeader.textContent = 'Community Themes';
-        popup.appendChild(communityHeader);
+        // ----- Community panel -----
+        const searchWrap = document.createElement('div');
+        searchWrap.className = 'theme-search-wrap';
+        const searchInput = document.createElement('input');
+        searchInput.className = 'theme-search-input';
+        searchInput.type = 'search';
+        searchInput.placeholder = 'Search themes…';
+        searchInput.addEventListener('input', () => renderCommunityList(popup, searchInput.value.trim().toLowerCase()));
+        searchWrap.appendChild(searchInput);
+        panelCommunity.appendChild(searchWrap);
 
         const communityList = document.createElement('div');
         communityList.className = 'theme-community-list';
-        communityList.innerHTML = '<div class="theme-community-loading">Loading...</div>';
-        popup.appendChild(communityList);
+        communityList.innerHTML = '<div class="theme-community-loading">Loading…</div>';
+        panelCommunity.appendChild(communityList);
 
-        // Toggle popup
         btn.addEventListener('click', () => {
             const isOpen = popup.style.display === 'block';
             popup.style.display = isOpen ? 'none' : 'block';
-            if (!isOpen) refreshCommunitySection(popup);
-        });
-
-        document.addEventListener('click', (e) => {
-            if (!wrapper.contains(e.target)) {
-                popup.style.display = 'none';
+            if (!isOpen && [...tabs.children].indexOf(tabCommunity) === 2 && tabCommunity.classList.contains('active')) {
+                refreshCommunitySection(popup);
             }
         });
 
-        const wrapper = document.createElement('div');
-        wrapper.className = 'theme-picker-wrapper';
+        document.addEventListener('click', (e) => {
+            if (!wrapper.contains(e.target)) popup.style.display = 'none';
+        });
+
         wrapper.appendChild(btn);
         wrapper.appendChild(popup);
         return wrapper;
     }
 
+    function makeTab(label, active) {
+        const t = document.createElement('button');
+        t.className = 'theme-tab' + (active ? ' active' : '');
+        t.textContent = label;
+        return t;
+    }
+
+    function makeSlider(label, min, max, step, value, onInput) {
+        const row = document.createElement('label');
+        row.className = 'theme-slider-row';
+        const lbl = document.createElement('span');
+        lbl.className = 'theme-slider-label';
+        lbl.textContent = label;
+        const input = document.createElement('input');
+        input.type = 'range';
+        input.min = String(min); input.max = String(max); input.step = String(step);
+        input.value = String(value);
+        const val = document.createElement('span');
+        val.className = 'theme-slider-value';
+        val.textContent = input.value;
+        input.addEventListener('input', () => {
+            val.textContent = input.value;
+            onInput(parseFloat(input.value));
+        });
+        row.append(lbl, input, val);
+        return row;
+    }
+
     function createThemeItem(id, label, swatchBg, isActive, popup) {
         const item = document.createElement('button');
-        item.className = 'theme-picker-item' + (isActive ? ' active' : '');
+        item.className = 'theme-picker-item theme-color-item' + (isActive ? ' active' : '');
         item.setAttribute('data-theme-id', id);
 
         const swatch = document.createElement('span');
@@ -472,15 +531,12 @@
         lbl.className = 'theme-label';
         lbl.textContent = label;
 
-        item.appendChild(swatch);
-        item.appendChild(lbl);
+        item.append(swatch, lbl);
 
         item.addEventListener('click', () => {
             applyTheme(id);
             setActive(popup, item);
-            setTimeout(() => { popup.style.display = 'none'; }, 150);
         });
-
         return item;
     }
 
@@ -492,13 +548,28 @@
     async function refreshCommunitySection(popup) {
         const list = popup.querySelector('.theme-community-list');
         if (!list) return;
-        list.innerHTML = '<div class="theme-community-loading">Loading...</div>';
+        list.innerHTML = '<div class="theme-community-loading">Loading…</div>';
+        await loadCommunityThemes();
+        renderCommunityList(popup, '');
+    }
 
-        const themes = await loadCommunityThemes();
+    function renderCommunityList(popup, query) {
+        const list = popup.querySelector('.theme-community-list');
+        if (!list) return;
         list.innerHTML = '';
 
+        let themes = communityThemes;
+        if (query) {
+            themes = themes.filter(t =>
+                (t.name || '').toLowerCase().includes(query) ||
+                (t.createdByName || '').toLowerCase().includes(query)
+            );
+        }
+
         if (themes.length === 0) {
-            list.innerHTML = '<div class="theme-community-empty">No community themes yet</div>';
+            list.innerHTML = '<div class="theme-community-empty">'
+                + (query ? 'No matches' : 'No community themes yet')
+                + '</div>';
             return;
         }
 
@@ -511,12 +582,9 @@
             const row = document.createElement('div');
             row.className = 'theme-community-item' + (current === themeId ? ' active' : '');
 
-            // Thumbnail from the stored image (tiny preview)
             const thumb = document.createElement('div');
             thumb.className = 'theme-community-thumb';
-            if (t.image) {
-                thumb.style.backgroundImage = `url(${t.image})`;
-            }
+            if (t.image) thumb.style.backgroundImage = `url(${t.image})`;
 
             const info = document.createElement('div');
             info.className = 'theme-community-info';
@@ -529,13 +597,9 @@
             author.className = 'theme-community-author';
             author.textContent = 'by ' + (t.createdByName || 'Unknown');
 
-            info.appendChild(nameEl);
-            info.appendChild(author);
+            info.append(nameEl, author);
+            row.append(thumb, info);
 
-            row.appendChild(thumb);
-            row.appendChild(info);
-
-            // Delete button for creator or admin
             if (currentUser && (currentUser.uid === t.createdBy || isAdmin)) {
                 const delBtn = document.createElement('button');
                 delBtn.className = 'theme-community-delete';
@@ -545,8 +609,7 @@
                     e.stopPropagation();
                     if (!confirm('Delete "' + t.name + '"?')) return;
                     deleteCommunityTheme(t.id).then(() => {
-                        // If currently using this theme, switch to midnight
-                        if (getCurrentTheme() === themeId) applyTheme('midnight');
+                        if (getCurrentTheme() === themeId) applyTheme(DEFAULT_THEME);
                         refreshCommunitySection(popup);
                     });
                 });
@@ -555,14 +618,12 @@
 
             row.addEventListener('click', () => {
                 applyTheme(themeId);
-                // Cache the image locally for instant load next time
                 if (t.image) {
                     try { localStorage.setItem(COMMUNITY_CACHE_KEY + ':' + t.id, t.image); } catch (e) {}
                 }
                 popup.querySelectorAll('.theme-picker-item').forEach(el => el.classList.remove('active'));
                 popup.querySelectorAll('.theme-community-item').forEach(el => el.classList.remove('active'));
                 row.classList.add('active');
-                setTimeout(() => { popup.style.display = 'none'; }, 150);
             });
 
             list.appendChild(row);
@@ -572,19 +633,20 @@
     // Apply saved theme immediately
     applyTheme(getCurrentTheme());
 
-    // Insert theme picker into the page
+    // Insert picker into the page
     document.addEventListener('DOMContentLoaded', () => {
         const header = document.querySelector('.header-content') || document.querySelector('.player-actions');
         if (header) {
             const picker = createThemePicker();
             const authArea = header.querySelector('.auth-area');
-            if (authArea) {
-                header.insertBefore(picker, authArea);
-            } else {
-                header.appendChild(picker);
-            }
+            if (authArea) header.insertBefore(picker, authArea);
+            else header.appendChild(picker);
         }
     });
 
-    window.ArcadeThemes = { applyTheme, getCurrentTheme, THEMES, publishTheme, loadCommunityThemes };
+    window.ArcadeThemes = {
+        applyTheme, getCurrentTheme, THEMES,
+        publishTheme, loadCommunityThemes,
+        getWallpaperDim, getWallpaperBlur
+    };
 })();

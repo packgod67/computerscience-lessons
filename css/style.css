@@ -1893,10 +1893,140 @@ body.auth-gated .player-container {
     border-radius: var(--radius);
     padding: 0.5rem;
     z-index: 300;
-    min-width: 220px;
-    max-height: 70vh;
-    overflow-y: auto;
+    width: 320px;
+    max-height: 80vh;
+    overflow: hidden;
     box-shadow: 0 8px 32px rgba(0,0,0,0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+/* ----- Tabs ----- */
+.theme-tabs {
+    display: flex;
+    gap: 2px;
+    padding: 2px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    margin-bottom: 0.5rem;
+    flex-shrink: 0;
+}
+
+.theme-tab {
+    flex: 1;
+    padding: 6px 4px;
+    background: none;
+    border: none;
+    border-radius: calc(var(--radius-sm) - 2px);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.theme-tab:hover {
+    color: var(--text-primary);
+}
+
+.theme-tab.active {
+    background: var(--accent);
+    color: #fff;
+}
+
+/* ----- Panels ----- */
+.theme-panel {
+    flex: 1;
+    min-height: 0;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.theme-hint {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    padding: 2px 4px 6px;
+}
+
+/* ----- Colors grid ----- */
+.theme-color-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+}
+
+.theme-color-item {
+    padding: 6px 8px !important;
+}
+
+.theme-color-item .theme-swatch {
+    width: 16px;
+    height: 16px;
+}
+
+.theme-color-item .theme-label {
+    font-size: 0.78rem;
+}
+
+/* ----- Sliders ----- */
+.theme-sliders {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    margin-top: 4px;
+}
+
+.theme-slider-row {
+    display: grid;
+    grid-template-columns: 50px 1fr 36px;
+    align-items: center;
+    gap: 8px;
+}
+
+.theme-slider-label {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-weight: 600;
+}
+
+.theme-slider-row input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent);
+    margin: 0;
+}
+
+.theme-slider-value {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+/* ----- Search box ----- */
+.theme-search-wrap {
+    margin-bottom: 4px;
+}
+
+.theme-search-input {
+    width: 100%;
+    padding: 6px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.8rem;
+    outline: none;
+    transition: border-color 0.15s;
+}
+
+.theme-search-input:focus {
+    border-color: var(--accent);
 }
 
 .theme-picker-item {
@@ -1944,11 +2074,21 @@ body.auth-gated .player-container {
 #custom-wallpaper {
     position: fixed;
     inset: 0;
-    z-index: -1;
+    z-index: -2;
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
     display: none;
+    transition: filter 0.2s ease-out;
+}
+
+#custom-wallpaper-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    display: none;
+    pointer-events: none;
+    transition: background 0.2s ease-out;
 }
 
 body.has-wallpaper::before {
@@ -1966,6 +2106,17 @@ body.has-wallpaper .main {
 
 body.has-wallpaper .login-gate {
     backdrop-filter: blur(12px);
+}
+
+/* ===== Smooth theme transitions =====
+   Class applied for ~400ms whenever the theme switches. Keeps normal
+   interactions snappy but gives a satisfying fade between themes. */
+body.theme-transitioning,
+body.theme-transitioning * {
+    transition: background-color 0.3s ease,
+                color 0.3s ease,
+                border-color 0.3s ease,
+                box-shadow 0.3s ease !important;
 }
 
 .theme-picker-divider {
@@ -2116,6 +2267,58 @@ body.has-wallpaper .login-gate {
 
 [data-theme="light"] .chat-send-btn:hover {
     background: #6d28d9;
+}
+
+/* ===== Light theme contrast fixes ===== */
+[data-theme="light"] body {
+    background-color: var(--bg-primary);
+}
+
+[data-theme="light"] .card-thumbnail-placeholder {
+    background: linear-gradient(135deg, #e0e0ea, #d0d0dc);
+    color: #7c3aed;
+}
+
+[data-theme="light"] .game-card {
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+}
+
+[data-theme="light"] .game-card:hover {
+    box-shadow: 0 4px 12px rgba(124, 58, 237, 0.15);
+}
+
+[data-theme="light"] .header {
+    box-shadow: 0 1px 0 rgba(0, 0, 0, 0.05);
+}
+
+[data-theme="light"] .theme-picker-popup {
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .chat-msg-self {
+    color: #1a1a2e;
+}
+
+[data-theme="light"] .chat-msg-other {
+    background: #f0f0f5;
+}
+
+/* ===== OLED-specific ===== */
+[data-theme="oled"] .game-card {
+    border: 1px solid var(--border);
+}
+
+[data-theme="oled"] .header {
+    border-bottom: 1px solid var(--border);
+}
+
+/* ===== Synthwave-specific glow ===== */
+[data-theme="synthwave"] .logo h1 {
+    text-shadow: 0 0 20px var(--accent-glow);
+}
+
+[data-theme="synthwave"] .cat-btn.active {
+    box-shadow: 0 0 12px var(--accent-glow);
 }
 
 /* ===== Responsive ===== */
