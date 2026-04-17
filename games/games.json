@@ -423,7 +423,7 @@
     "title": "Advance Wars",
     "category": "Other",
     "path": "games/cladvancewars.html",
-    "thumbnail": "assets/thumbnails/cladvancewars.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Advance%20Wars%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%29%20%28Virtual%20Console%29.png",
     "rom": "gba"
   },
   {
@@ -431,7 +431,7 @@
     "title": "Advance Wars 2",
     "category": "Other",
     "path": "games/cladvancewars2.html",
-    "thumbnail": "assets/thumbnails/cladvancewars2.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Advance%20Wars%202%20-%20Black%20Hole%20Rising%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29%20%28Virtual%20Console%29.png",
     "rom": "gba"
   },
   {
@@ -579,7 +579,7 @@
     "title": "Alien Vsp Red Ator",
     "category": "Other",
     "path": "games/clalienvspredator.html",
-    "thumbnail": "assets/thumbnails/clalienvspredator.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%20Jaguar/Named_Boxarts/Alien%20vs%20Predator%20%28World%29%20%28Beta%29%20%281993-08-18%29.png",
     "rom": "atari"
   },
   {
@@ -602,7 +602,7 @@
     "title": "Altered Beast",
     "category": "Retro",
     "path": "games/clAltered Beast.html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Altered%20Beast%20%28Japan%2C%20USA%29%20%28En%29%20%28Rev%20A%29.png",
     "rom": "genesis"
   },
   {
@@ -743,7 +743,7 @@
     "title": "Another World",
     "category": "Other",
     "path": "games/clanotherworld.html",
-    "thumbnail": "assets/thumbnails/clanotherworld.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Another%20World%20%28Europe%29.png",
     "rom": "genesis"
   },
   {
@@ -878,7 +878,7 @@
     "title": "Asteroids",
     "category": "Other",
     "path": "games/clasteroids.html",
-    "thumbnail": "assets/thumbnails/clasteroids.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/Asteroids%20%28Europe%29.png",
     "rom": "atari"
   },
   {
@@ -968,7 +968,7 @@
     "title": "Ax Battler",
     "category": "Other",
     "path": "games/claxbattler.html",
-    "thumbnail": "assets/thumbnails/claxbattler.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Game%20Gear/Named_Boxarts/Ax%20Battler%20-%20Golden%20Axe%20Densetsu%20%28Japan%29.png",
     "rom": "oldsega"
   },
   {
@@ -1062,7 +1062,7 @@
     "category": "Sports",
     "path": "games/clbackyardbaseball09.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Backyard%20Baseball%20%2709%20%28USA%29.png"
   },
   {
     "id": "clbackyardbaseball10",
@@ -1070,7 +1070,7 @@
     "category": "Sports",
     "path": "games/clbackyardbaseball10.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Backyard%20Baseball%20%2710%20%28USA%29.png"
   },
   {
     "id": "clbackyardfootball",
@@ -1078,7 +1078,7 @@
     "category": "Sports",
     "path": "games/clbackyardfootball.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Backyard%20Football%20%28USA%29.png"
   },
   {
     "id": "clbackyardsoccer",
@@ -1252,7 +1252,7 @@
     "title": "Banjo Kazooie",
     "category": "Other",
     "path": "games/clbanjokazooie.html",
-    "thumbnail": "assets/thumbnails/clbanjokazooie.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Banjo-Kazooie%20%28Europe%29%20%28En%2CFr%2CDe%29.png",
     "rom": "n64"
   },
   {
@@ -1260,7 +1260,7 @@
     "title": "Banjo Tooie",
     "category": "Other",
     "path": "games/clbanjotooie.html",
-    "thumbnail": "assets/thumbnails/clbanjotooie.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Banjo-Tooie%20%28Australia%29.png",
     "rom": "n64"
   },
   {
@@ -1396,7 +1396,7 @@
     "title": "Battlez One",
     "category": "Other",
     "path": "games/clbattlezone.html",
-    "thumbnail": "assets/thumbnails/clbattlezone.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/Battlezone%20%28Europe%29.png",
     "rom": "atari"
   },
   {
@@ -1425,7 +1425,7 @@
     "title": "Beamrider",
     "category": "Other",
     "path": "games/clbeamrider.html",
-    "thumbnail": "assets/thumbnails/clbeamrider.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/Beamrider%20%28Europe%29.png",
     "rom": "atari"
   },
   {
@@ -1460,7 +1460,7 @@
     "title": "Ben 10 Alien Force",
     "category": "Other",
     "path": "games/clben10alienforce.html",
-    "thumbnail": "assets/thumbnails/clben10alienforce.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Ben%2010%20-%20Alien%20Force%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png",
     "rom": "ds"
   },
   {
@@ -1475,7 +1475,7 @@
     "title": "Ben 10 Protector",
     "category": "Other",
     "path": "games/clben10protector.html",
-    "thumbnail": "assets/thumbnails/clben10protector.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Ben%2010%20-%20Protector%20of%20Earth%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png",
     "rom": "ds"
   },
   {
@@ -1960,7 +1960,7 @@
     "title": "Bomber Man",
     "category": "Other",
     "path": "games/clbomberman.html",
-    "thumbnail": "assets/thumbnails/clbomberman.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Bomberman%20%281985-12-19%29%28Hudson%29%28JP%29.png",
     "rom": "nes"
   },
   {
@@ -1968,7 +1968,7 @@
     "title": "Bomber Man 2",
     "category": "Other",
     "path": "games/clbomberman2.html",
-    "thumbnail": "assets/thumbnails/clbomberman2.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Bomberman%20II%20%28199x%29%28-%29%28JP%29%5Bh%20Jack84%5D%5Bp%5D%5Bmapper%202%2C%20iNES%20title%5D.png",
     "rom": "nes"
   },
   {
@@ -1976,7 +1976,7 @@
     "title": "Bomber Man Hero",
     "category": "Other",
     "path": "games/clbombermanhero.html",
-    "thumbnail": "assets/thumbnails/clbombermanhero.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Bomberman%20Hero%20%28Europe%29.png",
     "rom": "n64"
   },
   {
@@ -1998,7 +1998,7 @@
     "title": "Bonanza Bros.",
     "category": "Retro",
     "path": "games/clBonanza-Bros.html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Bonanza%20Bros.%20%28Japan%2C%20Europe%29%20%28En%29%20%28Rev%20A%29.png",
     "rom": "genesis"
   },
   {
@@ -2233,7 +2233,7 @@
     "title": "Bubsy",
     "category": "Other",
     "path": "games/clbubsy.html",
-    "thumbnail": "assets/thumbnails/clbubsy.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Bubsy%20II%20%28Europe%29.png",
     "rom": "genesis"
   },
   {
@@ -2283,7 +2283,7 @@
     "title": "Burger Time",
     "category": "Other",
     "path": "games/clburgertime.html",
-    "thumbnail": "assets/thumbnails/clburgertime.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Burger%20Time%20%281985-11-27%29%28Namco%29%28JP%29.png",
     "rom": "nes"
   },
   {
@@ -2319,7 +2319,7 @@
     "title": "Bushido Blade",
     "category": "Other",
     "path": "games/clbushidoblade.html",
-    "thumbnail": "assets/thumbnails/clbushidoblade.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Bushido%20Blade%20%28Europe%29.png",
     "rom": "psx"
   },
   {
@@ -2405,7 +2405,7 @@
     "title": "Cannonfodder",
     "category": "Other",
     "path": "games/clcannonfodder.html",
-    "thumbnail": "assets/thumbnails/clcannonfodder.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%20Jaguar/Named_Boxarts/Cannon%20Fodder%20%28World%29.png",
     "rom": "atari"
   },
   {
@@ -2421,7 +2421,7 @@
     "title": "Cap Tainlang",
     "category": "Other",
     "path": "games/clcaptainlang.html",
-    "thumbnail": "assets/thumbnails/clcaptainlang.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Captain%20Lang%20%28Japan%29%20%28En%2CJa%29.png",
     "rom": "genesis"
   },
   {
@@ -2522,7 +2522,7 @@
     "title": "Castlevania",
     "category": "Other",
     "path": "games/clcastlevania.html",
-    "thumbnail": "assets/thumbnails/clcastlevania.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Castlevania%20%28Europe%29%20%28Castlevania%20Advance%20Collection%29.png",
     "popular": true,
     "rom": "gba"
   },
@@ -2531,7 +2531,7 @@
     "title": "Castlevania 2",
     "category": "Other",
     "path": "games/clcastlevania2.html",
-    "thumbnail": "assets/thumbnails/clcastlevania2.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Castlevania%20II%20-%20Simon%27s%20Quest%20%281988-12%29%28Konami%29%28US%29.png",
     "rom": "nes"
   },
   {
@@ -2539,7 +2539,7 @@
     "title": "Castlevania 3",
     "category": "Other",
     "path": "games/clcastlevania3.html",
-    "thumbnail": "assets/thumbnails/clcastlevania3.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Castlevania%20III%20-%20Dracula%27s%20Curse%20%281990-09%29%28Konami%29%28US%29.png",
     "rom": "nes"
   },
   {
@@ -2547,7 +2547,7 @@
     "title": "Castlevania Aria Of Sorrow",
     "category": "Other",
     "path": "games/clcastlevaniaariaofsorrow.html",
-    "thumbnail": "assets/thumbnails/clcastlevaniaariaofsorrow.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Castlevania%20-%20Aria%20of%20Sorrow%20%28Europe%29%20%28En%2CFr%2CDe%29%20%28Castlevania%20Advance%20Collection%29.png",
     "rom": "gba"
   },
   {
@@ -2765,7 +2765,7 @@
     "title": "Chips Challenge",
     "category": "Other",
     "path": "games/clchipschallenge.html",
-    "thumbnail": "assets/thumbnails/clchipschallenge.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Chip%27s%20Challenge%20%28USA%2C%20Europe%29.png",
     "rom": "atari"
   },
   {
@@ -2780,7 +2780,7 @@
     "title": "Chrono Trigger",
     "category": "Other",
     "path": "games/clchronotrigger.html",
-    "thumbnail": "assets/thumbnails/clchronotrigger.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Chrono%20Trigger%20%28Japan%29%20%28Sample%29.png",
     "rom": "snes"
   },
   {
@@ -3095,7 +3095,7 @@
     "title": "Contra",
     "category": "Other",
     "path": "games/clcontra.html",
-    "thumbnail": "assets/thumbnails/clcontra.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Contra%20%281988%29%28Konami%29%28PlayChoice-10%29.png",
     "rom": "nes"
   },
   {
@@ -3103,7 +3103,7 @@
     "title": "Contra 3",
     "category": "Other",
     "path": "games/clcontra3.html",
-    "thumbnail": "assets/thumbnails/clcontra3.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Contra%20III%20-%20The%20Alien%20Wars%20%28USA%29%20%28Beta%29.png",
     "rom": "snes"
   },
   {
@@ -3143,7 +3143,7 @@
     "category": "Other",
     "path": "games/clcookingmama.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Cooking%20Mama%20%28Europe%29%20%28De%2CEs%2CIt%29.png"
   },
   {
     "id": "clcookingmama2",
@@ -3151,7 +3151,7 @@
     "category": "Other",
     "path": "games/clcookingmama2.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Cooking%20Mama%202%20%28Japan%29.png"
   },
   {
     "id": "clcookingmama3",
@@ -3172,7 +3172,7 @@
     "title": "Cory Inthe House",
     "category": "Other",
     "path": "games/clcoryinthehouse.html",
-    "thumbnail": "assets/thumbnails/clcoryinthehouse.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Cory%20in%20the%20House%20%28Europe%29.png",
     "rom": "ds"
   },
   {
@@ -3278,7 +3278,7 @@
     "category": "Other",
     "path": "games/clcrashbandicoot.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Crash%20Bandicoot%20XS%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%2CNl%29.png"
   },
   {
     "id": "clcrashbandicoot-1",
@@ -3292,7 +3292,7 @@
     "title": "Crash Bandicoot 2",
     "category": "Other",
     "path": "games/clcrashbandicoot2.html",
-    "thumbnail": "assets/thumbnails/clcrashbandicoot2.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Crash%20Bandicoot%202%20-%20N-Tranced%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%2CNl%29.png",
     "rom": "gba"
   },
   {
@@ -3327,7 +3327,7 @@
     "category": "Racing",
     "path": "games/clcrazyfrogracer.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Crazy%20Frog%20Racer%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "clcrazymotorcycle",
@@ -3418,7 +3418,7 @@
     "title": "Crystal Castles",
     "category": "Retro",
     "path": "games/clCrystalCastles.html",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png",
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/Crystal%20Castles%20%28version%202%29.png",
     "rom": "arcade"
   },
   {
@@ -3818,7 +3818,7 @@
     "category": "Other",
     "path": "games/cldiablo.html",
     "rom": "psx",
-    "thumbnail": "assets/thumbnails/platforms/psx.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Diablo%20%28Europe%29%20%28En%2CFr%2CDe%2CSv%29.png"
   },
   {
     "id": "cldiamondhollow",
@@ -3838,7 +3838,7 @@
     "category": "Racing",
     "path": "games/cldiddykong-racing.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Diddy%20Kong%20Racing%20%28Europe%29%20%28En%2CFr%2CDe%29%20%28Rev%201%29.png"
   },
   {
     "id": "cldieinthedungeon",
@@ -3875,7 +3875,7 @@
     "category": "Other",
     "path": "games/cldigdug2.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Dig%20Dug%20II%20%281986-04-18%29%28Namco%29%28JP%29.png"
   },
   {
     "id": "cldigdug26",
@@ -3987,7 +3987,7 @@
     "category": "Other",
     "path": "games/cldonkeykong.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Donkey%20Kong%20Country%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "cldonkeykong64",
@@ -4001,7 +4001,7 @@
     "category": "Other",
     "path": "games/cldonkeykongcountry.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Donkey%20Kong%20Country%20%28Europe%29%20%28En%2CFr%2CDe%29%20%28Rev%201%29.png"
   },
   {
     "id": "cldonkeykongcountry2",
@@ -4009,7 +4009,7 @@
     "category": "Other",
     "path": "games/cldonkeykongcountry2.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Donkey%20Kong%20Country%202%20-%20Diddy%27s%20Kong%20Quest%20%28Europe%29%20%28En%2CFr%29%20%28Rev%201%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "cldonkeykongcountry3",
@@ -4017,7 +4017,7 @@
     "category": "Other",
     "path": "games/cldonkeykongcountry3.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Donkey%20Kong%20Country%203%20-%20Dixie%20Kong%27s%20Double%20Trouble%21%20%28Europe%29%20%28En%2CFr%2CDe%29.png"
   },
   {
     "id": "cldonkeykongnes",
@@ -4071,7 +4071,7 @@
     "path": "games/cldoom.html",
     "popular": true,
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%20Jaguar/Named_Boxarts/Doom%20%28World%29.png"
   },
   {
     "id": "cldoom2",
@@ -4080,7 +4080,7 @@
     "path": "games/cldoom2.html",
     "popular": true,
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Doom%20II%20%28Europe%29.png"
   },
   {
     "id": "cldoom2d",
@@ -4112,7 +4112,7 @@
     "category": "Shooting",
     "path": "games/cldoom64.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Doom%2064%20%28Europe%29.png"
   },
   {
     "id": "cldoomdos",
@@ -4164,7 +4164,7 @@
     "category": "Other",
     "path": "games/cldoubledribble.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Double%20Dribble%20%281987%29%28Konami%29%28PlayChoice-10%29.png"
   },
   {
     "id": "cldoublewires",
@@ -4198,7 +4198,7 @@
     "category": "Other",
     "path": "games/cldragonballadvance.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Dragon%20Ball%20-%20Advance%20Adventure%20%28Japan%29.png"
   },
   {
     "id": "cldragonballzthelegacyofgoku",
@@ -4211,7 +4211,7 @@
     "title": "Dragon Ball Z: The Legacy of Goku",
     "category": "Retro",
     "path": "games/clDragonBallZTheLegacyofGoku.html",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Dragon%20Ball%20Z%20-%20The%20Legacy%20of%20Goku%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png",
     "rom": "gba"
   },
   {
@@ -4238,7 +4238,7 @@
     "category": "Other",
     "path": "games/cldrawntolife.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Drawn%20to%20Life%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "cldrawntolife2",
@@ -4325,7 +4325,7 @@
     "category": "Mario",
     "path": "games/cldrmario.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Dr.%20Mario%20%281990%29%28Nintendo%29%28PlayChoice-10%29.png"
   },
   {
     "id": "cldrweedgaster",
@@ -4345,7 +4345,7 @@
     "category": "Other",
     "path": "games/clduckhunt.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Duck%20Hunt%20%2819xx%29%28-%29%5Bp%5D.png"
   },
   {
     "id": "clducklfe5",
@@ -4410,7 +4410,7 @@
     "category": "Other",
     "path": "games/clducktales.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Duck%20Tales%20%281989-09%29%28Capcom%29%28US%29%28proto%29.png"
   },
   {
     "id": "clducktales2",
@@ -4418,7 +4418,7 @@
     "category": "Other",
     "path": "games/clducktales2.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Duck%20Tales%202%20%281993%29%28Capcom%29%28EU%29%28proto%29.png"
   },
   {
     "id": "cldud",
@@ -4498,7 +4498,7 @@
     "category": "Other",
     "path": "games/cldynamiteheaddy.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Dynamite%20Headdy%20%28Europe%29.png"
   },
   {
     "id": "cleaglercraft-alpha-126-offline",
@@ -4615,7 +4615,7 @@
     "category": "Other",
     "path": "games/clearthbound.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Earth%20Bound%20%28USA%29%20%28Proto%29.png"
   },
   {
     "id": "clearthbound3",
@@ -4665,14 +4665,14 @@
     "category": "Other",
     "path": "games/clearthwormjim.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Earthworm%20Jim%20%28Europe%29%20%28Beta%29.png"
   },
   {
     "id": "clearthwormjim (1)",
     "title": "Earthworm Jim",
     "category": "Retro",
     "path": "games/clearthwormjim (1).html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Earthworm%20Jim%20%28Europe%29.png",
     "rom": "genesis"
   },
   {
@@ -4687,14 +4687,14 @@
     "category": "Other",
     "path": "games/clearthwormjim2.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Earthworm%20Jim%202%20%28Europe%29.png"
   },
   {
     "id": "clearthwormjim2 (1)",
     "title": "Earthworm Jim 2",
     "category": "Retro",
     "path": "games/clearthwormjim2 (1).html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Earthworm%20Jim%202%20%28Europe%29.png",
     "rom": "genesis"
   },
   {
@@ -4778,7 +4778,7 @@
     "category": "Other",
     "path": "games/clelevatoraction.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Elevator%20Action%20%281985-06-28%29%28Taito%29%28JP%29.png"
   },
   {
     "id": "clelytraflight",
@@ -4842,7 +4842,7 @@
     "category": "Other",
     "path": "games/clenduro.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/Enduro%20%28USA%29.png"
   },
   {
     "id": "clepicbattlefantasy5",
@@ -4886,7 +4886,7 @@
     "category": "Other",
     "path": "games/clet.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/E.T.%20-%20The%20Extra-Terrestrial%20%28USA%29.png"
   },
   {
     "id": "cletrianoddyssey",
@@ -4914,7 +4914,7 @@
     "category": "Racing",
     "path": "games/clexcitebike64.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Excitebike%2064%20%28Europe%29.png"
   },
   {
     "id": "clexitpath",
@@ -5274,7 +5274,7 @@
     "title": "FIFA 99",
     "category": "Retro",
     "path": "games/clFIFA99.html",
-    "thumbnail": "assets/thumbnails/platforms/n64.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/FIFA%2099%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%2CNl%2CPt%2CSv%29.png",
     "rom": "n64"
   },
   {
@@ -5288,7 +5288,7 @@
     "title": "FIFA International Soccer",
     "category": "Retro",
     "path": "games/clFIFAinternationalsoccer.html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/FIFA%20International%20Soccer%20%28Japan%29%20%28En%2CJa%29.png",
     "rom": "genesis"
   },
   {
@@ -5302,7 +5302,7 @@
     "title": "FIFA: Road to World Cup 98",
     "category": "Retro",
     "path": "games/clFIFAroadtoworldcup98.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/FIFA%20-%20Road%20to%20World%20Cup%2098%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%2CSv%29%20%28A8FE%29.png",
     "rom": "snes"
   },
   {
@@ -5316,7 +5316,7 @@
     "title": "Fifasoccer 06",
     "category": "Retro",
     "path": "games/clFIFAsoccer06.html",
-    "thumbnail": "assets/thumbnails/platforms/ds.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/FIFA%20Soccer%2006%20%28USA%29.png",
     "rom": "ds"
   },
   {
@@ -5330,7 +5330,7 @@
     "title": "FIFA Soccer 95",
     "category": "Retro",
     "path": "games/clFIFAsoccer95.html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/FIFA%20Soccer%2095%20%28Korea%29%20%28En%2CFr%2CDe%2CEs%29.png",
     "rom": "genesis"
   },
   {
@@ -5344,7 +5344,7 @@
     "title": "FIFA Soccer 96",
     "category": "Retro",
     "path": "games/clFIFAsoccer96.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/FIFA%20Soccer%2096%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%2CSv%29.png",
     "rom": "snes"
   },
   {
@@ -5358,7 +5358,7 @@
     "title": "FIFA Soccer 97",
     "category": "Retro",
     "path": "games/clFIFAsoccer97.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/FIFA%20Soccer%2097%20%28USA%29%20%28En%2CFr%2CDe%2CEs%2CIt%2CSv%29.png",
     "rom": "snes"
   },
   {
@@ -5379,7 +5379,7 @@
     "category": "Other",
     "path": "games/clfinalfantasy.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Final%20Fantasy%20%281987-12-18%29%28Square%29%28JP%29.png"
   },
   {
     "id": "clfinalfantasy2nes",
@@ -5408,7 +5408,7 @@
     "title": "Final Fantasy II",
     "category": "Retro",
     "path": "games/clfinalfantasyII.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Final%20Fantasy%20II%20%28USA%29%20%28Rev%201%29.png",
     "rom": "snes"
   },
   {
@@ -5434,7 +5434,7 @@
     "title": "Final Fantasy VI",
     "category": "Retro",
     "path": "games/clfinalfantasyVI.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Final%20Fantasy%20VI%20%28Japan%29.png",
     "rom": "snes"
   },
   {
@@ -5448,7 +5448,7 @@
     "title": "Final Fantasy VII",
     "category": "Retro",
     "path": "games/clfinalfantasyVII.html",
-    "thumbnail": "assets/thumbnails/platforms/psx.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Final%20Fantasy%20VII%20%28Europe%29%20%28Disc%201%29.png",
     "rom": "psx"
   },
   {
@@ -5462,7 +5462,7 @@
     "title": "Final Fantasy VII (Disc 2)",
     "category": "Retro",
     "path": "games/clfinalfantasyVIId2.html",
-    "thumbnail": "assets/thumbnails/platforms/psx.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Final%20Fantasy%20VII%20%28Europe%29%20%28Disc%201%29.png",
     "rom": "psx"
   },
   {
@@ -5476,7 +5476,7 @@
     "title": "Final Fantasy VII (Disc 3)",
     "category": "Retro",
     "path": "games/clfinalfantasyVIId3.html",
-    "thumbnail": "assets/thumbnails/platforms/psx.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Final%20Fantasy%20VII%20%28Europe%29%20%28Disc%201%29.png",
     "rom": "psx"
   },
   {
@@ -5544,7 +5544,7 @@
     "category": "Other",
     "path": "games/clfireemblem.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Fire%20Emblem%20%28Europe%29%20%28En%2CEs%2CIt%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clfisheatgettingbig",
@@ -6399,7 +6399,7 @@
     "category": "Other",
     "path": "games/clfzero.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/F-Zero%20%28Europe%29.png"
   },
   {
     "id": "clfzerox",
@@ -6407,7 +6407,7 @@
     "category": "Other",
     "path": "games/clfzerox.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/F-Zero%20X%20%28Europe%29.png"
   },
   {
     "id": "clgachaverse",
@@ -6420,7 +6420,7 @@
     "title": "Gain Ground",
     "category": "Retro",
     "path": "games/clGain Ground.html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Gain%20Ground%20%28Europe%29.png",
     "rom": "genesis"
   },
   {
@@ -6435,7 +6435,7 @@
     "category": "Other",
     "path": "games/clgalaga.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Galaga%20%281985-02-01%29%28Namco%29%28JP%29.png"
   },
   {
     "id": "clgameandwatchcollection",
@@ -6495,7 +6495,7 @@
     "category": "Other",
     "path": "games/clgeneralchaos.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/General%20Chaos%20%28Europe%29.png"
   },
   {
     "id": "clgenericfightermaybe",
@@ -6571,7 +6571,7 @@
     "category": "Other",
     "path": "games/clggshinobi.html",
     "rom": "oldsega",
-    "thumbnail": "assets/thumbnails/platforms/oldsega.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Game%20Gear/Named_Boxarts/GG%20Shinobi%2C%20The%20%28Japan%29.png"
   },
   {
     "id": "clggshinobi2",
@@ -6619,7 +6619,7 @@
     "category": "Other",
     "path": "games/clglover.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Glover%20%28Europe%29%20%28En%2CFr%2CDe%29.png"
   },
   {
     "id": "clgoalsouthafrica",
@@ -6651,7 +6651,7 @@
     "category": "Other",
     "path": "games/clgoldenaxe.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Golden%20Axe%20%28Europe%29.png"
   },
   {
     "id": "clgoldenaxe2",
@@ -6659,7 +6659,7 @@
     "category": "Other",
     "path": "games/clgoldenaxe2.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Golden%20Axe%20II%20%28Europe%29.png"
   },
   {
     "id": "clgoldenaxe3",
@@ -6667,7 +6667,7 @@
     "category": "Other",
     "path": "games/clgoldenaxe3.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Golden%20Axe%20III%20%28Europe%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clgoldeneye007",
@@ -6675,7 +6675,7 @@
     "category": "Other",
     "path": "games/clgoldeneye007.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/GoldenEye%20007%20%28Europe%29.png"
   },
   {
     "id": "clgoldensun",
@@ -6683,7 +6683,7 @@
     "category": "Other",
     "path": "games/clgoldensun.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Golden%20Sun%20%28France%29.png"
   },
   {
     "id": "clgoldensunnds",
@@ -6702,7 +6702,7 @@
     "title": "Golden Sun: The Lost Age",
     "category": "Retro",
     "path": "games/clGoldenSunTheLostAge.html",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Golden%20Sun%20-%20The%20Lost%20Age%20%28USA%2C%20Europe%29%20%28Virtual%20Console%29.png",
     "rom": "gba"
   },
   {
@@ -6812,7 +6812,7 @@
     "category": "Other",
     "path": "games/clgrandtheftautoadvance.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Grand%20Theft%20Auto%20Advance%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "clgranny2",
@@ -6943,7 +6943,7 @@
     "path": "games/clgta.html",
     "popular": true,
     "rom": "psx",
-    "thumbnail": "assets/thumbnails/platforms/psx.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/G.T.A%20-%20Grand%20Theft%20Auto%20%28Japan%29.png"
   },
   {
     "id": "clgta2",
@@ -7057,7 +7057,7 @@
     "category": "Shooting",
     "path": "games/clgunsmoke.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Gun.Smoke%20%2819xx%29%28-%29%28US%29%5Bp%5D.png"
   },
   {
     "id": "clgunstarheroes",
@@ -7065,7 +7065,7 @@
     "category": "Shooting",
     "path": "games/clgunstarheroes.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Gunstar%20Heroes%20%28Europe%29.png"
   },
   {
     "id": "clgymstack",
@@ -7079,7 +7079,7 @@
     "category": "Other",
     "path": "games/clgyromite.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Gyromite%20%281985-08-13%29%28Nintendo%29%5Baka%20Robot%20Gyro%20in%20Jpn%5D.png"
   },
   {
     "id": "clhackertype",
@@ -7210,7 +7210,7 @@
     "category": "Other",
     "path": "games/clharvestmoon.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Harvest%20Moon%20-%20Friends%20of%20Mineral%20Town%20%28Europe%29.png"
   },
   {
     "id": "clharvestmoon64",
@@ -7218,7 +7218,7 @@
     "category": "Other",
     "path": "games/clharvestmoon64.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Harvest%20Moon%2064%20%28USA%29.png"
   },
   {
     "id": "clhauntedschool",
@@ -7334,7 +7334,7 @@
     "title": "High Speed",
     "category": "Retro",
     "path": "games/clHighSpeed.html",
-    "thumbnail": "assets/thumbnails/platforms/nes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/High%20Speed%20%281991-07%29%28Tradewest%29%28US%29.png",
     "rom": "nes"
   },
   {
@@ -7747,7 +7747,7 @@
     "category": "Other",
     "path": "games/clironsoldier.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%20Jaguar/Named_Boxarts/Iron%20Soldier%20%28World%29.png"
   },
   {
     "id": "clirori",
@@ -7791,7 +7791,7 @@
     "category": "Other",
     "path": "games/cljamesbondjr.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/James%20Bond%20Jr%20%281992-11%29%28THQ%29%28US%29.png"
   },
   {
     "id": "cljazzjackrabbit",
@@ -7841,7 +7841,7 @@
     "category": "Other",
     "path": "games/cljetforcegemini.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Jet%20Force%20Gemini%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%29.png"
   },
   {
     "id": "cljetpackjoyride",
@@ -7930,7 +7930,7 @@
     "title": "JUMP",
     "category": "Retro",
     "path": "games/clJUMP.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Jumpin%27%20Derby%20%28Japan%29.png",
     "rom": "snes"
   },
   {
@@ -8024,7 +8024,7 @@
     "title": "Ken Griffey Jr. Presents Major League Baseball",
     "category": "Retro",
     "path": "games/clKenGriffeyJrPresentsMajorLeagueBaseball.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Ken%20Griffey%20Jr.%20Presents%20Major%20League%20Baseball%20%28USA%29%20%28Rev%201%29.png",
     "rom": "snes"
   },
   {
@@ -8039,7 +8039,7 @@
     "category": "Other",
     "path": "games/clkillerinstinct.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Killer%20Instinct%20%28Europe%29.png"
   },
   {
     "id": "clkillover",
@@ -8071,7 +8071,7 @@
     "category": "Other",
     "path": "games/clkingdomheartsrecoded.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Kingdom%20Hearts%20-%20Re-coded%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "clkingdomheartsrecodedalt",
@@ -8086,7 +8086,7 @@
     "path": "games/clkirby64.html",
     "popular": true,
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Kirby%2064%20-%20The%20Crystal%20Shards%20%28Europe%29.png"
   },
   {
     "id": "clkirby64crystalshards",
@@ -8117,7 +8117,7 @@
     "category": "Platformer",
     "path": "games/clkirbysadventure.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Kirby%27s%20Adventure%20%281993%29%28Nintendo%29%28CA%29%28fr%29.png"
   },
   {
     "id": "clkirbysdreamland",
@@ -8133,7 +8133,7 @@
     "category": "Other",
     "path": "games/clkirbysdreamland3.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Kirby%27s%20Dream%20Land%203%20%28USA%29.png"
   },
   {
     "id": "clkirbysoftandwet",
@@ -8147,7 +8147,7 @@
     "category": "Other",
     "path": "games/clkirbysqueaksquad.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Kirby%20-%20Squeak%20Squad%20%28USA%29%20%28Demo%29%20%28Kiosk%29.png"
   },
   {
     "id": "clkirbysuperstar",
@@ -8155,7 +8155,7 @@
     "category": "Other",
     "path": "games/clkirbysuperstar.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Kirby%20Super%20Star%20%28USA%29.png"
   },
   {
     "id": "clkirbysuperstarultra",
@@ -8384,7 +8384,7 @@
     "category": "Other",
     "path": "games/cllemmings.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Lemmings%20%28Europe%29.png"
   },
   {
     "id": "clletitconsume",
@@ -8470,7 +8470,7 @@
     "category": "Platformer",
     "path": "games/clloderunner.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Lode%20Runner%20%281984-07-31%29%28Hudson%29%28JP%29.png"
   },
   {
     "id": "cllonewolf",
@@ -8648,7 +8648,7 @@
     "category": "Sports",
     "path": "games/clmaddenfootball64.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Madden%20Football%2064%20%28Europe%29.png"
   },
   {
     "id": "clmaddennfl",
@@ -8656,7 +8656,7 @@
     "category": "Other",
     "path": "games/clmaddennfl.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Madden%20NFL%2006%20%28USA%29.png"
   },
   {
     "id": "clmaddennfl2000",
@@ -8664,7 +8664,7 @@
     "category": "Other",
     "path": "games/clmaddennfl2000.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Madden%20NFL%202000%20%28USA%29.png"
   },
   {
     "id": "clmaddennfl2001",
@@ -8672,7 +8672,7 @@
     "category": "Other",
     "path": "games/clmaddennfl2001.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Madden%20NFL%202001%20%28USA%29.png"
   },
   {
     "id": "clmaddennfl2002",
@@ -8680,7 +8680,7 @@
     "category": "Other",
     "path": "games/clmaddennfl2002.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Madden%20NFL%202002%20%28USA%29.png"
   },
   {
     "id": "clmaddy98",
@@ -8848,7 +8848,7 @@
     "title": "Mario Party Advance",
     "category": "Retro",
     "path": "games/clMario Party Advance.html",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Mario%20Party%20Advance%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29%20%28Virtual%20Console%29.png",
     "rom": "gba"
   },
   {
@@ -8913,7 +8913,7 @@
     "category": "Mario",
     "path": "games/clmariogolf.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Mario%20Golf%20%28Europe%29.png"
   },
   {
     "id": "clmarioismissingdoneright",
@@ -8936,7 +8936,7 @@
     "path": "games/clmariokart64.html",
     "popular": true,
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Mario%20Kart%2064%20%28Europe%29%20%28Rev%201%29.png"
   },
   {
     "id": "clmariokartds",
@@ -8944,7 +8944,7 @@
     "category": "Mario",
     "path": "games/clmariokartds.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Mario%20Kart%20DS%20%28Europe%29%20%28Demo%29%20%28Kiosk%2C%20Multiplayer%29.png"
   },
   {
     "id": "clmariokartsupercircuit",
@@ -8952,7 +8952,7 @@
     "category": "Mario",
     "path": "games/clmariokartsupercircuit.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Mario%20Kart%20-%20Super%20Circuit%20%28Europe%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clmariolostlevels",
@@ -8988,7 +8988,7 @@
     "category": "Mario",
     "path": "games/clmariopaint.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Mario%20Paint%20%28Europe%29.png"
   },
   {
     "id": "clmarioparty",
@@ -9014,7 +9014,7 @@
     "category": "Mario",
     "path": "games/clmariopartyds.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Mario%20Party%20DS%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29%20%28Rev%201%29.png"
   },
   {
     "id": "clmariosmysterymeat",
@@ -9030,7 +9030,7 @@
     "category": "Mario",
     "path": "games/clmariotennis.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Mario%20Tennis%20%28Europe%29%20%28Wii%20Virtual%20Console%29.png"
   },
   {
     "id": "clmariovsluigi",
@@ -9100,7 +9100,7 @@
     "category": "Other",
     "path": "games/clmaxpayne.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Max%20Payne%20%28USA%29.png"
   },
   {
     "id": "clmcfpsfbhd",
@@ -9134,7 +9134,7 @@
     "category": "Other",
     "path": "games/clmedalofhonor.html",
     "rom": "psx",
-    "thumbnail": "assets/thumbnails/platforms/psx.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Medal%20of%20Honor%20%28Europe%29.png"
   },
   {
     "id": "clmedievalshark",
@@ -9172,7 +9172,7 @@
     "category": "Other",
     "path": "games/clmegaman.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Mega%20Man%20%281987-12%29%28Capcom%29%28US%29.png"
   },
   {
     "id": "clmegaman2",
@@ -9180,7 +9180,7 @@
     "category": "Other",
     "path": "games/clmegaman2.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Mega%20Man%202%20%281989-06%29%28Capcom%29%28US%29.png"
   },
   {
     "id": "clmegaman2gba",
@@ -9196,7 +9196,7 @@
     "category": "Other",
     "path": "games/clmegaman3.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Mega%20Man%203%20%281990%29%28Capcom%20USA%29%28PlayChoice-10%29.png"
   },
   {
     "id": "clmegaman4",
@@ -9204,7 +9204,7 @@
     "category": "Other",
     "path": "games/clmegaman4.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Mega%20Man%204%20%281993-01-21%29%28Capcom%29%28EU%29.png"
   },
   {
     "id": "clmegaman5",
@@ -9212,7 +9212,7 @@
     "category": "Other",
     "path": "games/clmegaman5.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Mega%20Man%205%20%281992-12%29%28Capcom%29%28US%29.png"
   },
   {
     "id": "clmegaman6",
@@ -9220,7 +9220,7 @@
     "category": "Other",
     "path": "games/clmegaman6.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Mega%20Man%206%20%281994-03%29%28Nintendo%29%28US%29.png"
   },
   {
     "id": "clmegaman7",
@@ -9228,7 +9228,7 @@
     "category": "Other",
     "path": "games/clmegaman7.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Mega%20Man%207%20%28Europe%29.png"
   },
   {
     "id": "clmegaman8",
@@ -9242,7 +9242,7 @@
     "category": "Other",
     "path": "games/clmegamanbattlechipchallenge.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Mega%20Man%20Battle%20Chip%20Challenge%20%28Europe%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clmegamanbn5tc",
@@ -9294,7 +9294,7 @@
     "category": "Other",
     "path": "games/clmegamanx.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Mega%20Man%20X%20%28Europe%29.png"
   },
   {
     "id": "clmegamanx2",
@@ -9302,7 +9302,7 @@
     "category": "Other",
     "path": "games/clmegamanx2.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Mega%20Man%20X2%20%28Europe%29.png"
   },
   {
     "id": "clmegamanx3",
@@ -9310,7 +9310,7 @@
     "category": "Other",
     "path": "games/clmegamanx3.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Mega%20Man%20X3%20%28Europe%29.png"
   },
   {
     "id": "clmegamanx4",
@@ -9324,7 +9324,7 @@
     "category": "Other",
     "path": "games/clmegamanzero.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Mega%20Man%20Zero%20%28USA%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clmegamanzx",
@@ -9362,7 +9362,7 @@
     "category": "Other",
     "path": "games/clmetalgear.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Metal%20Gear%20%281987-12-22%29%28Konami%29%28JP%29.png"
   },
   {
     "id": "clmetalgearsolid",
@@ -9384,7 +9384,7 @@
     "category": "Other",
     "path": "games/clmetalslug.html",
     "rom": "arcade",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png"
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/Metal%20Slug%203%20%28NGH-2560%29.png"
   },
   {
     "id": "clmetalslug2",
@@ -9392,7 +9392,7 @@
     "category": "Other",
     "path": "games/clmetalslug2.html",
     "rom": "arcade",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png"
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/Metal%20Slug%202%20-%20Super%20Vehicle-001-II.png"
   },
   {
     "id": "clmetalslugadvance",
@@ -9400,7 +9400,7 @@
     "category": "Other",
     "path": "games/clmetalslugadvance.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Metal%20Slug%20Advance%20%28Europe%29.png"
   },
   {
     "id": "clmetalslugmission1",
@@ -9438,7 +9438,7 @@
     "category": "Other",
     "path": "games/clmetroid.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Metroid%20%281986%29%28Nintendo%29%28PlayChoice-10%29.png"
   },
   {
     "id": "clmetroid2",
@@ -9455,7 +9455,7 @@
     "path": "games/clmetroidfusion.html",
     "popular": true,
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Metroid%20Fusion%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clmetroidprimehunters",
@@ -9469,7 +9469,7 @@
     "category": "Other",
     "path": "games/clmetroidzeromission.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Metroid%20-%20Zero%20Mission%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clmiamishark",
@@ -9489,7 +9489,7 @@
     "category": "Other",
     "path": "games/clmicromages.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Micro%20Mages%20%28World%29%20%28Aftermarket%29%20%28Unl%29.png"
   },
   {
     "id": "clmightyknight",
@@ -9874,7 +9874,7 @@
     "category": "Fighting",
     "path": "games/clmortalkombat.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Mortal%20Kombat%20%28Europe%29%20%28Rev%201%29.png"
   },
   {
     "id": "clmortalkombat2",
@@ -9882,7 +9882,7 @@
     "category": "Fighting",
     "path": "games/clmortalkombat2.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Mortal%20Kombat%20II%20%28Europe%29%20%28Rev%201%29.png"
   },
   {
     "id": "clmortalkombat2a",
@@ -9898,7 +9898,7 @@
     "category": "Fighting",
     "path": "games/clmortalkombat3.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Mortal%20Kombat%203%20%28Europe%29.png"
   },
   {
     "id": "clmortalkombat3a",
@@ -9914,7 +9914,7 @@
     "category": "Fighting",
     "path": "games/clmortalkombat4.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Mortal%20Kombat%204%20%28Europe%29.png"
   },
   {
     "id": "clmortalkombata",
@@ -9930,7 +9930,7 @@
     "category": "Fighting",
     "path": "games/clmortalkombatadvance.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Mortal%20Kombat%20Advance%20%28Europe%29.png"
   },
   {
     "id": "clmortkom4",
@@ -10043,14 +10043,14 @@
     "category": "Other",
     "path": "games/clmspacman.html",
     "rom": "arcade",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png"
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/Ms.%20Pac-Man.png"
   },
   {
     "id": "clmspacman(1)",
     "title": "Ms. Pac-Man",
     "category": "Retro",
     "path": "games/clmspacman(1).html",
-    "thumbnail": "assets/thumbnails/platforms/nes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Ms.%20Pac-Man%20%281990%29%28Tengen%29%28US%29.png",
     "rom": "nes"
   },
   {
@@ -10115,7 +10115,7 @@
     "category": "Other",
     "path": "games/clnarc.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/NARC%20%281990-08%29%28Acclaim%29%28US%29.png"
   },
   {
     "id": "clnatsuki64",
@@ -10154,7 +10154,7 @@
     "title": "NBA Hangtime",
     "category": "Retro",
     "path": "games/clNBAhangtime.html",
-    "thumbnail": "assets/thumbnails/platforms/n64.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/NBA%20Hangtime%20%28Europe%29.png",
     "rom": "n64"
   },
   {
@@ -10168,7 +10168,7 @@
     "title": "Nbajam",
     "category": "Retro",
     "path": "games/clNBAjam.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/NBA%20Jam%20%28Europe%29%20%28Rev%201%29.png",
     "rom": "snes"
   },
   {
@@ -10191,7 +10191,7 @@
     "category": "Other",
     "path": "games/clnbalive2000.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/NBA%20Live%202000%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%29.png"
   },
   {
     "id": "clnbalive2003",
@@ -10249,7 +10249,7 @@
     "category": "Mario",
     "path": "games/clnewsupermariobros.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/New%20Super%20Mario%20Bros.%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29%20%28Demo%29%20%28Kiosk%29.png"
   },
   {
     "id": "clnewsupermarioworld2aroundtheworld",
@@ -10283,7 +10283,7 @@
     "category": "Other",
     "path": "games/clnflblitz.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/NFL%20Blitz%20%28USA%29.png"
   },
   {
     "id": "clnfscarbonowncity",
@@ -10343,7 +10343,7 @@
     "category": "Other",
     "path": "games/clnhl2002.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/NHL%202002%20%28USA%29.png"
   },
   {
     "id": "clnhl98",
@@ -10357,7 +10357,7 @@
     "category": "Other",
     "path": "games/clnhlhitz2003.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/NHL%20Hitz%2020-03%20%28USA%29.png"
   },
   {
     "id": "clnickelodeonsuperbrawl2",
@@ -10376,7 +10376,7 @@
     "title": "Nicktoons: Freeze Frame Frenzy",
     "category": "Retro",
     "path": "games/clNicktoonsFreezeFrameFrenzy.html",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Nicktoons%20-%20Freeze%20Frame%20Frenzy%20%28USA%29.png",
     "rom": "gba"
   },
   {
@@ -10405,7 +10405,7 @@
     "category": "Horror",
     "path": "games/clnightshade.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Nightshade%20%281992-01%29%28Ultra%20Soft%29%28US%29.png"
   },
   {
     "id": "clnimrods",
@@ -10440,7 +10440,7 @@
     "category": "Other",
     "path": "games/clnintendogslab.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Nintendogs%20-%20Lab%20_%20Friends%20%28USA%29.png"
   },
   {
     "id": "clnintendoworldcup",
@@ -10448,7 +10448,7 @@
     "category": "Other",
     "path": "games/clnintendoworldcup.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Nintendo%20World%20Cup%20%281990%29%28Technos%29%28PlayChoice-10%29.png"
   },
   {
     "id": "clnitclient",
@@ -10492,7 +10492,7 @@
     "category": "Other",
     "path": "games/clnplus.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/N%2B%20%28USA%29.png"
   },
   {
     "id": "clnubbysnumberfactory",
@@ -10638,7 +10638,7 @@
     "category": "Other",
     "path": "games/clonepiece.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/One%20Piece%20%28USA%29.png"
   },
   {
     "id": "clonepiecefighting",
@@ -10741,7 +10741,7 @@
     "title": "OutRun (Arcade)",
     "category": "Retro",
     "path": "games/clOutrunArcade.html",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png",
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/Out%20Run%20%28bootleg%29.png",
     "rom": "arcade"
   },
   {
@@ -10755,7 +10755,7 @@
     "title": "OutRun (Genesis)",
     "category": "Retro",
     "path": "games/clOutrunGenesis.html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/OutRun%20%28Japan%29.png",
     "rom": "genesis"
   },
   {
@@ -10789,7 +10789,7 @@
     "path": "games/clpacman.html",
     "popular": true,
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Pac-Man%20%2819xx%29%28-%29%28JP%29%5Bh2%5D%5Bp%5D%5BiNES%20title%5D.png"
   },
   {
     "id": "clpacmana",
@@ -10797,7 +10797,7 @@
     "category": "Other",
     "path": "games/clpacmana.html",
     "rom": "arcade",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png"
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/Pac-Man%20%28Galaxian%20hardware%29.png"
   },
   {
     "id": "clpacmansuperfast",
@@ -11058,7 +11058,7 @@
     "category": "Other",
     "path": "games/clparappatherapper.html",
     "rom": "psx",
-    "thumbnail": "assets/thumbnails/platforms/psx.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/PaRappa%20the%20Rapper%20%28Japan%29.png"
   },
   {
     "id": "clparappatherapperalt",
@@ -11140,7 +11140,7 @@
     "category": "Other",
     "path": "games/clpepsiman.html",
     "rom": "psx",
-    "thumbnail": "assets/thumbnails/platforms/psx.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Pepsiman%20%28Japan%29.png"
   },
   {
     "id": "clpepsimanalt",
@@ -11172,7 +11172,7 @@
     "category": "Other",
     "path": "games/clpersona.html",
     "rom": "psx",
-    "thumbnail": "assets/thumbnails/platforms/psx.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Persona%20%28USA%29.png"
   },
   {
     "id": "clpersona2",
@@ -11180,7 +11180,7 @@
     "category": "Other",
     "path": "games/clpersona2.html",
     "rom": "psx",
-    "thumbnail": "assets/thumbnails/platforms/psx.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Persona%202%20-%20Tsumi%20-%20Innocent%20Sin%20%28Japan%29%20%28Rev%201%29.png"
   },
   {
     "id": "clpersona2alt",
@@ -11206,7 +11206,7 @@
     "category": "Other",
     "path": "games/clphantasystar.html",
     "rom": "oldsega",
-    "thumbnail": "assets/thumbnails/platforms/oldsega.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Master%20System%20-%20Mark%20III/Named_Boxarts/Phantasy%20Star%20%28Brazil%29.png"
   },
   {
     "id": "clphantasystar2",
@@ -11214,7 +11214,7 @@
     "category": "Other",
     "path": "games/clphantasystar2.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Phantasy%20Star%20II%20%28Brazil%29%20%28En%29.png"
   },
   {
     "id": "clphantasystar3",
@@ -11222,7 +11222,7 @@
     "category": "Other",
     "path": "games/clphantasystar3.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Phantasy%20Star%20III%20-%20Toki%20no%20Keishousha%20%28Japan%29.png"
   },
   {
     "id": "clphantasystar4",
@@ -11230,7 +11230,7 @@
     "category": "Other",
     "path": "games/clphantasystar4.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Phantasy%20Star%20IV%20%28Europe%29.png"
   },
   {
     "id": "clphasma",
@@ -11356,7 +11356,7 @@
     "category": "Other",
     "path": "games/clpitfall.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/Pitfall%20II%20-%20Lost%20Caverns%20%28USA%29.png"
   },
   {
     "id": "clpitof100trials",
@@ -11554,7 +11554,7 @@
     "category": "Pokemon",
     "path": "games/clpokeblack.html",
     "description": "Set in the New York-inspired Unova region with 156 entirely new Pokemon. Features a compelling story about the morality of capturing Pokemon, animated battle sprites, seasonal changes, Triple and Rotation Battles, and the enigmatic N. Only new Pokemon are available until post-game.",
-    "thumbnail": "assets/thumbnails/clpokeblack.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Black%20Version%20%28USA%2C%20Europe%29%20%28NDSi%20Enhanced%29.png",
     "popular": true,
     "rom": "ds"
   },
@@ -11888,7 +11888,7 @@
     "category": "Pokemon",
     "path": "games/clpokeliquidcrysta.html",
     "description": "A stunning GBA remake of Pokemon Crystal with redesigned maps, updated graphics, Pokemon from later generations, the Orange Islands from the anime, new events, and expanded content. Relive the Johto adventure in a beautiful new way with a massive post-game.",
-    "thumbnail": "assets/thumbnails/clpokeliquidcrysta.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20Liquid%20Crystal%20%28Hack%29.png",
     "rom": "gba"
   },
   {
@@ -11924,7 +11924,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonclover.html",
     "description": "A comedic FireRed hack featuring 386 entirely original fan-made Pokemon (Fakemon). Born from online community creativity with humorous designs, custom music, a full new region, and surprisingly deep gameplay. Features Fairy type and a unique, satirical tone throughout.",
-    "thumbnail": "assets/thumbnails/clpokemonclover.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20Clover%20%28Hack%29.png",
     "rom": "gba"
   },
   {
@@ -11943,7 +11943,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonemerald.html",
     "description": "The definitive Hoenn experience combining Ruby and Sapphire's stories. Features the legendary Rayquaza, the Battle Frontier with seven challenging facilities, Pokemon Animations in battle, and an expanded post-game. Both Team Magma and Team Aqua appear as antagonists in this enhanced version.",
-    "thumbnail": "assets/thumbnails/clpokemonemerald.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20Emerald%20Version%20%28USA%2C%20Europe%29%20%28Alternate%29.png",
     "popular": true,
     "rom": "gba"
   },
@@ -12020,7 +12020,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonfirered.html",
     "description": "A faithful GBA remake of the original Pokemon Red with updated graphics, the Sevii Islands post-game, a helpful tutorial system, and compatibility with Ruby/Sapphire/Emerald for trading. Relive the classic Kanto journey with Generation III mechanics and quality-of-life improvements.",
-    "thumbnail": "assets/thumbnails/clpokemonfirered.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20FireRed%20Version%20%28USA%29.png",
     "rom": "gba"
   },
   {
@@ -12074,7 +12074,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonleafgreen.html",
     "description": "The GBA remake of Pokemon Blue/Green with modernized graphics and gameplay. Features the same Kanto adventure with Sevii Islands, updated mechanics from Generation III, a wireless adapter for trading, and the ability to catch Johto and Hoenn Pokemon in the post-game.",
-    "thumbnail": "assets/thumbnails/clpokemonleafgreen.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20LeafGreen%20Version%20%28USA%29.png",
     "rom": "gba"
   },
   {
@@ -12092,7 +12092,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonmysterydungeon.html",
     "description": "You wake up as a Pokemon with no memory of being human! Form a rescue team and explore randomly generated dungeons in this roguelike spinoff. Recruit over 400 Pokemon to your team, take on rescue missions, and uncover the mystery of your transformation and the natural disasters plaguing the world.",
-    "thumbnail": "assets/thumbnails/clpokemonmysterydungeon.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20Mystery%20Dungeon%20-%20Red%20Rescue%20Team%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png",
     "rom": "gba"
   },
   {
@@ -12116,7 +12116,7 @@
     "title": "Pokemon Platinum",
     "category": "Pokemon",
     "path": "games/clpokemonplatinum.html",
-    "thumbnail": "assets/thumbnails/clpokemonplatinum.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Platinum%20Version%20%28Europe%29.png",
     "description": "The definitive Sinnoh experience with Giratina and the Distortion World. Features the Battle Frontier, Wi-Fi Plaza, expanded Pokedex, new forms for Giratina/Shaymin/Rotom, improved speed and animations, and a richer story involving both Dialga and Palkia. The best way to experience Gen IV.",
     "rom": "ds"
   },
@@ -12160,7 +12160,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonruby.html",
     "description": "Explore the tropical Hoenn region in this Generation III adventure. Features 135 new Pokemon, Double Battles, Abilities, Natures, Pokemon Contests, and Secret Bases. Lead Team Magma's quest to expand the land with the legendary Groudon. A massive leap in graphics and gameplay depth.",
-    "thumbnail": "assets/thumbnails/clpokemonruby.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20Ruby%20Version%20%28USA%29.png",
     "popular": true,
     "rom": "gba"
   },
@@ -12188,7 +12188,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonsapphire.html",
     "description": "The companion to Pokemon Ruby set in Hoenn. Features Team Aqua as the villainous team seeking to expand the sea using the legendary Kyogre. Enjoy the same rich gameplay with different Pokemon encounters, Double Battles, Contests, and the vast underwater diving routes.",
-    "thumbnail": "assets/thumbnails/clpokemonsapphire.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20Sapphire%20Version%20%28USA%29.png",
     "popular": true,
     "rom": "gba"
   },
@@ -12234,7 +12234,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonsnap.html",
     "description": "A unique N64 photography game where you ride through on-rails environments taking pictures of Pokemon in their natural habitats. Professor Oak scores your photos based on size, pose, and technique. Use items like apples and Pester Balls to get Pokemon to pose and reveal hidden behaviors.",
-    "thumbnail": "assets/thumbnails/clpokemonsnap.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Pokemon%20Snap%20%28Australia%29.png",
     "rom": "n64"
   },
   {
@@ -12529,7 +12529,7 @@
     "category": "Pokemon",
     "path": "games/clpokeruby.html",
     "description": "The original Pokemon Ruby for Game Boy Advance. Journey through Hoenn, battle Team Magma, catch Groudon, and challenge the Pokemon League. Features 135 new Pokemon, Double Battles, Abilities, Natures, Contests, and Secret Bases in the tropical Hoenn region.",
-    "thumbnail": "assets/thumbnails/clpokeruby.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20Ruby%20Version%20%28USA%29.png",
     "rom": "gba"
   },
   {
@@ -12579,7 +12579,7 @@
     "title": "Pokemon Theta Emerald EX",
     "category": "Retro",
     "path": "games/clPokeThetaEmeraldEX.html",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20Theta%20Emerald%20EX%20Version%20%28Hack%29.png",
     "rom": "gba"
   },
   {
@@ -12606,7 +12606,7 @@
     "category": "Pokemon",
     "path": "games/clpokeultrashinygoldsigma.html",
     "description": "The ultimate Shiny Gold Sigma experience, a FireRed-based remake of Pokemon Gold. Features all 386 Gen I-III Pokemon, updated graphics, the physical/special split, the Orange Islands, post-game content, and a faithful Johto adventure with modern mechanics. One of the best Johto remakes on GBA.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20Ultra%20Shiny%20Gold%20Sigma%20%28Hack%29.png",
     "rom": "gba"
   },
   {
@@ -12898,7 +12898,7 @@
     "category": "Other",
     "path": "games/clpuckman.html",
     "rom": "arcade",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png"
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/Puck%20Man%20%28Japan%20set%201%29.png"
   },
   {
     "id": "clpullfrog",
@@ -12918,7 +12918,7 @@
     "category": "Other",
     "path": "games/clpunchout.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Punch-Out%21%21%20%281987%29%28Nintendo%29%28EU%29.png"
   },
   {
     "id": "clpunchthetrump",
@@ -12958,7 +12958,7 @@
     "category": "Other",
     "path": "games/clpuyopuyofever.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Puyo%20Puyo%20Fever%20%28Japan%29%20%28En%2CJa%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "clpvz",
@@ -12992,7 +12992,7 @@
     "category": "Other",
     "path": "games/clqbert.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/Q-bert%20%28USA%29.png"
   },
   {
     "id": "clqtrewired",
@@ -13006,7 +13006,7 @@
     "category": "Other",
     "path": "games/clquake2.html",
     "rom": "psx",
-    "thumbnail": "assets/thumbnails/platforms/psx.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Quake%20II%20%28Europe%29.png"
   },
   {
     "id": "clquake3",
@@ -13054,7 +13054,7 @@
     "category": "Racing",
     "path": "games/clradracer.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Rad%20Racer%20%281987%29%28Square%29%28PlayChoice-10%29.png"
   },
   {
     "id": "clraftwars",
@@ -13160,7 +13160,7 @@
     "category": "Other",
     "path": "games/clrayman.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%20Jaguar/Named_Boxarts/Rayman%20%28World%29%20%28Beta%201%29.png"
   },
   {
     "id": "clraze",
@@ -13490,7 +13490,7 @@
     "category": "Other",
     "path": "games/clristar.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Ristar%20%28USA%2C%20Europe%29%20%28September%201994%29.png"
   },
   {
     "id": "clroadfighter",
@@ -13498,7 +13498,7 @@
     "category": "Fighting",
     "path": "games/clroadfighter.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Road%20Fighter%20%2819xx%29%28-%29%28JP%29%5Bp%5D.png"
   },
   {
     "id": "clroadoffury",
@@ -13558,7 +13558,7 @@
     "category": "Platformer",
     "path": "games/clrocketknightadventures.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Rocket%20Knight%20Adventures%20%28Europe%29.png"
   },
   {
     "id": "clrocketleague",
@@ -13868,7 +13868,7 @@
     "category": "Other",
     "path": "games/clscrapyarddog.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%20Lynx/Named_Boxarts/Scrapyard%20Dog%20%28USA%2C%20Europe%29.png"
   },
   {
     "id": "clscratchoptions",
@@ -13882,7 +13882,7 @@
     "category": "Other",
     "path": "games/clscribblenauts.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Scribblenauts%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%2CNl%29.png"
   },
   {
     "id": "clscubabear",
@@ -13914,7 +13914,7 @@
     "category": "Other",
     "path": "games/clsecretofmana.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Secret%20of%20Mana%20%28France%29%20%28Rev%201%29.png"
   },
   {
     "id": "clsega2gg",
@@ -13935,7 +13935,7 @@
     "title": "Sega Sonic The Hedgehog",
     "category": "Retro",
     "path": "games/clSegaSonicTheHedgehog.html",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png",
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/SegaSonic%20The%20Hedgehog%20%28Japan%2C%20rev.%20C%29.png",
     "rom": "arcade"
   },
   {
@@ -13962,7 +13962,7 @@
     "category": "Other",
     "path": "games/clserioussamadvance.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Serious%20Sam%20Advance%20%28Europe%29%20%28En%2CFr%2CDe%29.png"
   },
   {
     "id": "clservingupmadness",
@@ -14012,7 +14012,7 @@
     "category": "Other",
     "path": "games/clshadowdancer.html",
     "rom": "arcade",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png"
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/Shadow%20Dancer%20%28Rev.B%29.png"
   },
   {
     "id": "clshadowdancersecret",
@@ -14103,7 +14103,7 @@
     "category": "Other",
     "path": "games/clshinobi.html",
     "rom": "arcade",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png"
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/Shinobi%20%28Star%20bootleg%2C%20System%2016A%29.png"
   },
   {
     "id": "clshinobi3",
@@ -14111,7 +14111,7 @@
     "category": "Other",
     "path": "games/clshinobi3.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Shinobi%20III%20-%20Return%20of%20the%20Ninja%20Master%20%28Europe%29.png"
   },
   {
     "id": "clshinobirevenge",
@@ -14157,7 +14157,7 @@
     "category": "Other",
     "path": "games/clshrek-2.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Shrek%202%20%28Europe%29%20%28Fr%2CDe%2CEs%2CIt%2CSv%29.png"
   },
   {
     "id": "clshrubnaut",
@@ -14183,7 +14183,7 @@
     "category": "Other",
     "path": "games/clsidepocket.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Side%20Pocket%20%28Europe%29.png"
   },
   {
     "id": "clsierra7",
@@ -14197,7 +14197,7 @@
     "category": "Other",
     "path": "games/clsilenthill.html",
     "rom": "psx",
-    "thumbnail": "assets/thumbnails/platforms/psx.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Silent%20Hill%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "clsilenthillalt",
@@ -14261,7 +14261,7 @@
     "category": "Other",
     "path": "games/clskateordie.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Skate%20Or%20Die%20%281988-12%29%28Ultra%20Soft%29%28US%29.png"
   },
   {
     "id": "clskibididibidygyattohiorizzingallovertheplacestillwatermangotheoryfemboydrool",
@@ -14625,14 +14625,14 @@
     "category": "Other",
     "path": "games/clsnowbros.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Snow%20Bros.%20%28199x%29%28-%29%28AS%29%5Bh%5D%5Bp%5D%5Bripped%20from%204%20in%201%20NG-011%2C%20mapper%201%5D.png"
   },
   {
     "id": "clsnowbros(1)",
     "title": "Snow Bros",
     "category": "Retro",
     "path": "games/clsnowbros(1).html",
-    "thumbnail": "assets/thumbnails/platforms/nes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Snow%20Bros.%20%28199x%29%28-%29%28AS%29%5Bh%5D%5Bp%5D%5Bripped%20from%204%20in%201%20NG-011%2C%20mapper%201%5D.png",
     "rom": "nes"
   },
   {
@@ -14652,7 +14652,7 @@
     "title": "Snow Bros (Genesis)",
     "category": "Retro",
     "path": "games/clSnowBrosGenesis.html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Snow%20Bros.%20-%20Nick%20_%20Tom%20%28Japan%29.png",
     "rom": "genesis"
   },
   {
@@ -14661,7 +14661,7 @@
     "category": "Other",
     "path": "games/clsnowbrothers.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Snow%20Brothers%20%28199x%29%28-%29%28US%29%5Bp%5D.png"
   },
   {
     "id": "clsnowdrift",
@@ -14776,7 +14776,7 @@
     "category": "Other",
     "path": "games/clsolstice.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Solstice%20%281990-07-20%29%28Epic-Sony%20Records%29%28JP%29.png"
   },
   {
     "id": "clsomari64",
@@ -14911,7 +14911,7 @@
     "path": "games/clsonicadvance.html",
     "popular": true,
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Sonic%20Advance%20%28Europe%29%20%28En%2CJa%2CFr%2CDe%2CEs%29.png"
   },
   {
     "id": "clsonicadvance2",
@@ -14919,7 +14919,7 @@
     "category": "Sonic",
     "path": "games/clsonicadvance2.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Sonic%20Advance%202%20%28Europe%29%20%28En%2CJa%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "clsonicadvance2sp",
@@ -14935,7 +14935,7 @@
     "category": "Sonic",
     "path": "games/clsonicadvance3.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Sonic%20Advance%203%20%28Europe%29%20%28En%2CJa%2CFr%2CDe%2CEs%2CIt%29%20%28Beta%29.png"
   },
   {
     "id": "clsonicandashuro",
@@ -14965,7 +14965,7 @@
     "category": "Sonic",
     "path": "games/clsonicbattle.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Sonic%20Battle%20%28Europe%29%20%28En%2CJa%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "clsonicblast",
@@ -14973,7 +14973,7 @@
     "category": "Sonic",
     "path": "games/clsonicblast.html",
     "rom": "oldsega",
-    "thumbnail": "assets/thumbnails/platforms/oldsega.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Game%20Gear/Named_Boxarts/Sonic%20Blast%20%28World%29%20%28Beta%29%20%281996-05-31%29.png"
   },
   {
     "id": "clsoniccd",
@@ -14993,7 +14993,7 @@
     "category": "Sonic",
     "path": "games/clsonicchaos.html",
     "rom": "oldsega",
-    "thumbnail": "assets/thumbnails/platforms/oldsega.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Game%20Gear/Named_Boxarts/Sonic%20Chaos%20%28USA%2C%20Europe%2C%20Brazil%29%20%28Beta%29%20%281993-05-17%29.png"
   },
   {
     "id": "clsonicclassiccollection",
@@ -15020,7 +15020,7 @@
     "title": "Sonic Classics",
     "category": "Retro",
     "path": "games/clSonicClassics.html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Sonic%20Classics%20%28USA%2C%20Europe%29.png",
     "rom": "genesis"
   },
   {
@@ -15070,7 +15070,7 @@
     "title": "Sonic: Hellfire Saga",
     "category": "Retro",
     "path": "games/clSonicHellfireSaga.html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Sonic%20-%20Hellfire%20Saga.png",
     "rom": "genesis"
   },
   {
@@ -15079,7 +15079,7 @@
     "category": "Sonic",
     "path": "games/clsonicjam.html",
     "rom": "oldsega",
-    "thumbnail": "assets/thumbnails/platforms/oldsega.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Saturn/Named_Boxarts/Sonic%20Jam%20%28Europe%29.png"
   },
   {
     "id": "clsoniclabyrinth",
@@ -15087,7 +15087,7 @@
     "category": "Sonic",
     "path": "games/clsoniclabyrinth.html",
     "rom": "oldsega",
-    "thumbnail": "assets/thumbnails/platforms/oldsega.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Game%20Gear/Named_Boxarts/Sonic%20Labyrinth%20%28USA%2C%20Europe%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clsonicmania",
@@ -15132,7 +15132,7 @@
     "category": "Sonic",
     "path": "games/clsonicr.html",
     "rom": "oldsega",
-    "thumbnail": "assets/thumbnails/platforms/oldsega.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Saturn/Named_Boxarts/Sonic%20R%20%28Europe%29.png"
   },
   {
     "id": "clsonicralt",
@@ -15172,7 +15172,7 @@
     "category": "Sonic",
     "path": "games/clsonicspinball.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Sonic%20Spinball%20%28Europe%29%20%28Mega%20Drive%20Mini%29.png"
   },
   {
     "id": "clsonicthehedgehog",
@@ -15181,7 +15181,7 @@
     "path": "games/clsonicthehedgehog.html",
     "popular": true,
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Sonic%20The%20Hedgehog%20%28Japan%29%20%28En%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clsonicthehedgehog2",
@@ -15189,7 +15189,7 @@
     "category": "Sonic",
     "path": "games/clsonicthehedgehog2.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Sonic%20The%20Hedgehog%202%20%28Europe%29.png"
   },
   {
     "id": "clsonicthehedgehog3",
@@ -15197,7 +15197,7 @@
     "category": "Sonic",
     "path": "games/clsonicthehedgehog3.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Sonic%20The%20Hedgehog%203%20%28Japan%2C%20Korea%29%20%28Ja%29.png"
   },
   {
     "id": "clsonny2",
@@ -15269,7 +15269,7 @@
     "category": "Other",
     "path": "games/clspaceinvaders.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/Space%20Invaders%20%28USA%29.png"
   },
   {
     "id": "clspaceiskey",
@@ -15391,7 +15391,7 @@
     "category": "Other",
     "path": "games/clspyhunter.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Spy%20Hunter%20%281987-09%29%28Sunsoft%29%28US%29.png"
   },
   {
     "id": "clsquidplayground",
@@ -15468,7 +15468,7 @@
     "category": "Other",
     "path": "games/clstarfox.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Star%20Fox%20%28Japan%29%20%28Rev%201%29.png"
   },
   {
     "id": "clstarfox64",
@@ -15476,7 +15476,7 @@
     "category": "Other",
     "path": "games/clstarfox64.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Star%20Fox%2064%20%28Japan%29%20%28Rev%201%29%20%28Wii%20Virtual%20Console%29.png"
   },
   {
     "id": "clstarraiders",
@@ -15484,7 +15484,7 @@
     "category": "Other",
     "path": "games/clstarraiders.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/Star%20Raiders%20%28USA%29.png"
   },
   {
     "id": "clstateio",
@@ -15555,7 +15555,7 @@
     "category": "Other",
     "path": "games/clsteelempire.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Steel%20Empire%20%28USA%29%20%281992-03-13%29%20%28Sega%20Channel%29.png"
   },
   {
     "id": "clsteelsurge",
@@ -15754,7 +15754,7 @@
     "category": "Fighting",
     "path": "games/clstreetfighter2.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Street%20Fighter%20II%20%28Europe%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clstreetfighter2arcade",
@@ -15813,7 +15813,7 @@
     "category": "Fighting",
     "path": "games/clstreetfighteralpha3.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Street%20Fighter%20Alpha%203%20%28Europe%29.png"
   },
   {
     "id": "clstreetfighterumuhsomething",
@@ -16039,7 +16039,7 @@
     "category": "Other",
     "path": "games/clsuperbomberman.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Bomberman%20%28Europe%29.png"
   },
   {
     "id": "clsuperbomberman2",
@@ -16047,7 +16047,7 @@
     "category": "Other",
     "path": "games/clsuperbomberman2.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Bomberman%202%20%28Europe%29.png"
   },
   {
     "id": "clsuperbomberman3",
@@ -16055,7 +16055,7 @@
     "category": "Other",
     "path": "games/clsuperbomberman3.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Bomberman%203%20%28Europe%29%20%28Beta%29.png"
   },
   {
     "id": "clsuperbomberman4",
@@ -16063,7 +16063,7 @@
     "category": "Other",
     "path": "games/clsuperbomberman4.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Bomberman%204%20%28Japan%29.png"
   },
   {
     "id": "clsuperbomberman5",
@@ -16071,7 +16071,7 @@
     "category": "Other",
     "path": "games/clsuperbomberman5.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Bomberman%205%20%28Japan%29%20%28Caravan%20Event%20Ban%29.png"
   },
   {
     "id": "clsuperc",
@@ -16079,7 +16079,7 @@
     "category": "Other",
     "path": "games/clsuperc.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20C%20%281990%29%28Konami%29%28PlayChoice-10%29.png"
   },
   {
     "id": "clsupercarrush",
@@ -16098,7 +16098,7 @@
     "title": "Super Castlevania IV",
     "category": "Retro",
     "path": "games/clsupercastlevaniaVI.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Castlevania%20IV%20%28Europe%29%20%28Virtual%20Console%29.png",
     "rom": "snes"
   },
   {
@@ -16196,7 +16196,7 @@
     "path": "games/clsupermario.html",
     "popular": true,
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Mario%209%20%2819xx%29%28-%29%28AS%29%5Bp%5D%5BK1107%5D.png"
   },
   {
     "id": "clsupermario3mix",
@@ -16219,7 +16219,7 @@
     "path": "games/clsupermario64.html",
     "popular": true,
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Super%20Mario%2064%20%28Europe%29%20%28En%2CFr%2CDe%29.png"
   },
   {
     "id": "clsupermario64ds",
@@ -16227,7 +16227,7 @@
     "category": "Mario",
     "path": "games/clsupermario64ds.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Super%20Mario%2064%20DS%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "clsupermarioallstars",
@@ -16235,7 +16235,7 @@
     "category": "Mario",
     "path": "games/clsupermarioallstars.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Mario%20All-Stars%20%28Europe%29%20%28Wii%29.png"
   },
   {
     "id": "clsupermariobros",
@@ -16281,7 +16281,7 @@
     "category": "Mario",
     "path": "games/clsupermariokart.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Mario%20Kart%20%28Europe%29.png"
   },
   {
     "id": "clsupermarioland",
@@ -16327,7 +16327,7 @@
     "category": "Mario",
     "path": "games/clsupermariorpg.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Mario%20RPG%20%28Japan%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clsupermariostarroad",
@@ -16351,7 +16351,7 @@
     "category": "Mario",
     "path": "games/clsupermarioworld.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Mario%20World%20%28Europe%29%20%28Rev%201%29.png"
   },
   {
     "id": "clsupermarioworld2",
@@ -16359,7 +16359,7 @@
     "category": "Mario",
     "path": "games/clsupermarioworld2.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Mario%20World%202%20-%20Yoshi%27s%20Island%20%28Europe%29%20%28En%2CFr%2CDe%29%20%28Rev%201%29.png"
   },
   {
     "id": "clSuperMarioWorldThe SecretOfThe7GoldenStatues",
@@ -16381,7 +16381,7 @@
     "category": "Other",
     "path": "games/clsupermetroid.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Metroid%20%28Europe%29%20%28En%2CFr%2CDe%29.png"
   },
   {
     "id": "clsupermonkeyballjr",
@@ -16389,7 +16389,7 @@
     "category": "Other",
     "path": "games/clsupermonkeyballjr.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Super%20Monkey%20Ball%20Jr.%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png"
   },
   {
     "id": "clsupernoahsark3d",
@@ -16429,7 +16429,7 @@
     "category": "Other",
     "path": "games/clsuperpunchout.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Punch-Out%21%21%20%28Europe%29.png"
   },
   {
     "id": "clsuperpunchouten",
@@ -16442,7 +16442,7 @@
     "title": "Super Punch-Out!!",
     "category": "Retro",
     "path": "games/clSuperPunchOutEN.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Super%20Punch-Out%21%21%20%28Europe%29.png",
     "rom": "snes"
   },
   {
@@ -16477,7 +16477,7 @@
     "category": "Other",
     "path": "games/clsuperscribblenauts.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Super%20Scribblenauts%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%2CNl%29.png"
   },
   {
     "id": "clsupersmashbros",
@@ -16485,7 +16485,7 @@
     "category": "Fighting",
     "path": "games/clsupersmashbros.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Super%20Smash%20Bros.%20%28Australia%29.png"
   },
   {
     "id": "clsupersmashflash",
@@ -16766,7 +16766,7 @@
     "category": "Other",
     "path": "games/cltapper.html",
     "rom": "misc",
-    "thumbnail": "assets/thumbnails/platforms/misc.png"
+    "thumbnail": "https://thumbnails.libretro.com/Coleco%20-%20ColecoVision/Named_Boxarts/Tapper%20%28USA%2C%20Europe%29.png"
   },
   {
     "id": "cltaproad",
@@ -16792,7 +16792,7 @@
     "category": "Other",
     "path": "games/cltecmobowl.html",
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Tecmo%20Bowl%20%281989%29%28Tecmo%29%28PlayChoice-10%29.png"
   },
   {
     "id": "cltekken2ps1",
@@ -16821,7 +16821,7 @@
     "category": "Other",
     "path": "games/cltempest2000.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%20Jaguar/Named_Boxarts/Tempest%202000%20%28World%29.png"
   },
   {
     "id": "cltempleofboom",
@@ -16891,7 +16891,7 @@
     "path": "games/cltetris.html",
     "popular": true,
     "rom": "nes",
-    "thumbnail": "assets/thumbnails/platforms/nes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Tetris%20%281988-12-22%29%28BPS%29%28JP%29.png"
   },
   {
     "id": "cltetrisattack",
@@ -16899,7 +16899,7 @@
     "category": "Puzzle",
     "path": "games/cltetrisattack.html",
     "rom": "snes",
-    "thumbnail": "assets/thumbnails/platforms/snes.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Super%20Nintendo%20Entertainment%20System/Named_Boxarts/Tetris%20Attack%20%28Europe%29%20%28En%2CJa%29.png"
   },
   {
     "id": "cltetrisgba",
@@ -17046,7 +17046,7 @@
     "category": "Other",
     "path": "games/clthemepark.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%20Jaguar/Named_Boxarts/Theme%20Park%20%28World%29.png"
   },
   {
     "id": "clthepit",
@@ -17271,7 +17271,7 @@
     "category": "Other",
     "path": "games/cltonyhawksunderground.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Tony%20Hawk%27s%20Underground%20%28USA%2C%20Europe%29.png"
   },
   {
     "id": "cltoomanytypes",
@@ -17414,7 +17414,7 @@
     "category": "Other",
     "path": "games/cltripleplay2000.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Triple%20Play%202000%20%28USA%29.png"
   },
   {
     "id": "cltriviacrack",
@@ -17550,7 +17550,7 @@
     "category": "Other",
     "path": "games/clturokdinosaurhunter.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Turok%20-%20Dinosaur%20Hunter%20%28Europe%29%20%28Rev%201%29.png"
   },
   {
     "id": "cltvstatic",
@@ -17650,7 +17650,7 @@
     "category": "Fighting",
     "path": "games/clultimatemortalkombat3.html",
     "rom": "genesis",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Ultimate%20Mortal%20Kombat%203%20%28Europe%29.png"
   },
   {
     "id": "clultrakill",
@@ -17791,7 +17791,7 @@
     "category": "Other",
     "path": "games/clvanguard.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/Vanguard%20%28USA%29.png"
   },
   {
     "id": "clvaportrails",
@@ -17933,7 +17933,7 @@
     "title": "VS Super Mario Bros",
     "category": "Retro",
     "path": "games/clVSSMB.html",
-    "thumbnail": "assets/thumbnails/platforms/nes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Vs.%20Super%20Mario%20Bros.%20%281986%29%28Nintendo%29%28VS%20UniSystem%29.png",
     "rom": "nes"
   },
   {
@@ -17968,7 +17968,7 @@
     "category": "Other",
     "path": "games/clwarioland4.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Wario%20Land%204%20%28USA%2C%20Europe%29%20%28Virtual%20Console%29.png"
   },
   {
     "id": "clwariowarediy",
@@ -17976,7 +17976,7 @@
     "category": "Other",
     "path": "games/clwariowarediy.html",
     "rom": "ds",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/WarioWare%20-%20D.I.Y.%20%28USA%29.png"
   },
   {
     "id": "clwariowareinc",
@@ -17984,7 +17984,7 @@
     "category": "Other",
     "path": "games/clwariowareinc.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/WarioWare%2C%20Inc.%20-%20Trial%20Version%20%28USA%29.png"
   },
   {
     "id": "clwartheknight",
@@ -18016,7 +18016,7 @@
     "category": "Racing",
     "path": "games/clwaverace64.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Wave%20Race%2064%20-%20Kawasaki%20Jet%20Ski%20%28Europe%29%20%28En%2CDe%29.png"
   },
   {
     "id": "clwaverun",
@@ -18141,7 +18141,7 @@
     "title": "Mega Man: The Wily Wars",
     "category": "Retro",
     "path": "games/clwilywars(1).html",
-    "thumbnail": "assets/thumbnails/platforms/genesis.png",
+    "thumbnail": "https://thumbnails.libretro.com/Sega%20-%20Mega%20Drive%20-%20Genesis/Named_Boxarts/Mega%20Man%20-%20The%20Wily%20Wars%20%28Europe%29.png",
     "rom": "genesis"
   },
   {
@@ -18168,7 +18168,7 @@
     "category": "Other",
     "path": "games/clwipeout2097.html",
     "rom": "psx",
-    "thumbnail": "assets/thumbnails/platforms/psx.png"
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/WipEout%202097%20%28Europe%29.png"
   },
   {
     "id": "clwipeout2097alt",
@@ -18203,7 +18203,7 @@
     "category": "Other",
     "path": "games/clwolfenstein3d.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%20Jaguar/Named_Boxarts/Wolfenstein%203D%20%28World%29.png"
   },
   {
     "id": "clwoodworm",
@@ -18223,7 +18223,7 @@
     "category": "Other",
     "path": "games/clworldcup98.html",
     "rom": "n64",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/World%20Cup%2098%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%2CNl%2CSv%2CDa%29.png"
   },
   {
     "id": "clworldshardestgame",
@@ -18291,7 +18291,7 @@
     "title": "Xevious",
     "category": "Retro",
     "path": "games/clXevious.html",
-    "thumbnail": "assets/thumbnails/platforms/nes.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20Entertainment%20System/Named_Boxarts/Xevious%20%281984-11-08%29%28Namco%29%28JP%29.png",
     "rom": "nes"
   },
   {
@@ -18327,7 +18327,7 @@
     "title": "Xmen Vsstreet Fighter",
     "category": "Retro",
     "path": "games/clXMenVSStreetFighter.html",
-    "thumbnail": "assets/thumbnails/platforms/arcade.png",
+    "thumbnail": "https://thumbnails.libretro.com/MAME/Named_Boxarts/X-Men%20Vs.%20Street%20Fighter%20%28Asia%20960919%29.png",
     "rom": "arcade"
   },
   {
@@ -18342,7 +18342,7 @@
     "category": "Other",
     "path": "games/clyarsrevenge.html",
     "rom": "atari",
-    "thumbnail": "assets/thumbnails/platforms/atari.png"
+    "thumbnail": "https://thumbnails.libretro.com/Atari%20-%202600/Named_Boxarts/Yars%27%20Revenge%20%28USA%29.png"
   },
   {
     "id": "clyellow",
