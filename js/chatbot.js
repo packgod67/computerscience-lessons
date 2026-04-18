@@ -10,8 +10,8 @@
 // the full history is sent to the model each turn.
 
 (function () {
-    const KIRKY_ICON = 'assets/kirky.png';       // drop your image here to override
-    const KIRKY_FALLBACK = 'assets/logo.png';    // used if kirky.png doesn't exist
+    const KIRKY_ICON = 'assets/kirky.jpg';       // drop your portrait here
+    const KIRKY_FALLBACK = 'assets/logo.png';    // used if kirky.jpg fails to load
     const STORAGE_KEY = 'arcade-kirky-history';
     const MAX_HISTORY = 20;                      // cap context size
 
