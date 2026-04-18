@@ -18,7 +18,7 @@ arcade can call it from the Cloudflare worker as an extra LLM tier.
    | **Root Directory** | `g4f-server` |
    | **Runtime** | `Python 3` |
    | **Build Command** | `pip install -r requirements.txt` |
-   | **Start Command** | `python -m g4f.api run --bind 0.0.0.0:$PORT` |
+   | **Start Command** | `g4f api --bind 0.0.0.0:$PORT` |
    | **Instance Type** | `Free` |
 
 4. Click **Create Web Service**
