@@ -5663,20 +5663,109 @@ body.theme-transitioning * {
     .dm-toast-stack {
         left: 8px;
         right: 8px;
-        top: 8px;
+        top: calc(8px + env(safe-area-inset-top, 0px));
         width: auto;
     }
     .dm-panel {
         grid-template-columns: 1fr;
-        max-height: none;
-        min-height: calc(100vh - 220px);
-        min-height: calc(100dvh - 220px);
+        /* Bound the panel so the convo body has its own scroll container
+           instead of the whole page growing past the viewport. */
+        max-height: calc(100dvh - 160px);
+        min-height: 60dvh;
     }
     .dm-sidebar {
         border-right: none;
         border-bottom: 1px solid var(--border);
-        max-height: 180px;
+        /* Percentage-based so short phones don't waste space */
+        max-height: 35dvh;
     }
     .dm-convo-back { display: inline-flex; }
     .dm-convo-input { font-size: 16px; }
+    .dm-msg {
+        /* 75% leaves too much dead space on narrow phones */
+        max-width: 88%;
+    }
+}
+
+/* ===== Consolidated mobile polish (<=480px) ===== */
+@media (max-width: 480px) {
+    /* --- Emoji picker popup: cap to viewport so it can't clip off-screen --- */
+    .emoji-picker-popup {
+        max-width: calc(100vw - 24px);
+        right: 0;
+        left: auto;
+    }
+    .emoji-picker-grid {
+        /* Auto-fit instead of rigid 6 cols — keeps touch targets ~44px */
+        grid-template-columns: repeat(auto-fit, minmax(44px, 1fr));
+    }
+
+    /* --- Emoji manage modal: fit more emojis per row on small phones --- */
+    .emoji-manage-grid {
+        grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+        gap: 0.4rem;
+    }
+    .emoji-manage-name { font-size: 0.68rem; }
+
+    /* --- Player header: tighter spacing so title + auth fit --- */
+    .player-header {
+        padding: 0.55rem 0.7rem;
+        gap: 0.45rem;
+    }
+    .player-info h1 {
+        font-size: 0.9rem;
+        /* Ellipsize instead of wrapping awkwardly */
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        max-width: 100%;
+    }
+    .player-category {
+        font-size: 0.65rem;
+        padding: 1px 6px;
+    }
+    .player-actions {
+        gap: 4px;
+    }
+}
+
+/* ===== Ultra-narrow phones (<=360px) ===== */
+@media (max-width: 360px) {
+    /* Tab bar — shrink padding so 5 tabs fit without scroll */
+    .tab-btn {
+        padding: 7px 10px !important;
+        font-size: 0.75rem;
+    }
+    /* Emoji picker: fewer columns so items aren't cramped */
+    .emoji-picker-grid {
+        grid-template-columns: repeat(4, 1fr);
+    }
+    /* Kirky trigger: nudge up from safe area */
+    .kirky-trigger {
+        bottom: calc(12px + env(safe-area-inset-bottom, 0px));
+        right: 12px;
+    }
+    /* Player header: hide the auth area, rely on "Back to Arcade" */
+    .player-header .auth-area {
+        display: none;
+    }
+}
+
+/* ===== Kirky input: always 16px on any mobile size to prevent iOS zoom ===== */
+@media (max-width: 768px) {
+    .kirky-input {
+        font-size: 16px;
+    }
+    /* Kirky cards row: cap card width to prevent overflow on tiny screens */
+    .kirky-card-title {
+        font-size: 0.8rem;
+    }
+    .kirky-quick-chips {
+        margin-top: 8px;
+        gap: 5px;
+    }
+    .kirky-chip {
+        padding: 5px 10px;
+        font-size: 0.72rem;
+    }
 }
