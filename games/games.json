@@ -103,7 +103,6 @@
     "category": "Other",
     "path": "games/cl1v1space.html",
     "description": "A 1v1 shooter with building mechanics, space edition.",
-    "thumbnail": "assets/thumbnails/cl1v1space.png",
     "popular": true,
     "tags": [
       "1v1",
@@ -1806,8 +1805,7 @@
     "title": "The Big Red Button",
     "category": "Other",
     "path": "games/clbigredbutton.html",
-    "description": "Do NOT press the big red button. Or do. It is up to you.",
-    "thumbnail": "assets/thumbnails/clbigredbutton.png"
+    "description": "Do NOT press the big red button. Or do. It is up to you."
   },
   {
     "id": "clbigshotboxing2",
@@ -2096,7 +2094,6 @@
     "category": "Strategy",
     "path": "games/clbloonstd.html",
     "description": "The original Bloons Tower Defense. Pop balloons before they escape your gauntlet of towers.",
-    "thumbnail": "assets/thumbnails/clbloonstd.png",
     "popular": true,
     "tags": [
       "escape",
@@ -2398,7 +2395,6 @@
     "category": "Shooting",
     "path": "games/clboxhead2play.html",
     "description": "Classic 2-player zombie shooter with endless waves of boxy undead.",
-    "thumbnail": "assets/thumbnails/clboxhead2play.png",
     "tags": [
       "endless",
       "horror",
@@ -2480,7 +2476,6 @@
     "category": "Puzzle",
     "path": "games/clbreakingthebank.html",
     "description": "Henry Stickmin is breaking into a bank. Choose wisely or face comedic failure.",
-    "thumbnail": "assets/thumbnails/clbreakingthebank.png",
     "tags": [
       "flash-classic",
       "henry-stickmin",
@@ -2765,7 +2760,6 @@
     "category": "Sports",
     "path": "games/clcannonbasketball4.html",
     "description": "Launch a basketball through physics puzzles to score in the hoop.",
-    "thumbnail": "assets/thumbnails/clcannonbasketball4.png",
     "tags": [
       "sports"
     ]
@@ -2788,7 +2782,6 @@
     "category": "Strategy",
     "path": "games/clcanyondefense.html",
     "description": "Defend the canyon from waves of enemy tanks with your own tower placements.",
-    "thumbnail": "assets/thumbnails/clcanyondefense.png",
     "tags": [
       "strategy",
       "tanks"
@@ -3130,7 +3123,6 @@
     "category": "Puzzle",
     "path": "games/clcellmachine.html",
     "description": "Sandbox puzzle game where cells with different behaviors interact. Viral indie hit.",
-    "thumbnail": "assets/thumbnails/clcellmachine.png",
     "popular": true,
     "tags": [
       "popular",
@@ -3162,7 +3154,6 @@
     "category": "Other",
     "path": "games/clchampionarcher.html",
     "description": "Medieval arrow-shooting tournament game. Upgrade your bow, defeat the champion.",
-    "thumbnail": "assets/thumbnails/clchampionarcher.png",
     "tags": [
       "medieval",
       "shooter"
@@ -3299,7 +3290,6 @@
     "category": "Puzzle",
     "path": "games/clcirclo.html",
     "description": "Minimalist circular puzzle game.",
-    "thumbnail": "assets/thumbnails/clcirclo.png",
     "tags": [
       "puzzle"
     ]
@@ -3590,7 +3580,6 @@
     "category": "Puzzle",
     "path": "games/clconnect3.html",
     "description": "Four-in-a-row style board game, simplified to three.",
-    "thumbnail": "assets/thumbnails/clconnect3.png",
     "tags": [
       "board-game",
       "puzzle"
@@ -3956,7 +3945,6 @@
     "category": "Shooting",
     "path": "games/clcreativekillchamber.html",
     "description": "Point-and-click chamber escape. Take out the guards with creativity.",
-    "thumbnail": "assets/thumbnails/clcreativekillchamber.png",
     "popular": true,
     "tags": [
       "escape",
@@ -4095,7 +4083,6 @@
     "category": "Racing",
     "path": "games/clctr.html",
     "description": "Crash Team Racing style kart combat.",
-    "thumbnail": "assets/thumbnails/clctr.png",
     "tags": [
       "racing"
     ]
@@ -4106,7 +4093,6 @@
     "category": "Other",
     "path": "games/clcubefield.html",
     "description": "The iconic endless cube-dodging game. Reflex-testing and hypnotic.",
-    "thumbnail": "assets/thumbnails/clcubefield.png",
     "popular": true,
     "tags": [
       "endless",
@@ -4340,7 +4326,6 @@
     "category": "Other",
     "path": "games/cldealornodeal.html",
     "description": "The classic TV briefcase gameshow. Deal, or no deal?",
-    "thumbnail": "assets/thumbnails/cldealornodeal.png",
     "popular": true,
     "tags": [
       "popular"
@@ -4367,7 +4352,6 @@
     "category": "Platformer",
     "path": "games/cldeathrun3d.html",
     "description": "Endless runner through a neon tunnel of spikes. Fast and brutal.",
-    "thumbnail": "assets/thumbnails/cldeathrun3d.png",
     "popular": true,
     "tags": [
       "3d",
@@ -4438,7 +4422,6 @@
     "category": "Strategy",
     "path": "games/cldefendthetank.html",
     "description": "Protect your tank from waves of enemies.",
-    "thumbnail": "assets/thumbnails/cldefendthetank.png",
     "tags": [
       "strategy",
       "tanks"
@@ -5028,7 +5011,6 @@
     "category": "Platformer",
     "path": "games/cldoublewires.html",
     "description": "Swing through platformer levels using two grappling hooks.",
-    "thumbnail": "assets/thumbnails/cldoublewires.png",
     "tags": [
       "platformer"
     ]
@@ -5095,7 +5077,9 @@
     "category": "Other",
     "path": "games/clDragonQuestIX.html",
     "tags": [
+      "dragon-quest",
       "jrpg",
+      "monster-tamer",
       "rpg",
       "turn-based"
     ]
@@ -5135,8 +5119,7 @@
     "title": "Draw the Hill",
     "category": "Other",
     "path": "games/cldrawthehill.html",
-    "description": "Draw a hill to roll your character to the finish.",
-    "thumbnail": "assets/thumbnails/cldrawthehill.png"
+    "description": "Draw a hill to roll your character to the finish."
   },
   {
     "id": "cldrawtheline",
@@ -5280,7 +5263,6 @@
     "category": "Simulation",
     "path": "games/clducklife1.html",
     "description": "Train your duckling to run, swim, fly and climb, then compete in the championship.",
-    "thumbnail": "assets/thumbnails/clducklife1.png",
     "popular": true,
     "tags": [
       "parkour",
@@ -5821,7 +5803,6 @@
     "category": "Simulation",
     "path": "games/clelasticman.html",
     "description": "Stretch and pull a face that is unreasonably elastic. Oddly satisfying.",
-    "thumbnail": "assets/thumbnails/clelasticman.png",
     "popular": true,
     "tags": [
       "popular",
@@ -5877,7 +5858,6 @@
     "category": "Shooting",
     "path": "games/clendlesswar3.html",
     "description": "WWII endless-wave shooter.",
-    "thumbnail": "assets/thumbnails/clendlesswar3.png",
     "tags": [
       "endless",
       "shooter",
@@ -7028,7 +7008,6 @@
     "category": "Other",
     "path": "games/clflappy2048.html",
     "description": "Flappy Bird meets 2048. Double the frustration.",
-    "thumbnail": "assets/thumbnails/clflappy2048.png",
     "tags": [
       "2048",
       "flappy",
@@ -7063,7 +7042,6 @@
     "category": "Puzzle",
     "path": "games/clflashtetris.html",
     "description": "Classic Tetris with a Flash-era coat of paint.",
-    "thumbnail": "assets/thumbnails/clflashtetris.png",
     "popular": true,
     "tags": [
       "popular",
@@ -8130,7 +8108,6 @@
     "category": "Platformer",
     "path": "games/clgeodash.html",
     "description": "The famous rhythm-platformer. Jump to the beat and survive the obstacle course.",
-    "thumbnail": "assets/thumbnails/clgeodash.png",
     "popular": true,
     "tags": [
       "geometry",
@@ -8146,7 +8123,6 @@
     "category": "Platformer",
     "path": "games/clgeometrydashonline.html",
     "description": "Rhythm-based platformer. Jump and fly through dangerous passages synced to music. Precise timing required. The original online version.",
-    "thumbnail": "assets/thumbnails/clgeometrydashonline.png",
     "popular": true,
     "tags": [
       "geometry",
@@ -8889,7 +8865,6 @@
     "category": "Simulation",
     "path": "games/clhackertype.html",
     "description": "Pretend to be an elite hacker. Mash keys to generate convincing screen output.",
-    "thumbnail": "assets/thumbnails/clhackertype.png",
     "tags": [
       "hacking",
       "simulation",
@@ -9158,7 +9133,6 @@
     "category": "Strategy",
     "path": "games/clhexempire.html",
     "description": "Turn-based territorial war game on a hex grid.",
-    "thumbnail": "assets/thumbnails/clhexempire.png",
     "tags": [
       "strategy",
       "turn-based",
@@ -9171,7 +9145,6 @@
     "category": "Racing",
     "path": "games/clhexgl.html",
     "description": "Futuristic WebGL racing inspired by Wipeout. Fast, gorgeous, and free.",
-    "thumbnail": "assets/thumbnails/clhexgl.png",
     "tags": [
       "racing"
     ]
@@ -9539,7 +9512,6 @@
     "category": "Simulation",
     "path": "games/clidleshark.html",
     "description": "Idle/clicker game about a hungry shark. Eat fish, grow bigger.",
-    "thumbnail": "assets/thumbnails/clidleshark.png",
     "tags": [
       "clicker",
       "idle",
@@ -10786,7 +10758,6 @@
     "category": "Racing",
     "path": "games/clmadalinstuntcars2.html",
     "description": "Open-world supercar stunt driving with friends online.",
-    "thumbnail": "assets/thumbnails/clmadalinstuntcars2.png",
     "popular": true,
     "tags": [
       "cars",
@@ -10800,7 +10771,6 @@
     "category": "Racing",
     "path": "games/clmadalinstuntcars3.html",
     "description": "Sequel to the stunt car hit, with more cars and bigger maps.",
-    "thumbnail": "assets/thumbnails/clmadalinstuntcars3.png",
     "popular": true,
     "tags": [
       "cars",
@@ -11187,7 +11157,6 @@
     "category": "Mario",
     "path": "games/clmario.html",
     "description": "Classic Super Mario game in the browser.",
-    "thumbnail": "assets/thumbnails/clmario.png",
     "popular": true,
     "tags": [
       "mario",
@@ -12340,7 +12309,6 @@
     "category": "Minecraft",
     "path": "games/clminecraft.html",
     "description": "Browser-playable Minecraft client.",
-    "thumbnail": "assets/thumbnails/clminecraft.png",
     "popular": true,
     "tags": [
       "minecraft",
@@ -12374,7 +12342,6 @@
     "category": "Minecraft",
     "path": "games/clminecraftclassic.html",
     "description": "The original 2009 Minecraft Classic playable in-browser. 32 blocks, endless creativity.",
-    "thumbnail": "assets/thumbnails/clminecraftclassic.png",
     "popular": true,
     "tags": [
       "endless",
@@ -12408,7 +12375,6 @@
     "category": "Puzzle",
     "path": "games/clminesweeper.html",
     "description": "The classic grid of numbers and mines. Click carefully.",
-    "thumbnail": "assets/thumbnails/clminesweeper.png",
     "popular": true,
     "tags": [
       "popular",
@@ -12459,7 +12425,6 @@
     "category": "Sports",
     "path": "games/clminiputt.html",
     "description": "Cartoon mini-golf with silly obstacles and precision aiming.",
-    "thumbnail": "assets/thumbnails/clminiputt.png",
     "tags": [
       "golf",
       "sports"
@@ -12914,7 +12879,6 @@
     "category": "Racing",
     "path": "games/clmotox3m.html",
     "description": "The classic Moto X3M stunt bike platformer.",
-    "thumbnail": "assets/thumbnails/clmotox3m.png",
     "popular": true,
     "tags": [
       "cars",
@@ -12966,7 +12930,6 @@
     "category": "Racing",
     "path": "games/clmotox3mpool.html",
     "description": "Moto X3M pool-themed levels with water slides and inflatable obstacles.",
-    "thumbnail": "assets/thumbnails/clmotox3mpool.png",
     "popular": true,
     "tags": [
       "cars",
@@ -12994,7 +12957,6 @@
     "category": "Racing",
     "path": "games/clmotox3mspooky.html",
     "description": "Halloween-themed Moto X3M with spooky hazards.",
-    "thumbnail": "assets/thumbnails/clmotox3mspooky.png",
     "popular": true,
     "tags": [
       "cars",
@@ -13570,7 +13532,6 @@
     "category": "Fighting",
     "path": "games/clninja.html",
     "description": "Fast-paced ninja action game.",
-    "thumbnail": "assets/thumbnails/clninja.png",
     "popular": true,
     "tags": [
       "action",
@@ -14241,7 +14202,6 @@
     "category": "Simulation",
     "path": "games/clpapaspizzaria.html",
     "description": "Make pizzas for picky customers in this iconic time-management series entry.",
-    "thumbnail": "assets/thumbnails/clpapaspizzaria.png",
     "popular": true,
     "tags": [
       "popular",
@@ -14306,7 +14266,6 @@
     "category": "Other",
     "path": "games/clpaperio2.html",
     "description": "Expand your territory by drawing paper-like lines. Do not let anyone cross yours.",
-    "thumbnail": "assets/thumbnails/clpaperio2.png",
     "popular": true,
     "tags": [
       ".io",
@@ -14437,7 +14396,6 @@
     "category": "Other",
     "path": "games/clpaperyplanes.html",
     "description": "Fly paper airplanes through sketched obstacle courses.",
-    "thumbnail": "assets/thumbnails/clpaperyplanes.png",
     "tags": [
       "flight"
     ]
@@ -14490,7 +14448,6 @@
     "category": "Simulation",
     "path": "games/clparticleclicker.html",
     "description": "Idle-clicker physics simulator. Collect particles, fund research, advance science.",
-    "thumbnail": "assets/thumbnails/clparticleclicker.png",
     "tags": [
       "clicker",
       "idle",
@@ -14581,8 +14538,12 @@
     "rom": "psx",
     "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Persona%20%28USA%29.png",
     "tags": [
+      "jrpg",
+      "monster-tamer",
+      "persona",
       "psx",
-      "retro"
+      "retro",
+      "rpg"
     ]
   },
   {
@@ -14593,8 +14554,12 @@
     "rom": "psx",
     "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Persona%202%20-%20Tsumi%20-%20Innocent%20Sin%20%28Japan%29%20%28Rev%201%29.png",
     "tags": [
+      "jrpg",
+      "monster-tamer",
+      "persona",
       "psx",
-      "retro"
+      "retro",
+      "rpg"
     ]
   },
   {
@@ -17046,7 +17011,6 @@
     "category": "Pokemon",
     "path": "games/clpokeradicalred.html",
     "description": "A challenging FireRed-based hack with competitive difficulty, modern battle mechanics, and all Pokemon through Gen 8. Features updated AI, tough gym leaders, and a complete Pokedex overhaul. Perfect for players seeking a hardcore experience.",
-    "thumbnail": "assets/thumbnails/clpokeradicalred.png",
     "popular": true,
     "tags": [
       "card-game",
@@ -17621,7 +17585,6 @@
     "category": "Racing",
     "path": "games/clpolybranch.html",
     "description": "Low-poly branching racetrack. Pick your path at high speed.",
-    "thumbnail": "assets/thumbnails/clpolybranch.png",
     "tags": [
       "racing"
     ]
@@ -17879,7 +17842,6 @@
     "category": "Puzzle",
     "path": "games/clpushthesquare.html",
     "description": "Minimalist puzzle: push the square into the goal.",
-    "thumbnail": "assets/thumbnails/clpushthesquare.png",
     "tags": [
       "puzzle"
     ]
@@ -18858,7 +18820,6 @@
     "category": "Simulation",
     "path": "games/clsandgame.html",
     "description": "Falling-sand particle playground. Draw sand, water, fire, and watch chaos unfold.",
-    "thumbnail": "assets/thumbnails/clsandgame.png",
     "tags": [
       "simulation"
     ]
@@ -19686,7 +19647,6 @@
     "category": "Mario",
     "path": "games/clsm64.html",
     "description": "Super Mario 64 playable in-browser via WebAssembly.",
-    "thumbnail": "assets/thumbnails/clsm64.png",
     "popular": true,
     "tags": [
       "mario",
@@ -19882,7 +19842,6 @@
     "category": "Shooting",
     "path": "games/clsmokingbarrels.html",
     "description": "Wild-west quick-draw duel game. Who fires first?",
-    "thumbnail": "assets/thumbnails/clsmokingbarrels.png",
     "tags": [
       "shooter"
     ]
@@ -19957,7 +19916,6 @@
     "category": "Fighting",
     "path": "games/clsnowbattle.html",
     "description": "Frosty snowball fight in 2D.",
-    "thumbnail": "assets/thumbnails/clsnowbattle.png",
     "tags": [
       "2d",
       "fighting"
@@ -20163,7 +20121,6 @@
     "category": "Shooting",
     "path": "games/clsoldierlegend.html",
     "description": "Retro side-scrolling soldier shooter.",
-    "thumbnail": "assets/thumbnails/clsoldierlegend.png",
     "tags": [
       "shooter"
     ]
@@ -21292,7 +21249,6 @@
     "category": "Other",
     "path": "games/clstack.html",
     "description": "Stack falling blocks as high as you can. Simple but addictive.",
-    "thumbnail": "assets/thumbnails/clstack.png",
     "popular": true,
     "tags": [
       "casual",
@@ -21316,7 +21272,6 @@
     "category": "Other",
     "path": "games/clstackbump3d.html",
     "description": "3D stacking puzzle with ball physics.",
-    "thumbnail": "assets/thumbnails/clstackbump3d.png",
     "tags": [
       "3d",
       "casual",
@@ -21436,7 +21391,6 @@
     "category": "Puzzle",
     "path": "games/clstealingthediamond.html",
     "description": "Henry Stickmin heist: steal the giant diamond. Pick options, laugh at fails.",
-    "thumbnail": "assets/thumbnails/clstealingthediamond.png",
     "popular": true,
     "tags": [
       "flash-classic",
@@ -21909,7 +21863,6 @@
     "category": "Racing",
     "path": "games/clsubwaysurfers.html",
     "description": "The mobile hit. Run, dodge trains, collect coins through urban streets.",
-    "thumbnail": "assets/thumbnails/clsubwaysurfers.png",
     "popular": true,
     "tags": [
       "popular",
@@ -23060,7 +23013,6 @@
     "category": "Shooting",
     "path": "games/cltacticalassasin2.html",
     "description": "Sniper-rifle mission game. Read the brief, line up the shot.",
-    "thumbnail": "assets/thumbnails/cltacticalassasin2.png",
     "tags": [
       "shooter"
     ]
@@ -23152,7 +23104,6 @@
     "category": "Fighting",
     "path": "games/cltanktrouble2.html",
     "description": "Classic 2-3 player tank maze combat.",
-    "thumbnail": "assets/thumbnails/cltanktrouble2.png",
     "popular": true,
     "tags": [
       "fighting",
@@ -23294,7 +23245,6 @@
     "title": "Terraria",
     "category": "Other",
     "path": "games/clterraria.html",
-    "thumbnail": "assets/thumbnails/clterraria.jpg",
     "tags": [
       "sandbox"
     ]
@@ -23393,7 +23343,6 @@
     "category": "Strategy",
     "path": "games/clthebattle.html",
     "description": "Medieval battle simulator with unit upgrades.",
-    "thumbnail": "assets/thumbnails/clthebattle.png",
     "tags": [
       "medieval",
       "simulation",
@@ -23449,7 +23398,6 @@
     "category": "Simulation",
     "path": "games/clthefinalearth.html",
     "description": "Build a post-apocalyptic city on a floating chunk of rock.",
-    "thumbnail": "assets/thumbnails/clthefinalearth.png",
     "tags": [
       "simulation"
     ]
@@ -23460,7 +23408,6 @@
     "category": "Puzzle",
     "path": "games/cltheheist.html",
     "description": "Henry Stickmin heist: break into the bank. Bad choices lead to funny deaths.",
-    "thumbnail": "assets/thumbnails/cltheheist.png",
     "popular": true,
     "tags": [
       "flash-classic",
@@ -23559,7 +23506,6 @@
     "category": "Puzzle",
     "path": "games/clthereisnogame.html",
     "description": "Hilarious anti-game puzzle experience. You will have to see it to believe it.",
-    "thumbnail": "assets/thumbnails/clthereisnogame.png",
     "popular": true,
     "tags": [
       "popular",
@@ -23922,7 +23868,6 @@
     "category": "Simulation",
     "path": "games/cltownscaper.html",
     "description": "Click to build a charming seaside town. No goals, just zen.",
-    "thumbnail": "assets/thumbnails/cltownscaper.png",
     "popular": true,
     "tags": [
       "popular",
@@ -24221,8 +24166,7 @@
     "title": "TV Static",
     "category": "Other",
     "path": "games/cltvstatic.html",
-    "description": "Stare at the static. That is it. Cursed meme game.",
-    "thumbnail": "assets/thumbnails/cltvstatic.png"
+    "description": "Stare at the static. That is it. Cursed meme game."
   },
   {
     "id": "cltwinshot",
@@ -24999,7 +24943,6 @@
     "category": "Shooting",
     "path": "games/clwolf3d.html",
     "description": "Play the 1992 FPS classic directly in your browser.",
-    "thumbnail": "assets/thumbnails/clwolf3d.png",
     "popular": true,
     "tags": [
       "3d",
@@ -25267,7 +25210,6 @@
     "category": "Simulation",
     "path": "games/clyouarebezos.html",
     "description": "Spend Jeff Bezos's fortune on ridiculous purchases. Good luck running out.",
-    "thumbnail": "assets/thumbnails/clyouarebezos.png",
     "popular": true,
     "tags": [
       "popular",
@@ -25431,7 +25373,6 @@
     "category": "Shooting",
     "path": "games/clzombsroyale.html",
     "description": "2D top-down battle royale. 100 players, one winner.",
-    "thumbnail": "assets/thumbnails/clzombsroyale.png",
     "popular": true,
     "tags": [
       ".io",

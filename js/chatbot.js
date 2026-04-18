@@ -42,32 +42,97 @@
             .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
     }
 
-    // Use the recommender's local scoring to shortlist a candidate pool,
-    // so the LLM sees games that match the most recent user turn. Falls back
-    // to popular games if recommender isn't loaded yet.
-    function candidatePool(userText, limit) {
-        if (window.ArcadeRecommender && window.ArcadeRecommender.recommend) {
-            // We only want the local scoring pool here, not the AI call —
-            // so we read the underlying local matcher if exposed. Fallback:
-            // just quick title/tag substring match.
-        }
-        const q = (userText || '').toLowerCase();
-        if (!q.trim()) {
-            return games.filter(g => g.popular).slice(0, limit);
-        }
-        const scored = [];
-        for (const g of games) {
-            let s = 0;
-            if ((g.title || '').toLowerCase().includes(q)) s += 5;
-            for (const t of (g.tags || [])) {
-                if (q.includes(t)) s += 3;
+    // Extract negation targets from a user query: "like pokemon but not
+    // pokemon" → { positive: "like pokemon", negative: ["pokemon"] }
+    const NEGATION_RE = /(?:\bnot\b|\bno\b|\bexcept\b|\bwithout\b|\bbut\s+not\b)\s+([a-z][a-z0-9\s-]*?)(?=[.,;!?]|\s+(?:and|or|with|but|please|thanks)\b|$)/gi;
+    function parseNegations(q) {
+        const negatives = [];
+        const matches = q.matchAll(NEGATION_RE);
+        for (const m of matches) {
+            const phrase = m[1].trim().toLowerCase();
+            if (phrase.length >= 2 && phrase.length <= 30) {
+                // split multi-word phrase into individual tokens for tag checks
+                negatives.push(phrase);
+                for (const w of phrase.split(/\s+/)) {
+                    if (w.length >= 3) negatives.push(w);
+                }
             }
-            if ((g.description || '').toLowerCase().includes(q)) s += 1;
-            if (g.popular) s += 0.5;
-            if (s > 0) scored.push([s, g]);
         }
-        scored.sort((a, b) => b[0] - a[0]);
-        return scored.slice(0, limit).map(x => x[1]);
+        return negatives;
+    }
+
+    // Build a candidate pool for the LLM. Uses the recommender's tag-inference
+    // where available, filters out negation matches, and gracefully falls back
+    // when queries are vague (conversational turns like "hi").
+    function candidatePool(userText, limit) {
+        const q = (userText || '').toLowerCase();
+        const negatives = parseNegations(q);
+
+        // If the recommender is loaded, use its parsing + scoring
+        const R = window.ArcadeRecommender;
+        let pool = [];
+
+        if (R && R.parseQuery && R.scoreGame) {
+            const parsed = R.parseQuery(q);
+            // 1) Score every game against the parsed query
+            const scored = [];
+            for (const g of games) {
+                const s = R.scoreGame(g, parsed);
+                if (s.score > 0) scored.push({ g, s: s.score });
+            }
+            // 2) Also boost-include games whose tags match any inferred tag,
+            //    so we guarantee tag-representative candidates even if their
+            //    score is low. This is what surfaces Digimon/Persona when the
+            //    user asks for "games like pokemon but not pokemon".
+            const wantedTagSet = new Set(parsed.tags || []);
+            if (wantedTagSet.size > 0) {
+                const inPool = new Set(scored.map(x => x.g.id));
+                for (const g of games) {
+                    if (inPool.has(g.id)) continue;
+                    const gt = g.tags || [];
+                    if (gt.some(t => wantedTagSet.has(t))) {
+                        scored.push({ g, s: 2 });
+                        inPool.add(g.id);
+                    }
+                }
+            }
+            scored.sort((a, b) => b.s - a.s);
+            pool = scored.map(x => x.g);
+        } else {
+            // Ultra-fallback: just return popular games
+            pool = games.filter(g => g.popular);
+        }
+
+        // 3) Apply negations — drop anything matching "but not X"
+        if (negatives.length > 0) {
+            pool = pool.filter(g => {
+                const hay = ((g.title || '') + ' ' + (g.category || '') + ' '
+                    + (g.tags || []).join(' ')).toLowerCase();
+                for (const n of negatives) {
+                    if (hay.includes(n)) return false;
+                }
+                return true;
+            });
+        }
+
+        // 4) If pool is tiny, top up with popular games for diversity
+        if (pool.length < 8) {
+            const have = new Set(pool.map(g => g.id));
+            for (const g of games) {
+                if (have.has(g.id)) continue;
+                if (!g.popular) continue;
+                // Respect negations on the fallback too
+                if (negatives.length > 0) {
+                    const hay = ((g.title || '') + ' ' + (g.tags || []).join(' ')).toLowerCase();
+                    if (negatives.some(n => hay.includes(n))) continue;
+                }
+                pool.push(g);
+                have.add(g.id);
+                if (pool.length >= limit) break;
+            }
+        }
+
+        return pool.slice(0, limit);
     }
 
     // ---------------------------------------------------------------
@@ -75,30 +140,40 @@
     // ---------------------------------------------------------------
 
     const SYSTEM_PROMPT = [
-        "You are Kirky, the arcade's in-house game recommendation assistant.",
-        "You live in a chat bubble on the user's browser and help them find games from a 2,700+ title library (console ROMs from Gen 1-5 Pokemon, Mario, Sonic, Zelda, Kirby, Metroid, Castlevania, plus thousands of HTML5 browser games).",
+        "You are Kirky, the arcade's chat assistant.",
+        "Your MAIN job is helping users find games from a 2,700+ title library (Pokemon, Mario, Sonic, Zelda, retro ROMs, tons of HTML5 browser games). You ALSO handle general chat — greetings, questions about what you can do, casual banter — without being weird about it.",
         "",
         "PERSONALITY — this is important:",
         "- You are CHILL. Laid-back, low-key, unbothered. Think a friend who's been gaming forever and doesn't have to prove it.",
-        "- Short, casual replies. Lowercase is fine. Contractions are fine. \"yeah\", \"kinda\", \"tbh\", \"fr\", sure — but don't overdo slang.",
-        "- NEVER hype or oversell. Don't say things like \"Great choice!\", \"Amazing game!\", \"You're gonna love it!\". Just state what it is and why it fits.",
-        "- No exclamation points unless genuinely warranted. No emojis.",
-        "- Your whole reply should feel effortless — not eager. 1-2 short sentences is usually plenty.",
-        "- Never use markdown. No bullet lists. The `games` array handles visible game cards, so don't list game names in the text.",
+        "- Short, casual replies. Lowercase is fine. Contractions are fine. \"yeah\", \"kinda\", \"tbh\", sure — but don't overdo slang.",
+        "- NEVER hype or oversell. Banned phrases: \"Great choice\", \"Amazing game\", \"You're gonna love it\", \"awesome pick\". Just state what it is and why it fits.",
+        "- No exclamation points unless genuinely warranted. No emojis. Never use markdown.",
+        "- Replies should feel effortless — not eager. 1-2 short sentences is usually plenty.",
+        "- Don't list game names in the text. The `games` array renders them as cards below your message.",
         "",
-        "RESPONSE FORMAT: ALWAYS reply with strict JSON — no prose outside it:",
-        '  {"message": "your chat reply here", "games": ["game_id_1", "game_id_2", ...]}',
+        "TWO REPLY MODES:",
+        "  (A) Game recommendation — user described what they want to play. Return 3-6 game IDs in `games` and a short casual intro line as `message` (e.g. \"these should fit\", \"try these\", \"yeah these work\").",
+        "  (B) Plain chat — user said hi, asked what you do, chatted casually, or something clearly not about picking a game right now. Return empty `games: []` and a chill 1-sentence reply.",
         "",
-        "The `games` array is a list of game IDs from the provided candidate pool. Include 2-6 game IDs when the user wants recommendations, an empty array when they're just chatting (e.g. saying hi, asking what you can do).",
+        "IMPORTANT: if the user SEEMS to want games (even vaguely), prefer mode A. Only use mode B when it's obviously not a game-search turn.",
         "",
-        "REASONING: Look at the conversation history — if the user says 'harder' or 'one more', that's a follow-up to your last recommendation. If they ask for a specific franchise, only pick from that franchise. If they say 'like X', find similar games, NOT X itself. For vague words ('fun', 'good'), lean on games with `popular: true`.",
+        "RESPONSE FORMAT — STRICT JSON ONLY, no text outside:",
+        '  {"message": "...", "games": ["id1", "id2", ...]}',
         "",
-        "Only use game IDs that are in the candidates list I send with each turn.",
+        "REASONING RULES:",
+        "- Read the full conversation history. \"harder\", \"one more\", \"different\" = follow-up to your last picks.",
+        "- \"like X\" / \"similar to X\" → find games with similar vibes, NOT X itself.",
+        "- \"but not X\" / \"except X\" / \"no X\" → EXCLUDE X and games that look like X. The candidate list is pre-filtered to respect this, but double-check titles yourself.",
+        "- Specific franchise requested → only pick from that franchise.",
+        "- Vague words (\"fun\", \"good\") → lean on games with popular: true.",
+        "- Only use game IDs that appear in the candidates list I send with each turn. If a candidate's id has specific casing (e.g. `clPokemonEmerald`), match it exactly.",
         "",
         "EXAMPLES of the right tone:",
-        '  user: "something to kill an hour" → {"message": "pokemon unbound if you want depth, otherwise retro bowl eats the clock", "games": [...]}',
-        '  user: "with a friend?" → {"message": "tank trouble is goofy, fireboy and watergirl actually works", "games": [...]}',
-        '  user: "hi" → {"message": "yo. what do you want to play?", "games": []}',
+        '  user: "something to kill an hour" → {"message": "try these, pick whichever vibe", "games": [...]}',
+        '  user: "with a friend?" → {"message": "these work for couch co-op", "games": [...]}',
+        '  user: "hi" → {"message": "yo. what do you feel like playing?", "games": []}',
+        '  user: "what do you do" → {"message": "find you games. describe a vibe and i\'ll pick some", "games": []}',
+        '  user: "games like pokemon but not pokemon" → {"message": "monster collectors outside the franchise", "games": ["cldigimon...", "cldragonquest...", ...]}',
     ].join("\n");
 
     async function callLLM(msgs, candidates) {
@@ -361,17 +436,23 @@
         if (!reply) {
             messages.push({
                 role: 'assistant',
-                content: "Sorry — I couldn't reach my brain right now. Try again in a sec?",
+                content: "brain not reachable rn, try again",
                 games: [],
             });
         } else {
             const text = typeof reply.message === 'string' ? reply.message : '';
-            const gs = Array.isArray(reply.games) ? reply.games.filter(id =>
-                games.some(g => g.id === id)
-            ) : [];
+            // Match LLM-returned IDs case-insensitively so hallucinated
+            // casing still lands. Also keep the original catalog ID.
+            const byLower = {};
+            for (const g of games) byLower[g.id.toLowerCase()] = g.id;
+            const gs = Array.isArray(reply.games)
+                ? reply.games
+                    .map(id => byLower[String(id).toLowerCase()])
+                    .filter(Boolean)
+                : [];
             messages.push({
                 role: 'assistant',
-                content: text || "Here's what I've got:",
+                content: text || "here",
                 games: gs,
             });
         }

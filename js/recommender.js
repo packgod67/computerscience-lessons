@@ -559,5 +559,12 @@
     window.ArcadeRecommender = {
         open: openRecommender,
         recommend,
+        // Exposed for the chat assistant (Kirky) so it can reuse the same
+        // tag inference + scoring without duplicating logic.
+        parseQuery,
+        localRecommend,
+        scoreGame,
+        loadGames,
+        getGames: () => games,
     };
 })();
