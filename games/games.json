@@ -11275,7 +11275,7 @@
     "title": "Pokeblack 2",
     "category": "Retro",
     "path": "games/clpokeblack2.html",
-    "thumbnail": "assets/thumbnails/platforms/ds.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Black%20Version%202%20%28USA%2C%20Europe%29%20%28NDSi%20Enhanced%29.png",
     "rom": "ds"
   },
   {
@@ -11290,7 +11290,8 @@
     "title": "Pokemon Black 2 (Alt)",
     "category": "Pokemon",
     "path": "games/clpokeblack2alt.html",
-    "description": "An alternate version of the direct sequel to Pokemon Black. Set two years later in a changed Unova with new cities, the Pokemon World Tournament featuring past Champions, Memory Link to connect with your Black/White save, and an expanded Unova Pokedex."
+    "description": "An alternate version of the direct sequel to Pokemon Black. Set two years later in a changed Unova with new cities, the Pokemon World Tournament featuring past Champions, Memory Link to connect with your Black/White save, and an expanded Unova Pokedex.",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Black%20Version%202%20%28USA%2C%20Europe%29%20%28NDSi%20Enhanced%29.png"
   },
   {
     "id": "clpokeblackalt",
@@ -11313,7 +11314,7 @@
     "category": "Pokemon",
     "path": "games/clpokeblue.html",
     "description": "The companion game to Pokemon Red set in the Kanto region. Features the same core adventure with different wild Pokemon availability. Catch, train, and battle 151 Pokemon as you travel across Kanto, defeat Team Rocket, and challenge the Pokemon League.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy/Named_Boxarts/Pokemon%20-%20Blue%20Version%20%28USA%2C%20Europe%29%20%28SGB%20Enhanced%29.png",
     "popular": true,
     "rom": "gba"
   },
@@ -11323,7 +11324,7 @@
     "category": "Pokemon",
     "path": "games/clpokeclassic.html",
     "description": "A nostalgia-focused hack that recreates the classic Pokemon experience with subtle improvements. Maintains the original feel of early Pokemon games while fixing bugs, improving balance, and adding small quality-of-life features. Pure classic Pokemon gaming.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2024/04/pokemon-classic-cheats.png",
     "rom": "gba"
   },
   {
@@ -11341,7 +11342,7 @@
     "category": "Pokemon",
     "path": "games/clpokecrystaladvanceredux.html",
     "description": "A GBA reimagining of Pokemon Crystal with enhanced graphics, modern mechanics, updated Pokemon stats and movesets, quality-of-life improvements, and the Fairy type. The Johto adventure rebuilt on the GBA engine with a polished and refined gameplay experience.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2024/06/crystal-advance-redux-cheats.png",
     "rom": "gba"
   },
   {
@@ -11359,7 +11360,7 @@
     "category": "Pokemon",
     "path": "games/clpokedarkrising.html",
     "description": "A challenging FireRed-based hack set in the Core region where you must rescue your father and save the world from Darugis. Features a gripping story, Pokemon from multiple generations, tough trainers, unique abilities, and increased difficulty. One of the classic ROM hacks beloved by the community.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2016/12/Pokemon-Dark-Rising-Cover-Art.jpg",
     "rom": "gba"
   },
   {
@@ -11368,7 +11369,7 @@
     "category": "Pokemon",
     "path": "games/clpokediamond.html",
     "description": "Explore the Sinnoh region in this Generation IV NDS title. Features 107 new Pokemon, the physical/special split that revolutionized competitive play, Wi-Fi trading and battling, the Underground for mining, and the legendary Dialga that controls time. A beloved entry in the series.",
-    "thumbnail": "assets/thumbnails/clpokediamond.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Diamond%20Version%20%28USA%2C%20Australia%29%20%28Rev%205%29.png",
     "popular": true
   },
   {
@@ -11413,7 +11414,7 @@
     "category": "Pokemon",
     "path": "games/clpokeemeraldenhanced.html",
     "description": "Pokemon Emerald with careful enhancements that respect the original experience. Features quality-of-life fixes, all Pokemon obtainable without trading, rebalanced encounters, improved move tutors, and subtle difficulty adjustments. Perfect for fans who want a polished Emerald experience.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2020/12/EmeraldEnhance.png",
     "rom": "gba"
   },
   {
@@ -11431,7 +11432,7 @@
     "category": "Pokemon",
     "path": "games/clpokeemeraldhorizons.html",
     "description": "A fresh take on Emerald featuring new storylines, characters, and areas alongside the familiar Hoenn region. Includes modern Pokemon, quality-of-life features, custom events, and an engaging narrative that expands upon the original Emerald story.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2024/01/emerald-horizons-feature.jpg",
     "rom": "gba"
   },
   {
@@ -11440,7 +11441,7 @@
     "category": "Pokemon",
     "path": "games/clpokeemeraldimperium.html",
     "description": "A GBA-based Emerald enhancement featuring expanded Pokemon rosters from multiple generations, rebalanced difficulty, improved movesets, Mega Evolutions, and quality-of-life improvements. Explore a revitalized Hoenn with modern competitive mechanics.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2025/01/pokemon-emerald-imperium-cheats.jpg",
     "rom": "gba"
   },
   {
@@ -11458,7 +11459,7 @@
     "category": "Pokemon",
     "path": "games/clpokeemeraldrogue.html",
     "description": "A groundbreaking roguelike hack of Pokemon Emerald. Each run generates random routes, encounters, and challenges. Collect items, build a team, and try to beat all 8 Gyms in a single run. Death means starting over. Features Pokemon from all generations and unlockable perks between runs.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2022/11/EmeraldRogueFeature.jpg",
     "rom": "gba"
   },
   {
@@ -11482,7 +11483,7 @@
     "category": "Pokemon",
     "path": "games/clpokeemeraldz.html",
     "description": "A comprehensive Emerald overhaul featuring Z-Moves from Sun and Moon, Mega Evolutions, Pokemon from later generations, updated type chart with Fairy type, and rebalanced difficulty. Experience Hoenn with the power of Z-Crystals and modern battle mechanics.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2024/11/pokemon-emerald-z-cheats.jpg",
     "rom": "gba"
   },
   {
@@ -11491,7 +11492,7 @@
     "category": "Pokemon",
     "path": "games/clpokefiregold.html",
     "description": "A hack that combines FireRed's engine with Gold's Johto adventure. Explore Johto with GBA-quality graphics, modern mechanics, and enhanced visuals. Features the full Johto storyline rebuilt on the FireRed engine with improvements and expanded content.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2022/11/FireGoldFeature.jpg",
     "rom": "gba"
   },
   {
@@ -11500,7 +11501,7 @@
     "category": "Pokemon",
     "path": "games/clpokeflora.html",
     "description": "A nature-themed ROM hack set in a lush region filled with unique environments. Features an original story centered around the balance of nature, custom maps and events, Pokemon from multiple generations, and a serene atmosphere with challenging battles.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2017/05/Pokemon_Flora_Sky.png",
     "rom": "gba"
   },
   {
@@ -11518,7 +11519,7 @@
     "category": "Pokemon",
     "path": "games/clpokefuseddimension.html",
     "description": "Explore a dimension where all Pokemon are fusions of two different species. Every encounter is a unique combination with merged designs, types, and abilities. Features over 400 fusion Pokemon, an original story about the dimension rift, and creative creature designs throughout.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2021/11/FusedDimensionFeature.jpg",
     "rom": "gba"
   },
   {
@@ -11533,7 +11534,7 @@
     "title": "Pokemon Fusion 3",
     "category": "Retro",
     "path": "games/clPokeFusion3.html",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2024/07/pokemon-fusion-3-cheats.jpg",
     "rom": "gba"
   },
   {
@@ -11559,7 +11560,7 @@
     "category": "Pokemon",
     "path": "games/clpokegschronicles.html",
     "description": "A modern GBA reimagining of Pokemon Gold and Silver with stunning updated graphics, new sprites, Pokemon from multiple generations, Mega Evolution, the Fairy type, and expanded content. Experience the beloved Johto journey like never before with beautiful custom artwork.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2021/02/GSChroniclesMain.png",
     "rom": "gba"
   },
   {
@@ -11568,7 +11569,8 @@
     "category": "Pokemon",
     "path": "games/clpokeheartgold.html",
     "description": "The beloved DS remake of Pokemon Gold with stunning updated graphics, your lead Pokemon walking behind you, the Pokeathlon mini-games, and the PokeWalker accessory support. Explore both Johto and Kanto with 16 Gym Badges and challenge Red atop Mt. Silver once more.",
-    "popular": true
+    "popular": true,
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20HeartGold%20Version%20%28USA%29.png"
   },
   {
     "id": "clpokeheartgoldgenerations",
@@ -11601,7 +11603,7 @@
     "category": "Pokemon",
     "path": "games/clpokemegamoemon.html",
     "description": "A ROM hack where all Pokemon are replaced with anime-style girl sprites (Moemon) featuring Mega Evolutions. The same core gameplay with a unique aesthetic twist. All Pokemon are reimagined as cute character designs with their own Mega Evolution forms.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2021/04/MoemonMain.png",
     "rom": "gba"
   },
   {
@@ -11610,7 +11612,7 @@
     "category": "Pokemon",
     "path": "games/clpokemegapower.html",
     "description": "An Emerald-based hack where you play as a scientist seeking to create the most powerful Pokemon. Features Mega Evolutions, Pokemon from multiple generations, custom maps, a unique story about scientific ambition and ethics, and updated battle mechanics. Part of the beloved Pokemon Ruby Destiny series.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2016/10/pokemon-mega-power-rom-hack.jpg",
     "rom": "gba"
   },
   {
@@ -11637,7 +11639,7 @@
     "category": "Pokemon",
     "path": "games/clpokemoncrystal.html",
     "description": "The enhanced version of Gold and Silver, and the first Pokemon game to let you play as a female trainer. Features animated Pokemon sprites, the Battle Tower, an expanded Suicune storyline, and the Odd Egg event. Widely considered the definitive Gen II experience.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Color/Named_Boxarts/Pokemon%20-%20Crystal%20Version%20%28USA%2C%20Europe%29%20%28Rev%201%29.png",
     "popular": true,
     "rom": "gba"
   },
@@ -11647,7 +11649,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonemerald.html",
     "description": "The definitive Hoenn experience combining Ruby and Sapphire's stories. Features the legendary Rayquaza, the Battle Frontier with seven challenging facilities, Pokemon Animations in battle, and an expanded post-game. Both Team Magma and Team Aqua appear as antagonists in this enhanced version.",
-    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20Emerald%20Version%20%28USA%2C%20Europe%29%20%28Alternate%29.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20-%20Emerald%20Version%20%28USA%2C%20Europe%29.png",
     "popular": true,
     "rom": "gba"
   },
@@ -11672,7 +11674,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonemeraldkaizo.html",
     "description": "An extremely challenging difficulty hack of Pokemon Emerald designed for expert players. Every trainer has competitively optimized teams with perfect IVs and strategic movesets. Gym Leaders and the Elite Four are brutally difficult. Not for the faint of heart â€” this is Pokemon at its hardest.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2021/01/KaizoEmeraldMain.png",
     "rom": "gba"
   },
   {
@@ -11711,7 +11713,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonevolvedsfdgsdfs.html",
     "description": "An Emerald hack that evolves the classic formula with new Pokemon forms, updated movesets, rebalanced stats, and quality-of-life improvements. Features modern mechanics grafted onto the GBA engine and a refreshed take on the Hoenn adventure.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2025/05/pokemon-evolved-cheats.jpg",
     "rom": "gba"
   },
   {
@@ -11747,7 +11749,7 @@
     "category": "Pokemon",
     "path": "games/clpokemongold.html",
     "description": "Travel through the Johto region in this Generation II classic. Features 100 new Pokemon, a real-time day/night cycle, Pokemon breeding, held items, and two new types (Dark and Steel). After the Johto League, return to Kanto for a second adventure culminating in a battle against Red atop Mt. Silver.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Color/Named_Boxarts/Pokemon%20-%20Gold%20Version%20%28USA%2C%20Europe%29%20%28SGB%20Enhanced%29%20%28GB%20Compatible%29.png",
     "rom": "gba"
   },
   {
@@ -11792,7 +11794,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonmysterydungeon.html",
     "description": "You wake up as a Pokemon with no memory of being human! Form a rescue team and explore randomly generated dungeons in this roguelike spinoff. Recruit over 400 Pokemon to your team, take on rescue missions, and uncover the mystery of your transformation and the natural disasters plaguing the world.",
-    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20Mystery%20Dungeon%20-%20Red%20Rescue%20Team%20%28Europe%29%20%28En%2CFr%2CDe%2CEs%2CIt%29.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20Mystery%20Dungeon%20-%20Red%20Rescue%20Team%20%28USA%2C%20Australia%29.png",
     "rom": "gba"
   },
   {
@@ -11815,7 +11817,7 @@
     "title": "Pokemon Platinum",
     "category": "Pokemon",
     "path": "games/clpokemonplatinum.html",
-    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Platinum%20Version%20%28Europe%29.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Platinum%20Version%20%28USA%29.png",
     "description": "The definitive Sinnoh experience with Giratina and the Distortion World. Features the Battle Frontier, Wi-Fi Plaza, expanded Pokedex, new forms for Giratina/Shaymin/Rotom, improved speed and animations, and a richer story involving both Dialga and Palkia. The best way to experience Gen IV.",
     "rom": "ds"
   },
@@ -11869,7 +11871,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonsaiph.html",
     "description": "An original ROM hack set in the Colen region with a space-themed storyline involving alien threats and interdimensional travel. Features Pokemon from Gens 1-7, custom music, new characters, Mega Evolution, and a gripping sci-fi narrative that stands out from typical Pokemon games.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2020/09/PokemonSaiphCheats.png",
     "rom": "gba"
   },
   {
@@ -11878,7 +11880,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonsaiph2.html",
     "description": "The sequel to Pokemon Saiph continuing the space saga in a new region. Features improved graphics, an expanded story with more sci-fi elements, Pokemon from multiple generations, custom music, and deeper gameplay mechanics. The continuation of one of the most unique Pokemon hack storylines.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2021/10/Saiph2Feature.jpg",
     "rom": "gba"
   },
   {
@@ -11906,7 +11908,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonsilver.html",
     "description": "The companion to Pokemon Gold set in the Johto region. Features the legendary Pokemon Lugia on the cover and different wild Pokemon encounters. Enjoy the day/night system, breed Pokemon, and explore both Johto and Kanto in this massive adventure with 16 Gym Badges to collect.",
-    "thumbnail": "assets/thumbnails/clpokemonsilver.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Color/Named_Boxarts/Pokemon%20-%20Silver%20Version%20%28USA%2C%20Europe%29%20%28SGB%20Enhanced%29%20%28GB%20Compatible%29.png",
     "rom": "gba"
   },
   {
@@ -11933,7 +11935,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonsnap.html",
     "description": "A unique N64 photography game where you ride through on-rails environments taking pictures of Pokemon in their natural habitats. Professor Oak scores your photos based on size, pose, and technique. Use items like apples and Pester Balls to get Pokemon to pose and reveal hidden behaviors.",
-    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Pokemon%20Snap%20%28Australia%29.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Pokemon%20Snap%20%28USA%29.png",
     "rom": "n64"
   },
   {
@@ -11942,7 +11944,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonsors.html",
     "description": "A Spanish-developed ROM hack with a compelling original story set in a new region. Features custom sprites, maps, and music, Pokemon from multiple generations, innovative plot elements involving legendary Pokemon lore, and high production values throughout.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2021/08/PokemonSorsFeature.png",
     "rom": "gba"
   },
   {
@@ -11951,7 +11953,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonsors2.html",
     "description": "The sequel to Pokemon SORS continuing the original storyline with new regions, characters, and challenges. Features enhanced visuals, more Pokemon, deeper narrative elements, and the continuation of the mysteries established in the first game.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2024/07/sors-2-cheats.png",
     "rom": "gba"
   },
   {
@@ -11960,7 +11962,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonstadium.html",
     "description": "The N64 battle arena featuring full 3D Pokemon battles. Challenge the Stadium Cups, Gym Leader Castle, and the Elite Four with rental Pokemon or transfer your own from the Game Boy games. Features fun mini-games and the ability to play your GB Pokemon games on the TV.",
-    "thumbnail": "assets/thumbnails/clpokemonstadium.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Pokemon%20Stadium%20%28USA%29.png"
   },
   {
     "id": "clpokemontowerdefense",
@@ -11975,7 +11977,7 @@
     "category": "Pokemon",
     "path": "games/clpokemonultimatefusion.html",
     "description": "A hack where Pokemon can be fused together to create entirely new combinations. Mix and match different species to create unique hybrids with combined types, abilities, and appearances. Features a massive number of possible fusions for endless experimentation.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2023/09/Pokemon-Ultimate-Fusion-Cheats.jpeg",
     "rom": "gba"
   },
   {
@@ -12022,7 +12024,7 @@
     "category": "Pokemon",
     "path": "games/clpokemoonemerald.html",
     "description": "An Emerald hack that brings Alolan Pokemon and themes into Hoenn. Features Alolan forms, Pokemon from Sun and Moon, updated moves and abilities, and a tropical twist on the classic Hoenn adventure. Catch Alolan variants alongside Hoenn natives.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2020/12/moonemerald.png",
     "rom": "gba"
   },
   {
@@ -12031,7 +12033,7 @@
     "category": "Pokemon",
     "path": "games/clpokemysteryexplorersofsky.html",
     "description": "The definitive version of the Explorers series with one of the most emotional stories in any Pokemon game. Join an exploration guild, travel through time, and save the world from a dark future. Features new starter Pokemon, Special Episodes that expand the story, and the beloved Grovyle storyline.",
-    "thumbnail": "assets/thumbnails/clpokemysteryexplorersofsky.jpg"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20Mystery%20Dungeon%20-%20Explorers%20of%20Sky%20%28USA%29.png"
   },
   {
     "id": "clpokenameless",
@@ -12071,7 +12073,7 @@
     "category": "Pokemon",
     "path": "games/clpokepearl.html",
     "description": "The companion to Diamond set in Sinnoh, featuring the legendary Palkia that controls space. Enjoy the physical/special attack split, Super Contests, the Sinnoh Underground, and Wi-Fi features. Different wild Pokemon encounters complement Diamond for completing the Pokedex.",
-    "thumbnail": "assets/thumbnails/clpokepearl.jpg"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Pearl%20Version%20%28USA%2C%20Australia%29%20%28Rev%205%29.png"
   },
   {
     "id": "clpokeperfectfirered",
@@ -12097,7 +12099,8 @@
     "category": "Pokemon",
     "path": "games/clpokeplatinum.html",
     "description": "An alternate version of Pokemon Platinum for the Nintendo DS. Journey through Sinnoh, encounter the legendary Giratina in the Distortion World, challenge the Battle Frontier, and become the Pokemon Champion. Features the physical/special split and Wi-Fi connectivity.",
-    "popular": true
+    "popular": true,
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Platinum%20Version%20%28USA%29.png"
   },
   {
     "id": "clpokeplatinumrandomized",
@@ -12112,7 +12115,7 @@
     "category": "Pokemon",
     "path": "games/clpokepolishedcrystal.html",
     "description": "An ambitious overhaul of Pokemon Crystal featuring all 251 original Pokemon plus new additions, updated graphics, quality-of-life improvements, the physical/special split, new areas, expanded post-game content, and modernized mechanics. One of the most polished GBC ROM hacks ever made.",
-    "thumbnail": "assets/thumbnails/platforms/misc.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2025/07/pokemon-polished-crystal-cheats.jpg",
     "rom": "misc"
   },
   {
@@ -12166,7 +12169,7 @@
     "category": "Pokemon",
     "path": "games/clpokerechargedyellow.html",
     "description": "Pokemon Yellow reimagined with modern features and recharged gameplay. Pikachu still follows you, but now with updated mechanics, expanded Pokemon availability, quality-of-life improvements, and a refreshed difficulty curve. The Pikachu Edition revitalized.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2024/09/Pokemon-Recharged-Yellow-Cheats.jpg",
     "rom": "gba"
   },
   {
@@ -12184,7 +12187,7 @@
     "category": "Pokemon",
     "path": "games/clpokered.html",
     "description": "The original Pokemon RPG that started it all. Journey through the Kanto region as a young trainer, catch and train 151 Pokemon, battle eight Gym Leaders, and take on the Elite Four to become the Pokemon Champion. Choose between Bulbasaur, Charmander, or Squirtle as your starter.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy/Named_Boxarts/Pokemon%20-%20Red%20Version%20%28USA%2C%20Europe%29%20%28SGB%20Enhanced%29.png",
     "popular": true,
     "rom": "gba"
   },
@@ -12243,7 +12246,7 @@
     "category": "Pokemon",
     "path": "games/clpokesoulsilver.html",
     "description": "The DS remake of Pokemon Silver featuring the legendary Lugia. Your Pokemon follows you in the overworld, enjoy the Pokeathlon, Safari Zone customization, and the massive dual-region adventure. Widely regarded as one of the best Pokemon games ever made with incredible post-game content.",
-    "thumbnail": "assets/thumbnails/clpokesoulsilver.jpg",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20SoulSilver%20Version%20%28USA%29.png",
     "popular": true
   },
   {
@@ -12276,7 +12279,7 @@
     "category": "Pokemon",
     "path": "games/clpoketoomanytypes2.html",
     "description": "A chaotic hack that adds dozens of new types beyond the standard 18. Every Pokemon has wild new type combinations, creating absurd and hilarious interactions. Features a completely rebalanced type chart with types like Sound, Cosmic, Digital, and more. Pure creative madness.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2026/01/Pokemon-Too-Many-Types-2-Cheats.jpeg",
     "rom": "gba"
   },
   {
@@ -12312,7 +12315,7 @@
     "category": "Pokemon",
     "path": "games/clpokeunovaemerald.html",
     "description": "Play through Hoenn with Unova's Pokemon roster replacing the native encounters. All 156 Gen V Pokemon are available in the wild, creating a unique fusion of Hoenn's world design with Unova's creature roster. A fresh way to experience both regions' Pokemon.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2024/10/unova-emerald-cheats.jpg",
     "rom": "gba"
   },
   {
@@ -12345,7 +12348,7 @@
     "category": "Pokemon",
     "path": "games/clpokewhite.html",
     "description": "The companion to Pokemon Black set in Unova, featuring the legendary Reshiram. The same compelling story with different Pokemon encounters, exclusive areas like White Forest, and the full cast of 156 new Pokemon. Enjoy Triple Battles, seasons, and the deepest Pokemon narrative yet.",
-    "thumbnail": "assets/thumbnails/clpokewhite.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20White%20Version%20%28USA%2C%20Europe%29%20%28NDSi%20Enhanced%29.png"
   },
   {
     "id": "clpokewhite2",
@@ -12353,7 +12356,7 @@
     "category": "Pokemon",
     "path": "games/clpokewhite2.html",
     "description": "The sequel to Pokemon White set two years later in Unova. Features new areas, the Pokemon World Tournament, PokeStar Studios for making movies, Join Avenue for building a shopping mall, and a story that directly continues from the events of Pokemon White.",
-    "thumbnail": "assets/thumbnails/platforms/ds.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20White%20Version%202%20%28USA%2C%20Europe%29%20%28NDSi%20Enhanced%29.png",
     "rom": "ds"
   },
   {
@@ -12361,7 +12364,8 @@
     "title": "Pokemon White 2 (Alt)",
     "category": "Pokemon",
     "path": "games/clpokewhite2alt.html",
-    "description": "An alternate version of Pokemon White 2. Experience the sequel adventure in Unova with new towns to explore, the Pokemon World Tournament, PokeStar Studios, and the continuation of N's story. Features both old and new Pokemon from the very start."
+    "description": "An alternate version of Pokemon White 2. Experience the sequel adventure in Unova with new towns to explore, the Pokemon World Tournament, PokeStar Studios, and the continuation of N's story. Features both old and new Pokemon from the very start.",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20White%20Version%202%20%28USA%2C%20Europe%29%20%28NDSi%20Enhanced%29.png"
   },
   {
     "id": "clpokeyellow",
@@ -12369,7 +12373,7 @@
     "category": "Pokemon",
     "path": "games/clpokeyellow.html",
     "description": "The special Pikachu Edition inspired by the anime. Pikachu follows you outside its Poke Ball and you can check its mood. All three original starters (Bulbasaur, Charmander, Squirtle) can be obtained in-game. Features updated sprites and the iconic Team Rocket duo Jessie and James.",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy/Named_Boxarts/Pokemon%20-%20Yellow%20Version%20-%20Special%20Pikachu%20Edition%20%28USA%2C%20Europe%29%20%28CGB%2BSGB%20Enhanced%29.png",
     "popular": true,
     "rom": "gba"
   },
