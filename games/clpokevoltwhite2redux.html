@@ -1,12 +1,16 @@
 <!DOCTYPE html>
 
 
-<!-- Ultimate Game Stash file--> 
+<!-- Ultimate Game Stash file-->
 <!-- For the regularly updating doc go to https://docs.google.com/document/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/ -->
 
 
   <head>
     <script src="../js/ds-mode.js"></script>
+    <!-- 7z-wasm for client-side .7z extraction. EmulatorJS can't auto-detect
+         7z on blob URLs, so we unpack the archive ourselves and hand the raw
+         .nds ROM to the emulator. -->
+    <script src="https://cdn.jsdelivr.net/npm/7z-wasm@1.2.0/7zz.umd.js"></script>
     <script>
       window.gameconfig = {
         name: "Pokemon Volt White 2 Redux Complete (v1.4.1)",
@@ -17,41 +21,77 @@
       };
     </script>
     <script>
-      function mergeFiles(fileParts, cb) {
+      function mergeParts(fileParts, onProgress) {
         return new Promise((resolve, reject) => {
-          let buffers = [];
+          const buffers = [];
           function fetchPart(index) {
             if (index >= fileParts.length) {
-              let mergedBlob = new Blob(buffers);
-              let mergedFileUrl = URL.createObjectURL(mergedBlob);
-              resolve(mergedFileUrl);
+              resolve(new Blob(buffers, { type: 'application/x-7z-compressed' }));
               return;
             }
             fetch(fileParts[index])
-              .then((response) => response.arrayBuffer())
-              .then((data) => {
+              .then(r => r.arrayBuffer())
+              .then(data => {
                 buffers.push(data);
+                onProgress('parts', index + 1, fileParts.length);
                 fetchPart(index + 1);
               })
               .catch(reject);
-            cb(index);
           }
           fetchPart(0);
         });
       }
+
       function getParts(file, start, end) {
-        let parts = [];
+        const parts = [];
         for (let i = start; i <= end; i++) {
-          let padded = String(i).padStart((end+"").length, '0');
-          parts.push(file + ".part" + padded);
+          const padded = String(i).padStart((end + '').length, '0');
+          parts.push(file + '.part' + padded);
         }
         return parts;
       }
-getParts("asd.js", 0, 100)
+
+      async function extractNdsFrom7z(archiveBlob, onProgress) {
+        onProgress('extract', 0, 1);
+        const bytes = new Uint8Array(await archiveBlob.arrayBuffer());
+        const SevenZipModule = window.SevenZip || window.sevenzip || window._7z;
+        if (!SevenZipModule) {
+          throw new Error('7z-wasm library failed to load');
+        }
+        const sevenZip = await SevenZipModule({
+          locateFile: (f) => 'https://cdn.jsdelivr.net/npm/7z-wasm@1.2.0/' + f,
+        });
+        sevenZip.FS.writeFile('/rom.7z', bytes);
+        sevenZip.FS.mkdir('/out');
+        try {
+          sevenZip.callMain(['x', '-y', '-o/out', '/rom.7z']);
+        } catch (err) {
+          console.error('7z extraction error:', err);
+        }
+        onProgress('extract', 1, 1);
+        const findNds = (dir) => {
+          const entries = sevenZip.FS.readdir(dir);
+          for (const entry of entries) {
+            if (entry === '.' || entry === '..') continue;
+            const path = dir === '/' ? '/' + entry : dir + '/' + entry;
+            const stat = sevenZip.FS.stat(path);
+            if (sevenZip.FS.isDir(stat.mode)) {
+              const found = findNds(path);
+              if (found) return found;
+            } else if (/\.nds$/i.test(entry)) {
+              return path;
+            }
+          }
+          return null;
+        };
+        const ndsPath = findNds('/out');
+        if (!ndsPath) throw new Error('No .nds file found inside archive');
+        const ndsData = sevenZip.FS.readFile(ndsPath);
+        return new Blob([ndsData], { type: 'application/octet-stream' });
+      }
     </script>
     <style>
-      body,
-      html {
+      body, html {
         margin: 0;
         padding: 0;
         display: flex;
@@ -69,112 +109,72 @@ getParts("asd.js", 0, 100)
         height: 100%;
       }
       #loading-progress {
-        font-size: 18px;
+        font-size: 16px;
         margin-top: 20px;
-        padding: 10px;
-        background: rgba(255, 255, 255, 0.1);
+        padding: 10px 14px;
+        background: rgba(255, 255, 255, 0.08);
         border-radius: 8px;
         display: inline-block;
+      }
+      #first-time {
+        font-size: 13px;
+        color: #888;
+        margin-top: 8px;
       }
     </style>
   </head>
   <body>
     <div id="game-container">
       <div id="game"></div>
-      <div id="loading-progress">Loading: 0/0</div>
-      <div id="first-time">First-time loading may take longer...</div>
+      <div id="loading-progress">Downloading…</div>
+      <div id="first-time">First-time loading may take a minute (large archive)</div>
     </div>
     <script>
-      var parts = getParts(
-        window.gameconfig.url,
-        window.gameconfig.min,
-        window.gameconfig.max
-      );
-      var totalParts = parts.length;
-
-      function updateLoadingProgress(loaded) {
-        const progressElement = document.getElementById("loading-progress");
-        if (loaded === 0) {
-          progressElement.textContent = "Loading: 0/0";
-        } else {
-          progressElement.textContent = `Loading: ${loaded}/${totalParts}`;
+      (async () => {
+        const progressEl = document.getElementById('loading-progress');
+        const firstTimeEl = document.getElementById('first-time');
+        function setProgress(phase, loaded, total) {
+          if (phase === 'parts') {
+            progressEl.textContent = `Downloading parts: ${loaded}/${total}`;
+          } else if (phase === 'extract') {
+            progressEl.textContent = loaded === 0
+              ? 'Extracting archive…'
+              : 'Archive extracted, starting emulator…';
+          }
         }
-      }
 
-      Promise.all([mergeFiles(parts, updateLoadingProgress)])
-        .then(([gameUrl]) => {
-          document.getElementById("loading-progress").remove();
-          document.getElementById("first-time").remove();
-          EJS_player = "#game";
+        try {
+          const parts = getParts(
+            window.gameconfig.url,
+            window.gameconfig.min,
+            window.gameconfig.max
+          );
+          const sevenZipBlob = await mergeParts(parts, setProgress);
+          const ndsBlob = await extractNdsFrom7z(sevenZipBlob, setProgress);
+          const ndsUrl = URL.createObjectURL(ndsBlob);
+
+          progressEl.remove();
+          firstTimeEl.remove();
+
+          EJS_player = '#game';
           EJS_core = window.gameconfig.core;
           EJS_gameName = window.gameconfig.name;
-          EJS_color = "#0064ff";
+          EJS_color = '#0064ff';
           EJS_startOnLoaded = true;
           EJS_threads = true;
-          if (typeof EJS_VirtualGamepadEnabled === "undefined") EJS_VirtualGamepadEnabled = true;
-          EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
-          EJS_gameUrl = gameUrl;
+          if (typeof EJS_VirtualGamepadEnabled === 'undefined') EJS_VirtualGamepadEnabled = true;
+          EJS_pathtodata = 'https://cdn.jsdelivr.net/gh/genizy/emu@master/';
+          EJS_gameUrl = ndsUrl;
 
-          // Cloud save: notify parent when emulator is ready
-          EJS_onGameStart = function() {
-            window.parent.postMessage({ type: 'emu-ready', gameId: 'clpokevoltwhite2redux' }, '*');
-            // First save after 10s, then every 60s
-            setTimeout(function() {
-              try {
-                var state = EJS_emulator.gameManager.getState();
-                if (state && state.byteLength > 0) {
-                  var bytes = new Uint8Array(state);
-                  var binary = '';
-                  for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-                  window.parent.postMessage({ type: 'save-data', gameId: 'clpokevoltwhite2redux', data: btoa(binary) }, '*');
-                }
-              } catch(e) {}
-            }, 10000);
-            setInterval(function() {
-              try {
-                var state = EJS_emulator.gameManager.getState();
-                if (state && state.byteLength > 0) {
-                  var bytes = new Uint8Array(state);
-                  var binary = '';
-                  for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-                  window.parent.postMessage({ type: 'save-data', gameId: 'clpokevoltwhite2redux', data: btoa(binary) }, '*');
-                }
-              } catch(e) { console.error('Auto-save error:', e); }
-            }, 60000);
-          };
-          // Cloud save: listen for save data from parent
-          window.addEventListener('message', function(e) {
-            if (e.data && e.data.type === 'load-save' && e.data.data) {
-              try {
-                var binary = atob(e.data.data);
-                var bytes = new Uint8Array(binary.length);
-                for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-                EJS_emulator.gameManager.loadState(bytes.buffer);
-              } catch(e) { console.error('Cloud load error:', e); }
-            }
-          });
-          // Save to cloud on page close
-          window.addEventListener('beforeunload', function() {
-            try {
-              var state = EJS_emulator.gameManager.getState();
-              if (state && state.byteLength > 0) {
-                var bytes = new Uint8Array(state);
-                var binary = '';
-                for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-                window.parent.postMessage({ type: 'save-data', gameId: 'clpokevoltwhite2redux', data: btoa(binary) }, '*');
-              }
-            } catch(e) {}
-          });
-          const script = document.createElement("script");
-          script.src =
-            "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
+          const script = document.createElement('script');
+          script.src = 'https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js';
           document.body.appendChild(script);
-        })
-        .catch((error) => {
-          console.error(error);
-          document.getElementById("loading-progress").textContent =
-            "Error loading game.";
-        });
+        } catch (err) {
+          console.error('Boot error:', err);
+          document.getElementById('loading-progress').textContent =
+            'Error loading game: ' + (err && err.message ? err.message : err);
+        }
+      })();
     </script>
     <script>window.CLOUD_SAVE_GAME_ID = 'clpokevoltwhite2redux';</script>
     <script src="../js/cloud-save.js"></script>
