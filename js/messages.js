@@ -193,12 +193,17 @@
             new Date(Date.now() + MESSAGE_TTL_MS)
         );
 
+        // `participants` mirrors [from, to] so Firestore security rules can
+        // verify `request.auth.uid in resource.data.participants` for any
+        // query that filters by it — solves the query-result-auth problem
+        // that `pair` alone can't express.
         await db.collection('dm_messages').add({
             from: currentUid,
             fromName: currentUsername || 'unknown',
             to: toUid,
             text: text,
             pair: pairId(currentUid, toUid),
+            participants: [currentUid, toUid],
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             deleteAt: deleteAt,
         });
@@ -417,20 +422,31 @@
             e.preventDefault();
             const text = input.value.trim();
             if (!text) return;
+            const orig = input.value;
             input.value = '';
             input.style.height = 'auto';
             try {
                 await sendMessage(otherUid, text);
             } catch (err) {
-                alert('Send failed: ' + err.message);
+                console.error('DM send failed:', err);
+                // Restore text so user can retry
+                input.value = orig;
+                const msg = err.code === 'permission-denied'
+                    ? "Can't send — Firestore rules aren't letting this through. Check the dm_messages rule is published."
+                    : (err.message || 'Send failed');
+                alert('Send failed: ' + msg);
             }
         });
 
-        // Subscribe to this conversation's messages
+        // Subscribe to this conversation's messages. We query with BOTH
+        // filters: `pair` for exact-conversation scoping, AND `participants`
+        // array-contains for Firestore rule compatibility (the rule allows
+        // reads where request.auth.uid is in participants).
         const pair = pairId(currentUid, otherUid);
         if (currentConvoUnsub) currentConvoUnsub();
         const body = document.getElementById('dmBody');
         currentConvoUnsub = db.collection('dm_messages')
+            .where('participants', 'array-contains', currentUid)
             .where('pair', '==', pair)
             .orderBy('createdAt', 'asc')
             .onSnapshot((snap) => {
@@ -446,7 +462,7 @@
                 renderConvoMessages(body, msgs);
             }, (err) => {
                 console.warn('DM convo listener:', err);
-                body.innerHTML = `<div class="dm-convo-empty">Couldn't load messages.</div>`;
+                body.innerHTML = `<div class="dm-convo-empty">Couldn't load messages.<br><code style="font-size:0.72rem">${esc(err.message || err.code || 'unknown error')}</code></div>`;
             });
     }
 
