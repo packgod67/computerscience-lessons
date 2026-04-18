@@ -239,21 +239,112 @@
         return { score, reasons };
     }
 
-    // Top N recommendations for a query
-    async function recommend(query, topN = 6) {
-        await loadGames();
-        const parsed = parseQuery(query);
-        // If no tags and no keywords were extracted, give up gracefully
-        if (parsed.tags.length === 0 && parsed.keywords.length === 0) {
-            return { items: [], parsed };
-        }
+    // Local-only matcher. Returns top N by heuristic score.
+    function localRecommend(parsed, topN) {
         const scored = [];
         for (const g of games) {
             const s = scoreGame(g, parsed);
             if (s.score > 0) scored.push({ game: g, score: s.score, reasons: s.reasons });
         }
         scored.sort((a, b) => b.score - a.score);
-        return { items: scored.slice(0, topN), parsed };
+        return scored.slice(0, topN);
+    }
+
+    // AI-powered re-ranker. Feeds the top ~30 local candidates plus the raw
+    // user query into a free LLM (pollinations.ai — no auth, CORS-friendly)
+    // and asks it to pick the best 6 with a 1-line personalized reason each.
+    async function aiRecommend(query, candidates) {
+        if (!candidates.length) return null;
+
+        // Compact representation — trim title + tags + short description
+        const cand = candidates.slice(0, 30).map(c => ({
+            id: c.game.id,
+            title: c.game.title,
+            category: c.game.category,
+            tags: (c.game.tags || []).slice(0, 8),
+            description: (c.game.description || '').slice(0, 180),
+        }));
+
+        const system = 'You are a game recommender for a browser arcade. '
+            + 'Given a user request and a list of candidate games, pick the 6 games '
+            + 'that best match and return a SHORT one-line reason per pick. '
+            + 'Reply with STRICT JSON only. No markdown, no prose around it.';
+        const user = 'User asked: "' + query + '"\n\n'
+            + 'Candidates (JSON):\n' + JSON.stringify(cand) + '\n\n'
+            + 'Return JSON of this exact shape:\n'
+            + '{"picks":[{"id":"<game_id>","reason":"<max 90 chars>"},'
+            + '{"id":"...","reason":"..."}]}\n'
+            + 'Use 6 picks. Use only ids from the candidates list.';
+
+        let raw;
+        try {
+            const resp = await fetch('https://text.pollinations.ai/openai', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'openai',
+                    messages: [
+                        { role: 'system', content: system },
+                        { role: 'user', content: user },
+                    ],
+                    response_format: { type: 'json_object' },
+                    seed: 42,
+                }),
+            });
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            const data = await resp.json();
+            raw = data.choices?.[0]?.message?.content
+                || data.content
+                || data.text
+                || JSON.stringify(data);
+        } catch (e) {
+            console.warn('AI recommend failed:', e);
+            return null;
+        }
+
+        // Parse the JSON — tolerate code-fenced or prose-wrapped responses
+        let parsed;
+        try {
+            const m = raw.match(/\{[\s\S]*\}/);
+            parsed = JSON.parse(m ? m[0] : raw);
+        } catch (e) {
+            console.warn('AI JSON parse failed:', e, raw);
+            return null;
+        }
+        const picks = Array.isArray(parsed.picks) ? parsed.picks : [];
+        if (picks.length === 0) return null;
+
+        // Re-hydrate with the real game objects from our catalog
+        const byId = {};
+        for (const c of candidates) byId[c.game.id] = c;
+        const out = [];
+        for (const p of picks) {
+            const c = byId[p.id];
+            if (!c) continue;
+            const reason = (p.reason || '').toString().slice(0, 120);
+            out.push({ game: c.game, score: c.score, reasons: [reason] });
+        }
+        return out.length > 0 ? out : null;
+    }
+
+    // Combined entry point.
+    async function recommend(query, topN = 6, useAI = true) {
+        await loadGames();
+        const parsed = parseQuery(query);
+        if (parsed.tags.length === 0 && parsed.keywords.length === 0) {
+            return { items: [], parsed, source: 'none' };
+        }
+        // Always compute local matches first — acts as a candidate pool for
+        // the AI and as a fallback if AI is off/fails.
+        const local = localRecommend(parsed, 30);
+        if (!useAI) {
+            return { items: local.slice(0, topN), parsed, source: 'local' };
+        }
+        const aiPicks = await aiRecommend(query, local);
+        if (aiPicks && aiPicks.length) {
+            return { items: aiPicks.slice(0, topN), parsed, source: 'ai' };
+        }
+        return { items: local.slice(0, topN), parsed, source: 'local-fallback' };
     }
 
     function esc(s) {
@@ -263,6 +354,15 @@
     }
 
     // ===== UI =====
+
+    const AI_PREF_KEY = 'arcade-recommender-ai';
+    function aiEnabled() {
+        const v = localStorage.getItem(AI_PREF_KEY);
+        return v === null ? true : v === '1';
+    }
+    function setAiEnabled(on) {
+        localStorage.setItem(AI_PREF_KEY, on ? '1' : '0');
+    }
 
     function openRecommender() {
         closeRecommender();
@@ -274,7 +374,7 @@
                 <button class="recommender-close" aria-label="Close">&times;</button>
                 <div class="recommender-header">
                     <h2>&#9889; Game Recommender</h2>
-                    <p>Describe what you want to play — a mood, a genre, a franchise, anything.</p>
+                    <p>Describe what you want to play — a mood, a genre, a franchise, anything. Works best with natural sentences.</p>
                 </div>
                 <form class="recommender-form" id="recommenderForm">
                     <input type="text" id="recommenderInput" class="recommender-input"
@@ -282,6 +382,12 @@
                         autocomplete="off" autofocus>
                     <button type="submit" class="recommender-submit">Go</button>
                 </form>
+                <div class="recommender-toolbar">
+                    <label class="recommender-ai-toggle">
+                        <input type="checkbox" id="recommenderAiToggle" ${aiEnabled() ? 'checked' : ''}>
+                        <span>Use AI (free, via pollinations.ai)</span>
+                    </label>
+                </div>
                 <div class="recommender-chips" id="recommenderChips">
                     ${['relaxing puzzle', 'roguelike', 'with a friend', 'like Pokemon', 'retro platformer', 'hardcore', 'rhythm', 'short & easy'].map(p =>
                         `<button type="button" class="recommender-chip" data-prompt="${esc(p)}">${esc(p)}</button>`
@@ -291,6 +397,10 @@
             </div>
         `;
         document.body.appendChild(overlay);
+
+        document.getElementById('recommenderAiToggle').addEventListener('change', (e) => {
+            setAiEnabled(e.target.checked);
+        });
 
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay) closeRecommender();
@@ -328,17 +438,25 @@
         const results = document.getElementById('recommenderResults');
         if (!results) return;
         if (!query || !query.trim()) return;
-        results.innerHTML = '<div class="recommender-loading">Thinking…</div>';
-        const { items, parsed } = await recommend(query.trim(), 6);
+        const useAI = aiEnabled();
+        results.innerHTML = `<div class="recommender-loading">
+            ${useAI ? '&#9889; Asking the AI' : 'Searching the catalog'}…
+        </div>`;
+        const { items, parsed, source } = await recommend(query.trim(), 6, useAI);
         if (items.length === 0) {
             results.innerHTML = `<div class="recommender-empty">
                 Couldn't match anything to that. Try mentioning a mood (relaxing, intense), genre (puzzle, platformer, rpg), or franchise (Pokemon, Mario).
             </div>`;
             return;
         }
+        const sourceLabel = source === 'ai'
+            ? `<span class="recommender-source recommender-source-ai">&#9889; AI-picked</span>`
+            : source === 'local-fallback'
+            ? `<span class="recommender-source recommender-source-fallback">Tag-matched (AI unavailable)</span>`
+            : `<span class="recommender-source">Tag-matched</span>`;
         const tagsUsed = parsed.tags.length
-            ? `<div class="recommender-inferred">Understood as: ${parsed.tags.map(t => `<code>#${esc(t)}</code>`).join(' ')}</div>`
-            : '';
+            ? `<div class="recommender-inferred">${sourceLabel} Understood as: ${parsed.tags.map(t => `<code>#${esc(t)}</code>`).join(' ')}</div>`
+            : `<div class="recommender-inferred">${sourceLabel}</div>`;
         results.innerHTML = tagsUsed + items.map(({ game: g, reasons }) => {
             const thumb = g.thumbnail
                 ? `<img class="recommender-thumb" src="${esc(g.thumbnail)}" alt="" loading="lazy">`

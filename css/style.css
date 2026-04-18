@@ -665,6 +665,60 @@ body.auth-gated .player-container {
 
 .recommender-submit:hover { filter: brightness(1.15); }
 
+.recommender-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    margin: 4px 0 8px;
+    padding: 6px 10px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.recommender-ai-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.recommender-ai-toggle input[type="checkbox"] {
+    accent-color: var(--accent);
+    width: 16px;
+    height: 16px;
+    margin: 0;
+}
+
+.recommender-source {
+    display: inline-block;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.7rem;
+    padding: 2px 8px;
+    border-radius: 999px;
+    background: var(--bg-card-hover);
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    margin-right: 8px;
+    vertical-align: middle;
+}
+
+.recommender-source-ai {
+    background: rgba(251, 191, 36, 0.15);
+    border-color: rgba(251, 191, 36, 0.5);
+    color: #fbbf24;
+    font-weight: 700;
+}
+
+.recommender-source-fallback {
+    background: rgba(234, 88, 12, 0.12);
+    border-color: rgba(234, 88, 12, 0.4);
+    color: #fb923c;
+}
+
 .recommender-chips {
     display: flex;
     flex-wrap: wrap;
