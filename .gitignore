@@ -28,3 +28,5 @@ games/clundertale-gameboy.html
 .netlify
 
 .vercel
+__pycache__/
+*.pyc
