@@ -157,7 +157,10 @@
                         <span>·</span>
                         <span>${favs.length} favorite${favs.length === 1 ? '' : 's'}</span>
                     </div>
-                    ${isSelf ? '<button class="profile-edit-btn" id="editProfileBtn">Edit profile</button>' : ''}
+                    ${isSelf
+                        ? '<button class="profile-edit-btn" id="editProfileBtn">Edit profile</button>'
+                        : '<button class="profile-edit-btn profile-message-btn" id="profileMessageBtn">&#128172; Message</button>'
+                    }
                 </div>
                 <div class="profile-body">
                     ${profile.currentGame && gamesIndex[profile.currentGame] ? `
@@ -193,6 +196,20 @@
             document.getElementById('editProfileBtn').addEventListener('click', () => {
                 renderEditProfile(overlay, profile);
             });
+        } else {
+            const msgBtn = document.getElementById('profileMessageBtn');
+            if (msgBtn) {
+                msgBtn.addEventListener('click', () => {
+                    if (!ArcadeAuth.isLoggedIn()) {
+                        alert('Log in to send messages');
+                        return;
+                    }
+                    closeModal();
+                    if (window.ArcadeMessages && ArcadeMessages.openConversation) {
+                        ArcadeMessages.openConversation(profile.uid);
+                    }
+                });
+            }
         }
     }
 

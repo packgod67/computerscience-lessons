@@ -4,6 +4,7 @@
     const usersView = document.getElementById('usersView');
     const galleryView = document.getElementById('galleryView');
     const chatView = document.getElementById('chatView');
+    const messagesView = document.getElementById('messagesView');
     const banView = document.getElementById('banView');
     const cheatsView = document.getElementById('cheatsView');
 
@@ -12,6 +13,7 @@
         users: usersView,
         gallery: galleryView,
         chat: chatView,
+        messages: messagesView,
         ban: banView,
         cheats: cheatsView,
     };
@@ -21,6 +23,7 @@
     let chatLoaded = false;
     let banLoaded = false;
     let cheatsLoaded = false;
+    let messagesLoaded = false;
 
     // Add admin-only tabs after auth is ready
     ArcadeAuth.waitForAuth().then(() => {
@@ -72,6 +75,10 @@
         if (tab === 'cheats' && !cheatsLoaded && window.ArcadeCheats) {
             ArcadeCheats.renderCheatsView();
             cheatsLoaded = true;
+        }
+        if (tab === 'messages' && !messagesLoaded && window.ArcadeMessages) {
+            ArcadeMessages.renderMessagesView();
+            messagesLoaded = true;
         }
     });
 })();
