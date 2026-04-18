@@ -2863,10 +2863,96 @@ body.theme-transitioning * {
         height: calc(100vh - 180px);
         height: calc(100dvh - 180px);
     }
+    .chat-input-bar {
+        gap: 6px;
+        /* Safe-area bottom so iPhone home indicator doesn't overlap */
+        padding-bottom: env(safe-area-inset-bottom);
+    }
+    .chat-input {
+        padding: 10px 12px;
+        font-size: 16px; /* prevent iOS zoom */
+    }
+    .chat-send-btn {
+        padding: 10px 16px;
+        font-size: 0.9rem;
+    }
+    .chat-msg-text {
+        font-size: 0.9rem;
+    }
+    .chat-msg-user {
+        font-size: 0.85rem;
+    }
+
+    /* Active users panel more compact */
+    .active-users-bar {
+        padding: 10px 14px;
+        font-size: 0.88rem;
+    }
+    .active-users-panel {
+        padding: 0.4rem 0.6rem;
+        max-height: 260px;
+    }
+    .active-users-row {
+        padding: 10px 6px;
+        gap: 6px;
+        font-size: 0.88rem;
+    }
+    .active-users-playing, .active-users-idle {
+        flex: 1 1 100%;
+        padding-left: 14px;
+    }
 
     /* Profile modal shrinks */
     .profile-modal-overlay {
         padding: 0.5rem;
+    }
+
+    /* Game info modal takes most of the screen */
+    .game-info-overlay {
+        padding: 0.5rem;
+    }
+    .game-info-modal {
+        max-width: calc(100vw - 1rem);
+        padding: 1rem;
+    }
+    .game-info-title {
+        font-size: 1.2rem;
+    }
+
+    /* Users view: more breathable rows + larger badges */
+    .user-row {
+        padding: 10px 12px;
+        gap: 8px;
+    }
+    .user-row-name {
+        font-size: 0.95rem;
+    }
+    .assign-role-btn,
+    .ban-user-btn {
+        min-height: 36px;
+        padding: 6px 10px;
+    }
+
+    /* Theme picker sliders get bigger thumbs on touch */
+    .theme-slider-row input[type="range"] {
+        height: 28px;
+    }
+    /* Color/border preset buttons get a bit more padding */
+    .theme-color-item,
+    .theme-border-preset {
+        padding: 10px 10px !important;
+    }
+
+    /* Auth dropdown fills width to avoid overflow */
+    .auth-dropdown {
+        left: auto;
+        right: 0;
+        min-width: 260px;
+    }
+
+    /* Gallery images don't overflow */
+    .gallery-grid {
+        gap: 6px;
     }
 }
 
@@ -2977,6 +3063,7 @@ body.theme-transitioning * {
     button,
     .tab-btn,
     .cat-btn,
+    .rom-sub-btn,
     a.game-card,
     .fav-btn,
     .info-btn {
@@ -2990,6 +3077,41 @@ body.theme-transitioning * {
     .chat-send-btn {
         min-width: 44px;
         min-height: 44px;
+    }
+    /* Pull-to-refresh / overscroll disabled on the main scroll body
+       so users don't accidentally reload while scrolling the grid */
+    html, body {
+        overscroll-behavior-y: contain;
+    }
+}
+
+/* ===== iOS auto-zoom prevention =====
+   Safari iOS auto-zooms any input where font-size < 16px. Apply globally to
+   every input/textarea/select on viewports where we actually care (mobile). */
+@media (max-width: 768px) {
+    input[type="text"],
+    input[type="password"],
+    input[type="email"],
+    input[type="search"],
+    input[type="number"],
+    input[type="url"],
+    input[type="tel"],
+    textarea,
+    select {
+        font-size: 16px !important;
+    }
+}
+
+/* ===== Horizontal-scroll hint =====
+   Adds a faint fade on the right edge of scrollable rows so users know more
+   content exists offscreen. Uses mask-image to fade into transparent. */
+@media (max-width: 768px) {
+    .categories,
+    .tab-bar,
+    .rom-subbar,
+    .cheats-games-list {
+        -webkit-mask-image: linear-gradient(to right, black 0, black calc(100% - 24px), transparent 100%);
+                mask-image: linear-gradient(to right, black 0, black calc(100% - 24px), transparent 100%);
     }
 }
 
@@ -3927,30 +4049,144 @@ body.theme-transitioning * {
     font-size: 0.9rem;
 }
 
-/* Mobile layout */
+/* Mobile layout for Cheats */
 @media (max-width: 768px) {
+    .cheats-panel {
+        /* Edge-to-edge on phones */
+        margin: 0 -0.75rem;
+        border-left: 0;
+        border-right: 0;
+        border-radius: 0;
+    }
+
+    .cheats-header {
+        padding: 0.9rem 1rem;
+    }
+    .cheats-header h2 {
+        font-size: 1.05rem;
+    }
+    .cheats-hint {
+        font-size: 0.75rem;
+    }
+
     .cheats-body {
         grid-template-columns: 1fr;
+        min-height: auto;
     }
     .cheats-games-col {
         border-right: none;
         border-bottom: 1px solid var(--border);
     }
+
+    /* Horizontal scroll game picker — way nicer than a 220px vertical list */
     .cheats-games-list {
-        max-height: 220px;
+        display: flex;
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        overflow-y: hidden;
+        max-height: none;
+        padding: 0 0.6rem 0.6rem;
+        gap: 6px;
+        scrollbar-width: none;
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
     }
+    .cheats-games-list::-webkit-scrollbar { display: none; }
+
+    .cheats-game-item {
+        flex: 0 0 180px;
+        margin-bottom: 0;
+        scroll-snap-align: start;
+        min-height: 52px; /* touch target */
+        justify-content: center;
+    }
+    .cheats-game-title {
+        font-size: 0.82rem;
+    }
+
     .cheats-codes-col {
-        padding: 0.9rem 1rem;
+        padding: 0.9rem 1rem 1.2rem;
+    }
+    .cheats-codes-head {
+        flex-wrap: wrap;
+        gap: 0.3rem;
+    }
+
+    /* Prevent iOS auto-zoom on focus */
+    .cheats-input,
+    .cheats-item-name,
+    .cheats-item-codes,
+    .cheats-item-type,
+    .cheats-search {
+        font-size: 16px;
+    }
+
+    .cheats-add-form {
+        padding: 10px;
     }
     .cheats-add-row {
         flex-direction: column;
         align-items: stretch;
+        gap: 8px;
+    }
+    .cheats-input-type {
+        flex: 1 1 auto;
+        padding: 10px;
+    }
+    .cheats-enabled-label {
+        padding: 4px 0;
+        font-size: 0.9rem;
     }
     .cheats-add-btn {
         margin-left: 0;
         width: 100%;
+        min-height: 44px;
+        padding: 10px 14px;
+        font-size: 0.95rem;
     }
-    .cheats-input-type {
+
+    /* Item rows: bigger touch target for delete, stacked layout */
+    .cheats-item {
+        padding: 10px;
+    }
+    .cheats-item-head {
+        flex-wrap: wrap;
+        gap: 6px;
+    }
+    .cheats-item-name {
+        flex: 1 1 100%;
+        order: 1;
+        padding: 10px;
+    }
+    .cheats-item-enable {
+        order: 2;
         flex: 1 1 auto;
+        padding: 8px 0;
+    }
+    .cheats-item-delete {
+        order: 3;
+        width: 40px;
+        height: 40px;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+    }
+    .cheats-item-codes {
+        padding: 10px;
+    }
+    .cheats-item-type {
+        padding: 8px 10px;
+    }
+}
+
+/* Extra tightening for tiny phones */
+@media (max-width: 480px) {
+    .cheats-header {
+        padding: 0.75rem 0.8rem;
+    }
+    .cheats-codes-col {
+        padding: 0.75rem 0.8rem 1rem;
+    }
+    .cheats-game-item {
+        flex: 0 0 160px;
     }
 }
