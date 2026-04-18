@@ -1,15 +1,9 @@
 [
   {
-    "id": "cl",
-    "title": "ClÃŠËœ",
-    "category": "Other",
-    "path": "games/clÃŠËœ.html"
-  },
-  {
     "id": "cl-oo",
     "title": "Ãƒâ€“oo",
     "category": "Other",
-    "path": "games/clÃƒâ€“oo.html"
+    "path": "games/clÖoo.html"
   },
   {
     "id": "cl1",
@@ -3801,12 +3795,6 @@
     "title": "Clcrankit",
     "category": "Other",
     "path": "games/clcrankit.html"
-  },
-  {
-    "id": "clcrankit",
-    "title": "Clcrankit!",
-    "category": "Other",
-    "path": "games/clcrankit!.html"
   },
   {
     "id": "clcrash2",
@@ -8926,12 +8914,6 @@
     "title": "Clhandsofwar (1)",
     "category": "Other",
     "path": "games/clhandsofwar (1).html"
-  },
-  {
-    "id": "clhandsofwar-1",
-    "title": "Clhandsofwar(1)",
-    "category": "Other",
-    "path": "games/clhandsofwar(1).html"
   },
   {
     "id": "clhandsofwar-2",
@@ -14948,25 +14930,25 @@
     "id": "clpok-mon-emerald-rush-edition-2-0",
     "title": "PokÃƒÂ©mon Emerald Rush Edition (2.0)",
     "category": "Other",
-    "path": "games/clPokÃƒÂ©mon Emerald Rush Edition (2.0).html"
+    "path": "games/clPokémon Emerald Rush Edition (2.0).html"
   },
   {
     "id": "clpok-mon-trade-stache-v1-1",
     "title": "PokÃƒÂ©mon Trade& Stache (V 1.1)",
     "category": "Other",
-    "path": "games/clPokÃƒÂ©mon Trade&_Stache (V1.1).html"
+    "path": "games/clPokémon Trade&_Stache (V1.1).html"
   },
   {
     "id": "clpok-mon-two-v1-1",
     "title": "PokÃƒÂ©mon TWO (v 1.1)",
     "category": "Other",
-    "path": "games/clPokÃƒÂ©mon TWO (v1.1).html"
+    "path": "games/clPokémon TWO (v1.1).html"
   },
   {
     "id": "clpok-monstunningsteel",
     "title": "PokÃƒÂ©monstunningsteel",
     "category": "Other",
-    "path": "games/clPokÃƒÂ©monstunningsteel.html"
+    "path": "games/clPokémonstunningsteel.html"
   },
   {
     "id": "clpokeacademylifeforever",
@@ -15084,7 +15066,7 @@
     "id": "clpokeblack2",
     "title": "Pokeblack 2",
     "category": "Retro",
-    "path": "games/clpokeblack2.html",
+    "path": "games/clpokeblack2.html.html",
     "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Black%20Version%202%20%28USA%2C%20Europe%29%20%28NDSi%20Enhanced%29.png",
     "rom": "ds",
     "tags": [
@@ -22012,15 +21994,6 @@
     ]
   },
   {
-    "id": "clsubwaysurferssanfrancisco-1",
-    "title": "Clsubwaysurferssanfrancisco(1)",
-    "category": "Other",
-    "path": "games/clsubwaysurferssanfrancisco(1).html",
-    "tags": [
-      "runner"
-    ]
-  },
-  {
     "id": "clsubwaysurfersstpetersburg",
     "title": "Clsubwaysurfersstpetersburg",
     "category": "Other",
@@ -23213,16 +23186,6 @@
     "path": "games/cltempleofboom.html"
   },
   {
-    "id": "cltemplerun2",
-    "title": "Cltemplerun 2",
-    "category": "Platformer",
-    "path": "games/cltemplerun2.html",
-    "tags": [
-      "platformer",
-      "runner"
-    ]
-  },
-  {
     "id": "cltempoverdose",
     "title": "Cltempoverdose",
     "category": "Other",
@@ -24179,12 +24142,6 @@
     "title": "Cltwinshot (1)",
     "category": "Other",
     "path": "games/cltwinshot (1).html"
-  },
-  {
-    "id": "cltwinshot-1",
-    "title": "Cltwinshot(1)",
-    "category": "Other",
-    "path": "games/cltwinshot(1).html"
   },
   {
     "id": "cltwistedmetal",
