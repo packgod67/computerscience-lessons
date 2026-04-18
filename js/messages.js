@@ -12,6 +12,9 @@
 //     text:       string (<= 2000 chars),
 //     pair:       sorted-uid pair joined with "_" (for per-conversation queries),
 //     createdAt:  server timestamp,
+//     deleteAt:   server timestamp (createdAt + 24h) — used by Firestore
+//                 TTL to auto-delete stale messages. Client also filters
+//                 expired messages so deletion appears instant.
 //   }
 //
 // Firestore rule required (admin — add to rules):
@@ -70,6 +73,7 @@
                 snap.docChanges().forEach((change) => {
                     if (change.type !== 'added') return;
                     const msg = { id: change.doc.id, ...change.doc.data() };
+                    if (isExpired(msg)) return;  // skip 24h+ old
                     updateConversation(msg.from, msg);
 
                     // Only toast for NEW messages (not ones loaded from history)
@@ -99,6 +103,7 @@
                 snap.docChanges().forEach((change) => {
                     if (change.type !== 'added') return;
                     const msg = { id: change.doc.id, ...change.doc.data() };
+                    if (isExpired(msg)) return;
                     updateConversation(msg.to, msg);
                 });
                 if (!initialLoadDone.outbox) {
@@ -107,12 +112,15 @@
                 }
                 fireChange();
             }, (err) => console.warn('DM outbox listener error:', err));
+
+        startExpirySweep();
     }
 
     function stopListeners() {
         if (inboxUnsub) inboxUnsub();
         if (outboxUnsub) outboxUnsub();
         inboxUnsub = outboxUnsub = null;
+        stopExpirySweep();
         conversations.clear();
         seenIds.clear();
         initialLoadDone = { inbox: false, outbox: false };
@@ -136,6 +144,29 @@
         }
     }
 
+    // Periodic sweep — evict conversations whose last message has aged past
+    // the 24h TTL so they disappear from the inbox even if no new event
+    // fires the listener. Fires a change notification if anything moved.
+    let expirySweepInterval = null;
+    function startExpirySweep() {
+        stopExpirySweep();
+        expirySweepInterval = setInterval(() => {
+            const cutoff = Date.now() - MESSAGE_TTL_MS;
+            let changed = false;
+            for (const [uid, c] of conversations.entries()) {
+                if (c.lastAt <= cutoff) {
+                    conversations.delete(uid);
+                    changed = true;
+                }
+            }
+            if (changed) fireChange();
+        }, 5 * 60 * 1000);  // every 5 minutes
+    }
+    function stopExpirySweep() {
+        if (expirySweepInterval) clearInterval(expirySweepInterval);
+        expirySweepInterval = null;
+    }
+
     // ─────────────────────────────────────────────────────────────
     // Sending
     // ─────────────────────────────────────────────────────────────
@@ -143,6 +174,12 @@
     function pairId(a, b) {
         return [a, b].sort().join('_');
     }
+
+    // Messages self-delete 24h after they're sent. The `deleteAt` timestamp
+    // is what Firestore's TTL policy removes server-side; we also filter
+    // expired messages client-side so deletion *looks* instant even when
+    // Firestore's TTL cleanup runs behind.
+    const MESSAGE_TTL_MS = 24 * 60 * 60 * 1000;
 
     async function sendMessage(toUid, text) {
         if (!currentUid) throw new Error('Not logged in');
@@ -152,6 +189,10 @@
         if (!text) return;
         if (text.length > 2000) text = text.slice(0, 2000);
 
+        const deleteAt = firebase.firestore.Timestamp.fromDate(
+            new Date(Date.now() + MESSAGE_TTL_MS)
+        );
+
         await db.collection('dm_messages').add({
             from: currentUid,
             fromName: currentUsername || 'unknown',
@@ -159,7 +200,23 @@
             text: text,
             pair: pairId(currentUid, toUid),
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            deleteAt: deleteAt,
         });
+    }
+
+    // Returns true if a message has passed its deleteAt timestamp (or
+    // falls back to createdAt + 24h for legacy messages that predate
+    // the field).
+    function isExpired(msg) {
+        if (!msg) return false;
+        const now = Date.now();
+        if (msg.deleteAt && msg.deleteAt.toMillis) {
+            return msg.deleteAt.toMillis() <= now;
+        }
+        if (msg.createdAt && msg.createdAt.toMillis) {
+            return (msg.createdAt.toMillis() + MESSAGE_TTL_MS) <= now;
+        }
+        return false;
     }
 
     async function deleteMessage(msgId) {
@@ -377,11 +434,15 @@
             .where('pair', '==', pair)
             .orderBy('createdAt', 'asc')
             .onSnapshot((snap) => {
-                if (snap.empty) {
-                    body.innerHTML = `<div class="dm-convo-empty">No messages yet. Say hi.</div>`;
+                // Filter out expired (>24h) messages client-side so they
+                // disappear immediately even if Firestore TTL is slow.
+                const msgs = snap.docs
+                    .map((d) => ({ id: d.id, ...d.data() }))
+                    .filter((m) => !isExpired(m));
+                if (msgs.length === 0) {
+                    body.innerHTML = `<div class="dm-convo-empty">No messages yet. Say hi. <br><span style="font-size:0.75rem;opacity:0.65">Messages auto-delete after 24 hours.</span></div>`;
                     return;
                 }
-                const msgs = snap.docs.map((d) => ({ id: d.id, ...d.data() }));
                 renderConvoMessages(body, msgs);
             }, (err) => {
                 console.warn('DM convo listener:', err);
