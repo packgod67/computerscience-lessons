@@ -619,6 +619,8 @@ body.auth-gated .player-container {
 }
 
 .cat-dropdown-panel {
+    /* display handled by the two rules below — base `display:none` wins on
+       desktop, mobile media query flips to `display:grid` */
     position: absolute;
     left: 0;
     right: 0;
@@ -632,9 +634,13 @@ body.auth-gated .player-container {
     box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
     z-index: 80;
     padding: 6px;
-    display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 4px;
+}
+
+/* Respect the [hidden] HTML attribute even on mobile */
+.cat-dropdown-panel[hidden] {
+    display: none !important;
 }
 
 .cat-dropdown-item {
@@ -699,6 +705,9 @@ body.auth-gated .player-container {
     }
     .cat-dropdown-btn {
         display: flex;
+    }
+    .cat-dropdown-panel:not([hidden]) {
+        display: grid;
     }
     .controls-row {
         position: relative; /* anchor for the dropdown panel */
