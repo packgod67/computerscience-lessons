@@ -177,6 +177,23 @@
     // ===== Cloud Save Sync =====
     let saveStatusEl = null;
 
+    // Fetch any enabled cheats for this game and post them to the iframe.
+    // Safe to call multiple times (cloud-save.js dedupes when already applied).
+    async function sendCheatsToIframe(gameId) {
+        if (!window.ArcadeCheats || !ArcadeCheats.getEnabledCheatsForGame) return;
+        try {
+            const cheats = await ArcadeCheats.getEnabledCheatsForGame(gameId);
+            if (cheats && cheats.length) {
+                gameFrame.contentWindow.postMessage(
+                    { type: 'apply-cheats', cheats: cheats }, '*'
+                );
+                showSaveStatus(cheats.length + ' cheat' + (cheats.length === 1 ? '' : 's') + ' active');
+            }
+        } catch (e) {
+            console.warn('sendCheatsToIframe failed:', e);
+        }
+    }
+
     function showSaveStatus(msg) {
         if (!saveStatusEl) {
             saveStatusEl = document.createElement('div');
@@ -197,6 +214,8 @@
             await ArcadeAuth.waitForAuth();
             if (!ArcadeAuth.isLoggedIn()) {
                 showSaveStatus('Not logged in — cloud save disabled');
+                // Still try to apply cheats — they don't need login to work
+                sendCheatsToIframe(e.data.gameId);
                 return;
             }
             showSaveStatus('Loading cloud save...');
@@ -207,6 +226,7 @@
             } else {
                 showSaveStatus('No cloud save found — will create one');
             }
+            sendCheatsToIframe(e.data.gameId);
         }
 
         if (e.data.type === 'save-data' && e.data.gameId && e.data.data) {

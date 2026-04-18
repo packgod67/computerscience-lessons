@@ -3597,3 +3597,360 @@ body.theme-transitioning * {
         padding: 0.9rem 1rem 1.2rem;
     }
 }
+
+
+/* ===== Cheat Code Manager ===== */
+.tab-btn-cheats {
+    color: #fbbf24;
+}
+
+.tab-btn-cheats:hover {
+    border-color: #fbbf24;
+}
+
+.tab-btn-cheats.active {
+    background: #fbbf24 !important;
+    color: #000 !important;
+    border-color: #fbbf24 !important;
+}
+
+.cheats-panel {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+}
+
+.cheats-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.cheats-header h2 {
+    margin: 0 0 0.4rem;
+    font-size: 1.15rem;
+    color: var(--text-primary);
+}
+
+.cheats-hint {
+    margin: 0;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    line-height: 1.45;
+}
+
+.cheats-hint code {
+    background: var(--bg-card);
+    padding: 1px 6px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    color: var(--accent);
+}
+
+.cheats-body {
+    display: grid;
+    grid-template-columns: 260px 1fr;
+    min-height: 500px;
+}
+
+.cheats-games-col {
+    border-right: 1px solid var(--border);
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
+}
+
+.cheats-search {
+    margin: 0.75rem 0.75rem 0.5rem;
+    padding: 8px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    outline: none;
+}
+
+.cheats-search:focus { border-color: var(--accent); }
+
+.cheats-games-list {
+    flex: 1;
+    overflow-y: auto;
+    max-height: 600px;
+    padding: 0 0.5rem 0.5rem;
+}
+
+.cheats-game-item {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    padding: 8px 10px;
+    background: none;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    cursor: pointer;
+    text-align: left;
+    transition: all 0.12s;
+    margin-bottom: 2px;
+}
+
+.cheats-game-item:hover {
+    background: var(--bg-card);
+}
+
+.cheats-game-item.is-active {
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+}
+
+.cheats-game-title {
+    font-size: 0.85rem;
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cheats-game-category {
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+
+.cheats-codes-col {
+    padding: 1rem 1.5rem;
+    min-height: 0;
+}
+
+.cheats-codes-empty {
+    padding: 2rem 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+.cheats-codes-head {
+    display: flex;
+    align-items: baseline;
+    gap: 0.6rem;
+    margin-bottom: 0.8rem;
+    padding-bottom: 0.6rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.cheats-codes-head h3 {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+
+.cheats-codes-game-id {
+    font-family: monospace;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+
+.cheats-add-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 1.2rem;
+    padding: 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+}
+
+.cheats-input {
+    width: 100%;
+    padding: 8px 10px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    outline: none;
+    font-family: inherit;
+}
+
+.cheats-input:focus { border-color: var(--accent); }
+
+.cheats-codes-input {
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.82rem;
+    resize: vertical;
+    min-height: 60px;
+}
+
+.cheats-add-row {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.cheats-input-type {
+    flex: 0 0 160px;
+}
+
+.cheats-enabled-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.cheats-add-btn {
+    margin-left: auto;
+    padding: 8px 14px;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: #fff;
+    font-weight: 600;
+    cursor: pointer;
+    transition: filter 0.15s;
+}
+
+.cheats-add-btn:hover:not(:disabled) { filter: brightness(1.15); }
+.cheats-add-btn:disabled { opacity: 0.6; cursor: wait; }
+
+.cheats-existing {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.cheats-item {
+    padding: 10px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+}
+
+.cheats-item-head {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cheats-item-name {
+    flex: 1;
+    padding: 6px 8px;
+    background: var(--bg-secondary);
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    outline: none;
+}
+
+.cheats-item-name:focus { border-color: var(--accent); }
+
+.cheats-item-enable {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+}
+
+.cheats-item-delete {
+    width: 28px;
+    height: 28px;
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    line-height: 1;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.cheats-item-delete:hover {
+    background: #ef4444;
+    border-color: #ef4444;
+    color: #fff;
+}
+
+.cheats-item-codes {
+    width: 100%;
+    padding: 6px 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.8rem;
+    resize: vertical;
+    outline: none;
+}
+
+.cheats-item-codes:focus { border-color: var(--accent); }
+
+.cheats-item-foot {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.cheats-item-type {
+    padding: 4px 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+}
+
+.cheats-item-status {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+.cheats-loading {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Mobile layout */
+@media (max-width: 768px) {
+    .cheats-body {
+        grid-template-columns: 1fr;
+    }
+    .cheats-games-col {
+        border-right: none;
+        border-bottom: 1px solid var(--border);
+    }
+    .cheats-games-list {
+        max-height: 220px;
+    }
+    .cheats-codes-col {
+        padding: 0.9rem 1rem;
+    }
+    .cheats-add-row {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    .cheats-add-btn {
+        margin-left: 0;
+        width: 100%;
+    }
+    .cheats-input-type {
+        flex: 1 1 auto;
+    }
+}

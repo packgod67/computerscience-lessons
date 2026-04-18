@@ -5,15 +5,24 @@
     const galleryView = document.getElementById('galleryView');
     const chatView = document.getElementById('chatView');
     const banView = document.getElementById('banView');
+    const cheatsView = document.getElementById('cheatsView');
 
-    const views = { games: gamesView, users: usersView, gallery: galleryView, chat: chatView, ban: banView };
+    const views = {
+        games: gamesView,
+        users: usersView,
+        gallery: galleryView,
+        chat: chatView,
+        ban: banView,
+        cheats: cheatsView,
+    };
     let activeTab = 'games';
     let usersLoaded = false;
     let galleryLoaded = false;
     let chatLoaded = false;
     let banLoaded = false;
+    let cheatsLoaded = false;
 
-    // Add Ban tab for admin after auth is ready
+    // Add admin-only tabs after auth is ready
     ArcadeAuth.waitForAuth().then(() => {
         if (ArcadeAuth.isAdmin()) {
             const banBtn = document.createElement('button');
@@ -21,6 +30,13 @@
             banBtn.dataset.tab = 'ban';
             banBtn.textContent = 'Bans';
             tabBar.appendChild(banBtn);
+
+            const cheatsBtn = document.createElement('button');
+            cheatsBtn.className = 'tab-btn tab-btn-cheats';
+            cheatsBtn.dataset.tab = 'cheats';
+            cheatsBtn.innerHTML = '&#128299; Cheats'; // 🔫
+            cheatsBtn.title = 'Cheat code manager (admin only)';
+            tabBar.appendChild(cheatsBtn);
         }
     });
 
@@ -52,6 +68,10 @@
         if (tab === 'ban' && !banLoaded && window.ArcadeUsers) {
             ArcadeUsers.renderBanView();
             banLoaded = true;
+        }
+        if (tab === 'cheats' && !cheatsLoaded && window.ArcadeCheats) {
+            ArcadeCheats.renderCheatsView();
+            cheatsLoaded = true;
         }
     });
 })();

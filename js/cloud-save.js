@@ -186,7 +186,52 @@
     }, 1000);
     setTimeout(function () { clearInterval(poll); }, 600000);
 
-    // ----- Messages from parent (cloud save data to load) -----
+    // ----- Cheats from parent =====
+    // Applies a list of {name, codes, type} objects via the EmulatorJS cheat
+    // API. Held in `pendingCheats` until the emulator is ready, then drained.
+    var pendingCheats = null;
+    var cheatsApplied = false;
+
+    function applyCheats(list) {
+        var emu = findEmulator();
+        if (!emu || !emu.gameManager) {
+            pendingCheats = list;
+            return false;
+        }
+        try {
+            var gm = emu.gameManager;
+            // Most EmulatorJS builds expose Module.ccall for libretro cheats,
+            // or setCheat via the emulator frontend. Try the friendly API first.
+            var applied = 0;
+            for (var i = 0; i < list.length; i++) {
+                var c = list[i];
+                var codeText = (c.codes || '').trim();
+                if (!codeText) continue;
+                try {
+                    if (typeof gm.setCheat === 'function') {
+                        gm.setCheat(i, true, codeText);
+                    } else if (typeof gm.addCheat === 'function') {
+                        gm.addCheat(codeText, c.name || 'Cheat', true);
+                    } else if (emu.cheats && Array.isArray(emu.cheats)) {
+                        emu.cheats.push({ name: c.name || 'Cheat', code: codeText, enabled: true });
+                    }
+                    applied++;
+                } catch (err) {
+                    log('cheat apply err [' + (c.name || '') + ']: ' + err.message);
+                }
+            }
+            log('applied ' + applied + '/' + list.length + ' cheats');
+            showStatus(applied + ' cheats active', '#fbbf24');
+            cheatsApplied = true;
+            pendingCheats = null;
+            return true;
+        } catch (e) {
+            log('applyCheats error: ' + e.message);
+            return false;
+        }
+    }
+
+    // ----- Messages from parent (cloud save data + cheats) -----
     window.addEventListener('message', function (e) {
         if (!e.data || !e.data.type) return;
         if (e.data.type === 'load-save' && e.data.data) {
@@ -194,7 +239,23 @@
             pendingLoad = e.data.data;
             applyPendingLoad();
         }
+        if (e.data.type === 'apply-cheats' && Array.isArray(e.data.cheats)) {
+            log('apply-cheats received (' + e.data.cheats.length + ' codes)');
+            if (!applyCheats(e.data.cheats)) {
+                // Emulator not ready yet; stash and try again post-announce
+                pendingCheats = e.data.cheats;
+            }
+        }
     });
+
+    // Retry any pending cheats every second until applied (complements
+    // the emu-ready flow for older EmulatorJS builds where we can't hook
+    // EJS_onGameStart cleanly).
+    setInterval(function () {
+        if (pendingCheats && !cheatsApplied) {
+            applyCheats(pendingCheats);
+        }
+    }, 2000);
 
     // ----- Save on tab close / background -----
     window.addEventListener('beforeunload', function () { saveToCloud('beforeunload'); });
