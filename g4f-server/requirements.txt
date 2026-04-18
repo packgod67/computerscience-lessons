@@ -1,5 +1,4 @@
-g4f[api]
+g4f[all]
 curl_cffi
-fastapi
-uvicorn
+flask
 brotli
