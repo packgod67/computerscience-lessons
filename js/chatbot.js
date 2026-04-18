@@ -637,6 +637,29 @@
         ).trim();
     }
 
+    // Rate-limit backoff. Groq's free tier is ~30 req/min; tool calling
+    // fires 2 per turn and the two-pass fallback fires 2 more. A few rapid
+    // queries easily hit the ceiling (HTTP 429). When that happens we
+    // remember the cooldown time so subsequent turns skip Groq entirely
+    // and go straight to Pollinations — no point hammering the same 429.
+    let groqCooldownUntil = 0;
+    function groqIsCoolingDown() {
+        return Date.now() < groqCooldownUntil;
+    }
+    function markGroqRateLimited(retryAfterSeconds) {
+        // Default to 60s if the server didn't tell us how long to wait
+        const secs = Math.max(5, Math.min(300, retryAfterSeconds || 60));
+        groqCooldownUntil = Date.now() + secs * 1000;
+        console.warn(`[groq] rate-limited, cooling down for ${secs}s`);
+    }
+    // Pull retry-after from a 429 response (Groq sends seconds)
+    function retryAfterFrom(resp) {
+        if (!resp || !resp.headers) return 60;
+        const ra = resp.headers.get('retry-after');
+        const n = parseInt(ra, 10);
+        return isNaN(n) ? 60 : n;
+    }
+
     // Non-streaming JSON mode for game recommendations. Uses Llama 3.3 via
     // the admin's worker first, falls back to Pollinations.
     async function callLLMRecommend(msgs, candidates, contextBlocks) {
@@ -692,12 +715,18 @@
         });
 
         for (const p of providers) {
+            // Skip Groq while it's in cooldown — go straight to Pollinations
+            if (p.name === 'groq' && groqIsCoolingDown()) continue;
             try {
                 const resp = await fetch(p.url, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(p.body),
                 });
+                if (resp.status === 429 && p.name === 'groq') {
+                    markGroqRateLimited(retryAfterFrom(resp));
+                    continue;   // try Pollinations
+                }
                 if (!resp.ok) { console.warn(`[${p.name}] HTTP ${resp.status}`); continue; }
                 const data = await resp.json();
                 const raw = data.choices?.[0]?.message?.content || data.content || data.text;
@@ -732,6 +761,7 @@
     async function callWithTools(msgs, contextBlocks) {
         const groqWorker = getGroqWorker();
         if (!groqWorker) return null;   // tool calling needs the Groq worker
+        if (groqIsCoolingDown()) return null;   // skip during 429 cooldown
 
         const systemMsgs = [{ role: 'system', content: SYSTEM_PROMPT }];
         for (const block of contextBlocks) {
@@ -761,6 +791,10 @@
                 }),
             });
         } catch (e) { console.warn('[tools] request 1 failed:', e); return null; }
+        if (resp1.status === 429) {
+            markGroqRateLimited(retryAfterFrom(resp1));
+            return null;
+        }
         if (!resp1.ok) { console.warn('[tools] req1 HTTP', resp1.status); return null; }
         const data1 = await resp1.json();
         const msg1 = data1.choices?.[0]?.message;
@@ -818,6 +852,10 @@
                 }),
             });
         } catch (e) { console.warn('[tools] request 2 failed:', e); return null; }
+        if (resp2.status === 429) {
+            markGroqRateLimited(retryAfterFrom(resp2));
+            return null;
+        }
         if (!resp2.ok) { console.warn('[tools] req2 HTTP', resp2.status); return null; }
         const data2 = await resp2.json();
         const raw = data2.choices?.[0]?.message?.content || '';
@@ -889,17 +927,26 @@
         let intentResult = null;
         const groqWorker = getGroqWorker();
         const tryUrls = [];
-        if (groqWorker) tryUrls.push({ url: groqWorker, body: {
-            model: 'llama-3.3-70b-versatile',
-            messages: intentMessages,
-            response_format: { type: 'json_object' },
-            temperature: 0.2,
-        }});
-        tryUrls.push({ url: 'https://text.pollinations.ai/openai', body: {
-            model: 'openai',
-            messages: intentMessages,
-            response_format: { type: 'json_object' },
-        }});
+        // Only queue Groq if it's not cooling down from a 429
+        if (groqWorker && !groqIsCoolingDown()) tryUrls.push({
+            name: 'groq',
+            url: groqWorker,
+            body: {
+                model: 'llama-3.3-70b-versatile',
+                messages: intentMessages,
+                response_format: { type: 'json_object' },
+                temperature: 0.2,
+            },
+        });
+        tryUrls.push({
+            name: 'pollinations',
+            url: 'https://text.pollinations.ai/openai',
+            body: {
+                model: 'openai',
+                messages: intentMessages,
+                response_format: { type: 'json_object' },
+            },
+        });
 
         for (const p of tryUrls) {
             try {
@@ -908,6 +955,10 @@
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(p.body),
                 });
+                if (resp.status === 429 && p.name === 'groq') {
+                    markGroqRateLimited(retryAfterFrom(resp));
+                    continue;
+                }
                 if (!resp.ok) continue;
                 const data = await resp.json();
                 const raw = data.choices?.[0]?.message?.content || '';
@@ -984,6 +1035,8 @@
         });
 
         for (const p of providers) {
+            // Skip Groq-based streaming while cooling down
+            if (p.name === 'groq' && groqIsCoolingDown()) continue;
             try {
                 if (p.kind === 'sse') {
                     const resp = await fetch(p.url, {
@@ -991,6 +1044,10 @@
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify(p.body),
                     });
+                    if (resp.status === 429 && p.name === 'groq') {
+                        markGroqRateLimited(retryAfterFrom(resp));
+                        continue;
+                    }
                     if (!resp.ok || !resp.body) {
                         console.warn(`[${p.name} ${p.body.model}] HTTP ${resp.status}`);
                         continue;
