@@ -510,7 +510,8 @@ body.auth-gated .player-container {
 
 .search-input {
     width: 100%;
-    padding: 14px 56px 14px 48px;
+    /* Space on the right for two stacked buttons (recommender + random) */
+    padding: 14px 104px 14px 48px;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -520,9 +521,9 @@ body.auth-gated .player-container {
     transition: border-color 0.2s, box-shadow 0.2s;
 }
 
-.random-btn {
+.random-btn,
+.recommender-trigger-btn {
     position: absolute;
-    right: 8px;
     top: 50%;
     transform: translateY(-50%);
     width: 40px;
@@ -535,6 +536,23 @@ body.auth-gated .player-container {
     cursor: pointer;
     transition: all 0.15s;
     padding: 0;
+    line-height: 1;
+}
+
+.recommender-trigger-btn {
+    right: 54px;
+    color: #fbbf24;
+    font-size: 1.25rem;
+}
+
+.random-btn {
+    right: 8px;
+}
+
+.recommender-trigger-btn:hover {
+    border-color: #fbbf24;
+    background: rgba(251, 191, 36, 0.12);
+    transform: translateY(-50%) scale(1.08);
 }
 
 .random-btn:hover {
@@ -543,8 +561,250 @@ body.auth-gated .player-container {
     transform: translateY(-50%) rotate(180deg);
 }
 
-.random-btn:active {
+.random-btn:active,
+.recommender-trigger-btn:active {
     transform: translateY(-50%) scale(0.9);
+}
+
+/* ===== Recommender modal ===== */
+.recommender-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.65);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+    z-index: 1000;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    padding: 2.5rem 1rem;
+    overflow-y: auto;
+    animation: fadeIn 0.15s ease-out;
+}
+
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.recommender-modal {
+    position: relative;
+    width: 100%;
+    max-width: 680px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 1.5rem;
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.5);
+}
+
+.recommender-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 34px;
+    height: 34px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    color: var(--text-secondary);
+    font-size: 1.4rem;
+    line-height: 1;
+    cursor: pointer;
+}
+
+.recommender-close:hover {
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+.recommender-header h2 {
+    margin: 0 0 0.3rem;
+    font-size: 1.3rem;
+    color: var(--text-primary);
+}
+
+.recommender-header p {
+    margin: 0 0 1rem;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+
+.recommender-form {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 0.8rem;
+}
+
+.recommender-input {
+    flex: 1;
+    padding: 12px 14px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+}
+
+.recommender-input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px var(--accent-subtle);
+}
+
+.recommender-submit {
+    padding: 12px 22px;
+    background: var(--accent);
+    border: none;
+    border-radius: var(--radius-sm);
+    color: #fff;
+    font-weight: 700;
+    font-size: 0.95rem;
+    cursor: pointer;
+    transition: filter 0.15s;
+}
+
+.recommender-submit:hover { filter: brightness(1.15); }
+
+.recommender-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 1rem;
+}
+
+.recommender-chip {
+    padding: 5px 12px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    cursor: pointer;
+    transition: all 0.12s;
+}
+
+.recommender-chip:hover {
+    color: var(--text-primary);
+    border-color: var(--accent);
+    background: var(--accent-subtle);
+}
+
+.recommender-results {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.recommender-inferred {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    padding: 6px 10px;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+    margin-bottom: 4px;
+}
+
+.recommender-inferred code {
+    color: var(--accent);
+    background: transparent;
+    font-family: inherit;
+    margin-right: 2px;
+}
+
+.recommender-loading,
+.recommender-empty {
+    padding: 1.2rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+    background: var(--bg-card);
+    border-radius: var(--radius-sm);
+}
+
+.recommender-card {
+    display: flex;
+    gap: 12px;
+    padding: 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: all 0.15s;
+}
+
+.recommender-card:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+    transform: translateX(4px);
+}
+
+.recommender-thumb {
+    width: 88px;
+    height: 66px;
+    object-fit: cover;
+    border-radius: var(--radius-sm);
+    background: var(--bg-secondary);
+    flex-shrink: 0;
+}
+
+.recommender-thumb-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #fff;
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+}
+
+.recommender-card-body {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 3px;
+}
+
+.recommender-card-title {
+    color: var(--text-primary);
+    font-weight: 700;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recommender-card-tags {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+}
+
+.recommender-tag {
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+    font-size: 0.68rem;
+    color: var(--accent);
+    padding: 1px 7px;
+    background: var(--accent-subtle);
+    border-radius: 999px;
+}
+
+.recommender-card-reason {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+
+@media (max-width: 600px) {
+    .recommender-overlay { padding: 1rem 0.5rem; }
+    .recommender-modal { padding: 1rem; }
+    .recommender-header h2 { font-size: 1.1rem; }
+    .recommender-form { flex-direction: column; }
+    .recommender-input { font-size: 16px; }
+    .recommender-submit { width: 100%; padding: 12px; }
+    .recommender-thumb { width: 70px; height: 54px; }
+    .recommender-card-title { font-size: 0.88rem; }
 }
 
 /* ===== PWA install button ===== */
