@@ -1212,6 +1212,32 @@ body.auth-gated .player-container {
     margin-bottom: 0.8rem;
 }
 
+.game-info-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    margin: 0.6rem 0 0.2rem;
+}
+
+.game-info-tag {
+    padding: 4px 10px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.12s;
+    font-family: ui-monospace, "SF Mono", Consolas, monospace;
+}
+
+.game-info-tag:hover {
+    color: var(--text-primary);
+    background: var(--accent-subtle);
+    border-color: var(--accent);
+}
+
 .game-info-desc {
     color: var(--text-secondary);
     font-size: 0.95rem;

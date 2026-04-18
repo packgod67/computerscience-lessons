@@ -383,7 +383,17 @@
     }
 
     function applyFilters() {
-        const query = searchInput.value.toLowerCase().trim();
+        let query = searchInput.value.toLowerCase().trim();
+
+        // Tag-search mode: `#tagname` filters to games tagged with `tagname`.
+        // Space-separated tags after the hash require ALL tags ("#rpg #jrpg").
+        let tagQueries = null;
+        if (query.startsWith('#')) {
+            tagQueries = query.split(/\s+/)
+                .filter(t => t.startsWith('#') && t.length > 1)
+                .map(t => t.slice(1));
+            query = ''; // suppress text search when in tag mode
+        }
 
         // First pass: substring matches (fast path, covers 99% of typing)
         const substringMatches = [];
@@ -404,6 +414,15 @@
                 matchesCategory = activeCategory === 'all' || g.category === activeCategory;
             }
             if (!matchesCategory) continue;
+
+            if (tagQueries) {
+                // Every requested tag must be on the game
+                const tags = g.tags || [];
+                if (tagQueries.every(t => tags.includes(t))) {
+                    substringMatches.push(g);
+                }
+                continue;
+            }
 
             if (!query) {
                 substringMatches.push(g);
@@ -540,12 +559,22 @@
             ? `<img class="game-info-thumb" src="${esc(g.thumbnail)}" alt="${esc(g.title)}">`
             : '';
 
+        // Render tags as clickable pills. Clicking one runs a tag search.
+        const tags = Array.isArray(g.tags) ? g.tags : [];
+        const tagsHtml = tags.length ? `
+            <div class="game-info-tags">
+                ${tags.map(t =>
+                    `<button class="game-info-tag" data-tag="${esc(t)}">#${esc(t)}</button>`
+                ).join('')}
+            </div>` : '';
+
         overlay.innerHTML = `
             <div class="game-info-modal">
                 <button class="game-info-close">&times;</button>
                 ${thumb}
                 <h2 class="game-info-title">${esc(g.title)}</h2>
                 <span class="game-info-category">${esc(g.category)}</span>
+                ${tagsHtml}
                 <p class="game-info-desc">${esc(g.description)}</p>
                 <a class="game-info-play" href="play.html?game=${encodeURIComponent(g.id)}">Play Now</a>
             </div>`;
@@ -556,6 +585,23 @@
             if (e.target === overlay) overlay.remove();
         });
         overlay.querySelector('.game-info-close').addEventListener('click', () => overlay.remove());
+
+        // Tag clicks → put `#tag` into the search box and filter. Closes modal.
+        overlay.querySelectorAll('.game-info-tag').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const tag = btn.dataset.tag;
+                searchInput.value = '#' + tag;
+                activeCategory = 'all';
+                updateCategoryButtons();
+                currentPage = 0;
+                gameGrid.innerHTML = '';
+                applyFilters();
+                renderPage();
+                overlay.remove();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
     }
 
     function buildPartNav() {
