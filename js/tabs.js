@@ -52,6 +52,13 @@
         tabBar.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
 
+        // On mobile, make sure the just-tapped tab is fully visible.
+        // If it was partly off-screen (e.g. "Bans" peeking from the right),
+        // this smoothly scrolls it into view inside the scrollable tab bar.
+        if (typeof btn.scrollIntoView === 'function') {
+            btn.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
+        }
+
         Object.values(views).forEach(v => { if (v) v.style.display = 'none'; });
         if (views[tab]) views[tab].style.display = '';
         activeTab = tab;

@@ -636,12 +636,25 @@ body.auth-gated .player-container {
     overflow: hidden;
     transform: translateY(16px) scale(0.97);
     opacity: 0;
+    /* Block clicks while invisible — fixes the phantom-panel bug where
+       tapping where the search bar appears to be actually clicks a
+       lingering kirky-card link (especially on mobile where the panel
+       covers the whole screen when open). */
+    pointer-events: none;
     transition: transform 0.18s ease, opacity 0.18s ease;
+}
+
+/* When the panel is fully hidden (post-animation), display:none it so
+   it can't steal taps at all. Override is needed because .kirky-panel
+   has display:flex which wins over the HTML `hidden` attribute. */
+.kirky-panel[hidden] {
+    display: none !important;
 }
 
 .kirky-panel.is-open {
     transform: translateY(0) scale(1);
     opacity: 1;
+    pointer-events: auto;
 }
 
 .kirky-header {
@@ -3856,22 +3869,41 @@ body.theme-transitioning * {
         text-align: right;
     }
 
-    /* Tab bar: sticky + horizontal scroll for many tabs */
+    /* Tab bar: sticky + horizontal scroll for many tabs. Use a wrapping
+       positioned container so we can fade the right edge (cue that there
+       are hidden tabs) and enable smooth touch scrolling. */
     .tab-bar {
         position: sticky;
         top: 0;
         z-index: 50;
         background: var(--bg-primary);
-        padding: 0.5rem 0;
+        padding: 0.5rem 0.75rem;
         margin: 0 -0.75rem;
-        padding-left: 0.75rem;
-        padding-right: 0.75rem;
         display: flex;
         flex-wrap: nowrap;
         overflow-x: auto;
+        overflow-y: hidden;
         gap: 6px;
         scrollbar-width: none;
         border-bottom: 1px solid var(--border);
+        /* Momentum scrolling on iOS + snap-start so tabs "click" into place */
+        -webkit-overflow-scrolling: touch;
+        scroll-snap-type: x proximity;
+        scroll-padding-left: 0.75rem;
+        /* Fade-out on the right edge as a visual hint that more tabs exist.
+           Transparent left→ opaque middle →transparent right. */
+        -webkit-mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            #000 12px,
+            #000 calc(100% - 24px),
+            transparent 100%);
+                mask-image: linear-gradient(
+            to right,
+            transparent 0,
+            #000 12px,
+            #000 calc(100% - 24px),
+            transparent 100%);
     }
     .tab-bar::-webkit-scrollbar { display: none; }
     .tab-btn {
@@ -3879,6 +3911,7 @@ body.theme-transitioning * {
         padding: 10px 18px;
         font-size: 0.9rem;
         min-height: 44px;
+        scroll-snap-align: start;
     }
 
     /* Touch-friendly game grid: 2 columns on small tablets */
