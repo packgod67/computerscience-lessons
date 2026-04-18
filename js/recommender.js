@@ -250,9 +250,12 @@
         return scored.slice(0, topN);
     }
 
-    // AI-powered re-ranker. Feeds the top ~40 local candidates plus the raw
-    // user query into a free LLM (pollinations.ai — no auth, CORS-friendly)
-    // and asks it to pick the best 6 with a personalized reason each.
+    // AI-powered re-ranker. Tries in order:
+    //   1. The admin's Cloudflare Worker proxy to Groq (Llama 3.3 70B).
+    //      Set via localStorage.setItem('arcade-groq-worker-url', 'https://...')
+    //   2. Pollinations.ai public endpoint (no key needed).
+    // Both are called with the same OpenAI-compatible chat schema so the
+    // rest of the code is provider-agnostic.
     async function aiRecommend(query, candidates) {
         if (!candidates.length) return null;
 
@@ -290,31 +293,67 @@
             + '{"picks":[{"id":"<game_id>","reason":"<specific reason tied to the query>"},...]}\n'
             + 'Use only ids that appear in the candidates list.';
 
-        let raw;
-        try {
-            const resp = await fetch('https://text.pollinations.ai/openai', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    model: 'openai',
-                    messages: [
-                        { role: 'system', content: system },
-                        { role: 'user', content: user },
-                    ],
+        const messages = [
+            { role: 'system', content: system },
+            { role: 'user', content: user },
+        ];
+
+        // Provider list in priority order. Groq worker first (better model),
+        // pollinations as fallback. Both use OpenAI-compatible chat schema.
+        // URL priority: per-user localStorage override > site-wide config.
+        const groqWorker = (
+            localStorage.getItem('arcade-groq-worker-url')
+            || (window.ARCADE_CONFIG && window.ARCADE_CONFIG.groqWorkerUrl)
+            || ''
+        ).trim();
+        const providers = [];
+        if (groqWorker) {
+            providers.push({
+                name: 'groq',
+                url: groqWorker,
+                body: {
+                    model: 'llama-3.3-70b-versatile',
+                    messages,
                     response_format: { type: 'json_object' },
-                    seed: 42,
-                }),
+                    temperature: 0.4,
+                },
             });
-            if (!resp.ok) throw new Error('HTTP ' + resp.status);
-            const data = await resp.json();
-            raw = data.choices?.[0]?.message?.content
-                || data.content
-                || data.text
-                || JSON.stringify(data);
-        } catch (e) {
-            console.warn('AI recommend failed:', e);
-            return null;
         }
+        providers.push({
+            name: 'pollinations',
+            url: 'https://text.pollinations.ai/openai',
+            body: {
+                model: 'openai',
+                messages,
+                response_format: { type: 'json_object' },
+                seed: 42,
+            },
+        });
+
+        let raw = null;
+        let providerUsed = null;
+        for (const p of providers) {
+            try {
+                const resp = await fetch(p.url, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(p.body),
+                });
+                if (!resp.ok) {
+                    console.warn(`[${p.name}] HTTP ${resp.status}`);
+                    continue;
+                }
+                const data = await resp.json();
+                raw = data.choices?.[0]?.message?.content
+                    || data.content
+                    || data.text
+                    || null;
+                if (raw) { providerUsed = p.name; break; }
+            } catch (e) {
+                console.warn(`[${p.name}] failed:`, e);
+            }
+        }
+        if (!raw) return null;
 
         // Parse the JSON — tolerate code-fenced or prose-wrapped responses
         let parsed;
@@ -338,7 +377,11 @@
             const reason = (p.reason || '').toString().slice(0, 120);
             out.push({ game: c.game, score: c.score, reasons: [reason] });
         }
-        return out.length > 0 ? out : null;
+        if (out.length === 0) return null;
+        // Tag each result with which provider produced it so the UI can
+        // show a more specific source badge.
+        out.provider = providerUsed;
+        return out;
     }
 
     // Combined entry point.
@@ -357,7 +400,8 @@
         }
         const aiPicks = await aiRecommend(query, local);
         if (aiPicks && aiPicks.length) {
-            return { items: aiPicks.slice(0, topN), parsed, source: 'ai' };
+            const src = aiPicks.provider === 'groq' ? 'ai-groq' : 'ai-pollinations';
+            return { items: aiPicks.slice(0, topN), parsed, source: src };
         }
         return { items: local.slice(0, topN), parsed, source: 'local-fallback' };
     }
@@ -464,11 +508,14 @@
             </div>`;
             return;
         }
-        const sourceLabel = source === 'ai'
-            ? `<span class="recommender-source recommender-source-ai">&#9889; AI-picked</span>`
-            : source === 'local-fallback'
-            ? `<span class="recommender-source recommender-source-fallback">Tag-matched (AI unavailable)</span>`
-            : `<span class="recommender-source">Tag-matched</span>`;
+        const sourceLabel =
+            source === 'ai-groq'
+                ? `<span class="recommender-source recommender-source-ai">&#9889; Groq (Llama 3.3 70B)</span>`
+          : source === 'ai-pollinations'
+                ? `<span class="recommender-source recommender-source-ai">&#9889; AI-picked</span>`
+          : source === 'local-fallback'
+                ? `<span class="recommender-source recommender-source-fallback">Tag-matched (AI unavailable)</span>`
+          : `<span class="recommender-source">Tag-matched</span>`;
         const tagsUsed = parsed.tags.length
             ? `<div class="recommender-inferred">${sourceLabel} Understood as: ${parsed.tags.map(t => `<code>#${esc(t)}</code>`).join(' ')}</div>`
             : `<div class="recommender-inferred">${sourceLabel}</div>`;
