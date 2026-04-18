@@ -85,6 +85,22 @@ export default {
             return json({ error: 'Request too large (>50KB)' }, 413);
         }
 
+        // Build upstream payload. Pass through streaming + tools so the
+        // chat assistant can use compound-beta's web browsing and receive
+        // token-by-token deltas.
+        const wantStream = body.stream === true;
+        const upstreamPayload = {
+            model: body.model || DEFAULT_MODEL,
+            messages: messages,
+            temperature: typeof body.temperature === 'number' ? body.temperature : 0.4,
+            max_tokens: Math.min(body.max_tokens || 1024, 2048),
+            stream: wantStream,
+        };
+        if (body.response_format) upstreamPayload.response_format = body.response_format;
+        if (body.seed !== undefined) upstreamPayload.seed = body.seed;
+        if (Array.isArray(body.tools)) upstreamPayload.tools = body.tools;
+        if (body.tool_choice) upstreamPayload.tool_choice = body.tool_choice;
+
         // Forward to Groq with OUR key
         const upstream = await fetch(GROQ_URL, {
             method: 'POST',
@@ -92,14 +108,7 @@ export default {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + groqKey,
             },
-            body: JSON.stringify({
-                model: body.model || DEFAULT_MODEL,
-                messages: messages,
-                temperature: typeof body.temperature === 'number' ? body.temperature : 0.4,
-                max_tokens: Math.min(body.max_tokens || 1024, 2048),
-                response_format: body.response_format,
-                seed: body.seed,
-            }),
+            body: JSON.stringify(upstreamPayload),
         });
 
         if (!upstream.ok) {
@@ -109,6 +118,20 @@ export default {
                 status: upstream.status,
                 detail: text.slice(0, 400),
             }, upstream.status);
+        }
+
+        // Streaming: pipe the upstream SSE body straight back to the
+        // browser. Keep the CORS headers and the text/event-stream type.
+        if (wantStream && upstream.body) {
+            return new Response(upstream.body, {
+                status: 200,
+                headers: {
+                    ...CORS_HEADERS,
+                    'Content-Type': 'text/event-stream',
+                    'Cache-Control': 'no-cache, no-transform',
+                    'Connection': 'keep-alive',
+                },
+            });
         }
 
         const data = await upstream.json();

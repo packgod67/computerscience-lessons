@@ -849,6 +849,47 @@ body.auth-gated .player-container {
     text-overflow: ellipsis;
 }
 
+/* ===== Kirky: quick-action chips under game cards ===== */
+.kirky-quick-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 10px;
+}
+.kirky-chip {
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 5px 12px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    cursor: pointer;
+    transition: all 0.15s;
+    line-height: 1.2;
+}
+.kirky-chip:hover {
+    background: var(--bg-card-hover);
+    border-color: var(--accent);
+    color: var(--text-primary);
+    transform: translateY(-1px);
+}
+.kirky-chip:active {
+    transform: translateY(0);
+}
+
+/* ===== Kirky: streaming cursor ===== */
+.kirky-bubble-streaming .kirky-bubble-text::after {
+    content: '▋';
+    display: inline-block;
+    margin-left: 2px;
+    color: var(--accent);
+    animation: kirky-caret 0.9s step-end infinite;
+    vertical-align: baseline;
+}
+@keyframes kirky-caret {
+    50% { opacity: 0; }
+}
+
 .kirky-typing-dots {
     display: inline-flex;
     gap: 4px;

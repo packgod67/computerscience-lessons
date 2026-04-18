@@ -64,23 +64,35 @@
     function startListeners() {
         if (!db || !currentUid) return;
 
-        // Inbox: messages TO me. Drives the toast.
+        // ONE listener for everything — uses `participants` array-contains so
+        // the Firestore rules engine can always prove read access with the
+        // simple rule:  `allow read: if uid in resource.data.participants`
+        //
+        // This replaces the old split inbox(to=me) / outbox(from=me) queries
+        // which each needed their own rule branch and their own composite
+        // index. Now there's only one query, one rule, one index.
         inboxUnsub = db.collection('dm_messages')
-            .where('to', '==', currentUid)
+            .where('participants', 'array-contains', currentUid)
             .orderBy('createdAt', 'desc')
-            .limit(100)
+            .limit(200)
             .onSnapshot((snap) => {
                 snap.docChanges().forEach((change) => {
                     if (change.type !== 'added') return;
                     const msg = { id: change.doc.id, ...change.doc.data() };
                     if (isExpired(msg)) return;  // skip 24h+ old
-                    updateConversation(msg.from, msg);
 
-                    // Only toast for NEW messages (not ones loaded from history)
+                    // The "other" party of the convo — used as the key in
+                    // the conversation list regardless of who sent it.
+                    const otherUid = (msg.from === currentUid) ? msg.to : msg.from;
+                    updateConversation(otherUid, msg);
+
+                    // Toast only for INCOMING (someone else → me), and only
+                    // for messages that arrived AFTER the initial snapshot
+                    // (so we don't spam the user with history on page load).
+                    if (msg.from === currentUid) return;
                     if (!initialLoadDone.inbox) return;
                     if (seenIds.has(msg.id)) return;
                     seenIds.add(msg.id);
-                    // Skip if we're already in that convo
                     if (activeConversationWith === msg.from) return;
                     showToast(msg);
                 });
@@ -89,29 +101,13 @@
                 if (!initialLoadDone.inbox) {
                     snap.forEach((d) => seenIds.add(d.id));
                     initialLoadDone.inbox = true;
-                }
-                fireChange();
-            }, (err) => console.warn('DM inbox listener error:', err));
-
-        // Outbox: messages FROM me. Needed so the conversation list shows
-        // convos where I sent the most recent message.
-        outboxUnsub = db.collection('dm_messages')
-            .where('from', '==', currentUid)
-            .orderBy('createdAt', 'desc')
-            .limit(100)
-            .onSnapshot((snap) => {
-                snap.docChanges().forEach((change) => {
-                    if (change.type !== 'added') return;
-                    const msg = { id: change.doc.id, ...change.doc.data() };
-                    if (isExpired(msg)) return;
-                    updateConversation(msg.to, msg);
-                });
-                if (!initialLoadDone.outbox) {
-                    snap.forEach((d) => seenIds.add(d.id));
                     initialLoadDone.outbox = true;
                 }
                 fireChange();
-            }, (err) => console.warn('DM outbox listener error:', err));
+            }, (err) => console.warn('DM listener error:', err));
+
+        // Outbox listener retired — single listener above covers both.
+        outboxUnsub = null;
 
         startExpirySweep();
     }
