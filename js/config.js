@@ -10,5 +10,5 @@ window.ARCADE_CONFIG = {
     //            See workers/README.md for step-by-step instructions.
     //
     // Example:  groqWorkerUrl: 'https://arcade-groq.packgod67.workers.dev',
-    groqWorkerUrl: null,
+    groqWorkerUrl: 'https://arcad-groq.gatabanumai.workers.dev',
 };
