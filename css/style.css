@@ -3806,16 +3806,33 @@ body.theme-transitioning * {
 @media (max-width: 768px) {
     .header {
         padding: 1rem 0.75rem 0.9rem;
-        /* Respect iOS safe area */
         padding-top: max(1rem, env(safe-area-inset-top));
+        /* Kill desktop centering so absolute children don't get
+           visually centered while flex children sit left-aligned */
+        text-align: left;
     }
 
+    /* Proper flex layout on mobile: logo at top, controls below.
+       Prevents the overlap of absolute-positioned theme picker +
+       auth area that was happening on the previous layout. */
     .header-content {
-        gap: 0.5rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 0.65rem;
     }
 
     .header-logo {
         height: 32px;
+    }
+
+    /* Controls row: theme picker button + auth area side-by-side
+       in document flow (no more absolute positioning collisions) */
+    .header-content .theme-picker-wrapper {
+        position: relative;
+        top: auto;
+        right: auto;
+        z-index: 200;
     }
 
     .logo h1 {
@@ -3941,22 +3958,22 @@ body.theme-transitioning * {
         gap: 6px;
     }
 
+    /* Auth area: normal flow (no longer absolute). Sits centered in
+       the header column, its inner row wraps onto 2 lines if needed. */
     .auth-area {
         position: relative;
-        /* Block-level + full width so children get a proper container
-           instead of being inline-centered by the parent .header
-           (text-align:center). */
-        display: block;
+        top: auto;
+        right: auto;
+        display: flex;
+        justify-content: center;
         width: 100%;
         max-width: 100%;
         text-align: center;
     }
-    /* The inner row rendered by auth.js: ADMIN badge + username + Approvals
-       + Log out. On mobile it's too wide for narrow phones, so let it wrap
-       onto 2 lines centered, instead of being clipped on both edges by a
-       single-row overflow. */
+    /* Inner row rendered by auth.js. Let it wrap when too wide instead
+       of being clipped by a nowrap overflow. */
     .auth-user-info {
-        display: inline-flex;
+        display: flex;
         flex-wrap: wrap;
         justify-content: center;
         align-items: center;
@@ -3965,13 +3982,23 @@ body.theme-transitioning * {
     }
     .auth-user-info > * {
         flex: 0 0 auto;
+        /* Just in case a child stretches on some setup */
+        max-width: 100%;
     }
 
-    /* Theme picker: fill width on small screens */
+    /* Theme picker popup: constrained to viewport, properly bounded so
+       it can't span the whole left side of the screen like it was. */
     .theme-picker-popup {
-        width: calc(100vw - 16px);
-        max-width: 340px;
+        position: absolute;
+        /* Anchor to the button, not to the wrapper's right edge */
+        top: calc(100% + 4px);
         right: 0;
+        left: auto;
+        width: calc(100vw - 24px);
+        max-width: 320px;
+        /* Hard-cap height so it can't overrun the screen */
+        max-height: 70dvh;
+        overflow-y: auto;
     }
 
     /* Chat stays usable on mobile */
