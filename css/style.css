@@ -3881,6 +3881,12 @@ body.theme-transitioning * {
         padding: 0.5rem 0.75rem;
         margin: 0 -0.75rem;
         display: flex;
+        /* IMPORTANT: override base .tab-bar { justify-content: center }.
+           Centering an overflowing flex row hides the edge tabs (Games on
+           the left, Cheats on the right) because the content is pushed
+           past both edges equally. flex-start anchors Games visible first
+           and users scroll right to see the rest. */
+        justify-content: flex-start;
         flex-wrap: nowrap;
         overflow-x: auto;
         overflow-y: hidden;
@@ -3937,6 +3943,31 @@ body.theme-transitioning * {
 
     .auth-area {
         position: relative;
+        /* Force block-level flex row so overflow-x engages. The parent
+           .header has text-align:center which would otherwise center
+           the auth-area as inline content and clip both edges when it's
+           wider than the viewport. */
+        display: flex;
+        justify-content: flex-start;
+        align-items: center;
+        flex-wrap: nowrap;
+        gap: 8px;
+        width: 100%;
+        max-width: 100%;
+        overflow-x: auto;
+        overflow-y: hidden;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        /* Padding so the first child (ADMIN badge) isn't flush against
+           the scroll origin and can't be subtly clipped. */
+        padding: 0 6px;
+        /* Reset text-align inheritance from .header */
+        text-align: left;
+    }
+    .auth-area::-webkit-scrollbar { display: none; }
+    /* Prevent flex children from shrinking (would cause text clipping) */
+    .auth-area > * {
+        flex: 0 0 auto;
     }
 
     /* Theme picker: fill width on small screens */
