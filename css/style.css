@@ -569,6 +569,149 @@ body.auth-gated .player-container {
     }
 }
 
+/* ===== Mobile category dropdown =====
+   On phones the horizontal category strip gets unwieldy (20+ items of
+   mixed lengths). Replace with a dropdown button that expands to a list
+   of all categories. Hidden on desktop. */
+.cat-dropdown-btn,
+.cat-dropdown-panel {
+    display: none;
+}
+
+.cat-dropdown-btn {
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    width: 100%;
+    padding: 10px 14px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+}
+
+.cat-dropdown-btn:hover,
+.cat-dropdown-btn.is-open {
+    border-color: var(--accent);
+    background: var(--bg-card);
+}
+
+.cat-dropdown-label {
+    flex: 1;
+    text-align: left;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.cat-dropdown-chevron {
+    flex-shrink: 0;
+    color: var(--text-secondary);
+    transition: transform 0.2s;
+}
+
+.cat-dropdown-btn.is-open .cat-dropdown-chevron {
+    transform: rotate(180deg);
+}
+
+.cat-dropdown-panel {
+    position: absolute;
+    left: 0;
+    right: 0;
+    margin-top: 6px;
+    max-height: 60vh;
+    max-height: 60dvh;
+    overflow-y: auto;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
+    z-index: 80;
+    padding: 6px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+}
+
+.cat-dropdown-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px 8px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    font-weight: 500;
+    cursor: pointer;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.12s;
+}
+
+.cat-dropdown-item:hover {
+    border-color: var(--accent);
+    background: var(--bg-card-hover);
+}
+
+.cat-dropdown-item.active {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+}
+
+/* Color variants match the main-bar buttons */
+.cat-dropdown-item-fav {
+    color: #facc15;
+    border-color: rgba(250, 204, 21, 0.35);
+}
+.cat-dropdown-item-fav.active {
+    background: #facc15;
+    border-color: #facc15;
+    color: #000;
+}
+.cat-dropdown-item-popular {
+    color: #fb923c;
+}
+.cat-dropdown-item-popular.active {
+    background: linear-gradient(135deg, #f97316, #ef4444);
+    border-color: #f97316;
+}
+.cat-dropdown-item-roms {
+    color: #8b5cf6;
+}
+.cat-dropdown-item-roms.active {
+    background: linear-gradient(135deg, #7c3aed, #2563eb);
+    border-color: #7c3aed;
+}
+
+/* Activate the dropdown on mobile; hide the horizontal strip */
+@media (max-width: 768px) {
+    .categories {
+        display: none !important;
+    }
+    .cat-dropdown-btn {
+        display: flex;
+    }
+    .controls-row {
+        position: relative; /* anchor for the dropdown panel */
+    }
+}
+
+@media (max-width: 360px) {
+    /* Super narrow: single column in the dropdown so long names fit */
+    .cat-dropdown-panel {
+        grid-template-columns: 1fr;
+    }
+}
+
 /* ===== Continue Playing strip ===== */
 .continue-playing {
     margin: 0 0 1.25rem;

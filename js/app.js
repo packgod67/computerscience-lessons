@@ -40,6 +40,7 @@
         }
         buildCategories();
         buildRomSubBar();
+        buildDropdownPanel();
         applyFilters();
         renderPage();
 
@@ -109,6 +110,10 @@
             if (favBtnEl) {
                 favBtnEl.style.display = user ? '' : 'none';
             }
+            // Refresh the mobile dropdown since the Favorites button comes
+            // and goes with auth state
+            const panel = document.getElementById('catDropdownPanel');
+            if (panel && panel._refresh) panel._refresh();
             // If viewing favorites and logged out, switch to All
             if (!user && activeCategory === '__favorites__') {
                 activeCategory = 'all';
@@ -240,6 +245,88 @@
         categoriesContainer.querySelectorAll('.cat-btn').forEach(btn => {
             btn.classList.toggle('active', btn.dataset.category === activeCategory);
         });
+        // Also update the mobile dropdown: label + which item is highlighted
+        updateDropdownLabel();
+        const panel = document.getElementById('catDropdownPanel');
+        if (panel) {
+            panel.querySelectorAll('.cat-dropdown-item').forEach(b => {
+                b.classList.toggle('active', b.dataset.category === activeCategory);
+            });
+        }
+    }
+
+    // Human-readable name for whatever is active. Reads the text content of
+    // the real .cat-btn in the strip (that already has correct emoji + text).
+    function updateDropdownLabel() {
+        const labelEl = document.getElementById('catDropdownLabel');
+        if (!labelEl) return;
+        const activeBtn = categoriesContainer.querySelector(
+            `.cat-btn[data-category="${activeCategory}"]`
+        );
+        labelEl.textContent = activeBtn ? activeBtn.textContent.trim() : 'All';
+    }
+
+    // Build/refresh the mobile dropdown panel. Mirrors the desktop .categories
+    // strip — tapping an item does the same as tapping the corresponding
+    // cat-btn, then closes the dropdown.
+    function buildDropdownPanel() {
+        const btn = document.getElementById('catDropdownBtn');
+        const panel = document.getElementById('catDropdownPanel');
+        if (!btn || !panel) return;
+
+        function refreshItems() {
+            panel.innerHTML = '';
+            categoriesContainer.querySelectorAll('.cat-btn').forEach(src => {
+                const item = document.createElement('button');
+                item.className = 'cat-dropdown-item';
+                item.dataset.category = src.dataset.category;
+                item.innerHTML = src.innerHTML;
+                // Match hidden state (favorites button hides when logged out)
+                if (src.style.display === 'none') item.style.display = 'none';
+                if (src.classList.contains('active')) item.classList.add('active');
+                // Preserve color classes so favorites/popular/roms keep their tint
+                ['cat-btn-fav', 'cat-btn-popular', 'cat-btn-roms'].forEach(cls => {
+                    if (src.classList.contains(cls)) {
+                        item.classList.add(cls.replace('cat-btn-', 'cat-dropdown-item-'));
+                    }
+                });
+                item.addEventListener('click', () => {
+                    src.click();        // delegate to the real button's click handler
+                    closePanel();
+                });
+                panel.appendChild(item);
+            });
+            updateDropdownLabel();
+        }
+
+        function openPanel() {
+            refreshItems();
+            panel.hidden = false;
+            btn.setAttribute('aria-expanded', 'true');
+            btn.classList.add('is-open');
+        }
+        function closePanel() {
+            panel.hidden = true;
+            btn.setAttribute('aria-expanded', 'false');
+            btn.classList.remove('is-open');
+        }
+        function togglePanel() {
+            if (panel.hidden) openPanel(); else closePanel();
+        }
+
+        btn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            togglePanel();
+        });
+        document.addEventListener('click', (e) => {
+            if (!panel.hidden && !panel.contains(e.target) && e.target !== btn) {
+                closePanel();
+            }
+        });
+
+        // Expose a way for other code to keep items in sync when categories
+        // are dynamically added (e.g. favorites button appears on login)
+        panel._refresh = refreshItems;
     }
 
     // Levenshtein distance capped at `max` — returns max+1 if the distance

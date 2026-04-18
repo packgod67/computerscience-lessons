@@ -42,6 +42,18 @@
                     <button id="randomGameBtn" class="random-btn" title="Random game" aria-label="Random game">&#127922;</button>
                 </div>
                 <div class="controls-row">
+                    <!-- Mobile dropdown — only visible on small screens. Shows
+                         the active category and opens a full category picker
+                         when tapped. The horizontal strip below (.categories)
+                         is hidden on mobile via CSS. -->
+                    <button id="catDropdownBtn" class="cat-dropdown-btn" type="button" aria-expanded="false">
+                        <span class="cat-dropdown-label" id="catDropdownLabel">All</span>
+                        <svg class="cat-dropdown-chevron" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                            <polyline points="6 9 12 15 18 9"/>
+                        </svg>
+                    </button>
+                    <div id="catDropdownPanel" class="cat-dropdown-panel" hidden></div>
+
                     <div class="categories" id="categories">
                         <button class="cat-btn active" data-category="all">All</button>
                     </div>
