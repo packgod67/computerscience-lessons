@@ -3869,9 +3869,10 @@ body.theme-transitioning * {
         text-align: right;
     }
 
-    /* Tab bar: sticky + horizontal scroll for many tabs. Use a wrapping
-       positioned container so we can fade the right edge (cue that there
-       are hidden tabs) and enable smooth touch scrolling. */
+    /* Tab bar: sticky + horizontal scroll for many tabs. The partial
+       visibility of a tab at the edge is itself the cue that it scrolls;
+       we had a fade-mask here but it clipped the visible tabs and looked
+       worse than just showing them clean. */
     .tab-bar {
         position: sticky;
         top: 0;
@@ -3890,20 +3891,6 @@ body.theme-transitioning * {
         -webkit-overflow-scrolling: touch;
         scroll-snap-type: x proximity;
         scroll-padding-left: 0.75rem;
-        /* Fade-out on the right edge as a visual hint that more tabs exist.
-           Transparent left→ opaque middle →transparent right. */
-        -webkit-mask-image: linear-gradient(
-            to right,
-            transparent 0,
-            #000 12px,
-            #000 calc(100% - 24px),
-            transparent 100%);
-                mask-image: linear-gradient(
-            to right,
-            transparent 0,
-            #000 12px,
-            #000 calc(100% - 24px),
-            transparent 100%);
     }
     .tab-bar::-webkit-scrollbar { display: none; }
     .tab-btn {
