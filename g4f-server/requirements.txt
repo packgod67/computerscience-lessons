@@ -1,4 +1,0 @@
-g4f[all]
-curl_cffi
-flask
-brotli

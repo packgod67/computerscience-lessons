@@ -22,17 +22,6 @@
 // ─────────────────────────────────────────────────────────────────
 
 const PROVIDERS = {
-    // gpt4free on Render — free but unreliable. Gives access to premium
-    // models (GPT, Claude, Gemini Pro) via reverse-engineered endpoints.
-    // Set the G4F_URL env var to your deployed Render service URL.
-    g4f: {
-        urlFromEnv: 'G4F_URL',
-        fallbackUrlPath: '/v1/chat/completions',
-        defaultModel: 'gpt-4o',
-        // No API key needed — g4f's public endpoint has no auth
-        keys: [],
-        noAuth: true,
-    },
     cerebras: {
         url: 'https://api.cerebras.ai/v1/chat/completions',
         defaultModel: 'llama-3.3-70b',
@@ -93,28 +82,12 @@ export default {
             }, 400);
         }
 
-        // Resolve URL (static or from env var, e.g. G4F_URL pointing at
-        // the user's Render-hosted gpt4free instance)
-        let upstreamUrl = provider.url;
-        if (!upstreamUrl && provider.urlFromEnv) {
-            const base = env[provider.urlFromEnv];
-            if (!base) {
-                return json({
-                    error: `${providerName} URL not configured. Set ${provider.urlFromEnv} env var.`,
-                }, 503);
-            }
-            upstreamUrl = base.replace(/\/+$/, '') + (provider.fallbackUrlPath || '/v1/chat/completions');
-        }
-
-        // Resolve API key (unless provider is no-auth like local g4f)
-        let apiKey = null;
-        if (!provider.noAuth) {
-            apiKey = pickKey(env, provider.keys);
-            if (!apiKey) {
-                return json({
-                    error: `${providerName} API key not configured. Add one of: ${provider.keys.join(', ')}`,
-                }, 503);
-            }
+        const upstreamUrl = provider.url;
+        const apiKey = pickKey(env, provider.keys);
+        if (!apiKey) {
+            return json({
+                error: `${providerName} API key not configured. Add one of: ${provider.keys.join(', ')}`,
+            }, 503);
         }
 
         const messages = Array.isArray(body.messages) ? body.messages : null;
@@ -150,20 +123,18 @@ export default {
             delete upstreamPayload.seed;
         }
 
-        const upstreamHeaders = { 'Content-Type': 'application/json' };
-        if (apiKey) upstreamHeaders['Authorization'] = 'Bearer ' + apiKey;
-
-        // Set a timeout — g4f especially can hang for 60s+ on cold starts
-        // or when a provider is broken. Don't let the worker tie up waiting.
+        // 30s timeout so a slow upstream can't tie up the worker
         const controller = new AbortController();
-        const timeoutMs = providerName === 'g4f' ? 45_000 : 30_000;
-        const timeout = setTimeout(() => controller.abort(), timeoutMs);
+        const timeout = setTimeout(() => controller.abort(), 30_000);
 
         let upstream;
         try {
             upstream = await fetch(upstreamUrl, {
                 method: 'POST',
-                headers: upstreamHeaders,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + apiKey,
+                },
                 body: JSON.stringify(upstreamPayload),
                 signal: controller.signal,
             });
