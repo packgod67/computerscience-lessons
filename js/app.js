@@ -125,6 +125,22 @@
         // Active users bar — expandable, shows currently-playing status per user
         setupActiveUsersBar();
 
+        // Continue Playing strip — re-renders when auth changes or when
+        // user's profile recentPlays updates.
+        setupContinuePlaying();
+
+        // Random game button
+        const randomBtn = document.getElementById('randomGameBtn');
+        if (randomBtn) {
+            randomBtn.addEventListener('click', () => {
+                // Use the filtered list so "random" respects current category
+                const pool = filtered.length > 0 ? filtered : games;
+                if (pool.length === 0) return;
+                const g = pool[Math.floor(Math.random() * pool.length)];
+                window.location.href = 'play.html?game=' + encodeURIComponent(g.id);
+            });
+        }
+
         // When favorites change, update all visible star buttons
         ArcadeAuth.onFavoritesChange((favs) => {
             document.querySelectorAll('.fav-btn').forEach(btn => {
@@ -226,29 +242,115 @@
         });
     }
 
+    // Levenshtein distance capped at `max` — returns max+1 if the distance
+    // exceeds the cap (lets us bail out early on big mismatches).
+    function lev(a, b, max) {
+        if (a === b) return 0;
+        const la = a.length, lb = b.length;
+        if (Math.abs(la - lb) > max) return max + 1;
+        let prev = new Array(lb + 1);
+        for (let j = 0; j <= lb; j++) prev[j] = j;
+        for (let i = 1; i <= la; i++) {
+            const cur = new Array(lb + 1);
+            cur[0] = i;
+            let rowMin = cur[0];
+            for (let j = 1; j <= lb; j++) {
+                const cost = a[i - 1] === b[j - 1] ? 0 : 1;
+                cur[j] = Math.min(cur[j - 1] + 1, prev[j] + 1, prev[j - 1] + cost);
+                if (cur[j] < rowMin) rowMin = cur[j];
+            }
+            if (rowMin > max) return max + 1;  // early-exit
+            prev = cur;
+        }
+        return prev[lb];
+    }
+
+    // Fuzzy-match a query against a title. Returns a score:
+    //   0  = exact-contains (unbeatable)
+    //   1-N = minimum Levenshtein distance across title words / whole title
+    //   Infinity = no match
+    function fuzzyScore(title, query) {
+        if (!query) return 0;
+        const t = title.toLowerCase();
+        const q = query.toLowerCase();
+        if (t.includes(q)) return 0;
+
+        // Tolerance scales with query length: 1 typo for short words, up to 3 for long
+        const tolerance = q.length <= 4 ? 1 : q.length <= 8 ? 2 : 3;
+
+        // Try against whole title (accept short edits)
+        if (q.length >= 4) {
+            const d = lev(q, t, tolerance);
+            if (d <= tolerance) return d;
+        }
+        // Try each word in the title (catches "streat" vs "street fighter")
+        const words = t.split(/\s+/);
+        let best = Infinity;
+        for (const w of words) {
+            if (w.length < 3) continue;
+            const d = lev(q, w, tolerance);
+            if (d < best) best = d;
+            if (best === 0) return 0;
+        }
+        return best <= tolerance ? best : Infinity;
+    }
+
     function applyFilters() {
         const query = searchInput.value.toLowerCase().trim();
-        filtered = games.filter(g => {
-            const matchesSearch = !query || g.title.toLowerCase().includes(query);
+
+        // First pass: substring matches (fast path, covers 99% of typing)
+        const substringMatches = [];
+        const fuzzyCandidates = [];
+
+        for (const g of games) {
+            // Category filter first (cheaper than text search)
             let matchesCategory;
             if (activeCategory === '__favorites__') {
                 matchesCategory = ArcadeAuth.isFavorite(g.id);
             } else if (activeCategory === '__popular__') {
                 matchesCategory = !!g.popular;
             } else if (activeCategory === '__roms__') {
-                // Only games with a rom platform tag; apply sub-platform filter too
                 if (!g.rom) matchesCategory = false;
                 else if (activeRomPlatform === 'all') matchesCategory = true;
                 else matchesCategory = g.rom === activeRomPlatform;
             } else {
                 matchesCategory = activeCategory === 'all' || g.category === activeCategory;
             }
-            return matchesSearch && matchesCategory;
-        });
+            if (!matchesCategory) continue;
+
+            if (!query) {
+                substringMatches.push(g);
+                continue;
+            }
+            if (g.title.toLowerCase().includes(query)) {
+                substringMatches.push(g);
+            } else {
+                fuzzyCandidates.push(g);
+            }
+        }
+
+        filtered = substringMatches;
+
+        // Second pass: fuzzy fallback ONLY when substring matches are scarce
+        // and the query is long enough to be meaningful. Catches typos like
+        // "ponemon unbound" or "strret fighter" without flooding normal
+        // queries with noise.
+        if (query && query.length >= 3 && substringMatches.length < 20) {
+            const scored = [];
+            for (const g of fuzzyCandidates) {
+                const s = fuzzyScore(g.title, query);
+                if (s !== Infinity) scored.push([s, g]);
+            }
+            // Sort by lowest distance, take up to 20 fuzzy matches
+            scored.sort((a, b) => a[0] - b[0]);
+            for (let i = 0; i < Math.min(20, scored.length); i++) {
+                filtered.push(scored[i][1]);
+            }
+        }
+
         if (gameCount) {
             gameCount.textContent = `${filtered.length} game${filtered.length !== 1 ? 's' : ''}`;
         }
-        // Show/hide ROM sub-tab bar based on active category
         if (romSubBar) {
             romSubBar.style.display = activeCategory === '__roms__' ? '' : 'none';
         }
@@ -394,6 +496,81 @@
         return gamesById[id];
     }
 
+    // Render the user's "Continue Playing" strip on the home view. Data
+    // lives on their profile (`recentPlays: [{gameId, at}, ...]`) which
+    // player.js updates every time they load a game.
+    async function renderContinuePlaying() {
+        const section = document.getElementById('continuePlaying');
+        const strip = document.getElementById('continueStrip');
+        if (!section || !strip) return;
+
+        if (!ArcadeAuth.isLoggedIn()) {
+            section.hidden = true;
+            return;
+        }
+        const uid = ArcadeAuth.getUser()?.uid;
+        if (!uid) { section.hidden = true; return; }
+
+        let profile;
+        try { profile = await ArcadeAuth.getProfile(uid); }
+        catch { section.hidden = true; return; }
+
+        const plays = Array.isArray(profile && profile.recentPlays) ? profile.recentPlays : [];
+        if (plays.length === 0) { section.hidden = true; return; }
+
+        // Resolve gameId → game entry, keep the first 8 that still exist in
+        // the catalog. Preserves original order (most-recent-first).
+        const byId = {};
+        for (const g of games) byId[g.id] = g;
+        const resolved = [];
+        const seen = new Set();
+        for (const p of plays) {
+            const g = byId[p.gameId];
+            if (!g || seen.has(g.id)) continue;
+            seen.add(g.id);
+            resolved.push(g);
+            if (resolved.length >= 8) break;
+        }
+        if (resolved.length === 0) { section.hidden = true; return; }
+
+        strip.innerHTML = resolved.map(g => {
+            const thumb = g.thumbnail
+                ? `<img class="continue-thumb" src="${esc(g.thumbnail)}" alt="" loading="lazy">`
+                : `<div class="continue-thumb continue-thumb-placeholder">${esc(g.title.charAt(0).toUpperCase())}</div>`;
+            return `<a class="continue-card" href="play.html?game=${encodeURIComponent(g.id)}" title="${esc(g.title)}">
+                ${thumb}
+                <span class="continue-title">${esc(g.title)}</span>
+            </a>`;
+        }).join('');
+
+        section.hidden = false;
+    }
+
+    function setupContinuePlaying() {
+        renderContinuePlaying();
+        // Re-render when auth state changes
+        if (ArcadeAuth && ArcadeAuth.onAuthChange) {
+            ArcadeAuth.onAuthChange(() => renderContinuePlaying());
+        }
+        // Clear-history button: empty the user's recentPlays field
+        const clearBtn = document.getElementById('continueClearBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', async () => {
+                if (!confirm('Clear your Continue Playing history?')) return;
+                try {
+                    // updateProfile whitelists avatar/bio/wallpaper/accent/showcase.
+                    // We need a direct Firestore write for recentPlays.
+                    const db = ArcadeAuth.getDb();
+                    const uid = ArcadeAuth.getUser()?.uid;
+                    if (db && uid) {
+                        await db.collection('users').doc(uid).update({ recentPlays: [] });
+                        renderContinuePlaying();
+                    }
+                } catch (e) { alert('Clear failed: ' + e.message); }
+            });
+        }
+    }
+
     function setupActiveUsersBar() {
         const bar = document.getElementById('activeUsersBar');
         const textEl = document.getElementById('activeUsersText');
@@ -472,6 +649,52 @@
                 textEl.textContent = `${count} active user${count !== 1 ? 's' : ''}`;
             });
         }
+    }
+
+    // ===== PWA: service worker + install prompt =====
+    // Registers the worker on first visit, captures the beforeinstallprompt
+    // event so we can show our own install button in the header.
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('sw.js').catch((e) => {
+                console.warn('SW register failed:', e);
+            });
+        });
+    }
+
+    let deferredInstallPrompt = null;
+    window.addEventListener('beforeinstallprompt', (e) => {
+        e.preventDefault();
+        deferredInstallPrompt = e;
+        showInstallButton();
+    });
+    window.addEventListener('appinstalled', () => {
+        deferredInstallPrompt = null;
+        const btn = document.getElementById('pwaInstallBtn');
+        if (btn) btn.remove();
+    });
+
+    function showInstallButton() {
+        if (document.getElementById('pwaInstallBtn')) return;
+        const header = document.querySelector('.header-content');
+        if (!header) return;
+        const btn = document.createElement('button');
+        btn.id = 'pwaInstallBtn';
+        btn.className = 'pwa-install-btn';
+        btn.title = 'Install Arcade as an app';
+        btn.innerHTML = '&#128229; Install';
+        btn.addEventListener('click', async () => {
+            if (!deferredInstallPrompt) return;
+            deferredInstallPrompt.prompt();
+            try {
+                const { outcome } = await deferredInstallPrompt.userChoice;
+                if (outcome === 'accepted') btn.remove();
+            } catch {}
+            deferredInstallPrompt = null;
+        });
+        const authArea = header.querySelector('.auth-area');
+        if (authArea) header.insertBefore(btn, authArea);
+        else header.appendChild(btn);
     }
 
     buildPartNav();

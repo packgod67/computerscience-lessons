@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arcade</title>
+    <meta name="theme-color" content="#7c3aed">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="apple-touch-icon" href="assets/logo.png">
+    <link rel="icon" href="assets/logo.png">
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -35,6 +39,7 @@
                         <path d="m21 21-4.35-4.35"/>
                     </svg>
                     <input type="text" id="search" class="search-input" placeholder="Search games...">
+                    <button id="randomGameBtn" class="random-btn" title="Random game" aria-label="Random game">&#127922;</button>
                 </div>
                 <div class="controls-row">
                     <div class="categories" id="categories">
@@ -43,6 +48,16 @@
                     <span class="game-count" id="gameCount"></span>
                 </div>
             </div>
+
+            <!-- Continue Playing strip — populated by app.js when the user is
+                 logged in and has recentPlays. Hidden otherwise. -->
+            <section class="continue-playing" id="continuePlaying" hidden>
+                <div class="continue-header">
+                    <h2 class="section-title">&#9654; Continue Playing</h2>
+                    <button class="continue-clear" id="continueClearBtn" title="Clear history">Clear</button>
+                </div>
+                <div class="continue-strip" id="continueStrip"></div>
+            </section>
 
             <div class="game-grid" id="gameGrid"></div>
 

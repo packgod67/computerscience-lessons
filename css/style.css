@@ -510,7 +510,7 @@ body.auth-gated .player-container {
 
 .search-input {
     width: 100%;
-    padding: 14px 16px 14px 48px;
+    padding: 14px 56px 14px 48px;
     background: var(--bg-secondary);
     border: 1px solid var(--border);
     border-radius: var(--radius);
@@ -518,6 +518,168 @@ body.auth-gated .player-container {
     font-size: 1rem;
     outline: none;
     transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.random-btn {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    color: var(--text-primary);
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: all 0.15s;
+    padding: 0;
+}
+
+.random-btn:hover {
+    border-color: var(--accent);
+    background: var(--accent-subtle);
+    transform: translateY(-50%) rotate(180deg);
+}
+
+.random-btn:active {
+    transform: translateY(-50%) scale(0.9);
+}
+
+/* ===== PWA install button ===== */
+.pwa-install-btn {
+    background: var(--accent);
+    border: none;
+    color: #fff;
+    font-size: 0.8rem;
+    font-weight: 600;
+    padding: 7px 12px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: filter 0.15s;
+}
+
+.pwa-install-btn:hover { filter: brightness(1.15); }
+
+@media (max-width: 480px) {
+    .pwa-install-btn {
+        font-size: 0.72rem;
+        padding: 6px 9px;
+    }
+}
+
+/* ===== Continue Playing strip ===== */
+.continue-playing {
+    margin: 0 0 1.25rem;
+}
+
+.continue-header {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 0.6rem;
+    padding: 0 2px;
+}
+
+.section-title {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    color: var(--accent);
+}
+
+.continue-clear {
+    background: none;
+    border: 1px solid transparent;
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    padding: 4px 10px;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.continue-clear:hover {
+    color: var(--text-primary);
+    border-color: var(--border);
+}
+
+.continue-strip {
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(140px, 160px);
+    gap: 8px;
+    overflow-x: auto;
+    overflow-y: hidden;
+    padding-bottom: 8px;
+    scrollbar-width: thin;
+    scroll-snap-type: x proximity;
+    -webkit-overflow-scrolling: touch;
+}
+
+.continue-strip::-webkit-scrollbar { height: 6px; }
+.continue-strip::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+}
+
+.continue-card {
+    display: flex;
+    flex-direction: column;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-sm);
+    overflow: hidden;
+    text-decoration: none;
+    transition: all 0.15s;
+    scroll-snap-align: start;
+}
+
+.continue-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent);
+    box-shadow: 0 4px 14px var(--accent-subtle);
+}
+
+.continue-thumb {
+    width: 100%;
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+    background: var(--bg-card-hover);
+    display: block;
+}
+
+.continue-thumb-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-secondary);
+    background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+    color: #fff;
+}
+
+.continue-title {
+    padding: 6px 8px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+@media (max-width: 768px) {
+    .continue-strip {
+        grid-auto-columns: minmax(120px, 140px);
+    }
+    .section-title {
+        font-size: 0.9rem;
+    }
 }
 
 .search-input:focus {
