@@ -250,31 +250,45 @@
         return scored.slice(0, topN);
     }
 
-    // AI-powered re-ranker. Feeds the top ~30 local candidates plus the raw
+    // AI-powered re-ranker. Feeds the top ~40 local candidates plus the raw
     // user query into a free LLM (pollinations.ai — no auth, CORS-friendly)
-    // and asks it to pick the best 6 with a 1-line personalized reason each.
+    // and asks it to pick the best 6 with a personalized reason each.
     async function aiRecommend(query, candidates) {
         if (!candidates.length) return null;
 
         // Compact representation — trim title + tags + short description
-        const cand = candidates.slice(0, 30).map(c => ({
+        const cand = candidates.slice(0, 40).map(c => ({
             id: c.game.id,
             title: c.game.title,
             category: c.game.category,
             tags: (c.game.tags || []).slice(0, 8),
-            description: (c.game.description || '').slice(0, 180),
+            description: (c.game.description || '').slice(0, 220),
+            popular: !!c.game.popular,
         }));
 
-        const system = 'You are a game recommender for a browser arcade. '
-            + 'Given a user request and a list of candidate games, pick the 6 games '
-            + 'that best match and return a SHORT one-line reason per pick. '
-            + 'Reply with STRICT JSON only. No markdown, no prose around it.';
-        const user = 'User asked: "' + query + '"\n\n'
-            + 'Candidates (JSON):\n' + JSON.stringify(cand) + '\n\n'
-            + 'Return JSON of this exact shape:\n'
-            + '{"picks":[{"id":"<game_id>","reason":"<max 90 chars>"},'
-            + '{"id":"...","reason":"..."}]}\n'
-            + 'Use 6 picks. Use only ids from the candidates list.';
+        const system = [
+            'You are a thoughtful game recommender for a browser arcade with 2,700+ games.',
+            'The user describes what they want in plain language — possibly messy or vague — and you pick the 6 games that best match.',
+            '',
+            'REASONING HINTS:',
+            '- If the user references a specific game by name ("like Unbound", "similar to Zelda"), find games with similar vibes, franchises, mechanics, or tags. Do not just pick the referenced game itself.',
+            '- If they mention specific features ("all the pokemons", "infinite replay", "co-op"), prioritize games whose description or tags mention that.',
+            '- If they say "fun", "good", or other vague words, lean on the `popular` flag as a tiebreaker.',
+            '- If the request is for a franchise (Pokemon/Mario/Sonic/etc), ONLY pick games from that franchise.',
+            '- ROM hacks are legitimate picks. Don\'t avoid them.',
+            '- Sort by how well each one matches the user\'s PRIMARY intent, not by raw tag count.',
+            '',
+            'RESPONSE FORMAT:',
+            '- STRICT JSON only. No markdown, no prose outside the JSON.',
+            '- Reasons should be SPECIFIC and PERSONALIZED to the user\'s query — mention what the game does that matches their ask. Max 100 characters each.',
+            '- Use exactly 6 picks unless fewer than 6 candidates genuinely fit, in which case use as many as do.',
+        ].join('\n');
+        const user = 'User request: "' + query + '"\n\n'
+            + 'Candidate games (JSON array, each with id/title/category/tags/description/popular):\n'
+            + JSON.stringify(cand) + '\n\n'
+            + 'Return this exact JSON shape:\n'
+            + '{"picks":[{"id":"<game_id>","reason":"<specific reason tied to the query>"},...]}\n'
+            + 'Use only ids that appear in the candidates list.';
 
         let raw;
         try {
@@ -335,8 +349,9 @@
             return { items: [], parsed, source: 'none' };
         }
         // Always compute local matches first — acts as a candidate pool for
-        // the AI and as a fallback if AI is off/fails.
-        const local = localRecommend(parsed, 30);
+        // the AI and as a fallback if AI is off/fails. Pool of 40 so the
+        // LLM has room to rerank; users still see 6.
+        const local = localRecommend(parsed, 40);
         if (!useAI) {
             return { items: local.slice(0, topN), parsed, source: 'local' };
         }
