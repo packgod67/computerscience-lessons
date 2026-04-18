@@ -1,51 +1,69 @@
-// Cloudflare Worker: Groq proxy for the Arcade AI recommender.
+// Cloudflare Worker: multi-provider LLM proxy for the Arcade.
 //
-// Deploy this on a free Cloudflare Workers account, set the GROQ_API_KEY
-// secret, and point js/recommender.js at your worker's URL. Users get
-// Llama-3.3-70B-quality recommendations without ever seeing a key.
+// Routes to Cerebras / Groq / Gemini based on a `provider` field in the
+// request body. All three expose OpenAI-compatible chat completion APIs,
+// so the request/response shape stays identical from the browser's
+// perspective. Keeps streaming (SSE) + tool calling passthroughs.
 //
 // ─────────────────────────────────────────────────────────────────
-// DEPLOY (one-time setup, ~5 minutes):
+// DEPLOY
 //
-// 1. Sign up for Groq at  https://console.groq.com/keys
-//    Copy your API key (starts with `gsk_...`)
+// 1. Paste this entire file into your Cloudflare Worker's editor and Deploy.
 //
-// 2. Sign up for Cloudflare at  https://dash.cloudflare.com/
-//    Go to  Workers & Pages → Create → Create Worker
-//    Name it  arcade-groq  (or anything you like)
+// 2. Add secrets (Worker → Settings → Variables and Secrets):
+//      CEREBRAS_API_KEY   (recommended, 14K req/day free)
+//      GROQ_API_KEY       (current, 1K req/day free)
+//      GEMINI_API_KEY     (optional 3rd pool, 1K req/day free)
+//    You only need ONE of them, but the more you add, the more headroom
+//    the arcade's Kirky chatbot gets before hitting rate limits.
 //
-// 3. Click "Edit Code" and paste the CONTENTS OF THIS FILE
-//    Click "Deploy"
-//
-// 4. Go to the worker's Settings → Variables and Secrets
-//    Add a SECRET (not a variable):
-//      name:  GROQ_API_KEY
-//      value: your gsk_... key from step 1
-//    Click "Deploy" again
-//
-// 5. Copy the worker URL (something like
-//    https://arcade-groq.yourname.workers.dev)
-//    Paste it into the recommender settings (see README in this folder)
-//
-// Free tier covers 100,000 requests/day — more than enough unless the
-// arcade gets TikTok-famous.
+// 3. The client (js/chatbot.js) sends `{ provider, model, messages, ... }`
+//    and this worker routes accordingly.
 // ─────────────────────────────────────────────────────────────────
 
-const GROQ_URL = 'https://api.groq.com/openai/v1/chat/completions';
-const DEFAULT_MODEL = 'llama-3.3-70b-versatile';
+const PROVIDERS = {
+    // gpt4free on Render — free but unreliable. Gives access to premium
+    // models (GPT, Claude, Gemini Pro) via reverse-engineered endpoints.
+    // Set the G4F_URL env var to your deployed Render service URL.
+    g4f: {
+        urlFromEnv: 'G4F_URL',
+        fallbackUrlPath: '/v1/chat/completions',
+        defaultModel: 'gpt-4o',
+        // No API key needed — g4f's public endpoint has no auth
+        keys: [],
+        noAuth: true,
+    },
+    cerebras: {
+        url: 'https://api.cerebras.ai/v1/chat/completions',
+        defaultModel: 'llama-3.3-70b',
+        keys: ['CEREBRAS_API_KEY', 'cerebras', 'CEREBRAS'],
+    },
+    groq: {
+        url: 'https://api.groq.com/openai/v1/chat/completions',
+        defaultModel: 'llama-3.3-70b-versatile',
+        keys: ['GROQ_API_KEY', 'groq', 'GROQ'],
+    },
+    gemini: {
+        url: 'https://generativelanguage.googleapis.com/v1beta/openai/chat/completions',
+        defaultModel: 'gemini-2.5-flash-lite',
+        keys: ['GEMINI_API_KEY', 'gemini', 'GEMINI'],
+    },
+};
 
-// Allow your arcade origin(s). "*" is fine here since the worker is just a
-// recommender proxy with no secrets exposed to the client. If you want to
-// lock it down, replace with your specific origin (e.g.
-// 'https://packgod67.github.io').
 const ALLOWED_ORIGIN = '*';
-
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
     'Access-Control-Allow-Methods': 'POST, OPTIONS',
     'Access-Control-Allow-Headers': 'Content-Type',
     'Access-Control-Max-Age': '86400',
 };
+
+function pickKey(env, names) {
+    for (const n of names) {
+        if (env[n]) return env[n];
+    }
+    return null;
+}
 
 export default {
     async fetch(request, env) {
@@ -58,14 +76,6 @@ export default {
             return json({ error: 'POST only' }, 405);
         }
 
-        // Accept the secret under either the canonical `GROQ_API_KEY` name
-        // or the shorter `groq` name, so admins who configured it either
-        // way Just Work without needing to rename.
-        const groqKey = env.GROQ_API_KEY || env.groq || env.GROQ;
-        if (!groqKey) {
-            return json({ error: 'Groq API key secret not set on this worker (expected GROQ_API_KEY or groq)' }, 500);
-        }
-
         let body;
         try {
             body = await request.json();
@@ -73,24 +83,57 @@ export default {
             return json({ error: 'Body must be JSON' }, 400);
         }
 
+        // Resolve provider. Default to 'groq' for backward-compat with clients
+        // that predate the multi-provider routing.
+        const providerName = (body.provider || 'groq').toLowerCase();
+        const provider = PROVIDERS[providerName];
+        if (!provider) {
+            return json({
+                error: `Unknown provider '${providerName}'. Valid: cerebras, groq, gemini`,
+            }, 400);
+        }
+
+        // Resolve URL (static or from env var, e.g. G4F_URL pointing at
+        // the user's Render-hosted gpt4free instance)
+        let upstreamUrl = provider.url;
+        if (!upstreamUrl && provider.urlFromEnv) {
+            const base = env[provider.urlFromEnv];
+            if (!base) {
+                return json({
+                    error: `${providerName} URL not configured. Set ${provider.urlFromEnv} env var.`,
+                }, 503);
+            }
+            upstreamUrl = base.replace(/\/+$/, '') + (provider.fallbackUrlPath || '/v1/chat/completions');
+        }
+
+        // Resolve API key (unless provider is no-auth like local g4f)
+        let apiKey = null;
+        if (!provider.noAuth) {
+            apiKey = pickKey(env, provider.keys);
+            if (!apiKey) {
+                return json({
+                    error: `${providerName} API key not configured. Add one of: ${provider.keys.join(', ')}`,
+                }, 503);
+            }
+        }
+
         const messages = Array.isArray(body.messages) ? body.messages : null;
         if (!messages || messages.length === 0) {
             return json({ error: 'Missing messages[]' }, 400);
         }
 
-        // Basic request-size guard so nobody can abuse the worker to blast
-        // Groq quota with enormous prompts.
+        // Size guard so nobody abuses this worker to blast quota with
+        // enormous prompts
         const raw = JSON.stringify(messages);
-        if (raw.length > 50_000) {
-            return json({ error: 'Request too large (>50KB)' }, 413);
+        if (raw.length > 80_000) {
+            return json({ error: 'Request too large (>80KB)' }, 413);
         }
 
-        // Build upstream payload. Pass through streaming + tools so the
-        // chat assistant can use compound-beta's web browsing and receive
-        // token-by-token deltas.
+        // Build the upstream payload. All three providers accept the same
+        // OpenAI-compatible shape, with minor quirks handled below.
         const wantStream = body.stream === true;
         const upstreamPayload = {
-            model: body.model || DEFAULT_MODEL,
+            model: body.model || provider.defaultModel,
             messages: messages,
             temperature: typeof body.temperature === 'number' ? body.temperature : 0.4,
             max_tokens: Math.min(body.max_tokens || 1024, 2048),
@@ -101,27 +144,64 @@ export default {
         if (Array.isArray(body.tools)) upstreamPayload.tools = body.tools;
         if (body.tool_choice) upstreamPayload.tool_choice = body.tool_choice;
 
-        // Forward to Groq with OUR key
-        const upstream = await fetch(GROQ_URL, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + groqKey,
-            },
-            body: JSON.stringify(upstreamPayload),
-        });
+        // Gemini's OpenAI-compat layer doesn't accept `seed`, and sometimes
+        // rejects other unknown fields. Prune defensively.
+        if (providerName === 'gemini') {
+            delete upstreamPayload.seed;
+        }
+
+        const upstreamHeaders = { 'Content-Type': 'application/json' };
+        if (apiKey) upstreamHeaders['Authorization'] = 'Bearer ' + apiKey;
+
+        // Set a timeout — g4f especially can hang for 60s+ on cold starts
+        // or when a provider is broken. Don't let the worker tie up waiting.
+        const controller = new AbortController();
+        const timeoutMs = providerName === 'g4f' ? 45_000 : 30_000;
+        const timeout = setTimeout(() => controller.abort(), timeoutMs);
+
+        let upstream;
+        try {
+            upstream = await fetch(upstreamUrl, {
+                method: 'POST',
+                headers: upstreamHeaders,
+                body: JSON.stringify(upstreamPayload),
+                signal: controller.signal,
+            });
+        } catch (e) {
+            clearTimeout(timeout);
+            return json({
+                error: `${providerName} request failed: ${e.message || 'timeout'}`,
+            }, 504);
+        }
+        clearTimeout(timeout);
+
+        // Propagate 429 with Retry-After so the client can cool down
+        if (upstream.status === 429) {
+            const retryAfter = upstream.headers.get('retry-after') || '60';
+            const text = await upstream.text();
+            return new Response(JSON.stringify({
+                error: `${providerName} rate limit`,
+                detail: text.slice(0, 400),
+            }), {
+                status: 429,
+                headers: {
+                    ...CORS_HEADERS,
+                    'Content-Type': 'application/json',
+                    'Retry-After': retryAfter,
+                },
+            });
+        }
 
         if (!upstream.ok) {
             const text = await upstream.text();
             return json({
-                error: 'Groq upstream error',
+                error: `${providerName} upstream error`,
                 status: upstream.status,
                 detail: text.slice(0, 400),
             }, upstream.status);
         }
 
-        // Streaming: pipe the upstream SSE body straight back to the
-        // browser. Keep the CORS headers and the text/event-stream type.
+        // Streaming: pipe SSE back with proper headers
         if (wantStream && upstream.body) {
             return new Response(upstream.body, {
                 status: 200,

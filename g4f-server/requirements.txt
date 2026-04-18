@@ -1,0 +1,5 @@
+g4f[api]
+curl_cffi
+fastapi
+uvicorn
+brotli
