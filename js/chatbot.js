@@ -1219,6 +1219,17 @@
     function refreshProviderBadge() {
         const el = document.getElementById('kirkyProvider');
         if (!el) return;
+
+        // If Groq is rate-limited, surface that prominently so the user
+        // understands why Kirky's on the fallback — with a live countdown.
+        if (groqIsCoolingDown()) {
+            const secsLeft = Math.ceil((groqCooldownUntil - Date.now()) / 1000);
+            el.textContent = `Groq rate-limited • ${secsLeft}s`;
+            el.className = 'kirky-provider kirky-provider-ratelimited';
+            scheduleBadgeTick();
+            return;
+        }
+
         if (!lastProvider) { el.textContent = 'ready'; el.className = 'kirky-provider kirky-provider-unknown'; return; }
         if (lastProvider === 'groq-tools') {
             el.textContent = 'Groq • tool calling';
@@ -1227,9 +1238,23 @@
             el.textContent = 'Groq • Llama 3.3 70B';
             el.className = 'kirky-provider kirky-provider-groq';
         } else if (lastProvider === 'pollinations') {
-            el.textContent = 'Pollinations';
+            el.textContent = 'Pollinations (fallback)';
             el.className = 'kirky-provider kirky-provider-pollinations';
         }
+    }
+
+    // Refresh the badge every second while rate-limited so the countdown
+    // actually counts down. Stops itself once the cooldown expires.
+    let badgeTickTimer = null;
+    function scheduleBadgeTick() {
+        if (badgeTickTimer) return;
+        badgeTickTimer = setInterval(() => {
+            if (!groqIsCoolingDown()) {
+                clearInterval(badgeTickTimer);
+                badgeTickTimer = null;
+            }
+            refreshProviderBadge();
+        }, 1000);
     }
 
     function renderMessages() {

@@ -731,6 +731,17 @@ body.auth-gated .player-container {
     color: var(--text-secondary);
 }
 
+/* Shown when Groq has returned 429 and we're skipping it for N seconds */
+.kirky-provider-ratelimited {
+    color: #ef4444;
+    background: rgba(239, 68, 68, 0.12);
+    border-color: rgba(239, 68, 68, 0.4);
+}
+.kirky-provider-ratelimited::before {
+    content: '\23F3';   /* hourglass */
+    font-size: 0.75rem;
+}
+
 .kirky-subtitle {
     font-size: 0.7rem;
     color: var(--text-secondary);
