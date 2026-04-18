@@ -58,8 +58,12 @@ export default {
             return json({ error: 'POST only' }, 405);
         }
 
-        if (!env.GROQ_API_KEY) {
-            return json({ error: 'GROQ_API_KEY secret not set on this worker' }, 500);
+        // Accept the secret under either the canonical `GROQ_API_KEY` name
+        // or the shorter `groq` name, so admins who configured it either
+        // way Just Work without needing to rename.
+        const groqKey = env.GROQ_API_KEY || env.groq || env.GROQ;
+        if (!groqKey) {
+            return json({ error: 'Groq API key secret not set on this worker (expected GROQ_API_KEY or groq)' }, 500);
         }
 
         let body;
@@ -86,7 +90,7 @@ export default {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + env.GROQ_API_KEY,
+                'Authorization': 'Bearer ' + groqKey,
             },
             body: JSON.stringify({
                 model: body.model || DEFAULT_MODEL,
