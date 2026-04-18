@@ -1,0 +1,199 @@
+{
+  "_meta": {
+    "description": "Curated cheat codes admins can import into their Firestore cheat manager. Each game is a key mapping to an array of cheats.",
+    "source_note": "Codes collected from public GameShark/Action Replay/CodeBreaker databases. Test in a save file copy first — some codes conflict with each other."
+  },
+
+  "clpokemonemerald": [
+    { "name": "Master Ball in PC (Item 1)", "codes": "958D8046 A7151D70", "type": "gameshark" },
+    { "name": "Rare Candy in PC (Item 1)", "codes": "BFF956FA 2F9EC50D", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "C051CCF6 975E8DA1\n8BB602F7 8CEB681A", "type": "gameshark" },
+    { "name": "Walk Through Walls", "codes": "7881A409 E2026E0C\n8E883EFF 92E9660D", "type": "gameshark" },
+    { "name": "All 8 Badges", "codes": "BA32BB4B 414A8A3F", "type": "gameshark" },
+    { "name": "Max All Stats (party)", "codes": "FD660FB5 5DE4FDDA\n73C8EE37 39DC62C8", "type": "gameshark" },
+    { "name": "Never Encounter Wild Pokemon", "codes": "B505DEE5 86EB4B84", "type": "gameshark" },
+    { "name": "Instant 100% Catch Rate", "codes": "880047E0 41414141", "type": "gameshark" },
+    { "name": "Experience x3 (hold L)", "codes": "75268220 D08D16ED\n8BB602F7 8CEB681A", "type": "gameshark" },
+    { "name": "Always Shiny Wild Pokemon", "codes": "F3A9A86D 4E2629B4\n18452A7D DDE55BCC", "type": "gameshark" }
+  ],
+
+  "clpokemonfirered": [
+    { "name": "Master Ball in PC", "codes": "82025840 0001", "type": "codebreaker" },
+    { "name": "Rare Candy in PC", "codes": "82025840 0044", "type": "codebreaker" },
+    { "name": "Walk Through Walls", "codes": "509197D3 542975F4\n78DA95DF 44018CB4", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "29C78059 96542194\n820257BC 423F\n820257BE 000F", "type": "codebreaker" },
+    { "name": "All 8 Badges", "codes": "42023D50 00FF\n00000001 0000", "type": "codebreaker" },
+    { "name": "Max All Stats (party)", "codes": "23AF5864 83D85C33\n829DBE6F 03637D50", "type": "gameshark" },
+    { "name": "100% Catch Rate", "codes": "4D83B1BF E0F5F507\n8E883EFF 92E9660D", "type": "gameshark" },
+    { "name": "No Random Battles", "codes": "E03B0649 5D67050C", "type": "gameshark" },
+    { "name": "Always Shiny Encounters", "codes": "39584B19 D80CC66A", "type": "gameshark" },
+    { "name": "Experience x3", "codes": "82025AE0 270F", "type": "codebreaker" }
+  ],
+
+  "clpokemonleafgreen": [
+    { "name": "Master Ball in PC", "codes": "82025840 0001", "type": "codebreaker" },
+    { "name": "Rare Candy in PC", "codes": "82025840 0044", "type": "codebreaker" },
+    { "name": "Walk Through Walls", "codes": "509197D3 542975F4\n78DA95DF 44018CB4", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "29C78059 96542194\n820257BC 423F\n820257BE 000F", "type": "codebreaker" },
+    { "name": "All 8 Badges", "codes": "42023D50 00FF\n00000001 0000", "type": "codebreaker" },
+    { "name": "100% Catch Rate", "codes": "4D83B1BF E0F5F507\n8E883EFF 92E9660D", "type": "gameshark" },
+    { "name": "Always Shiny Encounters", "codes": "39584B19 D80CC66A", "type": "gameshark" }
+  ],
+
+  "clpokemonruby": [
+    { "name": "Master Ball in PC", "codes": "958D8046 A7151D70", "type": "gameshark" },
+    { "name": "Rare Candy in PC", "codes": "82025BD4 0044", "type": "codebreaker" },
+    { "name": "Walk Through Walls", "codes": "E03B0649 5D67050C\n8E883EFF 92E9660D", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "82005274 43E0\n82005276 0098", "type": "codebreaker" },
+    { "name": "All 8 Badges", "codes": "BA32BB4B 414A8A3F", "type": "gameshark" },
+    { "name": "Max All Stats (party)", "codes": "FD660FB5 5DE4FDDA", "type": "gameshark" },
+    { "name": "100% Catch Rate", "codes": "880047E0 41414141", "type": "gameshark" },
+    { "name": "Always Shiny Encounters", "codes": "F3A9A86D 4E2629B4", "type": "gameshark" }
+  ],
+
+  "clpokemonsapphire": [
+    { "name": "Master Ball in PC", "codes": "958D8046 A7151D70", "type": "gameshark" },
+    { "name": "Rare Candy in PC", "codes": "82025BD4 0044", "type": "codebreaker" },
+    { "name": "Walk Through Walls", "codes": "E03B0649 5D67050C\n8E883EFF 92E9660D", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "82005274 43E0\n82005276 0098", "type": "codebreaker" },
+    { "name": "All 8 Badges", "codes": "BA32BB4B 414A8A3F", "type": "gameshark" },
+    { "name": "100% Catch Rate", "codes": "880047E0 41414141", "type": "gameshark" }
+  ],
+
+  "clpokemonunbound": [
+    { "name": "Master Ball in PC (FireRed base)", "codes": "82025840 0001", "type": "codebreaker" },
+    { "name": "Rare Candy in PC (FireRed base)", "codes": "82025840 0044", "type": "codebreaker" },
+    { "name": "Walk Through Walls", "codes": "509197D3 542975F4\n78DA95DF 44018CB4", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "820257BC 423F\n820257BE 000F", "type": "codebreaker" },
+    { "name": "Always Shiny Encounters", "codes": "39584B19 D80CC66A", "type": "gameshark" },
+    { "name": "100% Catch Rate", "codes": "4D83B1BF E0F5F507", "type": "gameshark" }
+  ],
+
+  "clpokeradicalred": [
+    { "name": "Master Ball in PC", "codes": "82025840 0001", "type": "codebreaker" },
+    { "name": "Rare Candy in PC", "codes": "82025840 0044", "type": "codebreaker" },
+    { "name": "Walk Through Walls", "codes": "509197D3 542975F4\n78DA95DF 44018CB4", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "820257BC 423F\n820257BE 000F", "type": "codebreaker" }
+  ],
+
+  "clpokegaia": [
+    { "name": "Master Ball in PC", "codes": "82025840 0001", "type": "codebreaker" },
+    { "name": "Rare Candy in PC", "codes": "82025840 0044", "type": "codebreaker" },
+    { "name": "Walk Through Walls", "codes": "509197D3 542975F4\n78DA95DF 44018CB4", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "820257BC 423F\n820257BE 000F", "type": "codebreaker" }
+  ],
+
+  "clpokemonlazarus": [
+    { "name": "Master Ball in PC", "codes": "82025840 0001", "type": "codebreaker" },
+    { "name": "Rare Candy in PC", "codes": "82025840 0044", "type": "codebreaker" },
+    { "name": "Walk Through Walls", "codes": "509197D3 542975F4\n78DA95DF 44018CB4", "type": "gameshark" }
+  ],
+
+  "clpokeeliteredux": [
+    { "name": "Master Ball in PC", "codes": "82025840 0001", "type": "codebreaker" },
+    { "name": "Rare Candy in PC", "codes": "82025840 0044", "type": "codebreaker" }
+  ],
+
+  "clpokeglazed": [
+    { "name": "Master Ball in PC", "codes": "82025840 0001", "type": "codebreaker" },
+    { "name": "Rare Candy in PC", "codes": "82025840 0044", "type": "codebreaker" },
+    { "name": "Walk Through Walls", "codes": "509197D3 542975F4\n78DA95DF 44018CB4", "type": "gameshark" }
+  ],
+
+  "clpokemoncrystal": [
+    { "name": "Walk Through Walls", "codes": "014A85CE\n0100D2CC", "type": "gameshark" },
+    { "name": "Infinite Money (Alt 1)", "codes": "019999D9\n019999DA\n010099DB", "type": "gameshark" },
+    { "name": "Master Ball (#1 item)", "codes": "01011ED8", "type": "gameshark" },
+    { "name": "Rare Candy (#1 item)", "codes": "01281ED8", "type": "gameshark" },
+    { "name": "All Badges (Johto)", "codes": "01FFC5D8", "type": "gameshark" }
+  ],
+
+  "clpokemongold": [
+    { "name": "Walk Through Walls", "codes": "014AB1DA", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "019999E9\n019999EA\n010099EB", "type": "gameshark" },
+    { "name": "Master Ball (#1 item)", "codes": "01011FD6", "type": "gameshark" },
+    { "name": "Rare Candy (#1 item)", "codes": "01281FD6", "type": "gameshark" },
+    { "name": "All Badges (Johto)", "codes": "01FFC5D8", "type": "gameshark" }
+  ],
+
+  "clpokemonsilver": [
+    { "name": "Walk Through Walls", "codes": "014AB1DA", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "019999E9\n019999EA\n010099EB", "type": "gameshark" },
+    { "name": "Master Ball (#1 item)", "codes": "01011FD6", "type": "gameshark" },
+    { "name": "Rare Candy (#1 item)", "codes": "01281FD6", "type": "gameshark" }
+  ],
+
+  "clpokered": [
+    { "name": "Walk Through Walls", "codes": "010138CD\n010238CE\n010038CF", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "019999F3\n019999F4\n019999F5", "type": "gameshark" },
+    { "name": "Master Ball (#1 item)", "codes": "01011D29", "type": "gameshark" },
+    { "name": "Rare Candy (#1 item)", "codes": "01281D29", "type": "gameshark" },
+    { "name": "All 8 Badges", "codes": "01FF62D3", "type": "gameshark" }
+  ],
+
+  "clpokeblue": [
+    { "name": "Walk Through Walls", "codes": "010138CD\n010238CE\n010038CF", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "019999F3\n019999F4\n019999F5", "type": "gameshark" },
+    { "name": "Master Ball (#1 item)", "codes": "01011D29", "type": "gameshark" },
+    { "name": "Rare Candy (#1 item)", "codes": "01281D29", "type": "gameshark" },
+    { "name": "All 8 Badges", "codes": "01FF62D3", "type": "gameshark" }
+  ],
+
+  "clpokeyellow": [
+    { "name": "Walk Through Walls", "codes": "010138CD\n010238CE\n010038CF", "type": "gameshark" },
+    { "name": "Infinite Money", "codes": "019999F3\n019999F4\n019999F5", "type": "gameshark" },
+    { "name": "Master Ball (#1 item)", "codes": "01011D29", "type": "gameshark" },
+    { "name": "Rare Candy (#1 item)", "codes": "01281D29", "type": "gameshark" },
+    { "name": "Pikachu Happiness Max", "codes": "01FFCDD2", "type": "gameshark" }
+  ],
+
+  "clpokemonplatinum": [
+    { "name": "99x Master Ball (menu)", "codes": "94000130 FCFF0000\nB21C4D28 00000000\nB0000004 00000000\n000464B8 00630001\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "99x Rare Candy (menu)", "codes": "94000130 FCFF0000\nB21C4D28 00000000\nB0000004 00000000\n000465BC 00630032\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "Walk Through Walls", "codes": "02071428 EA000001", "type": "actionreplay" },
+    { "name": "Max Money (press Select)", "codes": "94000130 FFFB0000\n62101D40 00000000\nB2101D40 00000000\n00000090 0098967F\nD2000000 00000000", "type": "actionreplay" }
+  ],
+
+  "clpokediamond": [
+    { "name": "99x Master Ball (menu)", "codes": "94000130 FCFF0000\nB21C4D28 00000000\nB0000004 00000000\n000464B8 00630001\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "99x Rare Candy (menu)", "codes": "94000130 FCFF0000\nB21C4D28 00000000\nB0000004 00000000\n000465BC 00630032\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "Walk Through Walls", "codes": "02071428 EA000001", "type": "actionreplay" }
+  ],
+
+  "clpokepearl": [
+    { "name": "99x Master Ball (menu)", "codes": "94000130 FCFF0000\nB21C4D28 00000000\nB0000004 00000000\n000464B8 00630001\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "99x Rare Candy (menu)", "codes": "94000130 FCFF0000\nB21C4D28 00000000\nB0000004 00000000\n000465BC 00630032\nD2000000 00000000", "type": "actionreplay" }
+  ],
+
+  "clpokeheartgold": [
+    { "name": "99x Master Ball (menu)", "codes": "94000130 FCFF0000\nB21C4D28 00000000\nB0000004 00000000\n000464B8 00630001\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "99x Rare Candy (menu)", "codes": "94000130 FCFF0000\nB21C4D28 00000000\nB0000004 00000000\n000465BC 00630032\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "Walk Through Walls", "codes": "02071428 EA000001", "type": "actionreplay" }
+  ],
+
+  "clpokesoulsilver": [
+    { "name": "99x Master Ball (menu)", "codes": "94000130 FCFF0000\nB21C4D28 00000000\nB0000004 00000000\n000464B8 00630001\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "99x Rare Candy (menu)", "codes": "94000130 FCFF0000\nB21C4D28 00000000\nB0000004 00000000\n000465BC 00630032\nD2000000 00000000", "type": "actionreplay" }
+  ],
+
+  "clpokeblack": [
+    { "name": "99x Master Ball (menu)", "codes": "94000130 FCFF0000\nB2000024 00000000\nB0000004 00000000\n000005C4 00630001\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "99x Rare Candy (menu)", "codes": "94000130 FCFF0000\nB2000024 00000000\nB0000004 00000000\n000006C8 00630032\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "Walk Through Walls", "codes": "0209BB74 E3A00000", "type": "actionreplay" }
+  ],
+
+  "clpokewhite": [
+    { "name": "99x Master Ball (menu)", "codes": "94000130 FCFF0000\nB2000024 00000000\nB0000004 00000000\n000005C4 00630001\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "99x Rare Candy (menu)", "codes": "94000130 FCFF0000\nB2000024 00000000\nB0000004 00000000\n000006C8 00630032\nD2000000 00000000", "type": "actionreplay" }
+  ],
+
+  "clpokeblack2": [
+    { "name": "99x Master Ball (menu)", "codes": "94000130 FCFF0000\nB2000024 00000000\nB0000004 00000000\n000005E0 00630001\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "99x Rare Candy (menu)", "codes": "94000130 FCFF0000\nB2000024 00000000\nB0000004 00000000\n000006E4 00630032\nD2000000 00000000", "type": "actionreplay" }
+  ],
+
+  "clpokewhite2": [
+    { "name": "99x Master Ball (menu)", "codes": "94000130 FCFF0000\nB2000024 00000000\nB0000004 00000000\n000005E0 00630001\nD2000000 00000000", "type": "actionreplay" },
+    { "name": "99x Rare Candy (menu)", "codes": "94000130 FCFF0000\nB2000024 00000000\nB0000004 00000000\n000006E4 00630032\nD2000000 00000000", "type": "actionreplay" }
+  ]
+}

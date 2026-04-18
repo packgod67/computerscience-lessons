@@ -156,8 +156,6 @@
                         <span>Joined ${formatJoinDate(profile.joinedAt)}</span>
                         <span>·</span>
                         <span>${favs.length} favorite${favs.length === 1 ? '' : 's'}</span>
-                        <span>·</span>
-                        <span>${recent.length} played</span>
                     </div>
                     ${isSelf ? '<button class="profile-edit-btn" id="editProfileBtn">Edit profile</button>' : ''}
                 </div>
@@ -178,13 +176,6 @@
                         <h3 class="profile-section-title">Showcase</h3>
                         <div class="profile-game-grid profile-game-grid-lg">
                             ${showcaseGames.map(gameCardHTML).join('')}
-                        </div>
-                    </div>` : ''}
-
-                    ${recentGames.length ? `<div class="profile-section">
-                        <h3 class="profile-section-title">Recently played</h3>
-                        <div class="profile-game-grid">
-                            ${recentGames.map(gameCardHTML).join('')}
                         </div>
                     </div>` : ''}
 

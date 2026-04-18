@@ -10,6 +10,7 @@
     let selectedGameId = null;
     let cheatsUnsub = null;
     let currentCheats = [];
+    let defaultCheats = null; // lazy-loaded from games/default-cheats.json
 
     function db() { return ArcadeAuth.getDb(); }
     function esc(s) {
@@ -26,6 +27,20 @@
             gamesLoaded = true;
         } catch { games = []; }
         return games;
+    }
+
+    async function loadDefaultCheats() {
+        if (defaultCheats) return defaultCheats;
+        try {
+            const res = await fetch('games/default-cheats.json');
+            defaultCheats = await res.json();
+        } catch { defaultCheats = {}; }
+        return defaultCheats;
+    }
+
+    function getDefaultCheatsForGame(gameId) {
+        if (!defaultCheats || !defaultCheats[gameId]) return [];
+        return defaultCheats[gameId];
     }
 
     // ===== Firestore CRUD =====
@@ -110,7 +125,7 @@
         if (!container) return;
 
         container.innerHTML = '<div class="cheats-loading">Loading games…</div>';
-        await loadGames();
+        await Promise.all([loadGames(), loadDefaultCheats()]);
 
         container.innerHTML = `
             <div class="cheats-panel">
@@ -172,11 +187,21 @@
             return;
         }
         const game = games.find(g => g.id === selectedGameId);
+        const bundled = getDefaultCheatsForGame(selectedGameId);
+        const importBar = bundled.length > 0
+            ? `<div class="cheats-import-bar">
+                <span class="cheats-import-text">
+                    <strong>${bundled.length}</strong> built-in cheat${bundled.length === 1 ? '' : 's'} available
+                </span>
+                <button class="cheats-import-btn" id="cheatImportBtn" type="button">Import all (disabled)</button>
+            </div>`
+            : '';
         col.innerHTML = `
             <div class="cheats-codes-head">
                 <h3>${esc(game ? game.title : selectedGameId)}</h3>
                 <span class="cheats-codes-game-id">${esc(selectedGameId)}</span>
             </div>
+            ${importBar}
             <form class="cheats-add-form" id="cheatAddForm">
                 <input type="text" id="cheatNameInput" class="cheats-input" placeholder="Cheat name (e.g. 99 Master Balls)" maxlength="120" required>
                 <textarea id="cheatCodesInput" class="cheats-input cheats-codes-input" placeholder="Paste the code(s). Example:&#10;820257C4 270F" rows="3" required></textarea>
@@ -196,6 +221,35 @@
                 <div class="cheats-loading">Loading…</div>
             </div>
         `;
+
+        // Wire up bulk import — adds every built-in cheat to Firestore,
+        // all disabled by default so the admin opts in per cheat.
+        const importBtn = document.getElementById('cheatImportBtn');
+        if (importBtn) {
+            importBtn.addEventListener('click', async () => {
+                if (!confirm(`Import ${bundled.length} built-in cheats for this game? They'll all be disabled until you flip the enable toggle.`)) return;
+                importBtn.disabled = true;
+                importBtn.textContent = 'Importing…';
+                let ok = 0, dup = 0;
+                // Load current cheat names to avoid duplicates
+                const existing = currentCheats || await listCheats(selectedGameId);
+                const existingNames = new Set(existing.map(c => (c.name || '').trim().toLowerCase()));
+                for (const c of bundled) {
+                    if (existingNames.has((c.name || '').trim().toLowerCase())) { dup++; continue; }
+                    try {
+                        await addCheat(selectedGameId, {
+                            name: c.name, codes: c.codes, type: c.type || 'auto', enabled: false
+                        });
+                        ok++;
+                    } catch (e) {
+                        console.error('import err:', c.name, e);
+                    }
+                }
+                importBtn.disabled = false;
+                importBtn.textContent = 'Import all (disabled)';
+                alert(`Imported ${ok}${dup ? ` (skipped ${dup} duplicates)` : ''}. Flip the enable toggle on each cheat you want active.`);
+            });
+        }
 
         const form = document.getElementById('cheatAddForm');
         form.addEventListener('submit', async (e) => {
