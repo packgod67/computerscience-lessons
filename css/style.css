@@ -3943,30 +3943,27 @@ body.theme-transitioning * {
 
     .auth-area {
         position: relative;
-        /* Force block-level flex row so overflow-x engages. The parent
-           .header has text-align:center which would otherwise center
-           the auth-area as inline content and clip both edges when it's
-           wider than the viewport. */
-        display: flex;
-        justify-content: flex-start;
-        align-items: center;
-        flex-wrap: nowrap;
-        gap: 8px;
+        /* Block-level + full width so children get a proper container
+           instead of being inline-centered by the parent .header
+           (text-align:center). */
+        display: block;
         width: 100%;
         max-width: 100%;
-        overflow-x: auto;
-        overflow-y: hidden;
-        -webkit-overflow-scrolling: touch;
-        scrollbar-width: none;
-        /* Padding so the first child (ADMIN badge) isn't flush against
-           the scroll origin and can't be subtly clipped. */
-        padding: 0 6px;
-        /* Reset text-align inheritance from .header */
-        text-align: left;
+        text-align: center;
     }
-    .auth-area::-webkit-scrollbar { display: none; }
-    /* Prevent flex children from shrinking (would cause text clipping) */
-    .auth-area > * {
+    /* The inner row rendered by auth.js: ADMIN badge + username + Approvals
+       + Log out. On mobile it's too wide for narrow phones, so let it wrap
+       onto 2 lines centered, instead of being clipped on both edges by a
+       single-row overflow. */
+    .auth-user-info {
+        display: inline-flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+        max-width: 100%;
+    }
+    .auth-user-info > * {
         flex: 0 0 auto;
     }
 
