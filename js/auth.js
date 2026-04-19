@@ -25,6 +25,21 @@
     auth = firebase.auth();
     db = firebase.firestore();
 
+    // Supabase client — used only for Storage (cloud save blobs that
+    // exceed Firestore's 1MB per-doc limit). Auth + Firestore stay on
+    // Firebase. Fails gracefully if the SDK or config is missing.
+    let supabase = null;
+    try {
+        const cfg = window.ARCADE_CONFIG || {};
+        if (cfg.supabaseUrl && cfg.supabaseKey && window.supabase?.createClient) {
+            supabase = window.supabase.createClient(cfg.supabaseUrl, cfg.supabaseKey, {
+                auth: { persistSession: false, autoRefreshToken: false },
+            });
+        }
+    } catch (e) {
+        console.warn('[cloud-save] Supabase init failed:', e);
+    }
+
     auth.onAuthStateChanged(async (user) => {
         currentUser = user;
         if (user) {
@@ -634,31 +649,72 @@
         return new Uint8Array(await new Response(stream).arrayBuffer());
     }
 
-    // Gzip the save data and encode for Firestore. For DS/PSX games
-    // the compressed size often still exceeds Firestore's 1MB per-doc
-    // limit — those saves return { error: 'too-large' } so the UI can
-    // show an honest message instead of silently failing.
-    const FIRESTORE_DOC_LIMIT_BYTES = 1_048_487;
+    // Wire format for new saves:
+    //   Supabase Storage: bucket=saves, path={firebaseUid}/{gameId}.gz
+    //     (gzip-compressed raw save state, no per-file size limit)
+    //   Firestore metadata: saves/{uid}/games/{gameId}
+    //     { storage: 'supabase', updatedAt, sizeKB, compressed }
+    //
+    // Loading tries Supabase first, falls back to legacy Firestore
+    // payload for saves created before this migration.
+
+    const SUPABASE_BUCKET = 'saves';
 
     async function saveGameData(gameId, dataBase64) {
         if (!currentUser) return false;
         try {
             const rawBytes = base64ToBytes(dataBase64);
             const compressedBytes = await gzipBytes(rawBytes);
-            const gzBase64 = 'gz:' + bytesToBase64(compressedBytes);
-            const sizeKB = Math.round(gzBase64.length / 1024);
+            const sizeKB = Math.round(compressedBytes.length / 1024);
 
-            if (gzBase64.length > FIRESTORE_DOC_LIMIT_BYTES) {
-                console.warn(`[cloud-save] ${gameId} too big for Firestore: ${sizeKB}KB`);
-                return { error: 'too-large', sizeKB };
+            // Primary: upload to Supabase Storage. No size limit.
+            if (supabase) {
+                const path = `${currentUser.uid}/${gameId}.gz`;
+                const blob = new Blob([compressedBytes], { type: 'application/gzip' });
+                const { error } = await supabase.storage
+                    .from(SUPABASE_BUCKET)
+                    .upload(path, blob, {
+                        cacheControl: 'no-cache',
+                        upsert: true,
+                        contentType: 'application/gzip',
+                    });
+                if (error) {
+                    console.error('[cloud-save] Supabase upload failed:', error);
+                    return false;
+                }
+
+                // Lightweight metadata in Firestore (no blob) — lets the
+                // app list saves + show "last saved" without hitting
+                // Supabase. Best-effort; never fail the save for this.
+                try {
+                    await db.collection('saves').doc(currentUser.uid)
+                        .collection('games').doc(gameId).set({
+                            storage: 'supabase',
+                            path: path,
+                            updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                            sizeKB: sizeKB,
+                            compressed: true,
+                        });
+                } catch (metaErr) {
+                    console.warn('[cloud-save] metadata write failed:', metaErr);
+                }
+                return true;
             }
 
+            // Fallback: Supabase unavailable → try Firestore with the 1MB
+            // limit. Only works for GBA/NES/SNES/etc.
+            const gzBase64 = 'gz:' + bytesToBase64(compressedBytes);
+            const fbSizeKB = Math.round(gzBase64.length / 1024);
+            if (gzBase64.length > 1_048_487) {
+                console.warn(`[cloud-save] Supabase unavailable and ${gameId} too big for Firestore fallback: ${fbSizeKB}KB`);
+                return { error: 'too-large', sizeKB: fbSizeKB };
+            }
             await db.collection('saves').doc(currentUser.uid)
                 .collection('games').doc(gameId).set({
                     data: gzBase64,
                     updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
                     compressed: true,
-                    sizeKB: sizeKB,
+                    sizeKB: fbSizeKB,
                 });
             return true;
         } catch (e) {
@@ -669,23 +725,45 @@
 
     async function loadGameData(gameId) {
         if (!currentUser) return null;
+
+        // 1) Check Firestore metadata to see which storage backend has the save
+        let meta = null;
         try {
             const doc = await db.collection('saves').doc(currentUser.uid)
                 .collection('games').doc(gameId).get();
-            if (!doc.exists) return null;
-            const data = doc.data().data;
-            if (!data) return null;
-            // Legacy gz-prefixed Firestore payload
+            if (doc.exists) meta = doc.data();
+        } catch (e) {
+            console.warn('[cloud-save] metadata fetch failed:', e);
+        }
+
+        // 2) New saves: metadata points at Supabase → download + decompress
+        if (meta && meta.storage === 'supabase' && supabase) {
+            try {
+                const path = meta.path || `${currentUser.uid}/${gameId}.gz`;
+                const { data, error } = await supabase.storage
+                    .from(SUPABASE_BUCKET)
+                    .download(path);
+                if (error) throw error;
+                const compressed = new Uint8Array(await data.arrayBuffer());
+                const raw = await gunzipBytes(compressed);
+                return raw ? bytesToBase64(raw) : null;
+            } catch (e) {
+                console.warn('[cloud-save] Supabase download failed:', e);
+                return null;
+            }
+        }
+
+        // 3) Legacy: payload was stored inline in Firestore
+        if (meta && meta.data) {
+            const data = meta.data;
             if (data.startsWith && data.startsWith('gz:')) {
                 const bytes = base64ToBytes(data.slice(3));
                 const raw = await gunzipBytes(bytes);
                 return raw ? bytesToBase64(raw) : null;
             }
             return data;
-        } catch (e) {
-            console.error('Cloud load failed:', e);
-            return null;
         }
+        return null;
     }
 
     // ===== Profile: read/write profile fields on users/{uid} =====
