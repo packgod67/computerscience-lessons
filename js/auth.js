@@ -593,15 +593,97 @@
     }
 
     // ===== Cloud Save (Firestore) =====
-    // Firestore doc limit is ~1MB. Base64 SRAM saves are typically <512KB.
-    // We store save data directly in Firestore under saves/{userId}/{gameId}
+    // Firestore's per-doc limit is 1 MiB. GBA/NES/SNES save states fit
+    // easily (<200KB typical). DS/PSX states are 3-5 MiB raw which won't
+    // fit as raw base64, so we gzip them first — save states compress
+    // extremely well (lots of zero-padding), usually shrinking to
+    // 100-500KB which DOES fit.
+    //
+    // Wire format: docs now store `data` as "gz:" + base64(gzip(raw))
+    // for compressed saves, or plain base64 for legacy uncompressed
+    // saves. loadGameData detects the prefix and decompresses as needed.
+    //
+    // Path: saves/{userId}/games/{gameId}
+
+    const FIRESTORE_DOC_LIMIT_BYTES = 1_048_487;  // 1 MiB minus overhead
+
+    // Convert base64 string to Uint8Array
+    function base64ToBytes(b64) {
+        const binary = atob(b64);
+        const bytes = new Uint8Array(binary.length);
+        for (let i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+        return bytes;
+    }
+    // Convert Uint8Array to base64 — chunked for very large arrays
+    function bytesToBase64(bytes) {
+        let binary = '';
+        const chunk = 0x8000;
+        for (let i = 0; i < bytes.length; i += chunk) {
+            binary += String.fromCharCode.apply(null, bytes.subarray(i, i + chunk));
+        }
+        return btoa(binary);
+    }
+
+    // Gzip-compress a base64 payload. Returns "gz:" + base64(gzipped bytes).
+    async function compressPayload(base64Data) {
+        try {
+            if (typeof CompressionStream === 'undefined') return base64Data;
+            const bytes = base64ToBytes(base64Data);
+            const stream = new Response(bytes).body.pipeThrough(new CompressionStream('gzip'));
+            const compressed = new Uint8Array(await new Response(stream).arrayBuffer());
+            return 'gz:' + bytesToBase64(compressed);
+        } catch (e) {
+            console.warn('[cloud-save] compression failed, falling back to raw:', e);
+            return base64Data;
+        }
+    }
+
+    // Decompress a "gz:"-prefixed payload back to plain base64. Pass-through
+    // for legacy uncompressed saves.
+    async function decompressPayload(stored) {
+        if (!stored || !stored.startsWith('gz:')) return stored;
+        try {
+            if (typeof DecompressionStream === 'undefined') {
+                console.warn('[cloud-save] DecompressionStream unavailable');
+                return null;
+            }
+            const bytes = base64ToBytes(stored.slice(3));
+            const stream = new Response(bytes).body.pipeThrough(new DecompressionStream('gzip'));
+            const decompressed = new Uint8Array(await new Response(stream).arrayBuffer());
+            return bytesToBase64(decompressed);
+        } catch (e) {
+            console.error('[cloud-save] decompression failed:', e);
+            return null;
+        }
+    }
+
     async function saveGameData(gameId, dataBase64) {
         if (!currentUser) return false;
+
+        // Compress first — DS saves at ~5MB base64 shrink to ~200-500KB
+        // gzipped. GBA saves at 200KB stay roughly that size but the small
+        // overhead is worth the consistent code path.
+        const payload = await compressPayload(dataBase64);
+        const sizeKB = Math.round(payload.length / 1024);
+
+        // Even post-compression, some saves will still be too big (uncompressable
+        // random-looking data, or very large cores). Fail honestly rather than
+        // letting the SDK silently queue + reject on the server.
+        if (payload.length > FIRESTORE_DOC_LIMIT_BYTES) {
+            console.warn(
+                `[cloud-save] ${gameId} save too large even after compression: ` +
+                `${sizeKB}KB (limit ~1024KB).`
+            );
+            return { error: 'too-large', sizeKB };
+        }
+
         try {
             await db.collection('saves').doc(currentUser.uid)
                 .collection('games').doc(gameId).set({
-                    data: dataBase64,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp()
+                    data: payload,
+                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    compressed: payload.startsWith('gz:'),
+                    sizeKB: sizeKB,
                 });
             return true;
         } catch (e) {
@@ -616,7 +698,9 @@
             const doc = await db.collection('saves').doc(currentUser.uid)
                 .collection('games').doc(gameId).get();
             if (doc.exists && doc.data().data) {
-                return doc.data().data;
+                const raw = doc.data().data;
+                const decompressed = await decompressPayload(raw);
+                return decompressed;
             }
             return null;
         } catch (e) {

@@ -236,8 +236,19 @@
                 return;
             }
             showSaveStatus('Saving to cloud...');
-            const ok = await ArcadeAuth.saveGameData(e.data.gameId, e.data.data);
-            showSaveStatus(ok ? 'Saved to cloud!' : 'Cloud save failed');
+            const result = await ArcadeAuth.saveGameData(e.data.gameId, e.data.data);
+            if (result === true) {
+                showSaveStatus('Saved to cloud!');
+            } else if (result && result.error === 'too-large') {
+                // Firestore can't hold this — DS/PSX saves are too big for
+                // 1MB doc limit. Tell the user honestly instead of lying.
+                showSaveStatus(
+                    `Save too big for cloud (${result.sizeKB}KB, limit ~1000KB). ` +
+                    `Local save still works.`
+                );
+            } else {
+                showSaveStatus('Cloud save failed');
+            }
         }
     });
 
