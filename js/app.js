@@ -454,6 +454,22 @@
             }
         }
 
+        // Surface recently-added games at the top of the default view.
+        // Only when the user hasn't typed a query and isn't filtering by
+        // a specific category (otherwise it'd hide expected results).
+        // Stable sort: within "new" and "not new" groups, original order
+        // is preserved so Pokemon Unbound stays where it always was, etc.
+        if (!query && !tagQueries && activeCategory === 'all') {
+            filtered.sort((a, b) => {
+                const aNew = a.addedAt ? 1 : 0;
+                const bNew = b.addedAt ? 1 : 0;
+                if (aNew !== bNew) return bNew - aNew;   // new first
+                // Among new: sort by date descending (newest first)
+                if (aNew) return (b.addedAt || '').localeCompare(a.addedAt || '');
+                return 0;   // stable: keep original order for older games
+            });
+        }
+
         if (gameCount) {
             gameCount.textContent = `${filtered.length} game${filtered.length !== 1 ? 's' : ''}`;
         }
@@ -528,7 +544,11 @@
             const infoBtn = g.description
                 ? `<button class="info-btn" data-game-idx="${start + i}" title="Game info">&#8942;</button>`
                 : '';
-            html += `<a class="game-card" href="play.html?game=${encodeURIComponent(g.id)}">${thumb}${favBtn}${infoBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
+            // "NEW" badge for games added within the last 30 days
+            const newBadge = g.addedAt && (Date.now() - Date.parse(g.addedAt)) < 30 * 24 * 60 * 60 * 1000
+                ? `<span class="card-new-badge">NEW</span>`
+                : '';
+            html += `<a class="game-card" href="play.html?game=${encodeURIComponent(g.id)}">${thumb}${newBadge}${favBtn}${infoBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
         }
 
         gameGrid.insertAdjacentHTML('beforeend', html);

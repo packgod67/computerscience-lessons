@@ -1702,6 +1702,25 @@ body.auth-gated .player-container {
     padding: 0.8rem 1rem;
 }
 
+/* "NEW" badge on recently-added game cards. Sits on top of the thumbnail
+   in the top-left corner. Auto-hides after 30 days via app.js check. */
+.card-new-badge {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 2;
+    padding: 3px 8px;
+    background: linear-gradient(135deg, #10b981, #059669);
+    color: #fff;
+    font-size: 0.6rem;
+    font-weight: 800;
+    letter-spacing: 0.8px;
+    border-radius: 4px;
+    box-shadow: 0 2px 8px rgba(16, 185, 129, 0.5);
+    pointer-events: none;
+    text-transform: uppercase;
+}
+
 .card-category {
     display: inline-block;
     padding: 2px 8px;
