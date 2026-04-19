@@ -7,9 +7,49 @@
 
   <head>
     <script src="../js/ds-mode.js"></script>
+    <script>
+      window.gameconfig = {
+        name: "Pokemon - Black Version",
+        url: "https://cdn.jsdelivr.net/gh/bubbls/ugss@9404d511a812d85447a584616cedea9093329de8/poke%20black/pmb.nds",
+        core: "desmume2015",
+        min: 1,
+        max: 14,
+      };
+    </script>
+    <script>
+      function mergeFiles(fileParts, cb) {
+        return new Promise((resolve, reject) => {
+          let buffers = [];
+          function fetchPart(index) {
+            if (index >= fileParts.length) {
+              let mergedBlob = new Blob(buffers);
+              let mergedFileUrl = URL.createObjectURL(mergedBlob);
+              resolve(mergedFileUrl);
+              return;
+            }
+            fetch(fileParts[index])
+              .then((response) => response.arrayBuffer())
+              .then((data) => {
+                buffers.push(data);
+                fetchPart(index + 1);
+              })
+              .catch(reject);
+            cb(index);
+          }
+          fetchPart(0);
+        });
+      }
+      function getParts(file, start, end) {
+        let parts = [];
+        for (let i = start; i <= end; i++) {
+          let padded = String(i).padStart((end+"").length, '0');
+          parts.push(file + ".part" + padded);
+        }
+        return parts;
+      }
+    </script>
     <style>
-      body,
-      html {
+      body, html {
         margin: 0;
         padding: 0;
         display: flex;
@@ -39,69 +79,53 @@
   <body>
     <div id="game-container">
       <div id="game"></div>
-      <div id="loading-progress">Loading game...</div>
+      <div id="loading-progress">Loading: 0/0</div>
+      <div id="first-time">First-time loading may take longer...</div>
     </div>
     <script>
-      document.getElementById("loading-progress").textContent = "Loading Pokemon Black...";
+      var parts = getParts(
+        window.gameconfig.url,
+        window.gameconfig.min,
+        window.gameconfig.max
+      );
+      var totalParts = parts.length;
 
-      EJS_player = "#game";
-      EJS_core = "desmume2015";
-      EJS_gameName = "Pokemon - Black Version";
-      EJS_color = "#0064ff";
-      EJS_startOnLoaded = true;
-      EJS_cacheLimit = 0;
-      EJS_threads = false;
-      if (typeof EJS_VirtualGamepadEnabled === 'undefined') EJS_VirtualGamepadEnabled = true;
-      EJS_defaultControls = true;
-      EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
-      EJS_netplayServer = "https://netplay.emulatorjs.org";
-      EJS_gameUrl = "https://bbcdn.githack.com/jnfdk/redpalmer/raw/7e1539c9f6303905e09e7b52fd1780790223b8fd/pmb.nds";
-
-      EJS_onGameStart = function() {
-        document.getElementById("loading-progress")?.remove();
-        window.parent.postMessage({ type: 'emu-ready', gameId: 'clpokeblack' }, '*');
-
-        setInterval(function() {
-          try {
-            var state = EJS_emulator.gameManager.getState();
-            if (state && state.byteLength > 0) {
-              var bytes = new Uint8Array(state);
-              var binary = '';
-              for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-              window.parent.postMessage({ type: 'save-data', gameId: 'clpokeblack', data: btoa(binary) }, '*');
-            }
-          } catch(e) { console.error('Auto-save error:', e); }
-        }, 60000);
-      };
-
-      window.addEventListener('message', function(e) {
-        if (e.data && e.data.type === 'load-save' && e.data.data) {
-          try {
-            var binary = atob(e.data.data);
-            var bytes = new Uint8Array(binary.length);
-            for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
-            EJS_emulator.gameManager.loadState(bytes.buffer);
-          } catch(e) { console.error('Cloud load error:', e); }
+      function updateLoadingProgress(loaded) {
+        const progressElement = document.getElementById("loading-progress");
+        if (loaded === 0) {
+          progressElement.textContent = "Loading: 0/0";
+        } else {
+          progressElement.textContent = `Loading: ${loaded}/${totalParts}`;
         }
-      });
+      }
 
-      window.addEventListener('beforeunload', function() {
-        try {
-          var state = EJS_emulator.gameManager.getState();
-          if (state && state.byteLength > 0) {
-            var bytes = new Uint8Array(state);
-            var binary = '';
-            for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
-            window.parent.postMessage({ type: 'save-data', gameId: 'clpokeblack', data: btoa(binary) }, '*');
-          }
-        } catch(e) {}
-      });
+      Promise.all([mergeFiles(parts, updateLoadingProgress)])
+        .then(([gameUrl]) => {
+          document.getElementById("loading-progress")?.remove();
+          document.getElementById("first-time")?.remove();
+          EJS_player = "#game";
+          EJS_core = window.gameconfig.core;
+          EJS_gameName = window.gameconfig.name;
+          EJS_color = "#0064ff";
+          EJS_startOnLoaded = true;
+          EJS_cacheLimit = 0;
+          EJS_threads = false;
+          if (typeof EJS_VirtualGamepadEnabled === 'undefined') EJS_VirtualGamepadEnabled = true;
+          EJS_defaultControls = true;
+          EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
+          EJS_netplayServer = "https://netplay.emulatorjs.org";
+          EJS_gameUrl = gameUrl;
 
-      var script = document.createElement("script");
-      script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
-      document.body.appendChild(script);
+          const script = document.createElement("script");
+          script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
+          document.body.appendChild(script);
+        })
+        .catch((error) => {
+          console.error(error);
+          document.getElementById("loading-progress").textContent = "Error loading game.";
+        });
     </script>
-	<script>window.CLOUD_SAVE_GAME_ID = 'clpokeblack';</script>
-	<script src="../js/cloud-save.js"></script>
+    <script>window.CLOUD_SAVE_GAME_ID = 'clpokeblack';</script>
+    <script src="../js/cloud-save.js"></script>
   </body>
 </html>
