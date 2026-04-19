@@ -253,6 +253,23 @@
         // A's save on a button that looks like B's).
         const mainBtn = loadBtnEl.querySelector('.cloud-load-btn-main');
         mainBtn.onclick = async () => {
+            // Confirm before overwriting current state. Loading a cloud
+            // save replaces the emulator's entire RAM + SRAM — if the
+            // user has unsaved progress they'll lose it. The subtext
+            // shows the save's age so they can decide.
+            const ageLabel = subtext || 'unknown age';
+            const ok = window.confirm(
+                'Load cloud save from ' + ageLabel + '?\n\n' +
+                'This replaces your current game state. Any progress made ' +
+                'since this save will be lost, including in-game saves ' +
+                'made after this cloud save was recorded.\n\n' +
+                'Tap OK to load, Cancel to keep playing.'
+            );
+            if (!ok) {
+                hideLoadSaveButton();
+                return;
+            }
+
             mainBtn.disabled = true;
             mainBtn.querySelector('.cloud-load-btn-label').textContent = 'Loading…';
             try {

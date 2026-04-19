@@ -187,14 +187,18 @@
             if (!pendingLoad || tries > 30) clearInterval(loadTimer);
         }, 1000);
 
-        // Initial save after 15s so early progress is captured.
-        setTimeout(function () { saveToCloud('initial'); }, 15000);
+        // NO initial save. Previously we saved at 15s to "capture early
+        // progress", but this captured a mostly-empty state (user hasn't
+        // played yet) and then stayed in the cloud. When the user later
+        // refreshed + clicked "Load cloud save", that stale empty state
+        // overwrote their in-progress SRAM. Interval saves + pagehide
+        // save are enough — no bogus initial snapshot.
 
         // Adaptive interval: small save states (GBA/NES/SNES) save every
         // 30s like before — cheap, low memory pressure, worth it for
         // frequent sync. Big states (DS/PSX) save every 3 min to keep
         // mobile tab memory under control. Huge states (>6MB) skip
-        // interval saves entirely — only beforeunload/visibility ones.
+        // interval saves entirely — only pagehide ones.
         function scheduleNextSave() {
             var delay;
             if (lastStateSize === 0) {
