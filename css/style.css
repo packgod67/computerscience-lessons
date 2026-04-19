@@ -718,6 +718,16 @@ body.auth-gated .player-container {
     font-size: 0.7rem;
 }
 
+.kirky-provider-cloudflare {
+    color: #f38020;   /* Cloudflare orange */
+    background: rgba(243, 128, 32, 0.12);
+    border-color: rgba(243, 128, 32, 0.4);
+}
+.kirky-provider-cloudflare::before {
+    content: '\2601';   /* cloud */
+    font-size: 0.75rem;
+}
+
 .kirky-provider-pollinations {
     color: #ec4899;
     background: rgba(236, 72, 153, 0.12);

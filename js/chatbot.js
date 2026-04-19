@@ -637,27 +637,79 @@
         ).trim();
     }
 
-    // Rate-limit backoff. Groq's free tier is ~30 req/min; tool calling
-    // fires 2 per turn and the two-pass fallback fires 2 more. A few rapid
-    // queries easily hit the ceiling (HTTP 429). When that happens we
-    // remember the cooldown time so subsequent turns skip Groq entirely
-    // and go straight to Pollinations — no point hammering the same 429.
-    let groqCooldownUntil = 0;
-    function groqIsCoolingDown() {
-        return Date.now() < groqCooldownUntil;
+    // Per-provider rate-limit cooldowns. Kirky tries providers in
+    // priority order (cloudflare → groq → pollinations) and when one
+    // returns 429 we mark it cooling-down so subsequent turns skip it
+    // instead of wasting another request on a known-rejected provider.
+    const providerCooldowns = { cloudflare: 0, groq: 0 };
+    function providerIsCoolingDown(name) {
+        return Date.now() < (providerCooldowns[name] || 0);
     }
-    function markGroqRateLimited(retryAfterSeconds) {
-        // Default to 60s if the server didn't tell us how long to wait
+    function markProviderRateLimited(name, retryAfterSeconds) {
         const secs = Math.max(5, Math.min(300, retryAfterSeconds || 60));
-        groqCooldownUntil = Date.now() + secs * 1000;
-        console.warn(`[groq] rate-limited, cooling down for ${secs}s`);
+        providerCooldowns[name] = Date.now() + secs * 1000;
+        console.warn(`[${name}] rate-limited, cooling down for ${secs}s`);
     }
-    // Pull retry-after from a 429 response (Groq sends seconds)
+    // Legacy aliases kept so the rest of the file works unchanged
+    function groqIsCoolingDown() { return providerIsCoolingDown('groq'); }
+    function markGroqRateLimited(s) { return markProviderRateLimited('groq', s); }
+    // Pull retry-after from a 429 response
     function retryAfterFrom(resp) {
         if (!resp || !resp.headers) return 60;
         const ra = resp.headers.get('retry-after');
         const n = parseInt(ra, 10);
         return isNaN(n) ? 60 : n;
+    }
+    // The worker is a single URL that can route to multiple providers via
+    // the `provider` field in the request body. Chain is cloudflare first
+    // (fast + generous free tier, edge-hosted), groq as backup.
+    const WORKER_PROVIDER_CHAIN = ['cloudflare', 'groq'];
+    // Cloudflare Workers AI model names (the one Kirky gets by default).
+    // The _fp8_fast flavor runs on quantized weights for lower latency.
+    const CF_MODEL_DEFAULT = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
+    const GROQ_MODEL_DEFAULT = 'llama-3.3-70b-versatile';
+
+    function modelForProvider(providerName) {
+        return providerName === 'cloudflare' ? CF_MODEL_DEFAULT : GROQ_MODEL_DEFAULT;
+    }
+
+    // Send a request to the worker trying each provider in order. Returns
+    // the first successful Response, or null if all fail/are cooling.
+    async function fetchViaWorker(workerUrl, bodyBase, options) {
+        options = options || {};
+        const chain = options.chain || WORKER_PROVIDER_CHAIN;
+        for (const providerName of chain) {
+            if (providerIsCoolingDown(providerName)) continue;
+            const body = {
+                ...bodyBase,
+                provider: providerName,
+                model: bodyBase.model || modelForProvider(providerName),
+            };
+            let resp;
+            try {
+                resp = await fetch(workerUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(body),
+                });
+            } catch (e) {
+                console.warn(`[${providerName}] request failed:`, e);
+                continue;
+            }
+            if (resp.status === 429) {
+                markProviderRateLimited(providerName, retryAfterFrom(resp));
+                continue;
+            }
+            if (!resp.ok) {
+                console.warn(`[${providerName}] HTTP ${resp.status}`);
+                continue;
+            }
+            // Attach the provider name to the Response so callers can
+            // attribute the answer for the badge.
+            resp._arcadeProvider = providerName;
+            return resp;
+        }
+        return null;
     }
 
     // Non-streaming JSON mode for game recommendations. Uses Llama 3.3 via
@@ -691,63 +743,59 @@
         ];
 
         const groqWorker = getGroqWorker();
-        const providers = [];
+
+        // Primary: worker chain (cloudflare → groq)
         if (groqWorker) {
-            providers.push({
-                name: 'groq',
-                url: groqWorker,
-                body: {
-                    model: 'llama-3.3-70b-versatile',
-                    messages: fullMessages,
-                    response_format: { type: 'json_object' },
-                    temperature: 0.5,
-                },
-            });
-        }
-        providers.push({
-            name: 'pollinations',
-            url: 'https://text.pollinations.ai/openai',
-            body: {
-                model: 'openai',
+            const resp = await fetchViaWorker(groqWorker, {
                 messages: fullMessages,
                 response_format: { type: 'json_object' },
-            },
-        });
-
-        for (const p of providers) {
-            // Skip Groq while it's in cooldown — go straight to Pollinations
-            if (p.name === 'groq' && groqIsCoolingDown()) continue;
-            try {
-                const resp = await fetch(p.url, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(p.body),
-                });
-                if (resp.status === 429 && p.name === 'groq') {
-                    markGroqRateLimited(retryAfterFrom(resp));
-                    continue;   // try Pollinations
+                temperature: 0.5,
+            });
+            if (resp) {
+                try {
+                    const data = await resp.json();
+                    const raw = data.choices?.[0]?.message?.content || '';
+                    const parsed = parseKirkyJson(raw);
+                    if (parsed) {
+                        const validGames = parsed.games.filter(id => allowedIds.has(id));
+                        if (!(validGames.length === 0 && parsed.games.length > 0 && allowedIds.size > 0)) {
+                            lastProvider = resp._arcadeProvider || 'worker';
+                            refreshProviderBadge();
+                            return { message: parsed.message, games: validGames };
+                        }
+                        console.warn(`[${resp._arcadeProvider}] AI cited only invalid ids:`, parsed.games);
+                    }
+                } catch (e) {
+                    console.warn('worker response parse failed:', e);
                 }
-                if (!resp.ok) { console.warn(`[${p.name}] HTTP ${resp.status}`); continue; }
-                const data = await resp.json();
-                const raw = data.choices?.[0]?.message?.content || data.content || data.text;
-                if (!raw) continue;
-                const parsed = parseKirkyJson(raw);
-                if (!parsed) { console.warn(`[${p.name}] JSON parse failed`, raw); continue; }
-
-                // Validate: drop any id the AI made up that wasn't in the
-                // candidate list we showed it.
-                const validGames = parsed.games.filter(id => allowedIds.has(id));
-                if (validGames.length === 0 && parsed.games.length > 0 && allowedIds.size > 0) {
-                    console.warn(`[${p.name}] AI cited only invalid ids:`, parsed.games);
-                    continue;   // try next provider
-                }
-                lastProvider = p.name;
-                refreshProviderBadge();
-                return { message: parsed.message, games: validGames };
-            } catch (e) {
-                console.warn(`[${p.name}] failed:`, e);
             }
         }
+
+        // Last-resort: direct Pollinations
+        try {
+            const resp = await fetch('https://text.pollinations.ai/openai', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    model: 'openai',
+                    messages: fullMessages,
+                    response_format: { type: 'json_object' },
+                }),
+            });
+            if (resp.ok) {
+                const data = await resp.json();
+                const raw = data.choices?.[0]?.message?.content || data.content || data.text;
+                const parsed = raw && parseKirkyJson(raw);
+                if (parsed) {
+                    const validGames = parsed.games.filter(id => allowedIds.has(id));
+                    if (!(validGames.length === 0 && parsed.games.length > 0 && allowedIds.size > 0)) {
+                        lastProvider = 'pollinations';
+                        refreshProviderBadge();
+                        return { message: parsed.message, games: validGames };
+                    }
+                }
+            }
+        } catch (e) { console.warn('[pollinations] failed:', e); }
         return null;
     }
 
@@ -760,8 +808,9 @@
 
     async function callWithTools(msgs, contextBlocks) {
         const groqWorker = getGroqWorker();
-        if (!groqWorker) return null;   // tool calling needs the Groq worker
-        if (groqIsCoolingDown()) return null;   // skip during 429 cooldown
+        if (!groqWorker) return null;   // tool calling needs the worker
+        // Skip only if ALL worker providers are cooling down
+        if (WORKER_PROVIDER_CHAIN.every(providerIsCoolingDown)) return null;
 
         const systemMsgs = [{ role: 'system', content: SYSTEM_PROMPT }];
         for (const block of contextBlocks) {
@@ -776,26 +825,15 @@
             ...msgs.map(m => ({ role: m.role, content: m.content })),
         ];
 
-        // Request 1: let the AI decide whether/how to search
-        let resp1;
-        try {
-            resp1 = await fetch(groqWorker, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    model: 'llama-3.3-70b-versatile',
-                    messages: baseMessages,
-                    tools: KIRKY_TOOLS,
-                    tool_choice: 'auto',
-                    temperature: 0.4,
-                }),
-            });
-        } catch (e) { console.warn('[tools] request 1 failed:', e); return null; }
-        if (resp1.status === 429) {
-            markGroqRateLimited(retryAfterFrom(resp1));
-            return null;
-        }
-        if (!resp1.ok) { console.warn('[tools] req1 HTTP', resp1.status); return null; }
+        // Request 1: let the AI decide whether/how to search. Tries
+        // cloudflare (edge, huge free tier) then groq (fast) in order.
+        const resp1 = await fetchViaWorker(groqWorker, {
+            messages: baseMessages,
+            tools: KIRKY_TOOLS,
+            tool_choice: 'auto',
+            temperature: 0.4,
+        });
+        if (!resp1) return null;
         const data1 = await resp1.json();
         const msg1 = data1.choices?.[0]?.message;
         if (!msg1) return null;
@@ -839,24 +877,12 @@
         }
 
         // Request 2: AI picks from the tool results
-        let resp2;
-        try {
-            resp2 = await fetch(groqWorker, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    model: 'llama-3.3-70b-versatile',
-                    messages: [...baseMessages, ...toolMessages],
-                    response_format: { type: 'json_object' },
-                    temperature: 0.5,
-                }),
-            });
-        } catch (e) { console.warn('[tools] request 2 failed:', e); return null; }
-        if (resp2.status === 429) {
-            markGroqRateLimited(retryAfterFrom(resp2));
-            return null;
-        }
-        if (!resp2.ok) { console.warn('[tools] req2 HTTP', resp2.status); return null; }
+        const resp2 = await fetchViaWorker(groqWorker, {
+            messages: [...baseMessages, ...toolMessages],
+            response_format: { type: 'json_object' },
+            temperature: 0.5,
+        });
+        if (!resp2) return null;
         const data2 = await resp2.json();
         const raw = data2.choices?.[0]?.message?.content || '';
         const parsed = parseKirkyJson(raw);
@@ -871,7 +897,8 @@
             console.warn('[tools] AI cited only invalid ids:', parsed.games);
             return null;
         }
-        lastProvider = 'groq-tools';
+        lastProvider = resp2._arcadeProvider === 'cloudflare'
+            ? 'cloudflare-tools' : 'groq-tools';
         refreshProviderBadge();
         return { message: parsed.message, games: validGames };
     }
@@ -926,47 +953,43 @@
 
         let intentResult = null;
         const groqWorker = getGroqWorker();
-        const tryUrls = [];
-        // Only queue Groq if it's not cooling down from a 429
-        if (groqWorker && !groqIsCoolingDown()) tryUrls.push({
-            name: 'groq',
-            url: groqWorker,
-            body: {
-                model: 'llama-3.3-70b-versatile',
+
+        // Primary: worker chain (cloudflare → groq)
+        if (groqWorker) {
+            const resp = await fetchViaWorker(groqWorker, {
                 messages: intentMessages,
                 response_format: { type: 'json_object' },
                 temperature: 0.2,
-            },
-        });
-        tryUrls.push({
-            name: 'pollinations',
-            url: 'https://text.pollinations.ai/openai',
-            body: {
-                model: 'openai',
-                messages: intentMessages,
-                response_format: { type: 'json_object' },
-            },
-        });
+            });
+            if (resp) {
+                try {
+                    const data = await resp.json();
+                    const raw = data.choices?.[0]?.message?.content || '';
+                    const m = raw.match(/\{[\s\S]*\}/);
+                    if (m) intentResult = JSON.parse(m[0]);
+                } catch (e) { console.warn('[two-pass intent]', e); }
+            }
+        }
 
-        for (const p of tryUrls) {
+        // Fallback: direct Pollinations
+        if (!intentResult) {
             try {
-                const resp = await fetch(p.url, {
+                const resp = await fetch('https://text.pollinations.ai/openai', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(p.body),
+                    body: JSON.stringify({
+                        model: 'openai',
+                        messages: intentMessages,
+                        response_format: { type: 'json_object' },
+                    }),
                 });
-                if (resp.status === 429 && p.name === 'groq') {
-                    markGroqRateLimited(retryAfterFrom(resp));
-                    continue;
+                if (resp.ok) {
+                    const data = await resp.json();
+                    const raw = data.choices?.[0]?.message?.content || '';
+                    const m = raw.match(/\{[\s\S]*\}/);
+                    if (m) intentResult = JSON.parse(m[0]);
                 }
-                if (!resp.ok) continue;
-                const data = await resp.json();
-                const raw = data.choices?.[0]?.message?.content || '';
-                const m = raw.match(/\{[\s\S]*\}/);
-                if (!m) continue;
-                intentResult = JSON.parse(m[0]);
-                break;
-            } catch (e) { console.warn('[two-pass intent]', e); }
+            } catch (e) { console.warn('[two-pass intent pollinations]', e); }
         }
         if (!intentResult) return null;
 
@@ -994,64 +1017,16 @@
         ];
 
         const groqWorker = getGroqWorker();
-        const providers = [];
-        if (groqWorker) {
-            // compound-beta has autonomous web browsing, great for specific
-            // game-help queries
-            providers.push({
-                name: 'groq',
-                kind: 'sse',
-                url: groqWorker,
-                body: {
-                    model: 'compound-beta',
-                    messages: fullMessages,
-                    temperature: 0.5,
-                    stream: true,
-                },
-            });
-            // Fallback to Llama 3.3 (no web, but fast) if compound rejects
-            providers.push({
-                name: 'groq',
-                kind: 'sse',
-                url: groqWorker,
-                body: {
-                    model: 'llama-3.3-70b-versatile',
-                    messages: fullMessages,
-                    temperature: 0.6,
-                    stream: true,
-                },
-            });
-        }
-        // Pollinations as last resort — no streaming support via OpenAI shim,
-        // treat as single-chunk.
-        providers.push({
-            name: 'pollinations',
-            kind: 'single',
-            url: 'https://text.pollinations.ai/openai',
-            body: {
-                model: 'openai',
-                messages: fullMessages,
-            },
-        });
 
-        for (const p of providers) {
-            // Skip Groq-based streaming while cooling down
-            if (p.name === 'groq' && groqIsCoolingDown()) continue;
-            try {
-                if (p.kind === 'sse') {
-                    const resp = await fetch(p.url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(p.body),
-                    });
-                    if (resp.status === 429 && p.name === 'groq') {
-                        markGroqRateLimited(retryAfterFrom(resp));
-                        continue;
-                    }
-                    if (!resp.ok || !resp.body) {
-                        console.warn(`[${p.name} ${p.body.model}] HTTP ${resp.status}`);
-                        continue;
-                    }
+        // Primary: worker chain (cloudflare → groq) with streaming
+        if (groqWorker) {
+            const resp = await fetchViaWorker(groqWorker, {
+                messages: fullMessages,
+                temperature: 0.5,
+                stream: true,
+            });
+            if (resp && resp.body) {
+                try {
                     let acc = '';
                     const reader = resp.body.getReader();
                     const dec = new TextDecoder();
@@ -1070,7 +1045,8 @@
                             if (!raw || raw === '[DONE]') continue;
                             try {
                                 const parsed = JSON.parse(raw);
-                                const delta = parsed.choices?.[0]?.delta?.content;
+                                const delta = parsed.choices?.[0]?.delta?.content
+                                    || parsed.response || '';
                                 if (delta) {
                                     sawAnything = true;
                                     acc += delta;
@@ -1079,30 +1055,33 @@
                             } catch {}
                         }
                     }
-                    if (!sawAnything) continue;
-                    lastProvider = p.name;
-                    refreshProviderBadge();
-                    return acc;
-                } else {
-                    // Non-streaming fallback
-                    const resp = await fetch(p.url, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(p.body),
-                    });
-                    if (!resp.ok) { console.warn(`[${p.name}] HTTP ${resp.status}`); continue; }
-                    const data = await resp.json();
-                    const raw = data.choices?.[0]?.message?.content || data.content || data.text || '';
-                    if (!raw) continue;
+                    if (sawAnything) {
+                        lastProvider = resp._arcadeProvider || 'worker';
+                        refreshProviderBadge();
+                        return acc;
+                    }
+                } catch (e) { console.warn('[worker stream]', e); }
+            }
+        }
+
+        // Last-resort: Pollinations (no streaming, single-shot)
+        try {
+            const resp = await fetch('https://text.pollinations.ai/openai', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ model: 'openai', messages: fullMessages }),
+            });
+            if (resp.ok) {
+                const data = await resp.json();
+                const raw = data.choices?.[0]?.message?.content || data.content || data.text || '';
+                if (raw) {
                     onDelta?.(raw, raw);
-                    lastProvider = p.name;
+                    lastProvider = 'pollinations';
                     refreshProviderBadge();
                     return raw;
                 }
-            } catch (e) {
-                console.warn(`[${p.name}] failed:`, e);
             }
-        }
+        } catch (e) { console.warn('[pollinations stream]', e); }
         return null;
     }
 
@@ -1231,11 +1210,20 @@
         }
 
         if (!lastProvider) { el.textContent = 'ready'; el.className = 'kirky-provider kirky-provider-unknown'; return; }
-        if (lastProvider === 'groq-tools') {
+        if (lastProvider === 'cloudflare-tools') {
+            el.textContent = 'Cloudflare • tool calling';
+            el.className = 'kirky-provider kirky-provider-cloudflare';
+        } else if (lastProvider === 'cloudflare') {
+            el.textContent = 'Cloudflare Workers AI';
+            el.className = 'kirky-provider kirky-provider-cloudflare';
+        } else if (lastProvider === 'groq-tools') {
             el.textContent = 'Groq • tool calling';
             el.className = 'kirky-provider kirky-provider-groq';
         } else if (lastProvider === 'groq') {
             el.textContent = 'Groq • Llama 3.3 70B';
+            el.className = 'kirky-provider kirky-provider-groq';
+        } else if (lastProvider === 'worker') {
+            el.textContent = 'Worker';
             el.className = 'kirky-provider kirky-provider-groq';
         } else if (lastProvider === 'pollinations') {
             el.textContent = 'Pollinations (fallback)';
