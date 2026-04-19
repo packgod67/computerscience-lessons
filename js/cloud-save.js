@@ -194,25 +194,19 @@
         // overwrote their in-progress SRAM. Interval saves + pagehide
         // save are enough — no bogus initial snapshot.
 
-        // Adaptive interval: small save states (GBA/NES/SNES) save every
-        // 30s like before — cheap, low memory pressure, worth it for
-        // frequent sync. Big states (DS/PSX) save every 3 min to keep
-        // mobile tab memory under control. Huge states (>6MB) skip
-        // interval saves entirely — only pagehide ones.
+        // All cores save every 3 minutes. Previously small-state cores
+        // (GBA/NES/SNES) fired every 30s — too aggressive. It chewed
+        // mobile battery/memory, uploaded mostly-identical states, and
+        // increased the chance of a bad state (captured mid-animation,
+        // etc.) being in the cloud when the user comes back. 3 min is
+        // the sweet spot: captures progress reliably without spamming.
+        // Huge states (>6MB) still skip interval saves entirely.
+        var INTERVAL_MS = 3 * 60 * 1000;
+        var HUGE_INTERVAL_MS = 5 * 60 * 1000;  // re-check in case state shrinks
         function scheduleNextSave() {
-            var delay;
-            if (lastStateSize === 0) {
-                // Haven't measured yet — use the fast cadence
-                delay = 30000;
-            } else if (lastStateSize > HUGE_SAVE_THRESHOLD) {
-                // Will be skipped anyway, but schedule a "save-if-small"
-                // check in case the user's save file shrinks
-                delay = 5 * 60 * 1000;
-            } else if (lastStateSize > BIG_SAVE_THRESHOLD) {
-                delay = 3 * 60 * 1000;  // 3 min for DS/PSX
-            } else {
-                delay = 30000;  // 30s for lightweight cores
-            }
+            var delay = (lastStateSize > HUGE_SAVE_THRESHOLD)
+                ? HUGE_INTERVAL_MS
+                : INTERVAL_MS;
             setTimeout(function () {
                 saveToCloud('interval');
                 scheduleNextSave();
