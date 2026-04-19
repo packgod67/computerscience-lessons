@@ -1,11 +1,5 @@
 [
   {
-    "id": "cl-oo",
-    "title": "Ãƒâ€“oo",
-    "category": "Other",
-    "path": "games/clÖoo.html"
-  },
-  {
     "id": "cl1",
     "title": "1",
     "category": "Other",
@@ -9531,7 +9525,7 @@
   },
   {
     "id": "clinclementemerald",
-    "title": "Clinclementemerald",
+    "title": "Pokemon Inclement Emerald",
     "category": "Other",
     "path": "games/clinclementemerald.html"
   },
@@ -14928,25 +14922,25 @@
   },
   {
     "id": "clpok-mon-emerald-rush-edition-2-0",
-    "title": "PokÃƒÂ©mon Emerald Rush Edition (2.0)",
+    "title": "Pokémon Emerald Rush Edition (2.0)",
     "category": "Other",
     "path": "games/clPokémon Emerald Rush Edition (2.0).html"
   },
   {
     "id": "clpok-mon-trade-stache-v1-1",
-    "title": "PokÃƒÂ©mon Trade& Stache (V 1.1)",
+    "title": "Pokémon Trade& Stache (V 1.1)",
     "category": "Other",
     "path": "games/clPokémon Trade&_Stache (V1.1).html"
   },
   {
     "id": "clpok-mon-two-v1-1",
-    "title": "PokÃƒÂ©mon TWO (v 1.1)",
+    "title": "Pokémon TWO (v 1.1)",
     "category": "Other",
     "path": "games/clPokémon TWO (v1.1).html"
   },
   {
     "id": "clpok-monstunningsteel",
-    "title": "PokÃƒÂ©monstunningsteel",
+    "title": "Pokémonstunningsteel",
     "category": "Other",
     "path": "games/clPokémonstunningsteel.html"
   },
@@ -25560,6 +25554,24 @@
       "turn-based",
       "gba",
       "hard",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonplus",
+    "title": "Pokemon Plus",
+    "category": "Pokemon",
+    "path": "games/clpokemonplus.html",
+    "description": "A Ruby-based hack with expanded roster, altered movesets, and quality-of-life improvements over vanilla Ruby.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
       "rom-hack"
     ]
   }
