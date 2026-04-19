@@ -174,11 +174,22 @@
         ArcadeAuth.toggleFavorite(currentGameId).then(() => updateFavBtn());
     });
 
-    // ===== Cloud Save Sync =====
+    // Transient status pill in the bottom-right — used for cheats + any
+    // other short messages the player page needs to surface.
     let saveStatusEl = null;
+    function showSaveStatus(msg) {
+        if (!saveStatusEl) {
+            saveStatusEl = document.createElement('div');
+            saveStatusEl.style.cssText = 'position:fixed;bottom:12px;right:12px;background:#1a1a2e;color:#aaa;padding:6px 14px;border-radius:8px;font-size:13px;z-index:9999;transition:opacity 0.3s;';
+            document.body.appendChild(saveStatusEl);
+        }
+        saveStatusEl.textContent = msg;
+        saveStatusEl.style.opacity = '1';
+        clearTimeout(saveStatusEl._timer);
+        saveStatusEl._timer = setTimeout(() => { saveStatusEl.style.opacity = '0'; }, 3000);
+    }
 
-    // Fetch any enabled cheats for this game and post them to the iframe.
-    // Safe to call multiple times (cloud-save.js dedupes when already applied).
+    // Forward enabled cheats to the iframe whenever the game signals ready.
     async function sendCheatsToIframe(gameId) {
         if (!window.ArcadeCheats || !ArcadeCheats.getEnabledCheatsForGame) return;
         try {
@@ -194,159 +205,11 @@
         }
     }
 
-    function showSaveStatus(msg) {
-        if (!saveStatusEl) {
-            saveStatusEl = document.createElement('div');
-            saveStatusEl.style.cssText = 'position:fixed;bottom:12px;right:12px;background:#1a1a2e;color:#aaa;padding:6px 14px;border-radius:8px;font-size:13px;z-index:9999;transition:opacity 0.3s;';
-            document.body.appendChild(saveStatusEl);
-        }
-        saveStatusEl.textContent = msg;
-        saveStatusEl.style.opacity = '1';
-        clearTimeout(saveStatusEl._timer);
-        saveStatusEl._timer = setTimeout(() => { saveStatusEl.style.opacity = '0'; }, 3000);
-    }
-
-    // Cloud save is now opt-in per the user's request. When a save exists
-    // for the current game, we show a button in the bottom-left of the
-    // player — click to load it on top of the current state, or tap the
-    // X to dismiss and play from scratch.
-    let loadBtnEl = null;
-    function showLoadSaveButton(gameId, meta) {
-        // Build once, reuse across games
-        if (!loadBtnEl) {
-            loadBtnEl = document.createElement('div');
-            loadBtnEl.className = 'cloud-load-btn';
-            loadBtnEl.innerHTML = `
-                <button class="cloud-load-btn-main" type="button">
-                    <span class="cloud-load-btn-label">Load cloud save</span>
-                    <span class="cloud-load-btn-meta"></span>
-                </button>
-                <button class="cloud-load-btn-close" type="button" aria-label="Dismiss">&times;</button>
-            `;
-            document.body.appendChild(loadBtnEl);
-
-            loadBtnEl.querySelector('.cloud-load-btn-close').addEventListener('click', () => {
-                hideLoadSaveButton();
-            });
-        }
-
-        const meta_sub = loadBtnEl.querySelector('.cloud-load-btn-meta');
-        const updated = meta.updatedAt && meta.updatedAt.toDate
-            ? meta.updatedAt.toDate()
-            : null;
-        let subtext = '';
-        if (updated) {
-            const now = new Date();
-            const diffH = (now - updated) / 3_600_000;
-            if (diffH < 1) subtext = 'just now';
-            else if (diffH < 24) subtext = `${Math.round(diffH)}h ago`;
-            else if (diffH < 24 * 7) subtext = `${Math.round(diffH / 24)}d ago`;
-            else subtext = updated.toLocaleDateString();
-            if (meta.sizeKB) subtext += ` · ${meta.sizeKB}KB`;
-        } else if (meta.sizeKB) {
-            subtext = `${meta.sizeKB}KB`;
-        }
-        meta_sub.textContent = subtext;
-
-        // Replace the main click handler every call so it targets the
-        // current game (otherwise opening game A then B would still load
-        // A's save on a button that looks like B's).
-        const mainBtn = loadBtnEl.querySelector('.cloud-load-btn-main');
-        mainBtn.onclick = async () => {
-            // Confirm before overwriting current state. Loading a cloud
-            // save replaces the emulator's entire RAM + SRAM — if the
-            // user has unsaved progress they'll lose it. The subtext
-            // shows the save's age so they can decide.
-            const ageLabel = subtext || 'unknown age';
-            const ok = window.confirm(
-                'Load cloud save from ' + ageLabel + '?\n\n' +
-                'This replaces your current game state. Any progress made ' +
-                'since this save will be lost, including in-game saves ' +
-                'made after this cloud save was recorded.\n\n' +
-                'Tap OK to load, Cancel to keep playing.'
-            );
-            if (!ok) {
-                hideLoadSaveButton();
-                return;
-            }
-
-            mainBtn.disabled = true;
-            mainBtn.querySelector('.cloud-load-btn-label').textContent = 'Loading…';
-            try {
-                const data = await ArcadeAuth.loadGameData(gameId);
-                if (data) {
-                    gameFrame.contentWindow.postMessage({ type: 'load-save', data }, '*');
-                    showSaveStatus('Cloud save loaded!');
-                    hideLoadSaveButton();
-                } else {
-                    mainBtn.querySelector('.cloud-load-btn-label').textContent = 'Load failed';
-                    setTimeout(() => hideLoadSaveButton(), 2000);
-                }
-            } catch (e) {
-                console.error('load-save click failed:', e);
-                mainBtn.querySelector('.cloud-load-btn-label').textContent = 'Load failed';
-                setTimeout(() => hideLoadSaveButton(), 2000);
-            }
-        };
-
-        loadBtnEl.classList.add('is-visible');
-    }
-
-    function hideLoadSaveButton() {
-        if (loadBtnEl) loadBtnEl.classList.remove('is-visible');
-    }
-
     window.addEventListener('message', async (e) => {
         if (!e.data || !e.data.type) return;
-
+        // Cloud save system removed — just forward cheats on emu-ready.
         if (e.data.type === 'emu-ready' && e.data.gameId) {
-            const emGameId = e.data.gameId;
-            // Game emulator is ready. Check if a cloud save exists and
-            // show an opt-in "Load save" button in the bottom-left — the
-            // user chooses when to overwrite their current state.
-            await ArcadeAuth.waitForAuth();
-            if (!ArcadeAuth.isLoggedIn()) {
-                showSaveStatus('Not logged in — cloud save disabled');
-                sendCheatsToIframe(emGameId);
-                return;
-            }
-            const meta = await ArcadeAuth.hasGameData(emGameId);
-            if (meta.exists) {
-                showLoadSaveButton(emGameId, meta);
-            } else {
-                showSaveStatus('No cloud save — one will be created as you play');
-            }
-            sendCheatsToIframe(emGameId);
-        }
-
-        if (e.data.type === 'save-data' && e.data.gameId && e.data.data) {
-            await ArcadeAuth.waitForAuth();
-            if (!ArcadeAuth.isLoggedIn()) {
-                showSaveStatus('Not logged in — save skipped');
-                return;
-            }
-            showSaveStatus('Saving to cloud...');
-            const result = await ArcadeAuth.saveGameData(e.data.gameId, e.data.data);
-            if (result === true) {
-                showSaveStatus('Saved to cloud!');
-            } else if (result && result.error === 'too-large') {
-                // Firestore can't hold this — DS/PSX saves too big for
-                // the 1MB doc limit. Tell the user once AND signal the
-                // iframe to stop trying so we don't burn CPU + mobile RAM
-                // re-attempting every cycle.
-                showSaveStatus(
-                    `Save too big for cloud (${result.sizeKB}KB, limit ~1000KB). ` +
-                    `Cloud save disabled for this game.`
-                );
-                try {
-                    gameFrame.contentWindow.postMessage({
-                        type: 'cloud-save-disabled',
-                        reason: `too big (${result.sizeKB}KB)`,
-                    }, '*');
-                } catch (_) {}
-            } else {
-                showSaveStatus('Cloud save failed');
-            }
+            sendCheatsToIframe(e.data.gameId);
         }
     });
 

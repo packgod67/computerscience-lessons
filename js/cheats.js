@@ -1,9 +1,9 @@
 // ===== Cheat Code Manager (Admin) =====
 // Admin UI for entering GameShark / Action Replay / CodeBreaker codes per
-// game. Codes live in Firestore at cheats/{gameId}/codes/{docId}. When a user
-// opens a game, player.js fetches the `enabled` codes and posts them to the
-// iframe; cloud-save.js applies them via the EmulatorJS cheats API once the
-// emulator is ready.
+// game. Codes live in Firestore at cheats/{gameId}/codes/{docId}. When a
+// user opens a game, player.js fetches the enabled codes and posts them
+// to the iframe via postMessage. The iframe applies them through the
+// EmulatorJS cheats API once the emulator is ready.
 (function () {
     let games = [];
     let gamesLoaded = false;
