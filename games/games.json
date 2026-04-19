@@ -25574,5 +25574,581 @@
       "gba",
       "rom-hack"
     ]
+  },
+  {
+    "id": "clpokemonvolume1gba",
+    "title": "Pokemon Volume 1 (GBA)",
+    "category": "Pokemon",
+    "path": "games/clpokemonvolume1gba.html",
+    "description": "Pokemon – Volume 1 GBA — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonvolume3gba",
+    "title": "Pokemon Volume 3 (GBA)",
+    "category": "Pokemon",
+    "path": "games/clpokemonvolume3gba.html",
+    "description": "Pokemon – Volume 3 GBA — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonvolume2gba",
+    "title": "Pokemon Volume 2 (GBA)",
+    "category": "Pokemon",
+    "path": "games/clpokemonvolume2gba.html",
+    "description": "Pokemon – Volume 2 GBA — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonmega",
+    "title": "Pokemon Mega",
+    "category": "Pokemon",
+    "path": "games/clpokemonmega.html",
+    "description": "Pokemon Mega – — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonemeraldrandomizer",
+    "title": "Pokemon Emerald Randomizer",
+    "category": "Pokemon",
+    "path": "games/clpokemonemeraldrandomizer.html",
+    "description": "Pokemon Emerald Randomizer — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonprism",
+    "title": "Pokemon Prism",
+    "category": "Pokemon",
+    "path": "games/clpokemonprism.html",
+    "description": "Pokemon Prism — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonashgray",
+    "title": "Pokemon Ash Gray",
+    "category": "Pokemon",
+    "path": "games/clpokemonashgray.html",
+    "description": "Pokemon Ash Gray — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemondarkcry",
+    "title": "Pokemon Dark Cry Version: The Legend of Giratina",
+    "category": "Pokemon",
+    "path": "games/clpokemondarkcry.html",
+    "description": "Pokemon Dark Cry Version: The Legend of Giratina — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonglazed",
+    "title": "Pokemon Glazed",
+    "category": "Pokemon",
+    "path": "games/clpokemonglazed.html",
+    "description": "Pokemon Glazed — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonpink",
+    "title": "Pokemon Pink Version",
+    "category": "Pokemon",
+    "path": "games/clpokemonpink.html",
+    "description": "Pokemon Pink Version — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonteamrocket",
+    "title": "Pokemon Team Rocket",
+    "category": "Pokemon",
+    "path": "games/clpokemonteamrocket.html",
+    "description": "Pokemon Team Rocket — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonadvancedadventure",
+    "title": "Pokemon Advanced Adventure",
+    "category": "Pokemon",
+    "path": "games/clpokemonadvancedadventure.html",
+    "description": "Pokemon Advanced Adventure — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonflorasky",
+    "title": "Pokemon Flora Sky",
+    "category": "Pokemon",
+    "path": "games/clpokemonflorasky.html",
+    "description": "Pokemon Flora Sky — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonrenegadeplatinum",
+    "title": "Pokemon Renegade Platinum",
+    "category": "Pokemon",
+    "path": "games/clpokemonrenegadeplatinum.html",
+    "description": "Pokemon Renegade Platinum ROM – Downlaod — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "nds",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonsnakewood",
+    "title": "Pokemon Snakewood",
+    "category": "Pokemon",
+    "path": "games/clpokemonsnakewood.html",
+    "description": "Pokemon Snakewood ROM – Downlaod — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "nds",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonblackrandomizer",
+    "title": "Pokemon Black Randomizer",
+    "category": "Pokemon",
+    "path": "games/clpokemonblackrandomizer.html",
+    "description": "Pokemon Black Randomizer — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "nds",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonblazedglazed",
+    "title": "Pokemon Blazed Glazed",
+    "category": "Pokemon",
+    "path": "games/clpokemonblazedglazed.html",
+    "description": "Pokemon Blazed Glazed — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonexpertemerald",
+    "title": "Pokemon Expert Emerald",
+    "category": "Pokemon",
+    "path": "games/clpokemonexpertemerald.html",
+    "description": "Pokemon Expert Emerald — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonfireredrandomizer",
+    "title": "Pokemon Fire Red Randomizer",
+    "category": "Pokemon",
+    "path": "games/clpokemonfireredrandomizer.html",
+    "description": "Pokemon Fire Red Randomizer — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonflawlessplatinum",
+    "title": "Pokemon Flawless Platinum",
+    "category": "Pokemon",
+    "path": "games/clpokemonflawlessplatinum.html",
+    "description": "Pokemon Flawless Platinum — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "nds",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonmoonblack2",
+    "title": "Pokemon Moon Black 2",
+    "category": "Pokemon",
+    "path": "games/clpokemonmoonblack2.html",
+    "description": "Pokemon Moon Black 2 — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "nds",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemoncursed",
+    "title": "Pokemon Cursed",
+    "category": "Pokemon",
+    "path": "games/clpokemoncursed.html",
+    "description": "Pokemon Cursed — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonsacredgold",
+    "title": "Pokemon Sacred Gold",
+    "category": "Pokemon",
+    "path": "games/clpokemonsacredgold.html",
+    "description": "Pokemon Sacred Gold — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "nds",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemon2heroes",
+    "title": "Pokemon 2 Heroes",
+    "category": "Pokemon",
+    "path": "games/clpokemon2heroes.html",
+    "description": "Pokemon 2 Heroes — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonplatinumrandomizer",
+    "title": "Pokemon Platinum Randomizer",
+    "category": "Pokemon",
+    "path": "games/clpokemonplatinumrandomizer.html",
+    "description": "Pokemon Platinum Randomizer — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "nds",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "cllostsilver",
+    "title": "CreepyPasta Pokemon Lost Silver",
+    "category": "Pokemon",
+    "path": "games/cllostsilver.html",
+    "description": "CreepyPasta Pokemon Lost Silver — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonstormsilver",
+    "title": "Pokemon Storm Silver",
+    "category": "Pokemon",
+    "path": "games/clpokemonstormsilver.html",
+    "description": "Pokemon Storm Silver — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "nds",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "cl1636pokemonfireredsquirrels",
+    "title": "1636 Pokemon Fire Red Squirrels",
+    "category": "Pokemon",
+    "path": "games/cl1636pokemonfireredsquirrels.html",
+    "description": "1636 Pokemon Fire Red Squirrels — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonlink",
+    "title": "Pokemon Link!",
+    "category": "Pokemon",
+    "path": "games/clpokemonlink.html",
+    "description": "Pokemon Link! — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonfirereddeluxe",
+    "title": "Pokemon FireRed Deluxe Download",
+    "category": "Pokemon",
+    "path": "games/clpokemonfirereddeluxe.html",
+    "description": "Pokemon FireRed Deluxe Download — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonblackandwhite2",
+    "title": "Pokemon Black and White 2",
+    "category": "Pokemon",
+    "path": "games/clpokemonblackandwhite2.html",
+    "description": "Pokemon Black and White 2 — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonpisces",
+    "title": "Pokemon Pisces",
+    "category": "Pokemon",
+    "path": "games/clpokemonpisces.html",
+    "description": "​Pokemon Pisces Download — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
   }
 ]
