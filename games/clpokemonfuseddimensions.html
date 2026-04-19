@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Pokemon Fused Dimensions</title>
+<style>
+  body, html { margin:0; padding:0; width:100%; height:100%; background:#121212; color:#fff; font-family:Arial,sans-serif; }
+  #game-container { width:100%; height:100vh; display:flex; align-items:center; justify-content:center; }
+  #loading-progress { font-size:16px; padding:10px; background:rgba(255,255,255,0.1); border-radius:8px; }
+</style>
+</head>
+<body>
+<div id="game-container">
+  <div id="game"></div>
+  <div id="loading-progress">Loading Pokemon Fused Dimensions...</div>
+</div>
+<script>
+  EJS_player = "#game";
+  EJS_core = "gba";
+  EJS_gameName = "Pokemon Fused Dimensions";
+  EJS_color = "#0064ff";
+  EJS_startOnLoaded = true;
+  EJS_threads = false;
+  EJS_cacheLimit = 0;
+  if (typeof EJS_VirtualGamepadEnabled === 'undefined') EJS_VirtualGamepadEnabled = true;
+  EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
+  EJS_netplayServer = "https://netplay.emulatorjs.org";
+  EJS_gameUrl = "https://cdn.jsdelivr.net/gh/bubbls/UGS-file-encryption@3d64759cb35b901b5f982ce9da2db9053a9948f7/Pokemon%20Fused%20Dimensions%20(v2.3)%20(1).zip";
+  EJS_onGameStart = function() {
+    document.getElementById("loading-progress")?.remove();
+  };
+  var script = document.createElement("script");
+  script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";
+  document.body.appendChild(script);
+</script>
+<script>window.CLOUD_SAVE_GAME_ID = 'clpokemonfuseddimensions';</script>
+<script src="../js/cloud-save.js"></script>
+</body>
+</html>

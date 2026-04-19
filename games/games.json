@@ -25506,5 +25506,61 @@
     "title": "Wolfchild",
     "category": "Other",
     "path": "games/wolfchild.html"
+  },
+  {
+    "id": "clpokemondreamstonemysteries",
+    "title": "Pokemon Dreamstone Mysteries",
+    "category": "Pokemon",
+    "path": "games/clpokemondreamstonemysteries.html",
+    "description": "Explore the fan-made Cormoria region hunting for a missing Pokemon professor. Open-world adventure on a FireRed base with new storyline and side quests.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "adventure",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonthelastfirered",
+    "title": "Pokemon The Last Fire Red",
+    "category": "Pokemon",
+    "path": "games/clpokemonthelastfirered.html",
+    "description": "A FireRed overhaul with all 898 pokemon from Gen 1-8, mega evolutions, updated mechanics, and a remixed story. Long-running and regularly polished.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ]
+  },
+  {
+    "id": "clpokemonfuseddimensions",
+    "title": "Pokemon Fused Dimensions",
+    "category": "Pokemon",
+    "path": "games/clpokemonfuseddimensions.html",
+    "description": "A difficulty-focused Emerald hack with a new region and pokemon from many gens. Tough trainers, reworked movesets, and a twist-laden plot.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "hard",
+      "rom-hack"
+    ]
   }
 ]
