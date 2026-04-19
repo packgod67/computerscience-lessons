@@ -723,6 +723,32 @@
         }
     }
 
+    // Cheap existence check — reads only the Firestore metadata doc,
+    // not the Storage blob. Returns { exists, updatedAt, sizeKB } on
+    // hit, or { exists: false } on miss.
+    async function hasGameData(gameId) {
+        if (!currentUser) return { exists: false };
+        try {
+            const doc = await db.collection('saves').doc(currentUser.uid)
+                .collection('games').doc(gameId).get();
+            if (!doc.exists) return { exists: false };
+            const d = doc.data() || {};
+            // Either the new Supabase-backed format (storage==='supabase')
+            // or the legacy inline Firestore payload counts as "exists".
+            if (d.storage === 'supabase' || d.data) {
+                return {
+                    exists: true,
+                    updatedAt: d.updatedAt,
+                    sizeKB: d.sizeKB,
+                };
+            }
+            return { exists: false };
+        } catch (e) {
+            console.error('Cloud check failed:', e);
+            return { exists: false };
+        }
+    }
+
     async function loadGameData(gameId) {
         if (!currentUser) return null;
 
@@ -837,7 +863,7 @@
         getUserRoleIds: () => userRoleIds,
         getDb: () => db,
         banUser, approveUser, getPendingUsers, showApprovalPanel,
-        saveGameData, loadGameData,
+        saveGameData, loadGameData, hasGameData,
         getProfile, updateProfile, trackPlay, ensureJoinedAt,
         setCurrentGame, listenActiveUsersDetailed
     };

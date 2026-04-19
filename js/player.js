@@ -206,27 +206,100 @@
         saveStatusEl._timer = setTimeout(() => { saveStatusEl.style.opacity = '0'; }, 3000);
     }
 
+    // Cloud save is now opt-in per the user's request. When a save exists
+    // for the current game, we show a button in the bottom-left of the
+    // player — click to load it on top of the current state, or tap the
+    // X to dismiss and play from scratch.
+    let loadBtnEl = null;
+    function showLoadSaveButton(gameId, meta) {
+        // Build once, reuse across games
+        if (!loadBtnEl) {
+            loadBtnEl = document.createElement('div');
+            loadBtnEl.className = 'cloud-load-btn';
+            loadBtnEl.innerHTML = `
+                <button class="cloud-load-btn-main" type="button">
+                    <span class="cloud-load-btn-label">Load cloud save</span>
+                    <span class="cloud-load-btn-meta"></span>
+                </button>
+                <button class="cloud-load-btn-close" type="button" aria-label="Dismiss">&times;</button>
+            `;
+            document.body.appendChild(loadBtnEl);
+
+            loadBtnEl.querySelector('.cloud-load-btn-close').addEventListener('click', () => {
+                hideLoadSaveButton();
+            });
+        }
+
+        const meta_sub = loadBtnEl.querySelector('.cloud-load-btn-meta');
+        const updated = meta.updatedAt && meta.updatedAt.toDate
+            ? meta.updatedAt.toDate()
+            : null;
+        let subtext = '';
+        if (updated) {
+            const now = new Date();
+            const diffH = (now - updated) / 3_600_000;
+            if (diffH < 1) subtext = 'just now';
+            else if (diffH < 24) subtext = `${Math.round(diffH)}h ago`;
+            else if (diffH < 24 * 7) subtext = `${Math.round(diffH / 24)}d ago`;
+            else subtext = updated.toLocaleDateString();
+            if (meta.sizeKB) subtext += ` · ${meta.sizeKB}KB`;
+        } else if (meta.sizeKB) {
+            subtext = `${meta.sizeKB}KB`;
+        }
+        meta_sub.textContent = subtext;
+
+        // Replace the main click handler every call so it targets the
+        // current game (otherwise opening game A then B would still load
+        // A's save on a button that looks like B's).
+        const mainBtn = loadBtnEl.querySelector('.cloud-load-btn-main');
+        mainBtn.onclick = async () => {
+            mainBtn.disabled = true;
+            mainBtn.querySelector('.cloud-load-btn-label').textContent = 'Loading…';
+            try {
+                const data = await ArcadeAuth.loadGameData(gameId);
+                if (data) {
+                    gameFrame.contentWindow.postMessage({ type: 'load-save', data }, '*');
+                    showSaveStatus('Cloud save loaded!');
+                    hideLoadSaveButton();
+                } else {
+                    mainBtn.querySelector('.cloud-load-btn-label').textContent = 'Load failed';
+                    setTimeout(() => hideLoadSaveButton(), 2000);
+                }
+            } catch (e) {
+                console.error('load-save click failed:', e);
+                mainBtn.querySelector('.cloud-load-btn-label').textContent = 'Load failed';
+                setTimeout(() => hideLoadSaveButton(), 2000);
+            }
+        };
+
+        loadBtnEl.classList.add('is-visible');
+    }
+
+    function hideLoadSaveButton() {
+        if (loadBtnEl) loadBtnEl.classList.remove('is-visible');
+    }
+
     window.addEventListener('message', async (e) => {
         if (!e.data || !e.data.type) return;
 
         if (e.data.type === 'emu-ready' && e.data.gameId) {
-            // Game emulator is ready — send cloud save if user is logged in
+            const emGameId = e.data.gameId;
+            // Game emulator is ready. Check if a cloud save exists and
+            // show an opt-in "Load save" button in the bottom-left — the
+            // user chooses when to overwrite their current state.
             await ArcadeAuth.waitForAuth();
             if (!ArcadeAuth.isLoggedIn()) {
                 showSaveStatus('Not logged in — cloud save disabled');
-                // Still try to apply cheats — they don't need login to work
-                sendCheatsToIframe(e.data.gameId);
+                sendCheatsToIframe(emGameId);
                 return;
             }
-            showSaveStatus('Loading cloud save...');
-            const data = await ArcadeAuth.loadGameData(e.data.gameId);
-            if (data) {
-                gameFrame.contentWindow.postMessage({ type: 'load-save', data: data }, '*');
-                showSaveStatus('Cloud save loaded!');
+            const meta = await ArcadeAuth.hasGameData(emGameId);
+            if (meta.exists) {
+                showLoadSaveButton(emGameId, meta);
             } else {
-                showSaveStatus('No cloud save found — will create one');
+                showSaveStatus('No cloud save — one will be created as you play');
             }
-            sendCheatsToIframe(e.data.gameId);
+            sendCheatsToIframe(emGameId);
         }
 
         if (e.data.type === 'save-data' && e.data.gameId && e.data.data) {

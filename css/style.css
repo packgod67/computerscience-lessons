@@ -2188,6 +2188,90 @@ body.auth-gated .player-container {
 }
 
 /* ===== Game Error State ===== */
+/* ===== Cloud-save opt-in button (bottom-left of player) =====
+   Shown by player.js when a cloud save exists for the current game.
+   The user explicitly clicks to load it — no more surprise state
+   replacement on every reload. */
+.cloud-load-btn {
+    position: fixed;
+    left: 12px;
+    bottom: 12px;
+    z-index: 9998;
+    display: none;
+    align-items: stretch;
+    gap: 6px;
+    padding: 0;
+    background: var(--bg-secondary, #1a1a2e);
+    border: 1px solid var(--border, #333);
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    overflow: hidden;
+    max-width: calc(100vw - 24px);
+    transform: translateY(8px);
+    opacity: 0;
+    transition: transform 0.18s ease, opacity 0.18s ease;
+}
+.cloud-load-btn.is-visible {
+    display: inline-flex;
+    transform: translateY(0);
+    opacity: 1;
+}
+.cloud-load-btn-main {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 2px;
+    padding: 10px 16px;
+    background: transparent;
+    border: 0;
+    color: var(--text-primary, #fff);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background 0.15s;
+    min-width: 0;
+}
+.cloud-load-btn-main:hover:not(:disabled) {
+    background: rgba(124, 58, 237, 0.18);
+}
+.cloud-load-btn-main:disabled {
+    opacity: 0.6;
+    cursor: wait;
+}
+.cloud-load-btn-label {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--accent, #a78bfa);
+}
+.cloud-load-btn-meta {
+    font-size: 0.7rem;
+    color: var(--text-secondary, #999);
+}
+.cloud-load-btn-meta:empty { display: none; }
+.cloud-load-btn-close {
+    background: transparent;
+    border: 0;
+    border-left: 1px solid var(--border, #333);
+    color: var(--text-secondary, #aaa);
+    font-size: 1.2rem;
+    padding: 0 10px;
+    cursor: pointer;
+    transition: color 0.15s, background 0.15s;
+}
+.cloud-load-btn-close:hover {
+    color: var(--text-primary, #fff);
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Mobile tweak — leave space for safe-area home bar on iOS */
+@media (max-width: 640px) {
+    .cloud-load-btn {
+        left: 8px;
+        bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    }
+    .cloud-load-btn-label { font-size: 0.8rem; }
+}
+
 .game-error {
     position: absolute;
     inset: 0;
