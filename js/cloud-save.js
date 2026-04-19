@@ -85,12 +85,35 @@
         return false;
     }
 
+    // Guardrails against mobile tab OOM: on big-state games (DS/PSX)
+    // the 30s auto-save cycle allocates 15-30MB temporarily each time,
+    // which crashes the tab on phones with a few hundred MB free. We:
+    //   - cache the last state size, bump the interval way out for big
+    //     saves (every 3 min instead of 30s)
+    //   - skip interval saves entirely if the state is absurdly big
+    //     (>6MB raw) since Firestore won't accept them even compressed
+    //   - still try on beforeunload / visibility change (cheap, one-off)
+    var BIG_SAVE_THRESHOLD = 800 * 1024;   // 800KB raw → Firestore marginal
+    var HUGE_SAVE_THRESHOLD = 6 * 1024 * 1024;  // 6MB raw → skip auto-save
+    var lastStateSize = 0;
+
     function saveToCloud(reason) {
         var state = getState();
         if (!state) {
             log('save skipped — no state (' + (reason || '') + ')');
             return false;
         }
+        lastStateSize = state.byteLength;
+
+        // Mobile OOM safety: on HUGE saves, only allow save on explicit
+        // page exit (tab close / visibility-hidden). Interval saves get
+        // skipped to keep the tab alive.
+        if (state.byteLength > HUGE_SAVE_THRESHOLD && reason === 'interval') {
+            log('skipping interval save — state too big (' +
+                Math.round(state.byteLength / 1024) + 'KB)');
+            return false;
+        }
+
         try {
             var bytes = new Uint8Array(state);
             var binary = '';
@@ -109,6 +132,9 @@
             }, '*');
             log('sent ' + bytes.length + ' bytes (' + (reason || '') + ')');
             showStatus('Saving… (' + Math.round(bytes.length / 1024) + 'KB)', '#60a5fa');
+            // Free references so the GC can reclaim the big strings
+            binary = null;
+            bytes = null;
             return true;
         } catch (e) {
             log('save error: ' + e.message);
@@ -156,9 +182,34 @@
             if (!pendingLoad || tries > 30) clearInterval(loadTimer);
         }, 1000);
 
-        // Initial save after 15s so early progress is captured, then every 30s.
+        // Initial save after 15s so early progress is captured.
         setTimeout(function () { saveToCloud('initial'); }, 15000);
-        setInterval(function () { saveToCloud('interval'); }, 30000);
+
+        // Adaptive interval: small save states (GBA/NES/SNES) save every
+        // 30s like before — cheap, low memory pressure, worth it for
+        // frequent sync. Big states (DS/PSX) save every 3 min to keep
+        // mobile tab memory under control. Huge states (>6MB) skip
+        // interval saves entirely — only beforeunload/visibility ones.
+        function scheduleNextSave() {
+            var delay;
+            if (lastStateSize === 0) {
+                // Haven't measured yet — use the fast cadence
+                delay = 30000;
+            } else if (lastStateSize > HUGE_SAVE_THRESHOLD) {
+                // Will be skipped anyway, but schedule a "save-if-small"
+                // check in case the user's save file shrinks
+                delay = 5 * 60 * 1000;
+            } else if (lastStateSize > BIG_SAVE_THRESHOLD) {
+                delay = 3 * 60 * 1000;  // 3 min for DS/PSX
+            } else {
+                delay = 30000;  // 30s for lightweight cores
+            }
+            setTimeout(function () {
+                saveToCloud('interval');
+                scheduleNextSave();
+            }, delay);
+        }
+        scheduleNextSave();
     }
 
     // ----- Detection strategy 1: EJS_onGameStart (newer EmulatorJS) -----
