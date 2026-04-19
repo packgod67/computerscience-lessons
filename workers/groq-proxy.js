@@ -70,11 +70,83 @@ function pickKey(env, names) {
     return null;
 }
 
+// Hosts this worker is allowed to proxy ROM downloads from. All archive.org
+// subdomains (archive.org, dn*.archive.org, ia*.archive.org) are safe
+// public file hosting — no auth, no abuse surface. Anything else returns 403.
+const ROM_ALLOWED_HOSTS = [
+    'archive.org',
+    'us.archive.org',
+    'ca.archive.org',
+    'dn720006.ca.archive.org',
+    // Wildcards matched via endsWith('.archive.org') below
+];
+
 export default {
     async fetch(request, env) {
         if (request.method === 'OPTIONS') {
             return new Response(null, { status: 204, headers: CORS_HEADERS });
         }
+
+        // ───────────────────────────────────────────────────────────
+        // ROM proxy: GET /rom?src=<url>
+        // Forwards a request to archive.org (and friends) with CORS
+        // headers added. Needed because EmulatorJS fetches the ROM
+        // directly and archive.org's download endpoint doesn't send
+        // Access-Control-Allow-Origin.
+        // ───────────────────────────────────────────────────────────
+        const reqUrl = new URL(request.url);
+        if (reqUrl.pathname.startsWith('/rom')) {
+            const src = reqUrl.searchParams.get('src');
+            if (!src) return json({ error: 'missing src' }, 400);
+
+            let target;
+            try { target = new URL(src); } catch { return json({ error: 'invalid src url' }, 400); }
+            if (target.protocol !== 'https:') {
+                return json({ error: 'https only' }, 400);
+            }
+            const host = target.hostname;
+            const allowed = host.endsWith('.archive.org') || host === 'archive.org';
+            if (!allowed) {
+                return json({ error: 'host not allowed', host }, 403);
+            }
+
+            // Forward the request, preserving Range so EmulatorJS can
+            // stream chunks. Follow redirects (archive.org 302s to a
+            // region-specific download node).
+            const fwdHeaders = { 'User-Agent': 'arcade-rom-proxy' };
+            const range = request.headers.get('range');
+            if (range) fwdHeaders['Range'] = range;
+
+            let upstream;
+            try {
+                upstream = await fetch(src, {
+                    method: 'GET',
+                    headers: fwdHeaders,
+                    redirect: 'follow',
+                });
+            } catch (e) {
+                return json({ error: 'fetch failed: ' + (e.message || String(e)) }, 502);
+            }
+
+            // Pass through status + body with CORS added
+            const respHeaders = new Headers();
+            // Copy essential headers from upstream
+            for (const key of ['content-type', 'content-length', 'content-range', 'accept-ranges', 'last-modified', 'etag']) {
+                const v = upstream.headers.get(key);
+                if (v) respHeaders.set(key, v);
+            }
+            respHeaders.set('Access-Control-Allow-Origin', '*');
+            respHeaders.set('Access-Control-Expose-Headers', 'Content-Length, Content-Range, Accept-Ranges');
+            respHeaders.set('Cache-Control', 'public, max-age=86400');
+            return new Response(upstream.body, {
+                status: upstream.status,
+                headers: respHeaders,
+            });
+        }
+
+        // ───────────────────────────────────────────────────────────
+        // POST /  (LLM proxy — existing)
+        // ───────────────────────────────────────────────────────────
         if (request.method !== 'POST') {
             return json({ error: 'POST only' }, 405);
         }
