@@ -26150,5 +26150,1161 @@
       "gba",
       "rom-hack"
     ]
+  },
+  {
+    "id": "clpokemontrozei",
+    "title": "Pokemon Trozei! (USA)",
+    "category": "Pokemon",
+    "path": "games/clpokemontrozei.html",
+    "description": "Pokemon Trozei! (USA) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonfushiginodungeonakanokyuujotai",
+    "title": "Pokemon Fushigi no Dungeon – Aka no Kyuujotai (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemonfushiginodungeonakanokyuujotai.html",
+    "description": "Pokemon Fushigi no Dungeon – Aka no Kyuujotai (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonedicionrubi",
+    "title": "Pokemon – Edicion Rubi (Spain)",
+    "category": "Pokemon",
+    "path": "games/clpokemonedicionrubi.html",
+    "description": "Pokemon – Edicion Rubi (Spain) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionezaffiro",
+    "title": "Pokemon – Versione Zaffiro (Italy)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionezaffiro.html",
+    "description": "Pokemon – Versione Zaffiro (Italy) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionerubino",
+    "title": "Pokemon – Versione Rubino (Italy)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionerubino.html",
+    "description": "Pokemon – Versione Rubino (Italy) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionrubis",
+    "title": "Pokemon – Version Rubis (France)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionrubis.html",
+    "description": "Pokemon – Version Rubis (France) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonedicionzafiro",
+    "title": "Pokemon – Edicion Zafiro (Spain)",
+    "category": "Pokemon",
+    "path": "games/clpokemonedicionzafiro.html",
+    "description": "Pokemon – Edicion Zafiro (Spain) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonrubinedition",
+    "title": "Pokemon – Rubin-Edition (Germany)",
+    "category": "Pokemon",
+    "path": "games/clpokemonrubinedition.html",
+    "description": "Pokemon – Rubin-Edition (Germany) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonsaphiredition",
+    "title": "Pokemon – Saphir-Edition (Germany)",
+    "category": "Pokemon",
+    "path": "games/clpokemonsaphiredition.html",
+    "description": "Pokemon – Saphir-Edition (Germany) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionsaphir",
+    "title": "Pokemon – Version Saphir (France)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionsaphir.html",
+    "description": "Pokemon – Version Saphir (France) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpocketmonsterskin",
+    "title": "Pocket Monsters Kin (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpocketmonsterskin.html",
+    "description": "Pocket Monsters Kin (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpocketmonstersgeum",
+    "title": "Pocket Monsters Geum (Korea)",
+    "category": "Pokemon",
+    "path": "games/clpocketmonstersgeum.html",
+    "description": "Pocket Monsters Geum (Korea) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemoncardgb2grdansanjou",
+    "title": "Pokemon Card GB2 – GR Dan Sanjou! (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemoncardgb2grdansanjou.html",
+    "description": "Pokemon Card GB2 – GR Dan Sanjou! (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversioneoro",
+    "title": "Pokemon – Versione Oro (Italy)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversioneoro.html",
+    "description": "Pokemon – Versione Oro (Italy) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemondepanepon",
+    "title": "Pokemon de Panepon (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemondepanepon.html",
+    "description": "Pokemon de Panepon (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonedicionoro",
+    "title": "Pokemon – Edicion Oro (Spain)",
+    "category": "Pokemon",
+    "path": "games/clpokemonedicionoro.html",
+    "description": "Pokemon – Edicion Oro (Spain) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemongoldeneedition",
+    "title": "Pokemon – Goldene Edition (Germany)",
+    "category": "Pokemon",
+    "path": "games/clpokemongoldeneedition.html",
+    "description": "Pokemon – Goldene Edition (Germany) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionor",
+    "title": "Pokemon – Version Or (France)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionor.html",
+    "description": "Pokemon – Version Or (France) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonfushiginodungeonsoranotankentai",
+    "title": "Pokemon Fushigi no Dungeon: Sora no Tankentai (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemonfushiginodungeonsoranotankentai.html",
+    "description": "Pokemon Fushigi no Dungeon: Sora no Tankentai (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemontorouze",
+    "title": "Pokemon Torouze (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemontorouze.html",
+    "description": "Pokemon Torouze (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonrangerbatonnage",
+    "title": "Pokemon Ranger – Batonnage (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemonrangerbatonnage.html",
+    "description": "Pokemon Ranger – Batonnage (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonbulgasauidungeoneodumuitamheomdae",
+    "title": "Pokemon Bulgasaui Dungeon – Eodumui Tamheomdae (Korea)",
+    "category": "Pokemon",
+    "path": "games/clpokemonbulgasauidungeoneodumuitamheomdae.html",
+    "description": "Pokemon Bulgasaui Dungeon – Eodumui Tamheomdae (Korea) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonfushiginodungeontokinotankentai",
+    "title": "Pokemon Fushigi no Dungeon: Toki no Tankentai (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemonfushiginodungeontokinotankentai.html",
+    "description": "Pokemon Fushigi no Dungeon: Toki no Tankentai (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemoncardgameasobikatadsjapan",
+    "title": "Pokemon Card Game: Asobikata DS (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemoncardgameasobikatadsjapan.html",
+    "description": "Pokemon Card Game: Asobikata DS (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clbattlegetpokemontypingds",
+    "title": "Battle &#038; Get! Pokemon Typing DS (Japan)",
+    "category": "Pokemon",
+    "path": "games/clbattlegetpokemontypingds.html",
+    "description": "Battle &#038; Get! Pokemon Typing DS (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonrangerhikarinokiseki",
+    "title": "Pokemon Ranger – Hikari no Kiseki (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemonrangerhikarinokiseki.html",
+    "description": "Pokemon Ranger – Hikari no Kiseki (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonbulgasauidungeonparanggujodae",
+    "title": "POKEMON BULGASAUI DUNGEON PARANG GUJODAE (Korea)",
+    "category": "Pokemon",
+    "path": "games/clpokemonbulgasauidungeonparanggujodae.html",
+    "description": "POKEMON BULGASAUI DUNGEON PARANG GUJODAE (Korea) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonfushiginodungeonyaminotankentai",
+    "title": "Pokemon Fushigi no Dungeon – Yami no Tankentai (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemonfushiginodungeonyaminotankentai.html",
+    "description": "Pokemon Fushigi no Dungeon – Yami no Tankentai (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clapprendsavecpokemonalaconqueteduclavier",
+    "title": "Apprends avec Pokemon A la Conquete du Clavier (France)",
+    "category": "Pokemon",
+    "path": "games/clapprendsavecpokemonalaconqueteduclavier.html",
+    "description": "Apprends avec Pokemon A la Conquete du Clavier (France) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonbulgasauidungeonsiganuitamheomdae",
+    "title": "Pokemon Bulgasaui Dungeon – Siganui Tamheomdae (Korea)",
+    "category": "Pokemon",
+    "path": "games/clpokemonbulgasauidungeonsiganuitamheomdae.html",
+    "description": "Pokemon Bulgasaui Dungeon – Siganui Tamheomdae (Korea) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonfushiginodungeonaonokyuujotai",
+    "title": "Pokemon Fushigi no Dungeon: Ao no Kyuujotai (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpokemonfushiginodungeonaonokyuujotai.html",
+    "description": "Pokemon Fushigi no Dungeon: Ao no Kyuujotai (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonedicionblanca",
+    "title": "Pokemon Edicion Blanca (Spain)",
+    "category": "Pokemon",
+    "path": "games/clpokemonedicionblanca.html",
+    "description": "Pokemon Edicion Blanca (Spain) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemontoroje",
+    "title": "Pokemon Toroje (Korea)",
+    "category": "Pokemon",
+    "path": "games/clpokemontoroje.html",
+    "description": "Pokemon Toroje (Korea) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonpinballrubyandsapphire",
+    "title": "Pokemon Pinball Ruby and Sapphire",
+    "category": "Pokemon",
+    "path": "games/clpokemonpinballrubyandsapphire.html",
+    "description": "Pokemon Pinball Ruby and Sapphire — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonpinball",
+    "title": "Pokemon Pinball (Rumble Version)",
+    "category": "Pokemon",
+    "path": "games/clpokemonpinball.html",
+    "description": "Pokemon Pinball (Rumble Version) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonrangerguardiansigns",
+    "title": "Pokemon Ranger – Guardian Signs",
+    "category": "Pokemon",
+    "path": "games/clpokemonrangerguardiansigns.html",
+    "description": "Pokemon Ranger – Guardian Signs — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonpuzzlechallenge",
+    "title": "Pokemon Puzzle Challenge",
+    "category": "Pokemon",
+    "path": "games/clpokemonpuzzlechallenge.html",
+    "description": "Pokemon Puzzle Challenge — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gbc",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gbc"
+    ]
+  },
+  {
+    "id": "clpokemonstadium2",
+    "title": "Pokemon Stadium 2",
+    "category": "Pokemon",
+    "path": "games/clpokemonstadium2.html",
+    "description": "Pokemon Stadium 2 — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "n64",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "n64"
+    ]
+  },
+  {
+    "id": "clpokemonconquest",
+    "title": "Pokemon Conquest",
+    "category": "Pokemon",
+    "path": "games/clpokemonconquest.html",
+    "description": "Pokemon Conquest — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemontradingcardgame",
+    "title": "Pokemon Trading Card Game",
+    "category": "Pokemon",
+    "path": "games/clpokemontradingcardgame.html",
+    "description": "Pokemon Trading Card Game — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gbc",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gbc"
+    ]
+  },
+  {
+    "id": "clpokemonrangershadowsofalmia",
+    "title": "Pokemon Ranger Shadows of Almia",
+    "category": "Pokemon",
+    "path": "games/clpokemonrangershadowsofalmia.html",
+    "description": "Pokemon Ranger Shadows of Almia — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "cllearnwithpokemontypingadventure",
+    "title": "Learn with Pokemon: Typing Adventure",
+    "category": "Pokemon",
+    "path": "games/cllearnwithpokemontypingadventure.html",
+    "description": "Learn with Pokemon: Typing Adventure — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonranger",
+    "title": "Pokemon Ranger",
+    "category": "Pokemon",
+    "path": "games/clpokemonranger.html",
+    "description": "Pokemon Ranger — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemondash",
+    "title": "Pokemon Dash",
+    "category": "Pokemon",
+    "path": "games/clpokemondash.html",
+    "description": "Pokemon Dash — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "ds"
+    ]
+  },
+  {
+    "id": "clpokemonmaxiesisland",
+    "title": "Pokemon Maxie's Island",
+    "category": "Pokemon",
+    "path": "games/clpokemonmaxiesisland.html",
+    "description": "Pokemon Maxie's Island — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpocketmonstersgin",
+    "title": "Pocket Monsters Gin (Japan)",
+    "category": "Pokemon",
+    "path": "games/clpocketmonstersgin.html",
+    "description": "Pocket Monsters Gin (Japan) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonblattgrueneedition",
+    "title": "Pokemon – Blattgruene Edition (Germany)",
+    "category": "Pokemon",
+    "path": "games/clpokemonblattgrueneedition.html",
+    "description": "Pokemon – Blattgruene Edition (Germany) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonedicionesmeralda",
+    "title": "Pokemon – Edicion Esmeralda (Spain)",
+    "category": "Pokemon",
+    "path": "games/clpokemonedicionesmeralda.html",
+    "description": "Pokemon – Edicion Esmeralda (Spain) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionerossofuoco",
+    "title": "Pokemon – Versione Rosso Fuoco (Italy)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionerossofuoco.html",
+    "description": "Pokemon – Versione Rosso Fuoco (Italy) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionesmeraldo",
+    "title": "Pokemon – Versione Smeraldo (Italy)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionesmeraldo.html",
+    "description": "Pokemon – Versione Smeraldo (Italy) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemongreen",
+    "title": "Pokemon Green",
+    "category": "Pokemon",
+    "path": "games/clpokemongreen.html",
+    "description": "Pokemon Green — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversioneverdefoglia",
+    "title": "Pokemon – Versione Verde Foglia (Italy)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversioneverdefoglia.html",
+    "description": "Pokemon – Versione Verde Foglia (Italy) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonedicioncristal",
+    "title": "Pokemon – Edicion Cristal (Spain)",
+    "category": "Pokemon",
+    "path": "games/clpokemonedicioncristal.html",
+    "description": "Pokemon – Edicion Cristal (Spain) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonedicionplata",
+    "title": "Pokemon – Edicion Plata (Spain)",
+    "category": "Pokemon",
+    "path": "games/clpokemonedicionplata.html",
+    "description": "Pokemon – Edicion Plata (Spain) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonkristalledition",
+    "title": "Pokemon – Kristall-Edition (Germany)",
+    "category": "Pokemon",
+    "path": "games/clpokemonkristalledition.html",
+    "description": "Pokemon – Kristall-Edition (Germany) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonsilberneedition",
+    "title": "Pokemon – Silberne Edition (Germany)",
+    "category": "Pokemon",
+    "path": "games/clpokemonsilberneedition.html",
+    "description": "Pokemon – Silberne Edition (Germany) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionargent",
+    "title": "Pokemon – Version Argent (France)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionargent.html",
+    "description": "Pokemon – Version Argent (France) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversioncristal",
+    "title": "Pokemon – Version Cristal (France)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversioncristal.html",
+    "description": "Pokemon – Version Cristal (France) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversioneargento",
+    "title": "Pokemon – Versione Argento (Italy)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversioneargento.html",
+    "description": "Pokemon – Versione Argento (Italy) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionecristallo",
+    "title": "Pokemon – Versione Cristallo (Italy)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionecristallo.html",
+    "description": "Pokemon – Versione Cristallo (Italy) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpocketmonsterseun",
+    "title": "Pocket Monsters Eun (Korea)",
+    "category": "Pokemon",
+    "path": "games/clpocketmonsterseun.html",
+    "description": "Pocket Monsters Eun (Korea) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonrojofuegos",
+    "title": "Pokemon Rojo Fuego (S)",
+    "category": "Pokemon",
+    "path": "games/clpokemonrojofuegos.html",
+    "description": "Pokemon Rojo Fuego (S) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonedicionverdehoja",
+    "title": "Pokemon – Edicion Verde Hoja (Spain)",
+    "category": "Pokemon",
+    "path": "games/clpokemonedicionverdehoja.html",
+    "description": "Pokemon – Edicion Verde Hoja (Spain) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonfeuerrote",
+    "title": "Pokemon Feuerrote",
+    "category": "Pokemon",
+    "path": "games/clpokemonfeuerrote.html",
+    "description": "Pokemon Feuerrote — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonsmaragdedition",
+    "title": "Pokemon – Smaragd-Edition (Germany)",
+    "category": "Pokemon",
+    "path": "games/clpokemonsmaragdedition.html",
+    "description": "Pokemon – Smaragd-Edition (Germany) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionemeraude",
+    "title": "Pokemon – Version Emeraude (France)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionemeraude.html",
+    "description": "Pokemon – Version Emeraude (France) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionrougefeu",
+    "title": "Pokemon – Version Rouge Feu (France)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionrougefeu.html",
+    "description": "Pokemon – Version Rouge Feu (France) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
+  },
+  {
+    "id": "clpokemonversionvertfeuille",
+    "title": "Pokemon – Version Vert Feuille (France)",
+    "category": "Pokemon",
+    "path": "games/clpokemonversionvertfeuille.html",
+    "description": "Pokemon – Version Vert Feuille (France) — from pokemonrom.net via archive.org.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba"
+    ]
   }
 ]
