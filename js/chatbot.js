@@ -466,42 +466,124 @@
     //
     // Fallback chain if this misfires: two-pass translate → simple filter.
 
-    const KIRKY_TOOLS = [{
-        type: 'function',
-        function: {
-            name: 'search_games',
-            description: "Search the arcade's catalog of 2,700+ games. Call this whenever the user asks for games. Returns matching games as JSON with id/title/category/tags/description/popular.",
-            parameters: {
-                type: 'object',
-                properties: {
-                    include_tags: {
-                        type: 'array',
-                        items: { type: 'string' },
-                        description: "Tag names to match. Examples: 'jrpg','monster-tamer','2-player','roguelike','platformer','puzzle','co-op','turn-based','retro','gba','nes','sandbox'. Games with any of these tags are ranked higher. Use franchise tags ('pokemon','mario','sonic','zelda') only when the user wants that franchise specifically — NOT when they said 'like pokemon'.",
+    const KIRKY_TOOLS = [
+        {
+            type: 'function',
+            function: {
+                name: 'search_games',
+                description: "Search the arcade's catalog of 2,700+ games. Call this whenever the user asks for games. Returns matching games as JSON with id/title/category/tags/description/popular.",
+                parameters: {
+                    type: 'object',
+                    properties: {
+                        include_tags: {
+                            type: 'array',
+                            items: { type: 'string' },
+                            description: "Tag names to match. Examples: 'jrpg','monster-tamer','2-player','roguelike','platformer','puzzle','co-op','turn-based','retro','gba','nes','sandbox'. Games with any of these tags are ranked higher. Use franchise tags ('pokemon','mario','sonic','zelda') only when the user wants that franchise specifically — NOT when they said 'like pokemon'.",
+                        },
+                        exclude_franchises: {
+                            type: 'array',
+                            items: { type: 'string' },
+                            description: "Franchises or tags to EXCLUDE. When the user says 'like pokemon' / 'similar to pokemon' / 'pokemon-style', put 'pokemon' here. When they say 'but not mario', put 'mario' here. When they reject previous picks saying 'these are all X', put X here.",
+                        },
+                        fuzzy_title: {
+                            type: 'string',
+                            description: "Partial/misspelled title to search for, e.g. 'pokeman emerld' → Pokemon Emerald. Leave empty unless the user named a specific title.",
+                        },
+                        exclude_ids: {
+                            type: 'array',
+                            items: { type: 'string' },
+                            description: "Specific game IDs to exclude (e.g. your previous picks when the user rejected them).",
+                        },
+                        limit: {
+                            type: 'integer',
+                            description: "Max results (default 30, max 50).",
+                        },
                     },
-                    exclude_franchises: {
-                        type: 'array',
-                        items: { type: 'string' },
-                        description: "Franchises or tags to EXCLUDE. When the user says 'like pokemon' / 'similar to pokemon' / 'pokemon-style', put 'pokemon' here. When they say 'but not mario', put 'mario' here. When they reject previous picks saying 'these are all X', put X here.",
-                    },
-                    fuzzy_title: {
-                        type: 'string',
-                        description: "Partial/misspelled title to search for, e.g. 'pokeman emerld' → Pokemon Emerald. Leave empty unless the user named a specific title.",
-                    },
-                    exclude_ids: {
-                        type: 'array',
-                        items: { type: 'string' },
-                        description: "Specific game IDs to exclude (e.g. your previous picks when the user rejected them).",
-                    },
-                    limit: {
-                        type: 'integer',
-                        description: "Max results (default 30, max 50).",
-                    },
+                    required: ['include_tags'],
                 },
-                required: ['include_tags'],
             },
         },
-    }];
+        {
+            type: 'function',
+            function: {
+                name: 'pokemon_wiki',
+                description: "Look up a topic on Bulbapedia, the comprehensive Pokemon wiki. Use when you need SPECIFIC facts you're not 100% sure about — pokemon stats, move details, ability effects, item descriptions, route encounter tables, gym leader teams, ROM hack overviews, competitive terms, etc. The user can't see this call; use the result in your natural-language reply.",
+                parameters: {
+                    type: 'object',
+                    properties: {
+                        query: {
+                            type: 'string',
+                            description: "Search term. Be specific. Good: 'Pikachu', 'Stealth Rock move', 'Route 110 Hoenn', 'Pokemon Radical Red', 'Choice Scarf'. Bad: 'pokemon' (too broad), 'help me'.",
+                        },
+                    },
+                    required: ['query'],
+                },
+            },
+        },
+    ];
+
+    // Executes a pokemon_wiki tool call by querying Bulbapedia's MediaWiki
+    // API. Uses the generator=search pattern to find the best-matching
+    // page and pull its intro extract in one request. CORS is enabled
+    // via origin=* so this works directly from the browser.
+    async function lookupPokemonWiki(query) {
+        try {
+            const q = String(query || '').trim();
+            if (!q) return { error: 'empty query' };
+            const url = new URL('https://bulbapedia.bulbagarden.net/w/api.php');
+            url.search = new URLSearchParams({
+                action: 'query',
+                format: 'json',
+                origin: '*',
+                generator: 'search',
+                gsrsearch: q,
+                gsrlimit: '1',
+                prop: 'extracts|info',
+                exintro: '1',
+                explaintext: '1',
+                inprop: 'url',
+            }).toString();
+            const resp = await fetch(url, { method: 'GET' });
+            if (!resp.ok) return { error: `wiki http ${resp.status}` };
+            const data = await resp.json();
+            const pages = data?.query?.pages;
+            if (!pages) return { error: 'no results' };
+            const page = Object.values(pages)[0];
+            if (!page) return { error: 'no results' };
+            const extract = (page.extract || '').trim();
+            if (!extract) {
+                // Some pages lack extracts — fall back to a raw search
+                // snippet so the AI still has something to reason over.
+                const sUrl = new URL('https://bulbapedia.bulbagarden.net/w/api.php');
+                sUrl.search = new URLSearchParams({
+                    action: 'query',
+                    format: 'json',
+                    origin: '*',
+                    list: 'search',
+                    srsearch: q,
+                    srlimit: '3',
+                    srprop: 'snippet',
+                }).toString();
+                const sResp = await fetch(sUrl);
+                const sData = await sResp.json();
+                const hits = (sData?.query?.search || []).map(h => ({
+                    title: h.title,
+                    snippet: (h.snippet || '').replace(/<[^>]+>/g, '').replace(/&quot;/g, '"'),
+                }));
+                return {
+                    note: 'no article extract, falling back to search snippets',
+                    hits,
+                };
+            }
+            return {
+                title: page.title,
+                extract: extract.slice(0, 1200),
+                url: page.fullurl || `https://bulbapedia.bulbagarden.net/wiki/${encodeURIComponent(page.title.replace(/ /g, '_'))}`,
+            };
+        } catch (e) {
+            return { error: String(e && e.message || e) };
+        }
+    }
 
     // Execute the search_games tool locally against the loaded catalog.
     // Ranks by tag overlap + popularity + fuzzy title boost.
@@ -600,6 +682,10 @@
         "- If the candidate list looks wrong for the request (e.g. user said \"like pokemon\" but candidates are all Pokemon games), pick the best non-franchise match from what's there — do NOT pick Pokemon titles. If nothing fits, say so briefly and return `games: []`.",
         "",
         SITE_KNOWLEDGE,
+        "",
+        "TOOLS AVAILABLE:",
+        "  - search_games — search the arcade's 2,700-game catalog (use for recommendation turns).",
+        "  - pokemon_wiki — look up any Pokemon topic on Bulbapedia. Use it whenever you're NOT 100% sure about a pokemon fact — stats, move details, ability text, item effects, route encounter tables, gym teams, ROM hack overviews. Do NOT rely on memory for specifics; verify with the tool. The tool result is hidden from the user — weave the info into your natural reply.",
         "",
         "POKEMON EXPERTISE — Pokemon is ~5% of the catalog (137 games, mostly ROM hacks). Users ask about it constantly. Know this stuff cold:",
         "- Mainline generations 1-9: Red/Blue/Yellow (Gen 1), Gold/Silver/Crystal (Gen 2), Ruby/Sapphire/Emerald (Gen 3), Diamond/Pearl/Platinum/HG/SS (Gen 4), Black/White/B2/W2 (Gen 5), X/Y/OR/AS (Gen 6), S/M/US/UM (Gen 7), Sword/Shield (Gen 8), Scarlet/Violet (Gen 9).",
@@ -875,29 +961,49 @@
         // that the AI is allowed to cite in its final pick.
         const toolMessages = [msg1];
         const allowedIds = new Set();
+        let sawGameSearch = false;
         for (const tc of toolCalls) {
-            if (tc.type !== 'function' || tc.function?.name !== 'search_games') {
+            if (tc.type !== 'function') {
                 toolMessages.push({
                     role: 'tool',
                     tool_call_id: tc.id,
-                    content: JSON.stringify({ error: 'unknown tool' }),
+                    content: JSON.stringify({ error: 'unknown tool type' }),
                 });
                 continue;
             }
+            const fnName = tc.function?.name;
             let args = {};
             try { args = JSON.parse(tc.function.arguments || '{}'); } catch {}
-            const results = searchGames(args);
-            for (const r of results) allowedIds.add(r.id);
-            toolMessages.push({
-                role: 'tool',
-                tool_call_id: tc.id,
-                content: JSON.stringify(results),
-            });
+
+            if (fnName === 'search_games') {
+                sawGameSearch = true;
+                const results = searchGames(args);
+                for (const r of results) allowedIds.add(r.id);
+                toolMessages.push({
+                    role: 'tool',
+                    tool_call_id: tc.id,
+                    content: JSON.stringify(results),
+                });
+            } else if (fnName === 'pokemon_wiki') {
+                const result = await lookupPokemonWiki(args.query);
+                toolMessages.push({
+                    role: 'tool',
+                    tool_call_id: tc.id,
+                    content: JSON.stringify(result),
+                });
+            } else {
+                toolMessages.push({
+                    role: 'tool',
+                    tool_call_id: tc.id,
+                    content: JSON.stringify({ error: `unknown tool: ${fnName}` }),
+                });
+            }
         }
 
-        // If the tool returned NOTHING across all calls, bail to next strategy
-        if (allowedIds.size === 0) {
-            console.warn('[tools] search_games returned 0 results');
+        // If no game search happened and no candidates, we can't validate
+        // picks — bail so the next strategy (two-pass) can try.
+        if (!sawGameSearch && allowedIds.size === 0) {
+            console.warn('[tools] no search_games call made');
             return null;
         }
 
