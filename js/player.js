@@ -240,12 +240,20 @@
             if (result === true) {
                 showSaveStatus('Saved to cloud!');
             } else if (result && result.error === 'too-large') {
-                // Firestore can't hold this — DS/PSX saves are too big for
-                // 1MB doc limit. Tell the user honestly instead of lying.
+                // Firestore can't hold this — DS/PSX saves too big for
+                // the 1MB doc limit. Tell the user once AND signal the
+                // iframe to stop trying so we don't burn CPU + mobile RAM
+                // re-attempting every cycle.
                 showSaveStatus(
                     `Save too big for cloud (${result.sizeKB}KB, limit ~1000KB). ` +
-                    `Local save still works.`
+                    `Cloud save disabled for this game.`
                 );
+                try {
+                    gameFrame.contentWindow.postMessage({
+                        type: 'cloud-save-disabled',
+                        reason: `too big (${result.sizeKB}KB)`,
+                    }, '*');
+                } catch (_) {}
             } else {
                 showSaveStatus('Cloud save failed');
             }

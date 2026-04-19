@@ -85,19 +85,24 @@
         return false;
     }
 
-    // Guardrails against mobile tab OOM: on big-state games (DS/PSX)
-    // the 30s auto-save cycle allocates 15-30MB temporarily each time,
-    // which crashes the tab on phones with a few hundred MB free. We:
-    //   - cache the last state size, bump the interval way out for big
-    //     saves (every 3 min instead of 30s)
-    //   - skip interval saves entirely if the state is absurdly big
-    //     (>6MB raw) since Firestore won't accept them even compressed
-    //   - still try on beforeunload / visibility change (cheap, one-off)
-    var BIG_SAVE_THRESHOLD = 800 * 1024;   // 800KB raw → Firestore marginal
-    var HUGE_SAVE_THRESHOLD = 6 * 1024 * 1024;  // 6MB raw → skip auto-save
+    // Guardrails against mobile tab OOM + giving up gracefully when
+    // Firestore rejects a save as too big.
+    //   - small states (<800KB raw): save every 30s like before
+    //   - big states (DS/PSX, 800KB-6MB): save every 3 min
+    //   - huge states (>6MB): skip interval saves entirely
+    //   - if the parent reports 'too-large' → disable cloud save for
+    //     this session entirely, no more attempts
+    var BIG_SAVE_THRESHOLD = 800 * 1024;
+    var HUGE_SAVE_THRESHOLD = 6 * 1024 * 1024;
     var lastStateSize = 0;
+    var cloudSaveDisabled = false;   // flipped true after 'too-large' event
+    var disabledReason = '';
 
     function saveToCloud(reason) {
+        if (cloudSaveDisabled) {
+            // Silent — already told user once, don't spam
+            return false;
+        }
         var state = getState();
         if (!state) {
             log('save skipped — no state (' + (reason || '') + ')');
@@ -282,7 +287,7 @@
         }
     }
 
-    // ----- Messages from parent (cloud save data + cheats) -----
+    // ----- Messages from parent (cloud save data + cheats + failure signals) -----
     window.addEventListener('message', function (e) {
         if (!e.data || !e.data.type) return;
         if (e.data.type === 'load-save' && e.data.data) {
@@ -296,6 +301,15 @@
                 // Emulator not ready yet; stash and try again post-announce
                 pendingCheats = e.data.cheats;
             }
+        }
+        // Parent says cloud save is broken for this game (too big, auth,
+        // or other permanent fail). Stop the interval and show the reason
+        // once so we don't burn CPU and mobile RAM re-trying every cycle.
+        if (e.data.type === 'cloud-save-disabled') {
+            cloudSaveDisabled = true;
+            disabledReason = e.data.reason || 'unavailable';
+            log('cloud save disabled: ' + disabledReason);
+            showStatus('Cloud save disabled — ' + disabledReason, '#f87171');
         }
     });
 
