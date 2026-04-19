@@ -143,11 +143,32 @@ export default {
                 }
 
                 const result = await env.AI.run(model, aiArgs);
-                // Normalize to OpenAI shape. Workers AI responses vary by model:
+                // Normalize to OpenAI shape. Workers AI responses vary:
                 //   - Most recent Llama: { response: "text", tool_calls?: [...] }
                 //   - Some:              { choices: [{ message: {...} }] }
                 if (result && result.choices) return json(result, 200);
-                const toolCalls = result?.tool_calls || [];
+
+                // Workers AI tool_calls look like [{name, arguments: {...}}]
+                // but clients expect OpenAI format:
+                //   [{id, type:'function', function:{name, arguments:'{...}'}}]
+                // Rewrite them so the client's standard tool-call handler works.
+                const rawCalls = result?.tool_calls || [];
+                const toolCalls = rawCalls.map((tc, i) => {
+                    if (tc.function) return tc;   // already in OpenAI shape
+                    const argsObj = tc.arguments;
+                    const argsStr = typeof argsObj === 'string'
+                        ? argsObj
+                        : JSON.stringify(argsObj || {});
+                    return {
+                        id: tc.id || `call_${Date.now()}_${i}`,
+                        type: 'function',
+                        function: {
+                            name: tc.name,
+                            arguments: argsStr,
+                        },
+                    };
+                });
+
                 return json({
                     id: `cf-${Date.now()}`,
                     object: 'chat.completion',
