@@ -24,6 +24,10 @@
     firebase.initializeApp(firebaseConfig);
     auth = firebase.auth();
     db = firebase.firestore();
+    // Storage is used for cloud save blobs — Firestore's 1MB per-doc
+    // limit can't hold DS/PSX save states even after gzip compression.
+    let storage = null;
+    try { storage = firebase.storage(); } catch (e) { console.warn('Firebase Storage unavailable:', e); }
 
     auth.onAuthStateChanged(async (user) => {
         currentUser = user;
@@ -592,20 +596,17 @@
         await db.collection('users').doc(uid).set({ banned: !!ban }, { merge: true });
     }
 
-    // ===== Cloud Save (Firestore) =====
-    // Firestore's per-doc limit is 1 MiB. GBA/NES/SNES save states fit
-    // easily (<200KB typical). DS/PSX states are 3-5 MiB raw which won't
-    // fit as raw base64, so we gzip them first — save states compress
-    // extremely well (lots of zero-padding), usually shrinking to
-    // 100-500KB which DOES fit.
+    // ===== Cloud Save (Firebase Storage) =====
+    // Firestore's 1MB per-doc limit was too small for DS/PSX save states
+    // even after gzip. Storage has no such limit (5GB free quota, any
+    // single-file size). Compressed saves land at saves/{uid}/{gameId}.gz
     //
-    // Wire format: docs now store `data` as "gz:" + base64(gzip(raw))
-    // for compressed saves, or plain base64 for legacy uncompressed
-    // saves. loadGameData detects the prefix and decompresses as needed.
-    //
-    // Path: saves/{userId}/games/{gameId}
-
-    const FIRESTORE_DOC_LIMIT_BYTES = 1_048_487;  // 1 MiB minus overhead
+    // Firestore still holds lightweight metadata per save at
+    // saves/{uid}/games/{gameId} — { updatedAt, sizeKB, compressed }.
+    // This doc is small (~100 bytes) and lets the UI list saved games
+    // without downloading blobs. Metadata write is best-effort; cloud
+    // save considers itself successful as soon as the Storage upload
+    // completes.
 
     // Convert base64 string to Uint8Array
     function base64ToBytes(b64) {
@@ -624,67 +625,53 @@
         return btoa(binary);
     }
 
-    // Gzip-compress a base64 payload. Returns "gz:" + base64(gzipped bytes).
-    async function compressPayload(base64Data) {
-        try {
-            if (typeof CompressionStream === 'undefined') return base64Data;
-            const bytes = base64ToBytes(base64Data);
-            const stream = new Response(bytes).body.pipeThrough(new CompressionStream('gzip'));
-            const compressed = new Uint8Array(await new Response(stream).arrayBuffer());
-            return 'gz:' + bytesToBase64(compressed);
-        } catch (e) {
-            console.warn('[cloud-save] compression failed, falling back to raw:', e);
-            return base64Data;
-        }
+    // Gzip-compress raw bytes. Returns compressed Uint8Array.
+    async function gzipBytes(bytes) {
+        if (typeof CompressionStream === 'undefined') return bytes;
+        const stream = new Response(bytes).body.pipeThrough(new CompressionStream('gzip'));
+        return new Uint8Array(await new Response(stream).arrayBuffer());
     }
 
-    // Decompress a "gz:"-prefixed payload back to plain base64. Pass-through
-    // for legacy uncompressed saves.
-    async function decompressPayload(stored) {
-        if (!stored || !stored.startsWith('gz:')) return stored;
-        try {
-            if (typeof DecompressionStream === 'undefined') {
-                console.warn('[cloud-save] DecompressionStream unavailable');
-                return null;
-            }
-            const bytes = base64ToBytes(stored.slice(3));
-            const stream = new Response(bytes).body.pipeThrough(new DecompressionStream('gzip'));
-            const decompressed = new Uint8Array(await new Response(stream).arrayBuffer());
-            return bytesToBase64(decompressed);
-        } catch (e) {
-            console.error('[cloud-save] decompression failed:', e);
-            return null;
-        }
+    async function gunzipBytes(bytes) {
+        if (typeof DecompressionStream === 'undefined') return null;
+        const stream = new Response(bytes).body.pipeThrough(new DecompressionStream('gzip'));
+        return new Uint8Array(await new Response(stream).arrayBuffer());
     }
 
     async function saveGameData(gameId, dataBase64) {
         if (!currentUser) return false;
-
-        // Compress first — DS saves at ~5MB base64 shrink to ~200-500KB
-        // gzipped. GBA saves at 200KB stay roughly that size but the small
-        // overhead is worth the consistent code path.
-        const payload = await compressPayload(dataBase64);
-        const sizeKB = Math.round(payload.length / 1024);
-
-        // Even post-compression, some saves will still be too big (uncompressable
-        // random-looking data, or very large cores). Fail honestly rather than
-        // letting the SDK silently queue + reject on the server.
-        if (payload.length > FIRESTORE_DOC_LIMIT_BYTES) {
-            console.warn(
-                `[cloud-save] ${gameId} save too large even after compression: ` +
-                `${sizeKB}KB (limit ~1024KB).`
-            );
-            return { error: 'too-large', sizeKB };
+        if (!storage) {
+            console.error('[cloud-save] Firebase Storage SDK not loaded');
+            return false;
         }
 
         try {
-            await db.collection('saves').doc(currentUser.uid)
-                .collection('games').doc(gameId).set({
-                    data: payload,
-                    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
-                    compressed: payload.startsWith('gz:'),
-                    sizeKB: sizeKB,
-                });
+            // 1. Decode base64 → raw bytes, 2. gzip-compress,
+            // 3. upload as a Blob to Storage.
+            const rawBytes = base64ToBytes(dataBase64);
+            const compressedBytes = await gzipBytes(rawBytes);
+            const blob = new Blob([compressedBytes], { type: 'application/gzip' });
+            const sizeKB = Math.round(compressedBytes.length / 1024);
+
+            const ref = storage.ref(`saves/${currentUser.uid}/${gameId}.gz`);
+            await ref.put(blob, {
+                contentType: 'application/gzip',
+                cacheControl: 'no-cache',
+            });
+
+            // Write metadata to Firestore so the app can list saves quickly
+            // without hitting Storage — best-effort, no-throw.
+            try {
+                await db.collection('saves').doc(currentUser.uid)
+                    .collection('games').doc(gameId).set({
+                        storage: `saves/${currentUser.uid}/${gameId}.gz`,
+                        updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+                        sizeKB: sizeKB,
+                        compressed: true,
+                    });
+            } catch (metaErr) {
+                console.warn('[cloud-save] metadata write failed (save itself ok):', metaErr);
+            }
             return true;
         } catch (e) {
             console.error('Cloud save failed:', e);
@@ -694,15 +681,43 @@
 
     async function loadGameData(gameId) {
         if (!currentUser) return null;
+
+        // Try new Storage-backed path first
+        if (storage) {
+            try {
+                const ref = storage.ref(`saves/${currentUser.uid}/${gameId}.gz`);
+                const url = await ref.getDownloadURL();
+                const response = await fetch(url);
+                if (!response.ok) throw new Error('Storage fetch failed: ' + response.status);
+                const compressed = new Uint8Array(await response.arrayBuffer());
+                const raw = await gunzipBytes(compressed);
+                if (!raw) return null;
+                return bytesToBase64(raw);
+            } catch (e) {
+                // 'storage/object-not-found' → no save yet. Fall through to
+                // legacy Firestore check for users migrating from the old
+                // pre-Storage scheme.
+                if (e && e.code && e.code !== 'storage/object-not-found') {
+                    console.warn('[cloud-save] Storage load failed:', e);
+                }
+            }
+        }
+
+        // Legacy fallback: older saves stored the base64 directly in
+        // Firestore. Still readable, and returns plain base64.
         try {
             const doc = await db.collection('saves').doc(currentUser.uid)
                 .collection('games').doc(gameId).get();
-            if (doc.exists && doc.data().data) {
-                const raw = doc.data().data;
-                const decompressed = await decompressPayload(raw);
-                return decompressed;
+            if (!doc.exists) return null;
+            const data = doc.data().data;
+            if (!data) return null;
+            // Legacy gz-prefixed Firestore payload
+            if (data.startsWith && data.startsWith('gz:')) {
+                const bytes = base64ToBytes(data.slice(3));
+                const raw = await gunzipBytes(bytes);
+                return raw ? bytesToBase64(raw) : null;
             }
-            return null;
+            return data;
         } catch (e) {
             console.error('Cloud load failed:', e);
             return null;
