@@ -25506,7 +25506,7 @@
     "title": "Pokemon Dreamstone Mysteries",
     "category": "Pokemon",
     "path": "games/clpokemondreamstonemysteries.html",
-    "description": "Explore the fan-made Cormoria region hunting for a missing Pokemon professor. Open-world adventure on a FireRed base with new storyline and side quests.",
+    "description": "Ruby-based GBA hack where you chase a mystical Dreamstone across a brand-new region, with a revamped dex pulling monsters from every gen.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25527,7 +25527,7 @@
     "title": "Pokemon The Last Fire Red",
     "category": "Pokemon",
     "path": "games/clpokemonthelastfirered.html",
-    "description": "A FireRed overhaul with all 898 pokemon from Gen 1-8, mega evolutions, updated mechanics, and a remixed story. Long-running and regularly polished.",
+    "description": "A polished FireRed difficulty hack that adds post-game content, fairy types, physical/special split, and a much tougher Elite Four.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25547,7 +25547,7 @@
     "title": "Pokemon Fused Dimensions",
     "category": "Pokemon",
     "path": "games/clpokemonfuseddimensions.html",
-    "description": "A difficulty-focused Emerald hack with a new region and pokemon from many gens. Tough trainers, reworked movesets, and a twist-laden plot.",
+    "description": "FireRed hack where two parallel Kanto timelines collide — dual storylines, expanded dex, and boss encounters across both worlds.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25568,7 +25568,7 @@
     "title": "Pokemon Plus",
     "category": "Pokemon",
     "path": "games/clpokemonplus.html",
-    "description": "A Ruby-based hack with expanded roster, altered movesets, and quality-of-life improvements over vanilla Ruby.",
+    "description": "Quality-of-life FireRed upgrade: physical/special split, updated movepools, a national dex from day one, and rebalanced gym leaders.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25588,7 +25588,7 @@
     "title": "Pokemon Volume 1 (GBA)",
     "category": "Pokemon",
     "path": "games/clpokemonvolume1gba.html",
-    "description": "Pokemon – Volume 1 GBA — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Part one of a multi-chapter fan series built on the GBA engine — a fresh region, original rival arc, and a brand-new villain team.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25608,7 +25608,7 @@
     "title": "Pokemon Volume 3 (GBA)",
     "category": "Pokemon",
     "path": "games/clpokemonvolume3gba.html",
-    "description": "Pokemon – Volume 3 GBA — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "The finale of the Volume trilogy ties the previous chapters together with a unified post-game and an expanded competitive dex.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25628,7 +25628,7 @@
     "title": "Pokemon Volume 2 (GBA)",
     "category": "Pokemon",
     "path": "games/clpokemonvolume2gba.html",
-    "description": "Pokemon – Volume 2 GBA — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "The sequel chapter continues the Volume storyline with a second region, returning characters, and a harder progression curve.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25648,7 +25648,7 @@
     "title": "Pokemon Mega",
     "category": "Pokemon",
     "path": "games/clpokemonmega.html",
-    "description": "Pokemon Mega – — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "FireRed hack focused entirely on Mega Evolutions — nearly every fully-evolved mon has a custom Mega form with new typings and abilities.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25668,7 +25668,7 @@
     "title": "Pokemon Emerald Randomizer",
     "category": "Pokemon",
     "path": "games/clpokemonemeraldrandomizer.html",
-    "description": "Pokemon Emerald Randomizer — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Pokemon Emerald with every wild encounter, trainer team, starter, and TM shuffled — a fresh playthrough every time you load it.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25688,7 +25688,7 @@
     "title": "Pokemon Prism",
     "category": "Pokemon",
     "path": "games/clpokemonprism.html",
-    "description": "Pokemon Prism — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Legendary Crystal-based fan game set in the Naljo region, with remixed gyms, a brand-new Sound type, side quests, and mining mini-games.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25708,7 +25708,7 @@
     "title": "Pokemon Ash Gray",
     "category": "Pokemon",
     "path": "games/clpokemonashgray.html",
-    "description": "Pokemon Ash Gray — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "FireRed hack that retells the Pokemon anime beat-for-beat — follow Ash from Pallet Town through the Indigo League with Pikachu by your side.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25728,7 +25728,7 @@
     "title": "Pokemon Dark Cry Version: The Legend of Giratina",
     "category": "Pokemon",
     "path": "games/clpokemondarkcry.html",
-    "description": "Pokemon Dark Cry Version: The Legend of Giratina — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Ruby hack with a darker, grittier tone where you investigate the disturbed sleep of the legendary Giratina across a haunted region.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25748,7 +25748,7 @@
     "title": "Pokemon Glazed",
     "category": "Pokemon",
     "path": "games/clpokemonglazed.html",
-    "description": "Pokemon Glazed — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Classic Emerald hack set in the Tunod region with cross-region travel to Johto and Rankor, blending storylines from multiple gens.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25768,7 +25768,7 @@
     "title": "Pokemon Pink Version",
     "category": "Pokemon",
     "path": "games/clpokemonpink.html",
-    "description": "Pokemon Pink Version — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Sprite swap of Gen 3 with a pink-themed aesthetic overhaul — cute redesigns for nearly every monster while keeping the stock FireRed story.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25788,7 +25788,7 @@
     "title": "Pokemon Team Rocket",
     "category": "Pokemon",
     "path": "games/clpokemonteamrocket.html",
-    "description": "Pokemon Team Rocket — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Play as a Team Rocket grunt working your way up the ranks — steal pokemon, complete heists, and eventually challenge the bosses.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25808,7 +25808,7 @@
     "title": "Pokemon Advanced Adventure",
     "category": "Pokemon",
     "path": "games/clpokemonadvancedadventure.html",
-    "description": "Pokemon Advanced Adventure — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Emerald-based hack with a rewritten Hoenn adventure, custom gym leaders, and mons from every generation available in the wild.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25828,7 +25828,7 @@
     "title": "Pokemon Flora Sky",
     "category": "Pokemon",
     "path": "games/clpokemonflorasky.html",
-    "description": "Pokemon Flora Sky — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Emerald hack set in the Tuoku region with a focus on legendary lore — Cresselia and Darkrai pull you into a dream-world plotline.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25848,7 +25848,7 @@
     "title": "Pokemon Renegade Platinum",
     "category": "Pokemon",
     "path": "games/clpokemonrenegadeplatinum.html",
-    "description": "Pokemon Renegade Platinum ROM – Downlaod — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Drayano's famous Platinum difficulty hack — every trainer scaled up, full national dex available, gym leaders with six-mon teams.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -25868,7 +25868,7 @@
     "title": "Pokemon Snakewood",
     "category": "Pokemon",
     "path": "games/clpokemonsnakewood.html",
-    "description": "Pokemon Snakewood ROM – Downlaod — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Cult-classic Ruby hack set in a zombie apocalypse version of Hoenn — the region is in ruins and pokemon have been warped by the plague.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -25888,7 +25888,7 @@
     "title": "Pokemon Black Randomizer",
     "category": "Pokemon",
     "path": "games/clpokemonblackrandomizer.html",
-    "description": "Pokemon Black Randomizer — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Pokemon Black with randomized wild encounters, starters, trainer teams, and TMs — Unova from a completely unpredictable angle.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -25908,7 +25908,7 @@
     "title": "Pokemon Blazed Glazed",
     "category": "Pokemon",
     "path": "games/clpokemonblazedglazed.html",
-    "description": "Pokemon Blazed Glazed — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "The rebalanced, bug-fixed edition of Pokemon Glazed — same Tunod adventure with cleaner dialogue, smarter AI, and a patched post-game.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25928,7 +25928,7 @@
     "title": "Pokemon Expert Emerald",
     "category": "Pokemon",
     "path": "games/clpokemonexpertemerald.html",
-    "description": "Pokemon Expert Emerald — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Emerald difficulty hack: every trainer has a competitive team with held items, every wild mon uses its ideal ability, no gift trades.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25948,7 +25948,7 @@
     "title": "Pokemon Fire Red Randomizer",
     "category": "Pokemon",
     "path": "games/clpokemonfireredrandomizer.html",
-    "description": "Pokemon Fire Red Randomizer — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "FireRed with every encounter, starter, trainer team, and move tutor shuffled — a new Kanto experience with each fresh save.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -25968,7 +25968,7 @@
     "title": "Pokemon Flawless Platinum",
     "category": "Pokemon",
     "path": "games/clpokemonflawlessplatinum.html",
-    "description": "Pokemon Flawless Platinum — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Difficulty hack of Platinum that rebalances every trainer and gym leader while keeping the vanilla storyline intact and polished.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -25988,7 +25988,7 @@
     "title": "Pokemon Moon Black 2",
     "category": "Pokemon",
     "path": "games/clpokemonmoonblack2.html",
-    "description": "Pokemon Moon Black 2 — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Drayano's sequel difficulty hack to Pokemon Black 2 — national dex from the start, tougher gyms, and rematch trainers.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26008,7 +26008,7 @@
     "title": "Pokemon Cursed",
     "category": "Pokemon",
     "path": "games/clpokemoncursed.html",
-    "description": "Pokemon Cursed — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Horror-tinged FireRed hack with an unsettling mystery plot, glitchy overworld events, and encounters you would not expect in Kanto.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26028,7 +26028,7 @@
     "title": "Pokemon Sacred Gold",
     "category": "Pokemon",
     "path": "games/clpokemonsacredgold.html",
-    "description": "Pokemon Sacred Gold — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "The definitive HeartGold difficulty hack by Drayano: all 493 available, harder bosses, Johto rebuilt for the modern player.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26048,7 +26048,7 @@
     "title": "Pokemon 2 Heroes",
     "category": "Pokemon",
     "path": "games/clpokemon2heroes.html",
-    "description": "Pokemon 2 Heroes — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "GBA hack starring dual protagonists whose storylines intersect — swap perspectives mid-game and tackle the same events from both sides.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26068,7 +26068,7 @@
     "title": "Pokemon Platinum Randomizer",
     "category": "Pokemon",
     "path": "games/clpokemonplatinumrandomizer.html",
-    "description": "Pokemon Platinum Randomizer — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Pokemon Platinum with every encounter, trainer, and starter shuffled — Sinnoh's story with a totally unpredictable team to build.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26088,7 +26088,7 @@
     "title": "CreepyPasta Pokemon Lost Silver",
     "category": "Pokemon",
     "path": "games/cllostsilver.html",
-    "description": "CreepyPasta Pokemon Lost Silver — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Short Crystal-based creepypasta hack — a corrupted save file tells the story of a lost trainer trapped between the end of their adventure and the title screen.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26108,7 +26108,7 @@
     "title": "Pokemon Storm Silver",
     "category": "Pokemon",
     "path": "games/clpokemonstormsilver.html",
-    "description": "Pokemon Storm Silver — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Drayano's SoulSilver difficulty hack with national dex access, overhauled trainer teams, and a brutally tuned Kanto post-game.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26128,7 +26128,7 @@
     "title": "1636 Pokemon Fire Red Squirrels",
     "category": "Pokemon",
     "path": "games/cl1636pokemonfireredsquirrels.html",
-    "description": "1636 Pokemon Fire Red Squirrels — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "FireRed hack with a comedic squirrel-themed re-skin — custom sprites, joke dialogue, and a playthrough that does not take itself seriously.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26148,7 +26148,7 @@
     "title": "Pokemon Link!",
     "category": "Pokemon",
     "path": "games/clpokemonlink.html",
-    "description": "Pokemon Link! — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Puzzle spin-off for the DS where you match pokemon faces on a sliding grid — bite-sized levels that get fiendishly tricky.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26161,14 +26161,14 @@
       "rom-hack"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20Link!%20(USA).png"
   },
   {
     "id": "clpokemonfirereddeluxe",
     "title": "Pokemon FireRed Deluxe Download",
     "category": "Pokemon",
     "path": "games/clpokemonfirereddeluxe.html",
-    "description": "Pokemon FireRed Deluxe Download — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "FireRed enhanced edition: physical/special split, fairy type, running indoors, updated movesets, and every Kanto mon obtainable.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26188,7 +26188,7 @@
     "title": "Pokemon Black and White 2",
     "category": "Pokemon",
     "path": "games/clpokemonblackandwhite2.html",
-    "description": "Pokemon Black and White 2 — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "The Gen 5 sequels in the Unova region — two years after Black/White, with a new protagonist, Kyurem forms, and the returning champion.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26201,14 +26201,14 @@
       "rom-hack"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20-%20Black%20Version%202%20(USA%2C%20Europe)%20(NDSi%20Enhanced).png"
   },
   {
     "id": "clpokemonpisces",
     "title": "Pokemon Pisces",
     "category": "Pokemon",
     "path": "games/clpokemonpisces.html",
-    "description": "​Pokemon Pisces Download — Pokemon ROM hack, pulled from pokemonrom.net via archive.org.",
+    "description": "Emerald hack with a water-heavy region, puzzle-based gyms, and an overhauled encounter table focused on rare and underused mons.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26228,7 +26228,7 @@
     "title": "Pokemon Trozei! (USA)",
     "category": "Pokemon",
     "path": "games/clpokemontrozei.html",
-    "description": "Pokemon Trozei! (USA) — from pokemonrom.net via archive.org.",
+    "description": "Fast-paced puzzle spin-off where you chain-swap captured pokemon to rescue them from Team Phobos across stage after stage.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26240,14 +26240,14 @@
       "gba"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20Trozei!%20(USA).png"
   },
   {
     "id": "clpokemonpinballrubyandsapphire",
     "title": "Pokemon Pinball Ruby and Sapphire",
     "category": "Pokemon",
     "path": "games/clpokemonpinballrubyandsapphire.html",
-    "description": "Pokemon Pinball Ruby and Sapphire — from pokemonrom.net via archive.org.",
+    "description": "The GBA sequel to Pokemon Pinball — two Hoenn-themed tables with catch, evolve, and bonus modes tied to real pokemon mechanics.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26259,14 +26259,14 @@
       "gba"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20Pinball%20-%20Ruby%20%26%20Sapphire%20(USA).png"
   },
   {
     "id": "clpokemonpinball",
     "title": "Pokemon Pinball (Rumble Version)",
     "category": "Pokemon",
     "path": "games/clpokemonpinball.html",
-    "description": "Pokemon Pinball (Rumble Version) — from pokemonrom.net via archive.org.",
+    "description": "The original Pokemon Pinball for Game Boy Color — catch all 151 across two tables with wildly addictive bumpers and bonus rounds.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26278,14 +26278,14 @@
       "gba"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Color/Named_Boxarts/Pokemon%20Pinball%20(USA%2C%20Australia)%20(Rumble%20Version)%20(SGB%20Enhanced).png"
   },
   {
     "id": "clpokemonrangerguardiansigns",
     "title": "Pokemon Ranger – Guardian Signs",
     "category": "Pokemon",
     "path": "games/clpokemonrangerguardiansigns.html",
-    "description": "Pokemon Ranger – Guardian Signs — from pokemonrom.net via archive.org.",
+    "description": "DS spin-off where you draw capture loops with the stylus — this entry lets you call legendary pokemon with stylus-drawn signs.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26297,14 +26297,14 @@
       "ds"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20Ranger%20-%20Guardian%20Signs%20(USA).png"
   },
   {
     "id": "clpokemonpuzzlechallenge",
     "title": "Pokemon Puzzle Challenge",
     "category": "Pokemon",
     "path": "games/clpokemonpuzzlechallenge.html",
-    "description": "Pokemon Puzzle Challenge — from pokemonrom.net via archive.org.",
+    "description": "GBC port of Tetris Attack with a Pokemon coat of paint — clear blocks, chain combos, and face gym leaders in puzzle duels.",
     "popular": false,
     "rom": "gbc",
     "tags": [
@@ -26316,14 +26316,14 @@
       "gbc"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Color/Named_Boxarts/Pokemon%20Puzzle%20Challenge%20(USA%2C%20Europe).png"
   },
   {
     "id": "clpokemonstadium2",
     "title": "Pokemon Stadium 2",
     "category": "Pokemon",
     "path": "games/clpokemonstadium2.html",
-    "description": "Pokemon Stadium 2 — from pokemonrom.net via archive.org.",
+    "description": "The N64 3D battle sim with rental pokemon, Gym Leader Castle mode, and mini-games — connect a Transfer Pak to use your GBC team.",
     "popular": false,
     "rom": "n64",
     "tags": [
@@ -26335,14 +26335,14 @@
       "n64"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/n64.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Pokemon%20Stadium%202%20(USA).png"
   },
   {
     "id": "clpokemonconquest",
     "title": "Pokemon Conquest",
     "category": "Pokemon",
     "path": "games/clpokemonconquest.html",
-    "description": "Pokemon Conquest — from pokemonrom.net via archive.org.",
+    "description": "Tactical RPG crossover with Nobunaga's Ambition — lead feudal-Japan warriors and their partner pokemon across the Ransei region.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26354,14 +26354,14 @@
       "ds"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20Conquest%20(USA).png"
   },
   {
     "id": "clpokemontradingcardgame",
     "title": "Pokemon Trading Card Game",
     "category": "Pokemon",
     "path": "games/clpokemontradingcardgame.html",
-    "description": "Pokemon Trading Card Game — from pokemonrom.net via archive.org.",
+    "description": "The full TCG simulated on Game Boy Color — build decks from Base/Jungle/Fossil sets and battle the eight Club Masters.",
     "popular": false,
     "rom": "gbc",
     "tags": [
@@ -26373,14 +26373,14 @@
       "gbc"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Color/Named_Boxarts/Pokemon%20Trading%20Card%20Game%20(USA).png"
   },
   {
     "id": "clpokemonrangershadowsofalmia",
     "title": "Pokemon Ranger Shadows of Almia",
     "category": "Pokemon",
     "path": "games/clpokemonrangershadowsofalmia.html",
-    "description": "Pokemon Ranger Shadows of Almia — from pokemonrom.net via archive.org.",
+    "description": "DS sequel where you patrol the Almia region as a Ranger, using stylus-drawn capture loops to befriend wild pokemon temporarily.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26392,14 +26392,14 @@
       "ds"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20Ranger%20-%20Shadows%20of%20Almia%20(USA).png"
   },
   {
     "id": "cllearnwithpokemontypingadventure",
     "title": "Learn with Pokemon: Typing Adventure",
     "category": "Pokemon",
     "path": "games/cllearnwithpokemontypingadventure.html",
-    "description": "Learn with Pokemon: Typing Adventure — from pokemonrom.net via archive.org.",
+    "description": "Educational DS title (Europe-only) where you type to capture pokemon — the original packaging even shipped with a Bluetooth keyboard.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26411,14 +26411,14 @@
       "ds"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Learn%20with%20Pokemon%20-%20Typing%20Adventure%20(Europe)%20(En%2CFr%2CDe%2CEs%2CIt).png"
   },
   {
     "id": "clpokemonranger",
     "title": "Pokemon Ranger",
     "category": "Pokemon",
     "path": "games/clpokemonranger.html",
-    "description": "Pokemon Ranger — from pokemonrom.net via archive.org.",
+    "description": "The first Ranger game — a stylus-driven spin-off where you loop pokemon to recruit them for single-use assistance on missions.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26430,14 +26430,14 @@
       "ds"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20Ranger%20(USA).png"
   },
   {
     "id": "clpokemondash",
     "title": "Pokemon Dash",
     "category": "Pokemon",
     "path": "games/clpokemondash.html",
-    "description": "Pokemon Dash — from pokemonrom.net via archive.org.",
+    "description": "Pokemon racing spin-off for the DS where you draw paths with the stylus to guide Pikachu across stylus-scribble race courses.",
     "popular": false,
     "rom": "ds",
     "tags": [
@@ -26449,14 +26449,14 @@
       "ds"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/ds.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20Dash%20(USA).png"
   },
   {
     "id": "clpokemonmaxiesisland",
     "title": "Pokemon Maxie's Island",
     "category": "Pokemon",
     "path": "games/clpokemonmaxiesisland.html",
-    "description": "Pokemon Maxie's Island — from pokemonrom.net via archive.org.",
+    "description": "Short GBA side-story following Team Magma's Maxie on a volcanic island after the events of Ruby, with a compact dungeon-crawl plot.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26475,7 +26475,7 @@
     "title": "Pokemon Green",
     "category": "Pokemon",
     "path": "games/clpokemongreen.html",
-    "description": "Pokemon Green — from pokemonrom.net via archive.org.",
+    "description": "The original Japan-only Gen 1 release — same core adventure as Red/Blue but with distinct native sprites for every Kanto pokemon.",
     "popular": false,
     "rom": "gba",
     "tags": [
@@ -26487,6 +26487,6 @@
       "gba"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy/Named_Boxarts/Pocket%20Monsters%20Midori%20(Japan)%20(SGB%20Enhanced).png"
   }
 ]

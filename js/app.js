@@ -535,7 +535,7 @@
         for (let i = 0; i < pageGames.length; i++) {
             const g = pageGames[i];
             const thumb = g.thumbnail
-                ? `<img class="card-thumbnail" src="${esc(g.thumbnail)}" alt="${esc(g.title)}" loading="lazy">`
+                ? `<img class="card-thumbnail" src="${esc(g.thumbnail)}" alt="${esc(g.title)}" loading="lazy" onerror="this.onerror=null;this.src='${platformFallback(g.rom)}'">`
                 : `<div class="card-thumbnail-placeholder"><span>${esc(g.title.charAt(0).toUpperCase())}</span></div>`;
             const favClass = loggedIn && ArcadeAuth.isFavorite(g.id) ? ' fav-active' : '';
             const favBtn = loggedIn
@@ -559,6 +559,19 @@
         return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
     }
 
+    // Used by card/info thumbnails as an onerror fallback — if a remote cover
+    // (libretro CDN, etc.) 404s, swap to the platform icon instead of showing
+    // a broken image.
+    function platformFallback(rom) {
+        const map = {
+            gba: 'gba', gbc: 'gba', gb: 'gba',
+            ds: 'ds', n64: 'n64', snes: 'snes', nes: 'nes',
+            psx: 'psx', genesis: 'genesis', arcade: 'arcade', atari: 'atari',
+        };
+        const p = map[rom] || 'misc';
+        return `assets/thumbnails/platforms/${p}.png`;
+    }
+
     function debounce(fn, ms) {
         let timer;
         return (...args) => {
@@ -576,7 +589,7 @@
         overlay.className = 'game-info-overlay';
 
         const thumb = g.thumbnail
-            ? `<img class="game-info-thumb" src="${esc(g.thumbnail)}" alt="${esc(g.title)}">`
+            ? `<img class="game-info-thumb" src="${esc(g.thumbnail)}" alt="${esc(g.title)}" onerror="this.onerror=null;this.src='${platformFallback(g.rom)}'">`
             : '';
 
         // Render tags as clickable pills. Clicking one runs a tag search.
@@ -688,7 +701,7 @@
 
         strip.innerHTML = resolved.map(g => {
             const thumb = g.thumbnail
-                ? `<img class="continue-thumb" src="${esc(g.thumbnail)}" alt="" loading="lazy">`
+                ? `<img class="continue-thumb" src="${esc(g.thumbnail)}" alt="" loading="lazy" onerror="this.onerror=null;this.src='${platformFallback(g.rom)}'">`
                 : `<div class="continue-thumb continue-thumb-placeholder">${esc(g.title.charAt(0).toUpperCase())}</div>`;
             return `<a class="continue-card" href="play.html?game=${encodeURIComponent(g.id)}" title="${esc(g.title)}">
                 ${thumb}
