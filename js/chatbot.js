@@ -438,12 +438,32 @@
         "\\bwhy\\s+(do|does|is|are)\\b.*\\b(exist|called|named|made)\\b",
     ].join('|'), 'i');
 
+    // Decide whether a conversation is "active" — i.e. there's already been
+    // back-and-forth and short replies like "cool" / "nice" / "ok" are
+    // continuations of that thread, NOT first-contact greetings. Used to
+    // downgrade GREETING_RE matches from the local canned-reply shortcut to
+    // real chat-mode LLM calls so they get proper context-aware responses.
+    function conversationIsActive() {
+        // Look back up to 4 turns. If there's a recent assistant reply, the
+        // user's next short token is almost certainly a reaction to it, not
+        // a greeting to kick off a new convo.
+        const lookback = messages.slice(-4);
+        return lookback.some(m => m.role === 'assistant' && (m.content || '').trim().length > 0);
+    }
+
     function classifyIntent(userText) {
         const t = (userText || '').trim();
         if (!t) return 'recommend';
-        if (GREETING_RE.test(t)) return 'greet';
         if (HELP_RE.test(t)) return 'help';
         if (CHAT_RE.test(t)) return 'chat';
+        if (GREETING_RE.test(t)) {
+            // Mid-conversation: "cool", "nice", "ok", "lol" are reactions,
+            // not first-contact greetings. Send them to chat mode so Kirky
+            // actually sees the history and replies in context instead of
+            // firing a random "sup" from the canned pool.
+            if (conversationIsActive()) return 'chat';
+            return 'greet';
+        }
         return 'recommend';
     }
 
