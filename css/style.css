@@ -3542,27 +3542,48 @@ body.auth-gated .player-container {
    uncovered area for 'contain' mode. */
 #custom-wallpaper {
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
+    /* Inflated past the viewport edges so the blur effect's faded border
+       lands off-screen instead of producing a visible halo at the edge.
+       With blur(10px) the blurred edge is ~12px wide; -24px on all sides
+       is enough padding for the max blur we allow (20px) without needing
+       to scale the image further up. */
+    top: -24px;
+    left: -24px;
+    width: calc(100vw + 48px);
+    height: calc(100vh + 48px);
     /* Dynamic viewport so mobile URL-bar collapse/expand doesn't cause jumps */
-    height: 100dvh;
+    height: calc(100dvh + 48px);
     z-index: -2;
     background-size: cover;
     background-position: center center;
     background-repeat: no-repeat;
     background-color: #000;
     display: none;
-    transition: filter 0.25s ease-out, background-size 0.2s ease;
-    /* Avoid sub-pixel gaps on some browsers */
+    /* No transition on filter — changing blur mid-transition produces a
+       visible "blur pulse" that looks laggy. Direct apply is cleaner. */
+    /* Promote to its own GPU layer so blur performs well on scroll */
     transform: translateZ(0);
+    will-change: filter;
+    pointer-events: none;
 }
 
 /* Fit modes toggled via [data-wallpaper-fit] on <body> */
 body[data-wallpaper-fit="contain"] #custom-wallpaper {
+    /* Contain mode has to stay bounded to the viewport so the image
+       letterboxes cleanly instead of spilling into the negative offset.
+       Reset the inflation for this mode only. */
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     background-size: contain;
 }
 body[data-wallpaper-fit="fill"] #custom-wallpaper {
+    /* Same bounded treatment — 'fill' stretches to exactly viewport size. */
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     background-size: 100% 100%;
 }
 body[data-wallpaper-fit="tile"] #custom-wallpaper {
@@ -3572,10 +3593,12 @@ body[data-wallpaper-fit="tile"] #custom-wallpaper {
 
 #custom-wallpaper-overlay {
     position: fixed;
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
+    /* Cover the inflated wallpaper fully so the dim overlay extends to the
+       edges without any seam. */
+    top: -24px; left: -24px;
+    width: calc(100vw + 48px);
+    height: calc(100vh + 48px);
+    height: calc(100dvh + 48px);
     z-index: -1;
     display: none;
     pointer-events: none;

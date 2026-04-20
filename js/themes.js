@@ -178,7 +178,12 @@
 
         if (dataUrl) {
             el.style.backgroundImage = `url(${dataUrl})`;
-            el.style.filter = `blur(${getWallpaperBlur()}px)`;
+            // Only apply `filter: blur()` when the blur is non-zero. Setting
+            // blur(0px) still promotes the element to its own layer with
+            // subpixel rounding artifacts — cleaner to leave the style empty
+            // so the image renders crisp at 0 blur.
+            const b = getWallpaperBlur();
+            el.style.filter = b > 0 ? `blur(${b}px)` : '';
             el.style.display = 'block';
             overlay.style.background = `rgba(0, 0, 0, ${getWallpaperDim()})`;
             overlay.style.display = 'block';
@@ -198,7 +203,10 @@
     function updateWallpaperEffects() {
         const el = document.getElementById('custom-wallpaper');
         const overlay = document.getElementById('custom-wallpaper-overlay');
-        if (el) el.style.filter = `blur(${getWallpaperBlur()}px)`;
+        if (el) {
+            const b = getWallpaperBlur();
+            el.style.filter = b > 0 ? `blur(${b}px)` : '';
+        }
         if (overlay) overlay.style.background = `rgba(0, 0, 0, ${getWallpaperDim()})`;
     }
 
