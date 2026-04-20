@@ -3057,6 +3057,18 @@ body.auth-gated .player-container {
     box-shadow: 0 4px 16px rgba(0,0,0,0.3);
 }
 
+/* Portal variant: body-appended, fixed position (set inline by JS). Used
+   when the picker opens inside a modal or other overflow-clipped container
+   where the absolute-positioned default would get hidden. */
+.emoji-picker-popup.emoji-picker-popup-portal {
+    position: fixed;
+    bottom: auto;
+    right: auto;
+    margin: 0;
+    z-index: 6000;    /* above modal-overlay (5000) */
+    width: 280px;
+}
+
 .emoji-picker-grid {
     display: grid;
     grid-template-columns: repeat(6, 1fr);

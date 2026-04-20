@@ -315,7 +315,11 @@
         document.getElementById('patchnoteEmojiBtn').addEventListener('click', (e) => {
             e.stopPropagation();
             if (window.ArcadeEmojis?.renderEmojiPicker) {
-                ArcadeEmojis.renderEmojiPicker(overlay.querySelector('.patchnote-editor'), bodyInput);
+                // Portal mode — the modal-box has `overflow-y: auto` which
+                // clips any popup positioned outside its bounds. Passing
+                // the button as the third arg makes the popup body-appended
+                // with fixed positioning, escaping the clip.
+                ArcadeEmojis.renderEmojiPicker(null, bodyInput, e.currentTarget);
             }
         });
 

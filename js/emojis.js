@@ -180,7 +180,22 @@
     }
 
     // ===== Emoji Picker Popup =====
-    function renderEmojiPicker(containerEl, inputEl) {
+    // Render the emoji picker. The popup opens above the `triggerEl` (the
+    // button that was clicked) and inserts `:name:` into `inputEl` when an
+    // emoji is picked.
+    //
+    // Modes:
+    //   - Default (no `triggerEl` or same as `containerEl`): popup is
+    //     appended to containerEl with the existing CSS (position: absolute
+    //     relative to the container). Works when the container is positioned
+    //     and not inside an `overflow: auto` / `overflow: hidden` box.
+    //   - Portal mode (explicit `triggerEl` passed): popup is appended to
+    //     `<body>` with `position: fixed`, positioned just above the trigger
+    //     button via `getBoundingClientRect()`. Escapes any overflow clipping
+    //     (needed inside modals, scroll containers, etc.) — which is why
+    //     patchnotes and anything else in a modal.box should pass the
+    //     button as triggerEl.
+    function renderEmojiPicker(containerEl, inputEl, triggerEl) {
         // Toggle
         const existing = document.getElementById('emojiPickerPopup');
         if (existing) { existing.remove(); pickerOpen = false; return; }
@@ -203,7 +218,28 @@
         }
         popup.innerHTML = html;
 
-        containerEl.appendChild(popup);
+        if (triggerEl) {
+            // Portal mode — body-level with fixed positioning. Anchored just
+            // above the trigger button, right-aligned to its right edge.
+            popup.classList.add('emoji-picker-popup-portal');
+            document.body.appendChild(popup);
+            const rect = triggerEl.getBoundingClientRect();
+            // Measure AFTER the popup is in the DOM so its size is known.
+            const popupRect = popup.getBoundingClientRect();
+            // Prefer opening above; if there's not enough room, open below.
+            let top = rect.top - popupRect.height - 6;
+            if (top < 8) top = rect.bottom + 6;
+            // Right-align to the trigger, but keep fully on-screen.
+            let left = rect.right - popupRect.width;
+            if (left < 8) left = 8;
+            if (left + popupRect.width > window.innerWidth - 8) {
+                left = window.innerWidth - popupRect.width - 8;
+            }
+            popup.style.top = top + 'px';
+            popup.style.left = left + 'px';
+        } else {
+            containerEl.appendChild(popup);
+        }
 
         popup.addEventListener('click', (e) => {
             const item = e.target.closest('.emoji-picker-item');
