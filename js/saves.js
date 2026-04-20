@@ -138,9 +138,12 @@
                 <form class="saves-upload" id="savesUploadForm">
                     <input type="file" id="savesFile" accept=".state,.sav,.srm,.ss0,.ss1,.ss2,.ss3,.ss4,.ss5,.ss6,.ss7,.ss8,.ss9,.fs0,.fs1,application/octet-stream" required>
                     <input type="text" id="savesLabel" class="auth-input" placeholder="Label (e.g. 'After Elite Four')" maxlength="120" required>
-                    <select id="savesGameId" class="auth-input">
-                        <option value="">— link to a game (optional) —</option>
-                    </select>
+                    <div class="saves-game-picker" id="savesGamePicker">
+                        <input type="text" id="savesGameSearch" class="auth-input saves-game-search" placeholder="Search a game to link (optional)" autocomplete="off">
+                        <input type="hidden" id="savesGameId" value="">
+                        <button type="button" class="saves-game-clear" id="savesGameClear" style="display:none;" title="Clear selection">&times;</button>
+                        <div class="saves-game-dropdown" id="savesGameDropdown" hidden></div>
+                    </div>
                     <button type="submit" class="saves-upload-btn">Upload</button>
                 </form>
                 <div class="saves-upload-progress" id="savesProgress" style="display:none;"></div>
@@ -153,17 +156,10 @@
             </div>
         `;
 
-        // Populate game picker — games are already loaded
-        const gameSelect = document.getElementById('savesGameId');
-        if (gameSelect && Array.isArray(games)) {
-            const sortedGames = [...games].sort((a, b) => (a.title || '').localeCompare(b.title || ''));
-            for (const g of sortedGames) {
-                const opt = document.createElement('option');
-                opt.value = g.id;
-                opt.textContent = g.title;
-                gameSelect.appendChild(opt);
-            }
-        }
+        // Searchable game picker — type to filter, click a match to select.
+        // Internal state: the hidden #savesGameId input holds the picked id;
+        // #savesGameSearch shows the picked title for human confirmation.
+        wireGamePicker();
 
         document.getElementById('savesUploadForm').addEventListener('submit', onUploadSubmit);
 
@@ -224,6 +220,107 @@
     }
 
     // ─────────────────────────────────────────────────────────────
+    // Game picker — searchable combo-box
+    // ─────────────────────────────────────────────────────────────
+    //
+    // Replaces a 2,800-option <select> with a text-search input that
+    // shows the top 12 matches as a dropdown. A hidden input holds the
+    // picked game id so the existing onUploadSubmit reader (`.value` on
+    // #savesGameId) keeps working.
+
+    function wireGamePicker() {
+        const searchInput = document.getElementById('savesGameSearch');
+        const hiddenIdInput = document.getElementById('savesGameId');
+        const clearBtn = document.getElementById('savesGameClear');
+        const dropdown = document.getElementById('savesGameDropdown');
+        if (!searchInput || !dropdown || !Array.isArray(games)) return;
+
+        // Lowercased titles indexed once — avoids re-lowercasing every keystroke.
+        const haystack = games.map(g => ({
+            g,
+            needle: (g.title || '').toLowerCase(),
+        }));
+
+        function renderResults(q) {
+            const query = q.trim().toLowerCase();
+            if (!query) { dropdown.hidden = true; dropdown.innerHTML = ''; return; }
+
+            // Substring match + dumb scoring: prefix matches outrank mid-string
+            // matches so "poke" surfaces Pokemon titles before "Chicken Poker".
+            const hits = [];
+            for (const { g, needle } of haystack) {
+                if (!needle) continue;
+                const idx = needle.indexOf(query);
+                if (idx < 0) continue;
+                hits.push({ g, score: idx === 0 ? 0 : idx + 1 });
+                if (hits.length >= 60) break;  // cap scan for performance
+            }
+            hits.sort((a, b) => a.score - b.score || a.g.title.localeCompare(b.g.title));
+            const top = hits.slice(0, 12);
+
+            if (top.length === 0) {
+                dropdown.innerHTML = `<div class="saves-game-dropdown-empty">No games match.</div>`;
+                dropdown.hidden = false;
+                return;
+            }
+            dropdown.innerHTML = top.map(({ g }) => `
+                <button type="button" class="saves-game-option" data-id="${esc(g.id)}" data-title="${esc(g.title || '')}">
+                    <span class="saves-game-option-title">${esc(g.title || '')}</span>
+                    <span class="saves-game-option-cat">${esc(g.category || '')}</span>
+                </button>
+            `).join('');
+            dropdown.hidden = false;
+        }
+
+        searchInput.addEventListener('input', () => {
+            // Typing clears any previous selection so the hidden id doesn't
+            // disagree with the visible text.
+            if (hiddenIdInput.value) {
+                hiddenIdInput.value = '';
+                clearBtn.style.display = 'none';
+            }
+            renderResults(searchInput.value);
+        });
+        searchInput.addEventListener('focus', () => {
+            if (searchInput.value.trim()) renderResults(searchInput.value);
+        });
+        searchInput.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                dropdown.hidden = true;
+            } else if (e.key === 'Enter' && !dropdown.hidden) {
+                // Pick the top result on Enter — lets keyboard users stay in flow.
+                e.preventDefault();
+                const first = dropdown.querySelector('.saves-game-option');
+                if (first) first.click();
+            }
+        });
+
+        dropdown.addEventListener('click', (e) => {
+            const btn = e.target.closest('.saves-game-option');
+            if (!btn) return;
+            hiddenIdInput.value = btn.dataset.id;
+            searchInput.value = btn.dataset.title;
+            clearBtn.style.display = '';
+            dropdown.hidden = true;
+        });
+
+        clearBtn.addEventListener('click', () => {
+            hiddenIdInput.value = '';
+            searchInput.value = '';
+            clearBtn.style.display = 'none';
+            dropdown.hidden = true;
+            searchInput.focus();
+        });
+
+        // Close the dropdown when clicking anywhere outside the picker.
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('#savesGamePicker')) {
+                dropdown.hidden = true;
+            }
+        });
+    }
+
+    // ─────────────────────────────────────────────────────────────
 
     async function onUploadSubmit(e) {
         e.preventDefault();
@@ -273,7 +370,14 @@
             setTimeout(() => { progressEl.style.display = 'none'; }, 1500);
             fileInput.value = '';
             labelInput.value = '';
+            // Reset the searchable picker — hidden id, visible search text,
+            // and the × button. wireGamePicker() isn't called again here; we
+            // just clear the three inputs it controls.
             gameSelect.value = '';
+            const searchEl = document.getElementById('savesGameSearch');
+            const clearBtn = document.getElementById('savesGameClear');
+            if (searchEl) searchEl.value = '';
+            if (clearBtn) clearBtn.style.display = 'none';
         } catch (err) {
             progressEl.textContent = 'Upload failed: ' + (err.message || 'unknown');
             setTimeout(() => { progressEl.style.display = 'none'; }, 4000);
