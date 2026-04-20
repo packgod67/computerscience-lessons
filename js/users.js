@@ -124,13 +124,24 @@
             const assignBtn = isAdmin ? `<button class="assign-role-btn" data-uid="${esc(u.uid)}" title="Assign Roles">+</button>` : '';
             const isSelf = u.uid === currentUid;
             const banBtn = (isAdmin && !isSelf && u.role !== 'admin') ? `<button class="ban-user-btn" data-uid="${esc(u.uid)}" data-banned="0">Ban</button>` : '';
+            // Admin-only promote/demote button. Admins can elevate any non-admin
+            // to admin, or demote an admin back to member. We never let an admin
+            // demote themselves — that would lock you out of your own controls.
+            let adminToggleBtn = '';
+            if (isAdmin && !isSelf) {
+                if (u.role === 'admin') {
+                    adminToggleBtn = `<button class="promote-admin-btn demote" data-uid="${esc(u.uid)}" data-action="demote">Remove admin</button>`;
+                } else {
+                    adminToggleBtn = `<button class="promote-admin-btn" data-uid="${esc(u.uid)}" data-action="promote">Make admin</button>`;
+                }
+            }
             html += `<div class="user-row">
                 <div class="user-row-info">
                     <span class="user-row-name" data-open-profile-uid="${esc(u.uid)}" role="button" tabindex="0"${nameStyle}>${esc(u.username || 'unknown')}</span>
                     ${assignBtn}
                     ${adminBadge}${customBadges}
                 </div>
-                ${banBtn}
+                <div class="user-row-actions">${adminToggleBtn}${banBtn}</div>
             </div>`;
         }
         html += '</div></div>';
@@ -153,6 +164,28 @@
                     try {
                         await ArcadeAuth.banUser(uid, true);
                     } catch (e) { alert('Failed: ' + e.message); }
+                });
+            });
+            container.querySelectorAll('.promote-admin-btn').forEach(btn => {
+                btn.addEventListener('click', async () => {
+                    const uid = btn.dataset.uid;
+                    const action = btn.dataset.action;
+                    const user = allUsers.find(u => u.uid === uid);
+                    const name = user?.username || 'this user';
+                    if (action === 'promote') {
+                        if (!confirm(`Promote ${name} to admin? They'll get access to role management, bans, cheat codes, the requests queue, and everything else admin.`)) return;
+                        try {
+                            await getDb().collection('users').doc(uid).update({ role: 'admin' });
+                        } catch (e) { alert('Promote failed: ' + e.message); }
+                    } else {
+                        if (!confirm(`Remove admin role from ${name}? They'll go back to being a regular member.`)) return;
+                        try {
+                            // Clearing with a marker so the doc stays small; firestore.FieldValue.delete()
+                            // would drop the field entirely — either works, but an explicit 'member'
+                            // is easier to debug later.
+                            await getDb().collection('users').doc(uid).update({ role: 'member' });
+                        } catch (e) { alert('Demote failed: ' + e.message); }
+                    }
                 });
             });
         }

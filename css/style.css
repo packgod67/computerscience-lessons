@@ -5732,6 +5732,8 @@ body.theme-transitioning * {
     padding: 10px;
     border-top: 1px solid var(--border);
     background: var(--bg-card);
+    /* Don't let a long message body squish the input bar out of view. */
+    flex-shrink: 0;
 }
 
 .dm-convo-input {
@@ -5745,6 +5747,9 @@ body.theme-transitioning * {
     font-family: inherit;
     resize: none;
     outline: none;
+    /* Floor + ceiling so the auto-height JS can't collapse the textarea to 0
+       after send, and long drafts still cap at a reasonable height. */
+    min-height: 38px;
     max-height: 140px;
     line-height: 1.4;
     transition: border-color 0.15s;
@@ -5883,4 +5888,565 @@ body.theme-transitioning * {
         padding: 5px 10px;
         font-size: 0.72rem;
     }
+}
+
+/* =========================================================================
+   Patchnotes block (announcements at top of Games view)
+   ========================================================================= */
+.patchnotes-block {
+    margin: 0 0 1rem;
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+}
+.patchnotes-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.8rem;
+}
+.patchnotes-title {
+    margin: 0;
+    font-size: 1.05rem;
+    color: var(--text-primary);
+}
+.patchnotes-new-btn {
+    padding: 6px 12px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+.patchnotes-new-btn:hover { filter: brightness(1.1); }
+.patchnotes-toggle {
+    display: block;
+    margin: 0.6rem auto 0;
+    padding: 6px 16px;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.78rem;
+}
+.patchnotes-toggle:hover { background: var(--bg-card); }
+.patchnotes-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+.patchnotes-empty {
+    padding: 1rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+.patchnote-card {
+    padding: 0.8rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    transition: border-color 0.15s;
+}
+.patchnote-card.is-pinned {
+    border-color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 7%, var(--bg-card));
+}
+.patchnote-card .patchnote-header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+.patchnote-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+    flex: 1;
+}
+.patchnote-pin-badge {
+    display: inline-block;
+    padding: 1px 6px;
+    margin-right: 4px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 0.62rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    border-radius: 3px;
+    vertical-align: middle;
+}
+.patchnote-actions {
+    display: inline-flex;
+    gap: 0.3rem;
+    flex-shrink: 0;
+}
+.patchnote-actions button {
+    background: transparent;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    padding: 2px 6px;
+    cursor: pointer;
+    font-size: 0.8rem;
+    line-height: 1;
+}
+.patchnote-actions button:hover { background: var(--bg-secondary); color: var(--text-primary); }
+.patchnote-meta {
+    display: flex;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+.patchnote-body {
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    line-height: 1.45;
+}
+.patchnote-body p { margin: 0 0 0.5rem; }
+.patchnote-body p:last-child { margin-bottom: 0; }
+.patchnote-editor textarea.patchnote-body-input {
+    resize: vertical;
+    min-height: 140px;
+    font-family: inherit;
+}
+.patchnote-pin-toggle {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 0.5rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+.patchnote-editor-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.6rem;
+}
+
+/* =========================================================================
+   Requests tab
+   ========================================================================= */
+.requests-panel {
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+}
+.requests-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+.requests-header h2 { margin: 0; color: var(--text-primary); }
+.requests-new-btn {
+    padding: 8px 14px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.requests-new-btn:hover { filter: brightness(1.1); }
+.requests-filters {
+    display: flex;
+    gap: 0.4rem;
+    margin-bottom: 1rem;
+    flex-wrap: wrap;
+}
+.requests-filter {
+    padding: 5px 12px;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    cursor: pointer;
+    font-size: 0.78rem;
+}
+.requests-filter.is-active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+.requests-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+}
+.requests-empty {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+}
+.request-card {
+    display: flex;
+    gap: 0.6rem;
+    padding: 0.8rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+.request-card-done { opacity: 0.7; border-left: 3px solid #10b981; }
+.request-card-rejected { opacity: 0.55; border-left: 3px solid #ef4444; }
+.request-vote-col {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.2rem;
+    min-width: 42px;
+    padding-top: 0.2rem;
+}
+.request-upvote {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: all 0.15s;
+}
+.request-upvote:hover { border-color: var(--accent); color: var(--accent); }
+.request-upvote.is-voted {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+.request-vote-count {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+.request-main { flex: 1; min-width: 0; }
+.request-title-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    margin-bottom: 0.3rem;
+}
+.request-title {
+    margin: 0;
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+.request-kind, .request-status {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 4px;
+    font-size: 0.65rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.4px;
+}
+.request-kind-game      { background: #3b82f6; color: #fff; }
+.request-kind-feature   { background: #8b5cf6; color: #fff; }
+.request-kind-fix       { background: #f59e0b; color: #fff; }
+.request-kind-other     { background: #64748b; color: #fff; }
+.request-status-done    { background: #10b981; color: #fff; }
+.request-status-rejected{ background: #ef4444; color: #fff; }
+.request-details {
+    margin: 0.2rem 0 0.4rem;
+    font-size: 0.85rem;
+    color: var(--text-primary);
+    line-height: 1.4;
+}
+.request-status-note {
+    margin: 0.4rem 0;
+    padding: 0.4rem 0.7rem;
+    background: var(--bg-secondary);
+    border-left: 3px solid var(--accent);
+    border-radius: 4px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    font-style: italic;
+}
+.request-footer {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    margin-top: 0.4rem;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+.request-author { font-weight: 600; }
+.request-actions {
+    display: inline-flex;
+    gap: 0.3rem;
+    margin-left: auto;
+    flex-wrap: wrap;
+}
+.request-action {
+    padding: 3px 8px;
+    background: var(--bg-secondary);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.72rem;
+}
+.request-action:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.request-mark-done:hover { background: #10b981; border-color: #10b981; }
+.request-mark-rejected:hover, .request-delete:hover { background: #ef4444; border-color: #ef4444; }
+.request-modal .request-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+    margin-bottom: 0.7rem;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+}
+.request-modal-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 0.5rem;
+}
+
+/* =========================================================================
+   Save states tab
+   ========================================================================= */
+.saves-panel {
+    padding: 1rem;
+    background: var(--bg-secondary);
+    border-radius: 12px;
+}
+.saves-header h2 { margin: 0 0 0.3rem; color: var(--text-primary); }
+.saves-hint {
+    margin: 0 0 1rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+}
+.saves-loading, .saves-empty {
+    padding: 1.5rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.88rem;
+}
+.saves-upload {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr auto;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.8rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+.saves-upload input[type="file"] {
+    padding: 6px 8px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.82rem;
+}
+.saves-upload-btn {
+    padding: 8px 16px;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+.saves-upload-btn:hover { filter: brightness(1.1); }
+.saves-upload-progress {
+    padding: 0.5rem 0.8rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+}
+.saves-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.save-row {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.7rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+.save-info { flex: 1; min-width: 0; }
+.save-label {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 0.2rem;
+}
+.save-meta {
+    display: flex;
+    gap: 0.6rem;
+    flex-wrap: wrap;
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+.save-game {
+    padding: 1px 6px;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 3px;
+    font-weight: 600;
+    font-size: 0.68rem;
+}
+.save-actions {
+    display: inline-flex;
+    gap: 0.3rem;
+}
+.save-actions button {
+    width: 32px;
+    height: 32px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+}
+.save-actions button:hover { background: var(--accent); color: #fff; border-color: var(--accent); }
+.save-delete:hover { background: #ef4444 !important; border-color: #ef4444 !important; }
+
+@media (max-width: 640px) {
+    .saves-upload {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* =========================================================================
+   Group chat additions (extends the existing .dm-* system)
+   ========================================================================= */
+.dm-sidebar-section { padding: 0.5rem 0; }
+.dm-sidebar-section + .dm-sidebar-section {
+    border-top: 1px solid var(--border);
+}
+.dm-sidebar-heading {
+    margin: 0 0 0.3rem;
+    padding: 0 0.8rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.6px;
+    text-transform: uppercase;
+    color: var(--text-secondary);
+}
+.dm-sidebar-heading-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 0.8rem 0 0;
+}
+.dm-new-group-btn {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    line-height: 1;
+}
+.dm-new-group-btn:hover { filter: brightness(1.1); }
+.dm-group-item .dm-convo-name { font-weight: 600; }
+.dm-group-title {
+    font-weight: 700;
+    display: block;
+    color: var(--text-primary);
+}
+.dm-group-members {
+    display: block;
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    max-width: 360px;
+}
+.dm-group-leave {
+    padding: 4px 10px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.7rem;
+    cursor: pointer;
+}
+.dm-group-leave:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+.dm-msg-author {
+    font-size: 0.68rem;
+    font-weight: 700;
+    color: var(--accent);
+    margin-bottom: 0.15rem;
+}
+.new-group-members {
+    max-height: 280px;
+    overflow-y: auto;
+    padding: 0.5rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    margin-top: 0.5rem;
+}
+.new-group-member {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.3rem 0.4rem;
+    cursor: pointer;
+    color: var(--text-primary);
+    font-size: 0.88rem;
+}
+.new-group-member:hover { background: var(--bg-secondary); border-radius: 4px; }
+
+/* =========================================================================
+   Admin promote/demote button (users tab)
+   ========================================================================= */
+.user-row-actions {
+    display: inline-flex;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+}
+.promote-admin-btn {
+    padding: 4px 10px;
+    background: color-mix(in oklab, var(--accent) 20%, var(--bg-card));
+    color: var(--accent);
+    border: 1px solid var(--accent);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.promote-admin-btn:hover { background: var(--accent); color: #fff; }
+.promote-admin-btn.demote {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border-color: var(--border);
+}
+.promote-admin-btn.demote:hover {
+    background: #ef4444;
+    color: #fff;
+    border-color: #ef4444;
 }

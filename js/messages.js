@@ -37,15 +37,21 @@
     let currentUsername = null;
     let inboxUnsub = null;
     let outboxUnsub = null;
+    let groupsUnsub = null;
+    let groupMessagesUnsub = null;
 
     // conversations: Map<otherUid, { lastMessage, lastAt, lastFrom, unread }>
     const conversations = new Map();
+
+    // groups: Map<groupId, { id, name, members:[uids], lastMessage, lastAt, lastFrom }>
+    const groups = new Map();
 
     // Track which message ids we've seen so the initial snapshot doesn't
     // spam toasts with old messages. Populated during the "first page" of
     // the listener.
     const seenIds = new Set();
-    let initialLoadDone = { inbox: false, outbox: false };
+    const seenGroupMsgIds = new Set();
+    let initialLoadDone = { inbox: false, outbox: false, groups: false };
 
     // Callbacks that fire when the conversation list changes. Used by the
     // Messages tab renderer.
@@ -56,6 +62,7 @@
     // If the user is actively viewing a conversation with someone, we don't
     // show toasts for their messages — set by renderMessagesView().
     let activeConversationWith = null;
+    let activeGroupId = null;
 
     // ─────────────────────────────────────────────────────────────
     // Firestore listeners
@@ -63,6 +70,8 @@
 
     function startListeners() {
         if (!db || !currentUid) return;
+
+        startGroupListeners();
 
         // ONE listener for everything — uses `participants` array-contains so
         // the Firestore rules engine can always prove read access with the
@@ -115,11 +124,15 @@
     function stopListeners() {
         if (inboxUnsub) inboxUnsub();
         if (outboxUnsub) outboxUnsub();
-        inboxUnsub = outboxUnsub = null;
+        if (groupsUnsub) groupsUnsub();
+        if (groupMessagesUnsub) groupMessagesUnsub();
+        inboxUnsub = outboxUnsub = groupsUnsub = groupMessagesUnsub = null;
         stopExpirySweep();
         conversations.clear();
+        groups.clear();
         seenIds.clear();
-        initialLoadDone = { inbox: false, outbox: false };
+        seenGroupMsgIds.clear();
+        initialLoadDone = { inbox: false, outbox: false, groups: false };
         fireChange();
     }
 
@@ -299,43 +312,78 @@
             <div class="dm-panel">
                 <aside class="dm-sidebar" id="dmSidebar"></aside>
                 <section class="dm-main" id="dmMain">
-                    <div class="dm-empty-main">Pick a conversation, or click a username anywhere to start one.</div>
+                    <div class="dm-empty-main">Pick a conversation, or start a group chat.</div>
                 </section>
             </div>
         `;
 
         const sidebar = document.getElementById('dmSidebar');
         function renderSidebar() {
-            const list = [...conversations.values()]
+            const dmList = [...conversations.values()]
                 .sort((a, b) => b.lastAt - a.lastAt);
-            if (list.length === 0) {
-                sidebar.innerHTML = `<div class="dm-sidebar-empty">
-                    No conversations yet. Click a username anywhere (chat, users tab) to start one.
-                </div>`;
-                return;
-            }
-            sidebar.innerHTML = list.map((c) => `
-                <button class="dm-convo-item ${c.other === activeConversationWith ? 'is-active' : ''}"
-                        data-uid="${esc(c.other)}">
-                    <div class="dm-convo-row">
-                        <span class="dm-convo-name" data-lookup-uid="${esc(c.other)}">…</span>
-                        <span class="dm-convo-time">${timeAgo(c.lastAt)}</span>
+            const groupList = [...groups.values()]
+                .sort((a, b) => b.lastAt - a.lastAt);
+
+            const dmHtml = dmList.length
+                ? dmList.map((c) => `
+                    <button class="dm-convo-item ${c.other === activeConversationWith ? 'is-active' : ''}"
+                            data-uid="${esc(c.other)}">
+                        <div class="dm-convo-row">
+                            <span class="dm-convo-name" data-lookup-uid="${esc(c.other)}">…</span>
+                            <span class="dm-convo-time">${timeAgo(c.lastAt)}</span>
+                        </div>
+                        <div class="dm-convo-preview ${c.lastFrom === currentUid ? 'from-me' : ''}">
+                            ${c.lastFrom === currentUid ? 'You: ' : ''}${esc(truncate(c.lastMessage, 80))}
+                        </div>
+                    </button>
+                `).join('')
+                : `<div class="dm-sidebar-empty">No DMs yet. Click a username anywhere to start one.</div>`;
+
+            const groupsHtml = groupList.length
+                ? groupList.map((g) => `
+                    <button class="dm-convo-item dm-group-item ${g.id === activeGroupId ? 'is-active' : ''}"
+                            data-group-id="${esc(g.id)}">
+                        <div class="dm-convo-row">
+                            <span class="dm-convo-name">&#128101; ${esc(g.name)}</span>
+                            <span class="dm-convo-time">${g.lastAt ? timeAgo(g.lastAt) : ''}</span>
+                        </div>
+                        <div class="dm-convo-preview ${g.lastFrom === currentUid ? 'from-me' : ''}">
+                            ${g.lastMessage
+                                ? ((g.lastFrom === currentUid ? 'You: ' : (g.lastFromName ? esc(g.lastFromName) + ': ' : '')) + esc(truncate(g.lastMessage, 70)))
+                                : `<em style="opacity:.6">${g.members.length} members</em>`}
+                        </div>
+                    </button>
+                `).join('')
+                : `<div class="dm-sidebar-empty">No group chats yet.</div>`;
+
+            sidebar.innerHTML = `
+                <div class="dm-sidebar-section">
+                    <h3 class="dm-sidebar-heading">Direct messages</h3>
+                    ${dmHtml}
+                </div>
+                <div class="dm-sidebar-section">
+                    <div class="dm-sidebar-heading-row">
+                        <h3 class="dm-sidebar-heading">Group chats</h3>
+                        <button class="dm-new-group-btn" id="dmNewGroupBtn" title="New group">+</button>
                     </div>
-                    <div class="dm-convo-preview ${c.lastFrom === currentUid ? 'from-me' : ''}">
-                        ${c.lastFrom === currentUid ? 'You: ' : ''}${esc(truncate(c.lastMessage, 80))}
-                    </div>
-                </button>
-            `).join('');
-            // Async-fill usernames
+                    ${groupsHtml}
+                </div>
+            `;
+
+            // Async-fill DM usernames
             sidebar.querySelectorAll('[data-lookup-uid]').forEach(async (el) => {
                 const uid = el.dataset.lookupUid;
                 const name = await getUsername(uid);
                 el.textContent = name;
             });
             // Click to open
-            sidebar.querySelectorAll('.dm-convo-item').forEach((btn) => {
+            sidebar.querySelectorAll('.dm-convo-item[data-uid]').forEach((btn) => {
                 btn.addEventListener('click', () => openConversation(btn.dataset.uid));
             });
+            sidebar.querySelectorAll('.dm-convo-item[data-group-id]').forEach((btn) => {
+                btn.addEventListener('click', () => openGroup(btn.dataset.groupId));
+            });
+            document.getElementById('dmNewGroupBtn')?.addEventListener('click', showNewGroupModal);
         }
         renderSidebar();
 
@@ -372,6 +420,8 @@
         }
 
         activeConversationWith = otherUid;
+        activeGroupId = null;
+        if (currentGroupUnsub) { currentGroupUnsub(); currentGroupUnsub = null; }
         fireChange();
 
         const main = document.getElementById('dmMain');
@@ -420,7 +470,9 @@
             if (!text) return;
             const orig = input.value;
             input.value = '';
-            input.style.height = 'auto';
+            // Clear the inline style entirely so the textarea falls back to
+            // its CSS min-height (38px) instead of collapsing to 0 via 'auto'.
+            input.style.removeProperty('height');
             try {
                 await sendMessage(otherUid, text);
             } catch (err) {
@@ -544,10 +596,419 @@
         }
     });
 
+    // ═════════════════════════════════════════════════════════════
+    // Group chat
+    // ═════════════════════════════════════════════════════════════
+    //
+    // Schema:
+    //   groups/{id} = {
+    //     name:      string,
+    //     members:   string[] uids,
+    //     createdBy: uid,
+    //     createdAt: server ts,
+    //   }
+    //   group_messages/{id} = {
+    //     groupId:   string,
+    //     from:      uid,
+    //     fromName:  cached name,
+    //     members:   string[] — mirror of the group's members at send time,
+    //                so Firestore rules can validate read access without a
+    //                secondary lookup on the groups/{groupId} doc.
+    //     text:      string (<=2000 chars),
+    //     createdAt: server ts,
+    //     deleteAt:  server ts (for TTL),
+    //   }
+    //
+    // Required Firestore rules (add these):
+    //   match /groups/{id} {
+    //     allow read: if request.auth != null
+    //       && request.auth.uid in resource.data.members;
+    //     allow create: if request.auth != null
+    //       && request.auth.uid in request.resource.data.members
+    //       && request.resource.data.createdBy == request.auth.uid;
+    //     allow update: if request.auth != null
+    //       && request.auth.uid in resource.data.members;
+    //     allow delete: if request.auth != null
+    //       && resource.data.createdBy == request.auth.uid;
+    //   }
+    //   match /group_messages/{id} {
+    //     allow read: if request.auth != null
+    //       && request.auth.uid in resource.data.members;
+    //     allow create: if request.auth != null
+    //       && request.resource.data.from == request.auth.uid
+    //       && request.auth.uid in request.resource.data.members;
+    //     allow delete: if request.auth != null
+    //       && resource.data.from == request.auth.uid;
+    //   }
+
+    function startGroupListeners() {
+        // List of groups the user belongs to
+        groupsUnsub = db.collection('groups')
+            .where('members', 'array-contains', currentUid)
+            .onSnapshot((snap) => {
+                // Rebuild the groups map from this snapshot (keep last-msg
+                // metadata if we had it).
+                const next = new Map();
+                for (const d of snap.docs) {
+                    const data = d.data();
+                    const existing = groups.get(d.id);
+                    next.set(d.id, {
+                        id: d.id,
+                        name: data.name || 'Group',
+                        members: data.members || [],
+                        createdBy: data.createdBy,
+                        lastMessage: existing?.lastMessage || '',
+                        lastAt: existing?.lastAt || (data.createdAt?.toMillis?.() || 0),
+                        lastFrom: existing?.lastFrom || null,
+                        lastFromName: existing?.lastFromName || null,
+                    });
+                }
+                groups.clear();
+                for (const [k, v] of next.entries()) groups.set(k, v);
+                fireChange();
+            }, (err) => console.warn('Groups listener error:', err));
+
+        // Messages across all of the user's groups. Uses `members`
+        // array-contains so the same query matches every group the user is
+        // in without requiring a per-group subscription.
+        groupMessagesUnsub = db.collection('group_messages')
+            .where('members', 'array-contains', currentUid)
+            .orderBy('createdAt', 'desc')
+            .limit(200)
+            .onSnapshot((snap) => {
+                snap.docChanges().forEach((change) => {
+                    if (change.type !== 'added') return;
+                    const msg = { id: change.doc.id, ...change.doc.data() };
+                    if (isExpired(msg)) return;
+
+                    const g = groups.get(msg.groupId);
+                    if (g) {
+                        const tsMs = msg.createdAt?.toMillis?.() || Date.now();
+                        if (tsMs > g.lastAt) {
+                            g.lastMessage = msg.text || '';
+                            g.lastAt = tsMs;
+                            g.lastFrom = msg.from;
+                            g.lastFromName = msg.fromName;
+                        }
+                    }
+
+                    // Toast only for messages from others, only after the
+                    // initial load, and only if the user isn't already
+                    // looking at this group.
+                    if (msg.from === currentUid) return;
+                    if (!initialLoadDone.groups) return;
+                    if (seenGroupMsgIds.has(msg.id)) return;
+                    seenGroupMsgIds.add(msg.id);
+                    if (activeGroupId === msg.groupId) return;
+                    const groupName = groups.get(msg.groupId)?.name || 'Group';
+                    showGroupToast(msg, groupName);
+                });
+                if (!initialLoadDone.groups) {
+                    snap.forEach((d) => seenGroupMsgIds.add(d.id));
+                    initialLoadDone.groups = true;
+                }
+                fireChange();
+            }, (err) => console.warn('Group messages listener error:', err));
+    }
+
+    async function createGroup(name, memberUids) {
+        if (!currentUid) throw new Error('Not logged in');
+        name = String(name || '').trim().slice(0, 120);
+        if (!name) throw new Error('Name required');
+        // Dedupe + ensure creator is in the members array
+        const members = [...new Set([currentUid, ...memberUids])].filter(Boolean);
+        if (members.length < 2) throw new Error('Pick at least one other member');
+        const ref = await db.collection('groups').add({
+            name,
+            members,
+            createdBy: currentUid,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        });
+        return ref.id;
+    }
+
+    async function sendGroupMessage(groupId, text) {
+        if (!currentUid) throw new Error('Not logged in');
+        text = String(text || '').trim();
+        if (!text) return;
+        if (text.length > 2000) text = text.slice(0, 2000);
+        const g = groups.get(groupId);
+        if (!g) throw new Error('Group not found');
+        const deleteAt = firebase.firestore.Timestamp.fromDate(
+            new Date(Date.now() + MESSAGE_TTL_MS)
+        );
+        await db.collection('group_messages').add({
+            groupId,
+            from: currentUid,
+            fromName: currentUsername || 'unknown',
+            // Mirror members so the Firestore rule can enforce read access
+            // without a cross-doc lookup.
+            members: g.members,
+            text,
+            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            deleteAt,
+        });
+    }
+
+    async function leaveGroup(groupId) {
+        if (!currentUid) return;
+        const g = groups.get(groupId);
+        if (!g) return;
+        const remaining = g.members.filter(u => u !== currentUid);
+        // If you created the group and you're the last one, delete it.
+        if (remaining.length === 0) {
+            try { await db.collection('groups').doc(groupId).delete(); } catch {}
+            return;
+        }
+        await db.collection('groups').doc(groupId).update({ members: remaining });
+    }
+
+    function showGroupToast(msg, groupName) {
+        ensureToastStack();
+        const senderName = esc(msg.fromName || 'someone');
+        const preview = esc(truncate(msg.text, 120));
+        const toast = document.createElement('button');
+        toast.className = 'dm-toast';
+        toast.type = 'button';
+        toast.innerHTML = `
+            <span class="dm-toast-icon" aria-hidden="true">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                    <circle cx="9" cy="7" r="4"/>
+                    <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+                    <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+                </svg>
+            </span>
+            <span class="dm-toast-body">
+                <span class="dm-toast-name">${esc(groupName)} · ${senderName}</span>
+                <span class="dm-toast-text">${preview}</span>
+            </span>
+            <span class="dm-toast-close" aria-hidden="true">&times;</span>
+        `;
+        toast.addEventListener('click', () => {
+            openGroup(msg.groupId);
+            dismiss(toast);
+        });
+        const closer = toast.querySelector('.dm-toast-close');
+        closer.addEventListener('click', (e) => { e.stopPropagation(); dismiss(toast); });
+        toastStack.appendChild(toast);
+        requestAnimationFrame(() => toast.classList.add('is-shown'));
+        toast._dismissTimer = setTimeout(() => dismiss(toast), 6000);
+    }
+
+    let currentGroupUnsub = null;
+    async function openGroup(groupId) {
+        const messagesViewEl = document.getElementById('messagesView');
+        const messagesTabBtn = document.querySelector('.tab-btn[data-tab="messages"]');
+        if (messagesViewEl && messagesViewEl.style.display === 'none' && messagesTabBtn) {
+            messagesTabBtn.click();
+            setTimeout(() => openGroup(groupId), 50);
+            return;
+        }
+
+        const g = groups.get(groupId);
+        if (!g) return;
+
+        activeConversationWith = null;
+        activeGroupId = groupId;
+        fireChange();
+
+        const main = document.getElementById('dmMain');
+        if (!main) return;
+
+        // Resolve member display names so the header shows who's in the room.
+        const memberNames = await Promise.all(g.members.map(getUsername));
+
+        main.innerHTML = `
+            <header class="dm-convo-header">
+                <button class="dm-convo-back" id="dmBack" aria-label="Back to list">&larr;</button>
+                <div class="dm-convo-title">
+                    <span class="dm-group-title">${esc(g.name)}</span>
+                    <span class="dm-group-members">${esc(memberNames.join(', '))}</span>
+                </div>
+                <button class="dm-group-leave" id="dmGroupLeave" title="Leave group">&times; Leave</button>
+            </header>
+            <div class="dm-convo-body" id="dmBody">
+                <div class="dm-convo-loading">Loading…</div>
+            </div>
+            <form class="dm-convo-form" id="dmForm">
+                <textarea id="dmInput" class="dm-convo-input" placeholder="Write something…"
+                    rows="1" maxlength="2000" autocomplete="off"></textarea>
+                <button type="submit" class="dm-convo-send" title="Send" aria-label="Send">&#10148;</button>
+            </form>
+        `;
+
+        document.getElementById('dmBack').addEventListener('click', () => {
+            activeGroupId = null;
+            if (currentGroupUnsub) currentGroupUnsub();
+            main.innerHTML = '<div class="dm-empty-main">Pick a conversation, or start a group chat.</div>';
+            fireChange();
+        });
+
+        document.getElementById('dmGroupLeave').addEventListener('click', async () => {
+            if (!confirm(`Leave "${g.name}"? You'll lose access to its messages.`)) return;
+            try {
+                await leaveGroup(groupId);
+                activeGroupId = null;
+                if (currentGroupUnsub) currentGroupUnsub();
+                main.innerHTML = '<div class="dm-empty-main">Left the group.</div>';
+                fireChange();
+            } catch (e) { alert('Leave failed: ' + e.message); }
+        });
+
+        const form = document.getElementById('dmForm');
+        const input = document.getElementById('dmInput');
+        input.addEventListener('input', () => {
+            input.style.height = 'auto';
+            input.style.height = Math.min(140, input.scrollHeight) + 'px';
+        });
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' && !e.shiftKey) {
+                e.preventDefault();
+                form.requestSubmit();
+            }
+        });
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const text = input.value.trim();
+            if (!text) return;
+            const orig = input.value;
+            input.value = '';
+            input.style.removeProperty('height');
+            try {
+                await sendGroupMessage(groupId, text);
+            } catch (err) {
+                console.error('Group send failed:', err);
+                input.value = orig;
+                alert('Send failed: ' + (err.message || 'unknown'));
+            }
+        });
+
+        if (currentGroupUnsub) currentGroupUnsub();
+        const body = document.getElementById('dmBody');
+        currentGroupUnsub = db.collection('group_messages')
+            .where('members', 'array-contains', currentUid)
+            .where('groupId', '==', groupId)
+            .orderBy('createdAt', 'asc')
+            .onSnapshot((snap) => {
+                const msgs = snap.docs
+                    .map((d) => ({ id: d.id, ...d.data() }))
+                    .filter((m) => !isExpired(m));
+                if (msgs.length === 0) {
+                    body.innerHTML = `<div class="dm-convo-empty">No messages yet. Say hi.<br><span style="font-size:0.75rem;opacity:0.65">Messages auto-delete after 24 hours.</span></div>`;
+                    return;
+                }
+                renderGroupMessages(body, msgs);
+            }, (err) => {
+                console.warn('Group convo listener:', err);
+                body.innerHTML = `<div class="dm-convo-empty">Couldn't load messages.<br><code style="font-size:0.72rem">${esc(err.message || err.code || 'unknown error')}</code></div>`;
+            });
+    }
+
+    function renderGroupMessages(body, msgs) {
+        const wasAtBottom =
+            body.scrollHeight - body.scrollTop - body.clientHeight < 100;
+        body.innerHTML = msgs.map((m) => {
+            const mine = m.from === currentUid;
+            const time = m.createdAt && m.createdAt.toMillis
+                ? formatTime(m.createdAt.toMillis())
+                : '';
+            const delBtn = mine
+                ? `<button class="dm-msg-delete" data-id="${esc(m.id)}" data-type="group" title="Delete">&times;</button>`
+                : '';
+            const authorLabel = mine ? '' : `<div class="dm-msg-author">${esc(m.fromName || 'unknown')}</div>`;
+            return `<div class="dm-msg ${mine ? 'dm-msg-mine' : 'dm-msg-theirs'}">
+                ${authorLabel}
+                <div class="dm-msg-text">${esc(m.text)}</div>
+                <div class="dm-msg-meta">
+                    <span class="dm-msg-time">${esc(time)}</span>
+                    ${delBtn}
+                </div>
+            </div>`;
+        }).join('');
+        body.querySelectorAll('.dm-msg-delete').forEach((btn) => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                if (confirm('Delete this message?')) {
+                    db.collection('group_messages').doc(btn.dataset.id).delete()
+                        .catch((err) => console.warn('Delete failed:', err));
+                }
+            });
+        });
+        if (wasAtBottom) body.scrollTop = body.scrollHeight;
+    }
+
+    // ─────────────────────────────────────────────────────────────
+    // New group modal
+    // ─────────────────────────────────────────────────────────────
+
+    async function showNewGroupModal() {
+        if (!currentUid) return;
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.id = 'newGroupModal';
+        overlay.innerHTML = `
+            <div class="modal-box">
+                <div class="modal-header">
+                    <h2>New group chat</h2>
+                    <button class="modal-close" id="newGroupCloseBtn">&times;</button>
+                </div>
+                <input type="text" id="newGroupName" class="auth-input" placeholder="Group name" maxlength="120">
+                <div class="new-group-members" id="newGroupMembers">
+                    <div class="dm-convo-loading">Loading users…</div>
+                </div>
+                <button class="auth-submit" id="newGroupCreateBtn" style="margin-top:0.8rem;">Create</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+        const close = () => overlay.remove();
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+        document.getElementById('newGroupCloseBtn').addEventListener('click', close);
+
+        // Pull the user list — uses the existing users collection.
+        let users = [];
+        try {
+            const snap = await db.collection('users').get();
+            users = snap.docs
+                .map(d => ({ uid: d.id, ...d.data() }))
+                .filter(u => u.uid !== currentUid && !u.banned)
+                .sort((a, b) => (a.username || '').localeCompare(b.username || ''));
+        } catch (e) {
+            document.getElementById('newGroupMembers').innerHTML =
+                `<div class="dm-convo-empty">Couldn't load users: ${esc(e.message)}</div>`;
+            return;
+        }
+
+        const listEl = document.getElementById('newGroupMembers');
+        listEl.innerHTML = users.map(u => `
+            <label class="new-group-member">
+                <input type="checkbox" value="${esc(u.uid)}">
+                <span>${esc(u.username || u.uid.slice(0, 6))}</span>
+            </label>
+        `).join('') || '<div class="dm-convo-empty">No other users yet.</div>';
+
+        document.getElementById('newGroupCreateBtn').addEventListener('click', async () => {
+            const name = document.getElementById('newGroupName').value.trim();
+            const picks = [...listEl.querySelectorAll('input:checked')].map(c => c.value);
+            if (!name) { alert('Give the group a name'); return; }
+            if (picks.length === 0) { alert('Pick at least one member'); return; }
+            try {
+                const id = await createGroup(name, picks);
+                close();
+                // Give the snapshot a beat to deliver the new group doc
+                setTimeout(() => openGroup(id), 200);
+            } catch (e) { alert('Create failed: ' + e.message); }
+        });
+    }
+
     window.ArcadeMessages = {
         sendMessage,
         openConversation,
         renderMessagesView,
+        openGroup,
+        createGroup,
+        showNewGroupModal,
         getConversations: () => [...conversations.values()],
+        getGroups: () => [...groups.values()],
     };
 })();

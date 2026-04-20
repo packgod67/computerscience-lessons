@@ -43,30 +43,10 @@
 
     async function loadGallery() {
         init();
-        const isAdmin = ArcadeAuth.isAdmin();
-        const currentUid = ArcadeAuth.getUser()?.uid;
         try {
-            let allImages;
-            if (isAdmin) {
-                const snap = await db.collection('gallery').get();
-                allImages = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            } else {
-                const approvedSnap = await db.collection('gallery').where('approved', '==', true).get();
-                const approved = approvedSnap.docs.map(d => ({ id: d.id, ...d.data() }));
-                let ownPending = [];
-                if (currentUid) {
-                    const pendingSnap = await db.collection('gallery').where('uid', '==', currentUid).get();
-                    ownPending = pendingSnap.docs.filter(d => !d.data().approved).map(d => ({ id: d.id, ...d.data() }));
-                }
-                const seen = new Set();
-                allImages = [];
-                for (const img of [...ownPending, ...approved]) {
-                    if (!seen.has(img.id)) {
-                        seen.add(img.id);
-                        allImages.push(img);
-                    }
-                }
-            }
+            // Approval flow was retired — all uploads show up immediately.
+            const snap = await db.collection('gallery').get();
+            const allImages = snap.docs.map(d => ({ id: d.id, ...d.data() }));
             // Clean up expired images and filter them out
             galleryImages = await cleanupExpired(allImages);
             // Sort: pinned first, then by date
@@ -162,28 +142,22 @@
         } else {
             html += '<div class="gallery-grid">';
             for (const img of galleryImages) {
-                const pending = !img.approved;
                 const canDelete = isAdmin || img.uid === currentUid;
-                const pendingOverlay = pending ? '<div class="gallery-pending-overlay"><span>Pending Approval</span></div>' : '';
-                const approveBtn = (isAdmin && pending) ? `<button class="gallery-approve-btn" data-id="${esc(img.id)}">Approve</button><button class="gallery-reject-btn" data-id="${esc(img.id)}">Reject</button>` : '';
-                const deleteBtn = canDelete && !pending ? `<button class="gallery-delete-btn" data-id="${esc(img.id)}">Delete</button>` : '';
-                const pinBtn = isAdmin && !pending ? `<button class="gallery-pin-btn${img.pinned ? ' pinned' : ''}" data-id="${esc(img.id)}" title="${img.pinned ? 'Unpin' : 'Pin'}">&#128204;</button>` : '';
+                const deleteBtn = canDelete ? `<button class="gallery-delete-btn" data-id="${esc(img.id)}">Delete</button>` : '';
+                const pinBtn = isAdmin ? `<button class="gallery-pin-btn${img.pinned ? ' pinned' : ''}" data-id="${esc(img.id)}" title="${img.pinned ? 'Unpin' : 'Pin'}">&#128204;</button>` : '';
                 const expiryText = timeRemaining(img);
                 const expiryBadge = expiryText ? `<span class="gallery-expiry${img.pinned ? ' gallery-expiry-pinned' : ''}">${esc(expiryText)}</span>` : '';
 
-                if (pending && !isAdmin && img.uid !== currentUid) continue;
-
-                html += `<div class="gallery-card${pending ? ' gallery-card-pending' : ''}">
+                html += `<div class="gallery-card">
                     <div class="gallery-card-img-wrap">
                         <img src="${esc(img.url)}" alt="" loading="lazy" class="gallery-card-img" data-url="${esc(img.url)}">
-                        ${pendingOverlay}
                         ${pinBtn}
                     </div>
                     <div class="gallery-card-info">
                         <span class="gallery-card-user">${esc(img.username || 'unknown')}</span>
                         ${expiryBadge}
                         <div class="gallery-card-actions">
-                            ${approveBtn}${deleteBtn}
+                            ${deleteBtn}
                         </div>
                     </div>
                 </div>`;
@@ -221,22 +195,6 @@
                 try {
                     await db.collection('gallery').doc(id).update({ pinned: !img.pinned });
                 } catch (err) { alert('Failed: ' + err.message); }
-            });
-        });
-
-        // Approve/reject/delete
-        container.querySelectorAll('.gallery-approve-btn').forEach(btn => {
-            btn.addEventListener('click', async () => {
-                try {
-                    await db.collection('gallery').doc(btn.dataset.id).update({ approved: true });
-                } catch (e) { alert('Failed: ' + e.message); }
-            });
-        });
-
-        container.querySelectorAll('.gallery-reject-btn').forEach(btn => {
-            btn.addEventListener('click', async () => {
-                if (!confirm('Reject and delete this image?')) return;
-                await deleteImage(btn.dataset.id);
             });
         });
 
@@ -278,7 +236,8 @@
                 uid: user.uid,
                 username: ArcadeAuth.getUsername(),
                 url: dataUrl,
-                approved: false,
+                // approved left as true — admin approval flow retired
+                approved: true,
                 pinned: false,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp()
             });
