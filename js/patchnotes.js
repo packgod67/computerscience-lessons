@@ -22,7 +22,15 @@
     let db = null;
     let posts = [];
     let unsub = null;
-    let collapsed = null;  // null = use default, true/false = user choice
+    // Persist the collapse preference so expanding once doesn't revert on
+    // every refresh. null = use default (collapse if >1 post).
+    const COLLAPSE_KEY = 'arcade-patchnotes-collapsed';
+    let collapsed = (function () {
+        const v = localStorage.getItem(COLLAPSE_KEY);
+        if (v === 'true') return true;
+        if (v === 'false') return false;
+        return null;
+    })();
 
     function getDb() {
         if (!db) db = ArcadeAuth.getDb();
@@ -154,6 +162,7 @@
         const toggle = document.getElementById('patchnotesToggle');
         if (toggle) toggle.addEventListener('click', () => {
             collapsed = !isCollapsed;
+            try { localStorage.setItem(COLLAPSE_KEY, String(collapsed)); } catch {}
             render();
         });
     }

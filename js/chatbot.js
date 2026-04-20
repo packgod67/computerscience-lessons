@@ -1548,7 +1548,9 @@
         if (intent === 'help') {
             hideTyping();
             // Insert an empty assistant message that we'll fill in as text
-            // streams in. Render once up front so the bubble exists.
+            // streams in. Render once up front so the bubble exists. The
+            // whole stream attempt is wrapped in try/catch so a provider
+            // crash doesn't leave the empty bubble hanging.
             const placeholder = {
                 role: 'assistant',
                 content: '',
@@ -1558,10 +1560,16 @@
             messages.push(placeholder);
             renderMessages();
 
-            const finalText = await callLLMStream(messages.slice(0, -1), contextBlocks, (_delta, acc) => {
-                placeholder.content = acc;
-                updateStreamingBubble(acc);
-            });
+            let finalText = '';
+            try {
+                finalText = await callLLMStream(messages.slice(0, -1), contextBlocks, (_delta, acc) => {
+                    placeholder.content = acc;
+                    updateStreamingBubble(acc);
+                });
+            } catch (err) {
+                console.error('Kirky help stream crashed:', err);
+                finalText = '';
+            }
 
             placeholder.streaming = false;
             if (!finalText) {
@@ -1581,29 +1589,42 @@
         //      Works without tool support. 2 HTTP calls.
         //   3. Simple filter — our handwritten JS filter + one AI pick.
         //      Fastest + cheapest. 1 HTTP call. Less nuanced.
+        //
+        // Wrapped in try/finally so any uncaught exception from a provider
+        // never leaves the "..." typing indicator stuck on forever — the
+        // user gets a real error message instead of silence.
 
-        let reply = await callWithTools(messages, contextBlocks);
-        if (!reply) reply = await callTwoPass(messages, contextBlocks);
-        if (!reply) {
-            // For candidate-pool purposes, stitch together the last 3 user
-            // turns so short follow-ups ("these are all in the franchise",
-            // "different ones", "smaller") inherit the original intent.
-            const recentUserText = gatherRecentUserText(3);
-            // If the user's current turn reads like a rejection of Kirky's
-            // last picks, exclude those specific game ids from the new pool.
-            const excludeIds = looksLikeRejection(userText) ? lastSuggestedIds() : [];
-            // Candidate pool: tag-based pool (context-aware) + fuzzy-title
-            // matches.
-            const tagPool = candidatePool(recentUserText, 26, { excludeIds });
-            const fuzzy = fuzzyTitleMatch(userText, 6);
-            const poolIds = new Set(tagPool.map(g => g.id));
-            const simplePool = [...tagPool];
-            for (const g of fuzzy) {
-                if (!poolIds.has(g.id)) { simplePool.push(g); poolIds.add(g.id); }
+        let reply = null;
+        try {
+            reply = await callWithTools(messages, contextBlocks);
+            if (!reply) reply = await callTwoPass(messages, contextBlocks);
+            if (!reply) {
+                // For candidate-pool purposes, stitch together the last 3 user
+                // turns so short follow-ups ("these are all in the franchise",
+                // "different ones", "smaller") inherit the original intent.
+                const recentUserText = gatherRecentUserText(3);
+                // If the user's current turn reads like a rejection of Kirky's
+                // last picks, exclude those specific game ids from the new pool.
+                const excludeIds = looksLikeRejection(userText) ? lastSuggestedIds() : [];
+                // Candidate pool: tag-based pool (context-aware) + fuzzy-title
+                // matches.
+                const tagPool = candidatePool(recentUserText, 26, { excludeIds });
+                const fuzzy = fuzzyTitleMatch(userText, 6);
+                const poolIds = new Set(tagPool.map(g => g.id));
+                const simplePool = [...tagPool];
+                for (const g of fuzzy) {
+                    if (!poolIds.has(g.id)) { simplePool.push(g); poolIds.add(g.id); }
+                }
+                reply = await callLLMRecommend(messages, simplePool.slice(0, 30), contextBlocks);
             }
-            reply = await callLLMRecommend(messages, simplePool.slice(0, 30), contextBlocks);
+        } catch (err) {
+            console.error('Kirky cascade crashed:', err);
+            reply = null;
+        } finally {
+            // ALWAYS clear the typing indicator — without this, any thrown
+            // exception above would leave the user staring at "..." forever.
+            hideTyping();
         }
-        hideTyping();
 
         if (!reply) {
             messages.push({
