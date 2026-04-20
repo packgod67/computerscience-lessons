@@ -1147,6 +1147,8 @@
                     <button class="modal-close" id="newGroupCloseBtn">&times;</button>
                 </div>
                 <input type="text" id="newGroupName" class="auth-input" placeholder="Group name" maxlength="120">
+                <input type="search" id="newGroupSearch" class="auth-input new-group-search" placeholder="Search users…" autocomplete="off">
+                <div class="new-group-selected-bar" id="newGroupSelectedBar" style="display:none;"></div>
                 <div class="new-group-members" id="newGroupMembers">
                     <div class="dm-convo-loading">Loading users…</div>
                 </div>
@@ -1173,16 +1175,84 @@
         }
 
         const listEl = document.getElementById('newGroupMembers');
-        listEl.innerHTML = users.map(u => `
-            <label class="new-group-member">
-                <input type="checkbox" value="${esc(u.uid)}">
-                <span>${esc(u.username || u.uid.slice(0, 6))}</span>
-            </label>
-        `).join('') || '<div class="dm-convo-empty">No other users yet.</div>';
+        const searchEl = document.getElementById('newGroupSearch');
+        const selectedBar = document.getElementById('newGroupSelectedBar');
+
+        // Selected uids survive across filters — if you check someone, then
+        // type to search for a different person, the first one stays selected
+        // even when filtered out of the visible list. The selected-chips bar
+        // shows who's currently in so you never lose track.
+        const selectedUids = new Set();
+
+        function renderList() {
+            const q = searchEl.value.trim().toLowerCase();
+            const filtered = q
+                ? users.filter(u => (u.username || '').toLowerCase().includes(q))
+                : users;
+
+            if (filtered.length === 0) {
+                listEl.innerHTML = `<div class="dm-convo-empty">${q ? 'No matches.' : 'No other users yet.'}</div>`;
+                return;
+            }
+            listEl.innerHTML = filtered.map(u => `
+                <label class="new-group-member">
+                    <input type="checkbox" value="${esc(u.uid)}"${selectedUids.has(u.uid) ? ' checked' : ''}>
+                    <span>${esc(u.username || u.uid.slice(0, 6))}</span>
+                </label>
+            `).join('');
+
+            // Wire checkboxes — keep selectedUids in sync across filters.
+            listEl.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', () => {
+                    if (cb.checked) selectedUids.add(cb.value);
+                    else selectedUids.delete(cb.value);
+                    renderSelectedBar();
+                });
+            });
+        }
+
+        function renderSelectedBar() {
+            if (selectedUids.size === 0) {
+                selectedBar.style.display = 'none';
+                selectedBar.innerHTML = '';
+                return;
+            }
+            const nameByUid = {};
+            for (const u of users) nameByUid[u.uid] = u.username || u.uid.slice(0, 6);
+            selectedBar.style.display = 'flex';
+            selectedBar.innerHTML = `
+                <span class="new-group-selected-count">${selectedUids.size} selected:</span>
+                ${[...selectedUids].map(uid => `
+                    <span class="new-group-chip" data-uid="${esc(uid)}">
+                        ${esc(nameByUid[uid] || uid.slice(0, 6))}
+                        <button type="button" class="new-group-chip-x" data-uid="${esc(uid)}" title="Remove">&times;</button>
+                    </span>
+                `).join('')}
+            `;
+            // Wire the × on each chip so users can deselect without scrolling
+            // back to find the checkbox.
+            selectedBar.querySelectorAll('.new-group-chip-x').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    selectedUids.delete(btn.dataset.uid);
+                    renderList();
+                    renderSelectedBar();
+                });
+            });
+        }
+
+        // Debounce the search redraw by one frame so fast typing doesn't
+        // thrash the DOM.
+        let rafId = null;
+        searchEl.addEventListener('input', () => {
+            if (rafId) cancelAnimationFrame(rafId);
+            rafId = requestAnimationFrame(renderList);
+        });
+
+        renderList();
 
         document.getElementById('newGroupCreateBtn').addEventListener('click', async () => {
             const name = document.getElementById('newGroupName').value.trim();
-            const picks = [...listEl.querySelectorAll('input:checked')].map(c => c.value);
+            const picks = [...selectedUids];
             if (!name) { alert('Give the group a name'); return; }
             if (picks.length === 0) { alert('Pick at least one member'); return; }
             try {
