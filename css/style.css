@@ -6450,3 +6450,158 @@ body.theme-transitioning * {
     color: #fff;
     border-color: #ef4444;
 }
+
+/* =========================================================================
+   DM / group message image + emoji support
+   ========================================================================= */
+
+/* Attach + emoji buttons in the conversation input bar */
+.dm-convo-attach-btn,
+.dm-convo-emoji-btn {
+    width: 36px;
+    height: 36px;
+    flex-shrink: 0;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    transition: background 0.15s, color 0.15s;
+}
+.dm-convo-attach-btn:hover,
+.dm-convo-emoji-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--accent);
+}
+
+/* Pending image preview — shown between the body and the form */
+.dm-image-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 6px 10px;
+    background: var(--bg-secondary);
+    border-top: 1px solid var(--border);
+    flex-shrink: 0;
+}
+.dm-image-preview img {
+    max-height: 60px;
+    max-width: 120px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+.dm-image-preview-clear {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    border: 1px solid var(--border);
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+.dm-image-preview-clear:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+
+/* Sent image inside a message bubble */
+.dm-msg-image {
+    max-width: 100%;
+    max-height: 280px;
+    border-radius: 8px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    cursor: zoom-in;
+    display: block;
+}
+
+/* Lightbox for enlarged DM images */
+.dm-lightbox {
+    position: fixed;
+    inset: 0;
+    z-index: 10000;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+    cursor: zoom-out;
+}
+.dm-lightbox img {
+    max-width: 95vw;
+    max-height: 95vh;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+/* =========================================================================
+   Patchnote image + emoji editor bits
+   ========================================================================= */
+
+.patchnote-editor-toolbar {
+    display: flex;
+    gap: 0.4rem;
+    margin: 0.3rem 0 0.5rem;
+    flex-wrap: wrap;
+}
+.patchnote-toolbar-btn {
+    padding: 5px 12px;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.78rem;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.patchnote-toolbar-btn:hover {
+    background: var(--bg-secondary);
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.patchnote-image-preview {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-bottom: 0.5rem;
+    padding: 8px;
+    background: var(--bg-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+.patchnote-image-preview img {
+    max-width: 140px;
+    max-height: 100px;
+    border-radius: 6px;
+    object-fit: cover;
+}
+.patchnote-image-preview-clear {
+    padding: 5px 12px;
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.78rem;
+}
+.patchnote-image-preview-clear:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+
+/* Rendered image inside a posted patchnote */
+.patchnote-image {
+    display: block;
+    max-width: 100%;
+    max-height: 320px;
+    border-radius: 8px;
+    margin: 0.4rem 0;
+    object-fit: cover;
+    cursor: zoom-in;
+}
+.patchnote-image:hover { opacity: 0.95; }

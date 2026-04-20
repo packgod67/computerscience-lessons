@@ -239,4 +239,14 @@
         renderEmojiPicker,
         getAllEmojis: () => allEmojis
     };
+
+    // Auto-load emojis on auth ready so DMs / groups / patchnotes can render
+    // `:emoji:` codes without waiting for the user to open the public chat
+    // tab first (which was the old trigger).
+    if (window.ArcadeAuth?.waitForAuth) {
+        ArcadeAuth.waitForAuth().then(() => {
+            if (!ArcadeAuth.isLoggedIn()) return;
+            loadEmojis().then(() => startListener());
+        });
+    }
 })();

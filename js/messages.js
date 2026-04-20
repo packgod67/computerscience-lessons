@@ -143,9 +143,13 @@
             : Date.now();
         const existing = conversations.get(otherUid);
         if (!existing || tsMs > existing.lastAt) {
+            // Sidebar previews: text if present, otherwise a little "📷 photo"
+            // placeholder so image-only messages don't look like empty convos.
+            let preview = msg.text || '';
+            if (!preview && msg.imageUrl) preview = '📷 photo';
             conversations.set(otherUid, {
                 other: otherUid,
-                lastMessage: msg.text || '',
+                lastMessage: preview,
                 lastAt: tsMs,
                 lastFrom: msg.from,
                 fromName: msg.fromName,
@@ -190,12 +194,56 @@
     // Firestore's TTL cleanup runs behind.
     const MESSAGE_TTL_MS = 24 * 60 * 60 * 1000;
 
-    async function sendMessage(toUid, text) {
+    // Shared image compression for DMs and groups. Max 600px on the long
+    // side, JPEG quality 0.72 — keeps the base64 payload small enough that
+    // a message doc with image + text stays well under the 1 MB Firestore
+    // ceiling. Returns a data URL (or null on failure).
+    const DM_IMAGE_MAX_DIM = 600;
+    const DM_IMAGE_QUALITY = 0.72;
+    const DM_IMAGE_SOURCE_MAX = 8 * 1024 * 1024;  // 8 MB pre-compression cap
+
+    function compressImageForDm(file) {
+        return new Promise((resolve, reject) => {
+            if (!file.type.startsWith('image/')) {
+                reject(new Error('Not an image file'));
+                return;
+            }
+            if (file.size > DM_IMAGE_SOURCE_MAX) {
+                reject(new Error('Image too large (over 8 MB)'));
+                return;
+            }
+            const reader = new FileReader();
+            reader.onload = (e) => {
+                const img = new Image();
+                img.onload = () => {
+                    let w = img.width, h = img.height;
+                    if (w > DM_IMAGE_MAX_DIM || h > DM_IMAGE_MAX_DIM) {
+                        if (w > h) { h = Math.round(h * DM_IMAGE_MAX_DIM / w); w = DM_IMAGE_MAX_DIM; }
+                        else       { w = Math.round(w * DM_IMAGE_MAX_DIM / h); h = DM_IMAGE_MAX_DIM; }
+                    }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = w;
+                    canvas.height = h;
+                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                    // Preserve transparency for PNGs, re-encode everything
+                    // else as JPEG for a huge size win.
+                    const mime = file.type === 'image/png' ? 'image/png' : 'image/jpeg';
+                    resolve(canvas.toDataURL(mime, DM_IMAGE_QUALITY));
+                };
+                img.onerror = () => reject(new Error('Failed to decode image'));
+                img.src = e.target.result;
+            };
+            reader.onerror = () => reject(new Error('Failed to read file'));
+            reader.readAsDataURL(file);
+        });
+    }
+
+    async function sendMessage(toUid, text, imageUrl) {
         if (!currentUid) throw new Error('Not logged in');
         if (!toUid) throw new Error('Missing recipient');
         if (toUid === currentUid) throw new Error("Can't message yourself");
         text = String(text || '').trim();
-        if (!text) return;
+        if (!text && !imageUrl) return;  // empty + no image = nothing to send
         if (text.length > 2000) text = text.slice(0, 2000);
 
         const deleteAt = firebase.firestore.Timestamp.fromDate(
@@ -206,7 +254,7 @@
         // verify `request.auth.uid in resource.data.participants` for any
         // query that filters by it — solves the query-result-auth problem
         // that `pair` alone can't express.
-        await db.collection('dm_messages').add({
+        const payload = {
             from: currentUid,
             fromName: currentUsername || 'unknown',
             to: toUid,
@@ -215,7 +263,9 @@
             participants: [currentUid, toUid],
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             deleteAt: deleteAt,
-        });
+        };
+        if (imageUrl) payload.imageUrl = imageUrl;
+        await db.collection('dm_messages').add(payload);
     }
 
     // Returns true if a message has passed its deleteAt timestamp (or
@@ -438,7 +488,14 @@
             <div class="dm-convo-body" id="dmBody">
                 <div class="dm-convo-loading">Loading…</div>
             </div>
+            <div class="dm-image-preview" id="dmImagePreview" style="display:none;">
+                <img id="dmImagePreviewImg" alt="">
+                <button type="button" class="dm-image-preview-clear" id="dmImagePreviewClear" title="Remove">&times;</button>
+            </div>
             <form class="dm-convo-form" id="dmForm">
+                <button type="button" class="dm-convo-attach-btn" id="dmImageBtn" title="Attach image" aria-label="Attach image">&#128206;</button>
+                <button type="button" class="emoji-picker-btn dm-convo-emoji-btn" id="dmEmojiBtn" title="Emoji" aria-label="Emoji">&#128512;</button>
+                <input type="file" id="dmImageFile" accept="image/*" style="display:none;">
                 <textarea id="dmInput" class="dm-convo-input" placeholder="Write something…"
                     rows="1" maxlength="2000" autocomplete="off"></textarea>
                 <button type="submit" class="dm-convo-send" title="Send" aria-label="Send">&#10148;</button>
@@ -454,6 +511,9 @@
 
         const form = document.getElementById('dmForm');
         const input = document.getElementById('dmInput');
+        // Pending image the user picked but hasn't sent yet — null means no
+        // image attached to the next send.
+        let pendingImage = null;
         input.addEventListener('input', () => {
             input.style.height = 'auto';
             input.style.height = Math.min(140, input.scrollHeight) + 'px';
@@ -464,21 +524,65 @@
                 form.requestSubmit();
             }
         });
+
+        // Image attachment — compress on the client before storing, show a
+        // preview the user can cancel.
+        const imageBtn = document.getElementById('dmImageBtn');
+        const imageFileInput = document.getElementById('dmImageFile');
+        const previewEl = document.getElementById('dmImagePreview');
+        const previewImgEl = document.getElementById('dmImagePreviewImg');
+        const previewClearBtn = document.getElementById('dmImagePreviewClear');
+        imageBtn.addEventListener('click', () => imageFileInput.click());
+        imageFileInput.addEventListener('change', async () => {
+            const f = imageFileInput.files?.[0];
+            imageFileInput.value = '';
+            if (!f) return;
+            try {
+                const dataUrl = await compressImageForDm(f);
+                pendingImage = dataUrl;
+                previewImgEl.src = dataUrl;
+                previewEl.style.display = 'flex';
+            } catch (err) {
+                alert('Image failed: ' + err.message);
+            }
+        });
+        previewClearBtn.addEventListener('click', () => {
+            pendingImage = null;
+            previewImgEl.src = '';
+            previewEl.style.display = 'none';
+        });
+
+        // Emoji picker — reuses the shared ArcadeEmojis helper. The popup
+        // anchors to the form so it shows above the input bar.
+        document.getElementById('dmEmojiBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.ArcadeEmojis?.renderEmojiPicker) {
+                ArcadeEmojis.renderEmojiPicker(form, input);
+            }
+        });
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = input.value.trim();
-            if (!text) return;
+            if (!text && !pendingImage) return;
             const orig = input.value;
+            const origImage = pendingImage;
             input.value = '';
-            // Clear the inline style entirely so the textarea falls back to
-            // its CSS min-height (38px) instead of collapsing to 0 via 'auto'.
             input.style.removeProperty('height');
+            const sentImage = pendingImage;
+            pendingImage = null;
+            previewImgEl.src = '';
+            previewEl.style.display = 'none';
             try {
-                await sendMessage(otherUid, text);
+                await sendMessage(otherUid, text, sentImage);
             } catch (err) {
                 console.error('DM send failed:', err);
-                // Restore text so user can retry
                 input.value = orig;
+                pendingImage = origImage;
+                if (origImage) {
+                    previewImgEl.src = origImage;
+                    previewEl.style.display = 'flex';
+                }
                 const msg = err.code === 'permission-denied'
                     ? "Can't send — Firestore rules aren't letting this through. Check the dm_messages rule is published."
                     : (err.message || 'Send failed');
@@ -514,6 +618,23 @@
             });
     }
 
+    // Render text with :emoji: replacements and optional image attachment.
+    // Called by both DM and group message renderers so emoji rendering is
+    // consistent.
+    function renderMessageContent(m) {
+        const rawText = esc(m.text || '');
+        const textHtml = (window.ArcadeEmojis?.replaceEmojis)
+            ? ArcadeEmojis.replaceEmojis(rawText)
+            : rawText;
+        const textBlock = m.text
+            ? `<div class="dm-msg-text">${textHtml}</div>`
+            : '';
+        const imgBlock = m.imageUrl
+            ? `<img class="dm-msg-image" src="${esc(m.imageUrl)}" alt="" loading="lazy">`
+            : '';
+        return imgBlock + textBlock;
+    }
+
     function renderConvoMessages(body, msgs) {
         const wasAtBottom =
             body.scrollHeight - body.scrollTop - body.clientHeight < 100;
@@ -526,7 +647,7 @@
                 ? `<button class="dm-msg-delete" data-id="${esc(m.id)}" title="Delete">&times;</button>`
                 : '';
             return `<div class="dm-msg ${mine ? 'dm-msg-mine' : 'dm-msg-theirs'}">
-                <div class="dm-msg-text">${esc(m.text)}</div>
+                ${renderMessageContent(m)}
                 <div class="dm-msg-meta">
                     <span class="dm-msg-time">${esc(time)}</span>
                     ${delBtn}
@@ -539,7 +660,22 @@
                 if (confirm('Delete this message?')) deleteMessage(btn.dataset.id);
             });
         });
+        body.querySelectorAll('.dm-msg-image').forEach((img) => {
+            img.addEventListener('click', () => showLightbox(img.src));
+        });
         if (wasAtBottom) body.scrollTop = body.scrollHeight;
+    }
+
+    // Lightweight lightbox for DM/group image enlargement. Clicking the
+    // overlay dismisses it.
+    function showLightbox(url) {
+        document.getElementById('dmLightbox')?.remove();
+        const overlay = document.createElement('div');
+        overlay.id = 'dmLightbox';
+        overlay.className = 'dm-lightbox';
+        overlay.innerHTML = `<img src="${esc(url)}" alt="">`;
+        overlay.addEventListener('click', () => overlay.remove());
+        document.body.appendChild(overlay);
     }
 
     // ─────────────────────────────────────────────────────────────
@@ -685,7 +821,9 @@
                     if (g) {
                         const tsMs = msg.createdAt?.toMillis?.() || Date.now();
                         if (tsMs > g.lastAt) {
-                            g.lastMessage = msg.text || '';
+                            let preview = msg.text || '';
+                            if (!preview && msg.imageUrl) preview = '📷 photo';
+                            g.lastMessage = preview;
                             g.lastAt = tsMs;
                             g.lastFrom = msg.from;
                             g.lastFromName = msg.fromName;
@@ -727,17 +865,17 @@
         return ref.id;
     }
 
-    async function sendGroupMessage(groupId, text) {
+    async function sendGroupMessage(groupId, text, imageUrl) {
         if (!currentUid) throw new Error('Not logged in');
         text = String(text || '').trim();
-        if (!text) return;
+        if (!text && !imageUrl) return;
         if (text.length > 2000) text = text.slice(0, 2000);
         const g = groups.get(groupId);
         if (!g) throw new Error('Group not found');
         const deleteAt = firebase.firestore.Timestamp.fromDate(
             new Date(Date.now() + MESSAGE_TTL_MS)
         );
-        await db.collection('group_messages').add({
+        const payload = {
             groupId,
             from: currentUid,
             fromName: currentUsername || 'unknown',
@@ -747,7 +885,9 @@
             text,
             createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             deleteAt,
-        });
+        };
+        if (imageUrl) payload.imageUrl = imageUrl;
+        await db.collection('group_messages').add(payload);
     }
 
     async function leaveGroup(groupId) {
@@ -831,7 +971,14 @@
             <div class="dm-convo-body" id="dmBody">
                 <div class="dm-convo-loading">Loading…</div>
             </div>
+            <div class="dm-image-preview" id="dmImagePreview" style="display:none;">
+                <img id="dmImagePreviewImg" alt="">
+                <button type="button" class="dm-image-preview-clear" id="dmImagePreviewClear" title="Remove">&times;</button>
+            </div>
             <form class="dm-convo-form" id="dmForm">
+                <button type="button" class="dm-convo-attach-btn" id="dmImageBtn" title="Attach image" aria-label="Attach image">&#128206;</button>
+                <button type="button" class="emoji-picker-btn dm-convo-emoji-btn" id="dmEmojiBtn" title="Emoji" aria-label="Emoji">&#128512;</button>
+                <input type="file" id="dmImageFile" accept="image/*" style="display:none;">
                 <textarea id="dmInput" class="dm-convo-input" placeholder="Write something…"
                     rows="1" maxlength="2000" autocomplete="off"></textarea>
                 <button type="submit" class="dm-convo-send" title="Send" aria-label="Send">&#10148;</button>
@@ -858,6 +1005,7 @@
 
         const form = document.getElementById('dmForm');
         const input = document.getElementById('dmInput');
+        let pendingImage = null;
         input.addEventListener('input', () => {
             input.style.height = 'auto';
             input.style.height = Math.min(140, input.scrollHeight) + 'px';
@@ -868,18 +1016,60 @@
                 form.requestSubmit();
             }
         });
+
+        const imageBtn = document.getElementById('dmImageBtn');
+        const imageFileInput = document.getElementById('dmImageFile');
+        const previewEl = document.getElementById('dmImagePreview');
+        const previewImgEl = document.getElementById('dmImagePreviewImg');
+        const previewClearBtn = document.getElementById('dmImagePreviewClear');
+        imageBtn.addEventListener('click', () => imageFileInput.click());
+        imageFileInput.addEventListener('change', async () => {
+            const f = imageFileInput.files?.[0];
+            imageFileInput.value = '';
+            if (!f) return;
+            try {
+                const dataUrl = await compressImageForDm(f);
+                pendingImage = dataUrl;
+                previewImgEl.src = dataUrl;
+                previewEl.style.display = 'flex';
+            } catch (err) {
+                alert('Image failed: ' + err.message);
+            }
+        });
+        previewClearBtn.addEventListener('click', () => {
+            pendingImage = null;
+            previewImgEl.src = '';
+            previewEl.style.display = 'none';
+        });
+        document.getElementById('dmEmojiBtn').addEventListener('click', (e) => {
+            e.stopPropagation();
+            if (window.ArcadeEmojis?.renderEmojiPicker) {
+                ArcadeEmojis.renderEmojiPicker(form, input);
+            }
+        });
+
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             const text = input.value.trim();
-            if (!text) return;
+            if (!text && !pendingImage) return;
             const orig = input.value;
+            const origImage = pendingImage;
             input.value = '';
             input.style.removeProperty('height');
+            const sentImage = pendingImage;
+            pendingImage = null;
+            previewImgEl.src = '';
+            previewEl.style.display = 'none';
             try {
-                await sendGroupMessage(groupId, text);
+                await sendGroupMessage(groupId, text, sentImage);
             } catch (err) {
                 console.error('Group send failed:', err);
                 input.value = orig;
+                pendingImage = origImage;
+                if (origImage) {
+                    previewImgEl.src = origImage;
+                    previewEl.style.display = 'flex';
+                }
                 alert('Send failed: ' + (err.message || 'unknown'));
             }
         });
@@ -919,7 +1109,7 @@
             const authorLabel = mine ? '' : `<div class="dm-msg-author">${esc(m.fromName || 'unknown')}</div>`;
             return `<div class="dm-msg ${mine ? 'dm-msg-mine' : 'dm-msg-theirs'}">
                 ${authorLabel}
-                <div class="dm-msg-text">${esc(m.text)}</div>
+                ${renderMessageContent(m)}
                 <div class="dm-msg-meta">
                     <span class="dm-msg-time">${esc(time)}</span>
                     ${delBtn}
@@ -934,6 +1124,9 @@
                         .catch((err) => console.warn('Delete failed:', err));
                 }
             });
+        });
+        body.querySelectorAll('.dm-msg-image').forEach((img) => {
+            img.addEventListener('click', () => showLightbox(img.src));
         });
         if (wasAtBottom) body.scrollTop = body.scrollHeight;
     }
@@ -1008,6 +1201,9 @@
         openGroup,
         createGroup,
         showNewGroupModal,
+        // Shared with patchnotes + anything else that wants the same
+        // click-to-zoom overlay for inline images.
+        showImageLightbox: showLightbox,
         getConversations: () => [...conversations.values()],
         getGroups: () => [...groups.values()],
     };
