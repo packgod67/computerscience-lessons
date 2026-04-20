@@ -185,18 +185,22 @@
         const existing = document.getElementById('emojiPickerPopup');
         if (existing) { existing.remove(); pickerOpen = false; return; }
 
-        if (allEmojis.length === 0) return;
-
         pickerOpen = true;
         const popup = document.createElement('div');
         popup.className = 'emoji-picker-popup';
         popup.id = 'emojiPickerPopup';
 
         let html = '<div class="emoji-picker-grid">';
-        for (const e of allEmojis) {
-            html += `<button class="emoji-picker-item" data-name="${esc(e.name)}" title=":${esc(e.name)}:"><img src="${esc(e.url)}" alt=":${esc(e.name)}:"></button>`;
+        if (allEmojis.length === 0) {
+            // Used to silently no-op — now shows a helpful placeholder so the
+            // user knows the button fired but there's nothing to show yet.
+            html = '<div class="emoji-picker-empty">No emojis yet. An admin can upload some from the Chat panel.</div>';
+        } else {
+            for (const e of allEmojis) {
+                html += `<button class="emoji-picker-item" data-name="${esc(e.name)}" title=":${esc(e.name)}:"><img src="${esc(e.url)}" alt=":${esc(e.name)}:"></button>`;
+            }
+            html += '</div>';
         }
-        html += '</div>';
         popup.innerHTML = html;
 
         containerEl.appendChild(popup);

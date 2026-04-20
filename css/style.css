@@ -5734,6 +5734,9 @@ body.theme-transitioning * {
     background: var(--bg-card);
     /* Don't let a long message body squish the input bar out of view. */
     flex-shrink: 0;
+    /* Anchor for the absolutely-positioned emoji picker popup — without
+       this the popup escapes to <body> and lands off-screen. */
+    position: relative;
 }
 
 .dm-convo-input {
@@ -6017,6 +6020,9 @@ body.theme-transitioning * {
     min-height: 140px;
     font-family: inherit;
 }
+/* Anchor the absolutely-positioned emoji picker popup to the editor box
+   instead of letting it escape up to <body>. */
+.patchnote-editor { position: relative; }
 .patchnote-pin-toggle {
     display: flex;
     align-items: center;
@@ -6642,6 +6648,17 @@ body.theme-transitioning * {
     font-size: 0.78rem;
 }
 .patchnote-image-preview-clear:hover { background: #ef4444; color: #fff; border-color: #ef4444; }
+
+/* Placeholder shown when the emoji picker opens but there are no emojis
+   configured yet — replaces the prior silent no-op. */
+.emoji-picker-empty {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    white-space: normal;
+    max-width: 240px;
+    line-height: 1.4;
+}
 
 /* Rendered image inside a posted patchnote */
 .patchnote-image {

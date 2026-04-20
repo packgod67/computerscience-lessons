@@ -414,10 +414,11 @@
         "^how\\s+(are|ya|r)\\s+(you|u)\\b",
         "\\bhow'?s\\s+it\\s+going\\b",
         "\\bwhat'?s\\s+up\\b",
-        // Feelings / venting
-        "^i'?m\\s+(bored|tired|sleepy|sad|lonely|stressed|happy|excited|hyped|chilling|hungry)\\b",
-        "^(i\\s+)?feel(\\s+)?(ing)?\\s+(bored|tired|off|down|great|ok|fine)\\b",
+        // Feelings / venting / status replies
+        "^i'?m\\s+(bored|tired|sleepy|sad|lonely|stressed|happy|excited|hyped|chilling|hungry|good|fine|okay|ok|great|alright|cool|chill|doing\\s+(good|fine|ok|great))\\b",
+        "^(i\\s+)?feel(\\s+)?(ing)?\\s+(bored|tired|off|down|great|ok|fine|good)\\b",
         "\\b(long|rough|tough|great|good|bad)\\s+day\\b",
+        "^(not\\s+much|nm|nothing\\s+much|just\\s+chilling)\\b",
         // Opinions / preferences
         "^(what\\s+do\\s+you|whatcha|wdyt)\\s+think\\s+(about|of|on)\\b",
         "^do\\s+you\\s+(like|hate|love|enjoy|prefer)\\b",
@@ -1134,8 +1135,17 @@
 
     // Parses the LLM's JSON reply, tolerating code fences and prose wrap.
     // Returns {message, games} or null.
+    //
+    // Cloudflare Workers AI sometimes delivers `content` as a pre-parsed
+    // object — we coerce to a string up front so .match() can't throw
+    // 'raw.match is not a function'.
     function parseKirkyJson(raw) {
         if (!raw) return null;
+        if (typeof raw !== 'string') {
+            // If it's already an object with the expected shape, short-circuit
+            // straight through the validation below.
+            try { raw = JSON.stringify(raw); } catch { return null; }
+        }
         try {
             const m = raw.match(/\{[\s\S]*\}/);
             const parsed = JSON.parse(m ? m[0] : raw);
@@ -1193,7 +1203,16 @@
             if (resp) {
                 try {
                     const data = await resp.json();
-                    const raw = data.choices?.[0]?.message?.content || '';
+                    // Cloudflare Workers AI sometimes returns `content` as a
+                    // parsed object or array (their OpenAI-compat layer
+                    // isn't fully consistent). Coerce to a string before
+                    // running .match() — calling it on a non-string used to
+                    // throw 'raw.match is not a function' and tank the whole
+                    // two-pass strategy.
+                    const contentRaw = data.choices?.[0]?.message?.content;
+                    const raw = typeof contentRaw === 'string'
+                        ? contentRaw
+                        : JSON.stringify(contentRaw || '');
                     const m = raw.match(/\{[\s\S]*\}/);
                     if (m) intentResult = JSON.parse(m[0]);
                 } catch (e) { console.warn('[two-pass intent]', e); }
@@ -1214,7 +1233,10 @@
                 });
                 if (resp.ok) {
                     const data = await resp.json();
-                    const raw = data.choices?.[0]?.message?.content || '';
+                    const contentRaw = data.choices?.[0]?.message?.content;
+                    const raw = typeof contentRaw === 'string'
+                        ? contentRaw
+                        : JSON.stringify(contentRaw || '');
                     const m = raw.match(/\{[\s\S]*\}/);
                     if (m) intentResult = JSON.parse(m[0]);
                 }
@@ -1434,8 +1456,13 @@
 
         // If Groq is rate-limited, surface that prominently so the user
         // understands why Kirky's on the fallback — with a live countdown.
+        // Read the cooldown from the providerCooldowns map (the old
+        // `groqCooldownUntil` global was removed in the multi-provider
+        // refactor; leaving the stale read here used to ReferenceError
+        // every badge refresh and crash the open() handler).
         if (groqIsCoolingDown()) {
-            const secsLeft = Math.ceil((groqCooldownUntil - Date.now()) / 1000);
+            const until = providerCooldowns.groq || 0;
+            const secsLeft = Math.ceil((until - Date.now()) / 1000);
             el.textContent = `Groq rate-limited • ${secsLeft}s`;
             el.className = 'kirky-provider kirky-provider-ratelimited';
             scheduleBadgeTick();
