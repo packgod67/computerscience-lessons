@@ -772,9 +772,19 @@
         return isNaN(n) ? 60 : n;
     }
     // The worker is a single URL that can route to multiple providers via
-    // the `provider` field in the request body. Chain is cloudflare first
-    // (fast + generous free tier, edge-hosted), groq as backup.
-    const WORKER_PROVIDER_CHAIN = ['cloudflare', 'groq'];
+    // the `provider` field in the request body.
+    //
+    // Chain order: Groq first — its Llama 3.3 70B on LPU consistently
+    // responds in 500-1500ms and doesn't stall under load. Cloudflare
+    // Workers AI is the fallback; its fp8-fast model has wider variance
+    // (fast when warm, can hit 15-30s cold or under free-tier contention)
+    // which is why we stopped putting it first.
+    const WORKER_PROVIDER_CHAIN = ['groq', 'cloudflare'];
+
+    // Hard cap on how long we'll wait for any single provider to respond.
+    // Past this, AbortController fires and we advance to the next link in
+    // the chain instead of letting one slow provider hang the whole turn.
+    const PROVIDER_TIMEOUT_MS = 15_000;
     // Cloudflare Workers AI model names (the one Kirky gets by default).
     // The _fp8_fast flavor runs on quantized weights for lower latency.
     const CF_MODEL_DEFAULT = '@cf/meta/llama-3.3-70b-instruct-fp8-fast';
@@ -789,6 +799,7 @@
     async function fetchViaWorker(workerUrl, bodyBase, options) {
         options = options || {};
         const chain = options.chain || WORKER_PROVIDER_CHAIN;
+        const timeoutMs = options.timeoutMs || PROVIDER_TIMEOUT_MS;
         for (const providerName of chain) {
             if (providerIsCoolingDown(providerName)) continue;
             const body = {
@@ -796,17 +807,33 @@
                 provider: providerName,
                 model: bodyBase.model || modelForProvider(providerName),
             };
+            // Per-provider AbortController — if this provider takes too
+            // long, we abort and try the next one rather than hanging.
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), timeoutMs);
             let resp;
             try {
                 resp = await fetch(workerUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(body),
+                    signal: ctrl.signal,
                 });
             } catch (e) {
-                console.warn(`[${providerName}] request failed:`, e);
+                clearTimeout(timer);
+                // AbortError just means the timeout fired — log quietly
+                // and advance. Other errors (network, CORS) get a louder warn.
+                if (e.name === 'AbortError') {
+                    console.warn(`[${providerName}] timed out after ${timeoutMs}ms, trying next`);
+                    // Brief cool-down so a known-slow provider isn't retried
+                    // immediately on the next turn.
+                    markProviderRateLimited(providerName, 30);
+                } else {
+                    console.warn(`[${providerName}] request failed:`, e);
+                }
                 continue;
             }
+            clearTimeout(timer);
             if (resp.status === 429) {
                 markProviderRateLimited(providerName, retryAfterFrom(resp));
                 continue;
