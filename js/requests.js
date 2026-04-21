@@ -130,7 +130,12 @@
             </div>
         `;
 
-        document.getElementById('requestsNewBtn').addEventListener('click', showSubmitModal);
+        // Wrap the click handler instead of passing showSubmitModal directly —
+        // addEventListener calls the handler with the MouseEvent as the first
+        // arg, which made `existing` truthy and sent the submit code down the
+        // .update() path with a random doc id. Explicit () => shows intent
+        // and keeps `existing` null for new requests.
+        document.getElementById('requestsNewBtn').addEventListener('click', () => showSubmitModal(null));
         container.querySelectorAll('.requests-filter').forEach(b => {
             b.addEventListener('click', () => {
                 activeFilter = b.dataset.filter;
@@ -264,6 +269,12 @@
     // ─────────────────────────────────────────────────────────────
 
     function showSubmitModal(existing) {
+        // Guard: if this function is ever accidentally wired as a direct
+        // event listener again, `existing` will be a MouseEvent — which is
+        // truthy but has no `.id`. Coerce anything that doesn't look like
+        // a real existing-request object back to null so we hit the .add()
+        // path instead of .update() on a random Firestore doc.
+        if (existing && typeof existing.id !== 'string') existing = null;
         const overlay = document.createElement('div');
         overlay.className = 'modal-overlay';
         overlay.id = 'requestModal';

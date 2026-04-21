@@ -124,7 +124,11 @@
     }
     function getWallpaperFit() {
         const v = localStorage.getItem(WALLPAPER_FIT_KEY);
-        return FIT_MODES.includes(v) ? v : 'cover';
+        // Default changed to 'contain' — the new wallpaper design shows the
+        // whole image with a gradient filling any gaps. Users who previously
+        // had 'cover' stored keep it; only brand-new setups get the new
+        // default.
+        return FIT_MODES.includes(v) ? v : 'contain';
     }
     function setWallpaperFit(mode) {
         if (!FIT_MODES.includes(mode)) return;
@@ -162,7 +166,55 @@
         applyBorderOverrides();
     }
 
-    function applyWallpaper(dataUrl) {
+    // Tiny cache so we don't re-sample the same data URL every theme refresh.
+    // Keyed by the last 64 chars of the data URL (cheap stable identifier).
+    const edgeColorCache = new Map();
+
+    // Sample the left and right edges of a wallpaper image and return two
+    // average colors for use as a backdrop gradient. Runs against a 64×64
+    // downsampled canvas so sampling is <1ms even for big images.
+    function extractEdgeColors(dataUrl) {
+        const key = dataUrl.slice(-64);
+        if (edgeColorCache.has(key)) return Promise.resolve(edgeColorCache.get(key));
+
+        return new Promise((resolve) => {
+            const img = new Image();
+            img.onload = () => {
+                try {
+                    const W = 64, H = 64;
+                    const c = document.createElement('canvas');
+                    c.width = W; c.height = H;
+                    const ctx = c.getContext('2d', { willReadFrequently: true });
+                    ctx.drawImage(img, 0, 0, W, H);
+
+                    function avgCol(x) {
+                        const d = ctx.getImageData(x, 0, 1, H).data;
+                        let r = 0, g = 0, b = 0;
+                        for (let i = 0; i < d.length; i += 4) {
+                            r += d[i]; g += d[i + 1]; b += d[i + 2];
+                        }
+                        const n = d.length / 4;
+                        return `rgb(${(r / n) | 0}, ${(g / n) | 0}, ${(b / n) | 0})`;
+                    }
+                    // Sample 2px in from each edge so we're not averaging
+                    // border/anti-aliasing artifacts.
+                    const left = avgCol(2);
+                    const right = avgCol(W - 3);
+                    const out = { left, right };
+                    edgeColorCache.set(key, out);
+                    resolve(out);
+                } catch (e) {
+                    // getImageData can throw on some CORS-tainted sources —
+                    // fall back to a neutral dark gradient.
+                    resolve({ left: '#0d0d12', right: '#1a1a22' });
+                }
+            };
+            img.onerror = () => resolve({ left: '#0d0d12', right: '#1a1a22' });
+            img.src = dataUrl;
+        });
+    }
+
+    async function applyWallpaper(dataUrl) {
         let el = document.getElementById('custom-wallpaper');
         if (!el) {
             el = document.createElement('div');
@@ -177,13 +229,19 @@
         }
 
         if (dataUrl) {
-            el.style.backgroundImage = `url(${dataUrl})`;
-            // Only apply `filter: blur()` when the blur is non-zero. Setting
-            // blur(0px) still promotes the element to its own layer with
-            // subpixel rounding artifacts — cleaner to leave the style empty
-            // so the image renders crisp at 0 blur.
-            const b = getWallpaperBlur();
-            el.style.filter = b > 0 ? `blur(${b}px)` : '';
+            // New behavior: the image is displayed contained (not cropped, not
+            // blurred) and centered. The space around it is filled with a
+            // linear gradient sampled from the image's left and right edges
+            // so the empty zones pick up the colors of whatever's near them.
+            // This replaces the old blurred-image fill, which was expensive
+            // (blur + backdrop-filter on heavy elements) and caused the user's
+            // "very slow with wallpaper" complaint.
+            const { left, right } = await extractEdgeColors(dataUrl);
+            // Two-layer background: image on top, gradient underneath. Order
+            // matters — the first listed layer is topmost.
+            el.style.backgroundImage = `url(${dataUrl}), linear-gradient(90deg, ${left} 0%, ${right} 100%)`;
+            // Clear any legacy blur from previous applications.
+            el.style.filter = '';
             el.style.display = 'block';
             overlay.style.background = `rgba(0, 0, 0, ${getWallpaperDim()})`;
             overlay.style.display = 'block';
@@ -192,6 +250,7 @@
             document.body.setAttribute('data-wallpaper-fit', getWallpaperFit());
         } else {
             el.style.backgroundImage = '';
+            el.style.filter = '';
             el.style.display = 'none';
             overlay.style.display = 'none';
             document.body.classList.remove('has-wallpaper');
@@ -199,14 +258,12 @@
         }
     }
 
-    // Allow live tweaking of dim/blur without reloading the image
+    // Allow live tweaking of dim without reloading the image. Blur tweaks no
+    // longer need a re-render because the image isn't blurred anymore — the
+    // setter still persists the value for backward-compat with any stored
+    // preferences, but this function only touches the dim overlay.
     function updateWallpaperEffects() {
-        const el = document.getElementById('custom-wallpaper');
         const overlay = document.getElementById('custom-wallpaper-overlay');
-        if (el) {
-            const b = getWallpaperBlur();
-            el.style.filter = b > 0 ? `blur(${b}px)` : '';
-        }
         if (overlay) overlay.style.background = `rgba(0, 0, 0, ${getWallpaperDim()})`;
     }
 

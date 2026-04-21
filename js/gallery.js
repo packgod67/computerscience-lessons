@@ -4,7 +4,6 @@
     const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/gif', 'image/webp'];
     const MAX_DIMENSION = 800;
     const JPEG_QUALITY = 0.7;
-    const EXPIRY_MS = 5 * 60 * 60 * 1000; // 5 hours
     let galleryImages = [];
     let unsubGallery = null;
     let galleryActive = false;
@@ -24,31 +23,16 @@
         }, () => {});
     }
 
-    function isExpired(img) {
-        if (img.pinned) return false;
-        const created = img.createdAt?.toMillis?.() || 0;
-        if (!created) return false;
-        return Date.now() - created > EXPIRY_MS;
-    }
-
-    async function cleanupExpired(images) {
-        const expired = images.filter(img => isExpired(img));
-        for (const img of expired) {
-            try {
-                await db.collection('gallery').doc(img.id).delete();
-            } catch {}
-        }
-        return images.filter(img => !isExpired(img));
-    }
-
     async function loadGallery() {
         init();
         try {
             // Approval flow was retired — all uploads show up immediately.
+            // Auto-expiry was also retired (used to delete anything older
+            // than 5 hours) since users wanted uploads to stick around.
+            // Admins can still delete individual images; pin button survives
+            // for consistency but doesn't affect visibility anymore.
             const snap = await db.collection('gallery').get();
-            const allImages = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-            // Clean up expired images and filter them out
-            galleryImages = await cleanupExpired(allImages);
+            galleryImages = snap.docs.map(d => ({ id: d.id, ...d.data() }));
             // Sort: pinned first, then by date
             galleryImages.sort((a, b) => {
                 if (a.pinned && !b.pinned) return -1;
@@ -95,16 +79,19 @@
         });
     }
 
+    // Used to show "Xh Ym left" before the 5-hour auto-expiry kicked in.
+    // That's gone now (images are kept until someone explicitly deletes
+    // them), so this just returns a pinned marker or an uploaded-timestamp
+    // humanization — no more countdown.
     function timeRemaining(img) {
         if (img.pinned) return 'Pinned';
         const created = img.createdAt?.toMillis?.() || 0;
         if (!created) return '';
-        const remaining = EXPIRY_MS - (Date.now() - created);
-        if (remaining <= 0) return 'Expired';
-        const hours = Math.floor(remaining / 3600000);
-        const mins = Math.floor((remaining % 3600000) / 60000);
-        if (hours > 0) return `${hours}h ${mins}m left`;
-        return `${mins}m left`;
+        const s = Math.floor((Date.now() - created) / 1000);
+        if (s < 60) return 'just now';
+        if (s < 3600) return Math.floor(s / 60) + 'm ago';
+        if (s < 86400) return Math.floor(s / 3600) + 'h ago';
+        return Math.floor(s / 86400) + 'd ago';
     }
 
     async function renderGalleryView() {
@@ -134,7 +121,7 @@
                 <div class="upload-progress-bar" id="uploadBar"></div>
                 <span id="uploadText">Uploading...</span>
             </div>
-            <span class="gallery-note">Images expire after 5 hours (unless pinned)</span>
+            <span class="gallery-note">Images stay up until someone deletes them.</span>
         </div>`;
 
         if (galleryImages.length === 0) {

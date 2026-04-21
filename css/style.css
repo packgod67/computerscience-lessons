@@ -3542,63 +3542,47 @@ body.auth-gated .player-container {
    uncovered area for 'contain' mode. */
 #custom-wallpaper {
     position: fixed;
-    /* Inflated past the viewport edges so the blur effect's faded border
-       lands off-screen instead of producing a visible halo at the edge.
-       With blur(10px) the blurred edge is ~12px wide; -24px on all sides
-       is enough padding for the max blur we allow (20px) without needing
-       to scale the image further up. */
-    top: -24px;
-    left: -24px;
-    width: calc(100vw + 48px);
-    height: calc(100vh + 48px);
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
     /* Dynamic viewport so mobile URL-bar collapse/expand doesn't cause jumps */
-    height: calc(100dvh + 48px);
+    height: 100dvh;
     z-index: -2;
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;
+    /* Two layers: the image is sized `contain` (first listed = topmost) and
+       the generated gradient fills the viewport as the base color. Both are
+       set together by applyWallpaper() in themes.js. */
+    background-repeat: no-repeat, no-repeat;
+    background-position: center center, center center;
+    background-size: contain, 100% 100%;
     background-color: #000;
     display: none;
-    /* No transition on filter — changing blur mid-transition produces a
-       visible "blur pulse" that looks laggy. Direct apply is cleaner. */
-    /* Promote to its own GPU layer so blur performs well on scroll */
-    transform: translateZ(0);
-    will-change: filter;
     pointer-events: none;
 }
 
-/* Fit modes toggled via [data-wallpaper-fit] on <body> */
-body[data-wallpaper-fit="contain"] #custom-wallpaper {
-    /* Contain mode has to stay bounded to the viewport so the image
-       letterboxes cleanly instead of spilling into the negative offset.
-       Reset the inflation for this mode only. */
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    background-size: contain;
+/* Fit modes toggled via [data-wallpaper-fit] on <body>. 'cover' now keeps
+   the same contained layout as 'contain' by default since the whole point
+   of the new design is that the image shows whole + gradient fills gaps.
+   Fill and tile still behave traditionally. */
+body[data-wallpaper-fit="cover"] #custom-wallpaper {
+    /* Cover crops the image to fill the screen — the edge gradient becomes
+       irrelevant but we leave it as a fallback color in case the image fails
+       to load. */
+    background-size: cover, 100% 100%;
 }
 body[data-wallpaper-fit="fill"] #custom-wallpaper {
-    /* Same bounded treatment — 'fill' stretches to exactly viewport size. */
-    top: 0; left: 0;
-    width: 100vw;
-    height: 100vh;
-    height: 100dvh;
-    background-size: 100% 100%;
+    background-size: 100% 100%, 100% 100%;
 }
 body[data-wallpaper-fit="tile"] #custom-wallpaper {
-    background-size: auto;
-    background-repeat: repeat;
+    background-size: auto, 100% 100%;
+    background-repeat: repeat, no-repeat;
 }
 
 #custom-wallpaper-overlay {
     position: fixed;
-    /* Cover the inflated wallpaper fully so the dim overlay extends to the
-       edges without any seam. */
-    top: -24px; left: -24px;
-    width: calc(100vw + 48px);
-    height: calc(100vh + 48px);
-    height: calc(100dvh + 48px);
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
     z-index: -1;
     display: none;
     pointer-events: none;
@@ -3609,20 +3593,18 @@ body.has-wallpaper::before {
     background-image: none;
 }
 
+/* Content legibility without backdrop-filter — previously every has-wallpaper
+   element had a blur() backdrop applied, which forced the browser to
+   re-composite a blur pass over huge areas (header, .main, .login-gate) on
+   every scroll and repaint. That's what was making the site crawl with a
+   wallpaper set. Replaced with opaque-enough semi-transparent backgrounds
+   that don't require GPU compositing. */
 body.has-wallpaper .header {
-    background: linear-gradient(180deg, rgba(0,0,0,0.55) 0%, rgba(0,0,0,0.15) 100%);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-}
-
-body.has-wallpaper .main {
-    backdrop-filter: blur(2px);
-    -webkit-backdrop-filter: blur(2px);
+    background: linear-gradient(180deg, rgba(10, 10, 15, 0.85) 0%, rgba(10, 10, 15, 0.55) 100%);
 }
 
 body.has-wallpaper .login-gate {
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
+    background: rgba(10, 10, 15, 0.9);
 }
 
 /* Inputs need legible text background over wallpaper */
