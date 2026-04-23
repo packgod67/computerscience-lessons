@@ -336,29 +336,46 @@
     }
 
     // ─── Parallel Range downloader ─────────────────────────────────────
-    // Archive.org throttles each connection — a single stream tops out at
-    // ~1-2 MB/s for most users. Splitting the file into N chunks and
-    // fetching them concurrently routes around the per-connection cap and
-    // typically achieves ~3-5x throughput.
-    const PARALLEL = 4;
+    // Archive.org throttles each connection but may also throttle per-IP
+    // — 4 parallel connections can actually be slower than 2 if they
+    // trip the IP-based limit. Start at 2 as a safer default; if a user
+    // has fast archive.org access they'll still get a 2x improvement,
+    // and if archive.org is rate-limiting aggressively we avoid piling
+    // on extra connections that each get throttled to a smaller share.
+    const PARALLEL = 2;
 
     async function fetchInParallel(url) {
-        // Probe total size via HEAD. We also use this response to detect
-        // whether the server honors Range requests — if Accept-Ranges is
-        // missing / 'none', fall back to single-connection streaming.
-        let head;
+        // Probe total size + range support with a tiny Range request
+        // instead of HEAD. A 2-byte range returns 206 Partial Content
+        // with Content-Range: bytes 0-1/TOTAL, telling us the size AND
+        // confirming range support in one round trip. If the server
+        // ignores Range and returns 200, we know parallel won't work.
+        const probeStart = performance.now();
+        let probe;
         try {
-            head = await fetch(url, { method: 'HEAD', mode: 'cors' });
+            probe = await fetch(url, { mode: 'cors', headers: { Range: 'bytes=0-1' } });
         } catch (e) {
-            throw new Error('HEAD request failed: ' + e.message);
+            throw new Error('probe failed: ' + e.message);
         }
-        if (!head.ok) throw new Error('HEAD HTTP ' + head.status);
-        const total = parseInt(head.headers.get('content-length') || '0', 10);
-        const supportsRanges = head.headers.get('accept-ranges') === 'bytes';
+        const probeMs = Math.round(performance.now() - probeStart);
+        console.log('[arcade-play] range probe:', probe.status, 'in', probeMs, 'ms');
 
-        if (!total || !supportsRanges || PARALLEL <= 1) {
+        if (probe.status !== 206) {
+            // Server ignored Range — cancel the stream so we don't
+            // waste bandwidth, then fall back to single.
+            probe.body?.cancel().catch(() => {});
+            throw new Error('range not supported (HTTP ' + probe.status + ')');
+        }
+        // Content-Range: bytes 0-1/12345678 → total from after the slash
+        const cr = probe.headers.get('content-range') || '';
+        const totalMatch = cr.match(/\/(\d+)$/);
+        const total = totalMatch ? parseInt(totalMatch[1], 10) : 0;
+        probe.body?.cancel().catch(() => {});  // drop the 2 bytes; we only needed the header
+
+        if (!total || PARALLEL <= 1) {
             return fetchSingle(url, total);
         }
+        console.log('[arcade-play] parallel download:', PARALLEL, 'connections, total =', (total / 1048576).toFixed(1), 'MB');
 
         const chunkSize = Math.ceil(total / PARALLEL);
         const ranges = [];

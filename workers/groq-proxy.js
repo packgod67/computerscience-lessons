@@ -58,8 +58,10 @@ const PROVIDERS = {
 const ALLOWED_ORIGIN = '*';
 const CORS_HEADERS = {
     'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
-    'Access-Control-Allow-Methods': 'POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type',
+    // GET/HEAD so the ROM proxy accepts range probes + actual downloads.
+    // Range is in Allow-Headers so Play!'s parallel downloader can send it.
+    'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS',
+    'Access-Control-Allow-Headers': 'Content-Type, Range',
     'Access-Control-Max-Age': '86400',
 };
 
@@ -127,7 +129,13 @@ export default {
             let upstream;
             try {
                 upstream = await fetch(src, {
-                    method: 'GET',
+                    // Forward the client's actual method. Previously this
+                    // was hardcoded to GET, which meant a client HEAD probe
+                    // caused the worker to GET the full file (multi-GB)
+                    // before returning headers — turning a 200ms size check
+                    // into a 30s+ stall and wrecking download speed when
+                    // the page tried to check size before parallelizing.
+                    method: request.method,
                     headers: fwdHeaders,
                     redirect: 'follow',
                 });
