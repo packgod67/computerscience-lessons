@@ -243,6 +243,7 @@
     const gameName = params.get('name') || '';
     if (!romUrl) return;
 
+    // ─── UI helpers ────────────────────────────────────────────────────
     const banner = document.getElementById('arcade-rom-banner');
     const titleEl = document.getElementById('arcade-rom-title');
     const pctEl = document.getElementById('arcade-rom-pct');
@@ -253,35 +254,31 @@
     function show() { banner.classList.add('visible'); }
     function hide() { banner.classList.remove('visible'); }
     function setTitle(s) { if (titleEl) titleEl.textContent = s; }
-    function setPct(pct) {    // null = indeterminate
+    function setPct(pct) {
         if (!pctEl || !fillEl) return;
         if (pct == null) { pctEl.textContent = ''; fillEl.style.width = '0%'; return; }
-        const clamped = Math.max(0, Math.min(100, pct));
-        pctEl.textContent = clamped.toFixed(0) + '%';
-        fillEl.style.width = clamped + '%';
+        const c = Math.max(0, Math.min(100, pct));
+        pctEl.textContent = c.toFixed(0) + '%';
+        fillEl.style.width = c + '%';
     }
     function setBytes(received, total) {
         if (!bytesEl) return;
         const mb = (n) => (n / 1048576).toFixed(1) + ' MB';
-        bytesEl.textContent = total
-            ? `${mb(received)} / ${mb(total)}`
-            : mb(received);
+        bytesEl.textContent = total ? `${mb(received)} / ${mb(total)}` : mb(received);
     }
-    function setSpeed(bytesPerSec) {
+    function setSpeed(bps) {
         if (!speedEl) return;
-        if (!bytesPerSec || !isFinite(bytesPerSec)) { speedEl.textContent = ''; return; }
-        const mbps = bytesPerSec / 1048576;
-        speedEl.textContent = mbps >= 1 ? mbps.toFixed(1) + ' MB/s' : (bytesPerSec / 1024).toFixed(0) + ' KB/s';
+        if (!bps || !isFinite(bps)) { speedEl.textContent = ''; return; }
+        const mbps = bps / 1048576;
+        speedEl.textContent = mbps >= 1 ? mbps.toFixed(1) + ' MB/s' : (bps / 1024).toFixed(0) + ' KB/s';
     }
 
-    setTitle(`Downloading ${gameName || 'ROM'}…`);
+    setTitle(`Preparing ${gameName || 'ROM'}…`);
     setPct(null);
     setBytes(0, 0);
     setSpeed(0);
     show();
 
-    // Pick a sensible filename — Play! keys off the extension (.iso/.chd/…)
-    // to decide disc vs ELF boot mode.
     function filenameFromUrl(u) {
         try {
             const p = new URL(u).pathname;
@@ -291,8 +288,167 @@
     }
     const filename = filenameFromUrl(romUrl);
 
-    async function feedRomToPlay() {
-        // Wait for React to mount its file input.
+    // ─── IndexedDB cache ───────────────────────────────────────────────
+    // Persistent store for downloaded ROMs so a second play is instant.
+    // Keyed by ROM URL; value is the Blob. Browsers handle the backing
+    // storage (disk-backed for large blobs) and enforce per-origin quotas.
+    const DB_NAME = 'arcade-play-roms';
+    const STORE = 'roms';
+
+    function openDb() {
+        return new Promise((resolve, reject) => {
+            const req = indexedDB.open(DB_NAME, 1);
+            req.onupgradeneeded = () => {
+                if (!req.result.objectStoreNames.contains(STORE)) {
+                    req.result.createObjectStore(STORE);
+                }
+            };
+            req.onsuccess = () => resolve(req.result);
+            req.onerror = () => reject(req.error);
+        });
+    }
+    async function cacheGet(key) {
+        try {
+            const db = await openDb();
+            return await new Promise((resolve) => {
+                const tx = db.transaction(STORE, 'readonly');
+                const req = tx.objectStore(STORE).get(key);
+                req.onsuccess = () => resolve(req.result || null);
+                req.onerror = () => resolve(null);
+            });
+        } catch { return null; }
+    }
+    async function cachePut(key, blob) {
+        try {
+            const db = await openDb();
+            await new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE, 'readwrite');
+                tx.objectStore(STORE).put(blob, key);
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
+                tx.onabort = () => reject(tx.error);
+            });
+            return true;
+        } catch (e) {
+            console.warn('[arcade-play] cache write failed:', e);
+            return false;
+        }
+    }
+
+    // ─── Parallel Range downloader ─────────────────────────────────────
+    // Archive.org throttles each connection — a single stream tops out at
+    // ~1-2 MB/s for most users. Splitting the file into N chunks and
+    // fetching them concurrently routes around the per-connection cap and
+    // typically achieves ~3-5x throughput.
+    const PARALLEL = 4;
+
+    async function fetchInParallel(url) {
+        // Probe total size via HEAD. We also use this response to detect
+        // whether the server honors Range requests — if Accept-Ranges is
+        // missing / 'none', fall back to single-connection streaming.
+        let head;
+        try {
+            head = await fetch(url, { method: 'HEAD', mode: 'cors' });
+        } catch (e) {
+            throw new Error('HEAD request failed: ' + e.message);
+        }
+        if (!head.ok) throw new Error('HEAD HTTP ' + head.status);
+        const total = parseInt(head.headers.get('content-length') || '0', 10);
+        const supportsRanges = head.headers.get('accept-ranges') === 'bytes';
+
+        if (!total || !supportsRanges || PARALLEL <= 1) {
+            return fetchSingle(url, total);
+        }
+
+        const chunkSize = Math.ceil(total / PARALLEL);
+        const ranges = [];
+        for (let i = 0; i < PARALLEL; i++) {
+            const start = i * chunkSize;
+            const end = Math.min(start + chunkSize - 1, total - 1);
+            if (start <= end) ranges.push({ start, end, index: i });
+        }
+
+        let received = 0;
+        const buffers = new Array(ranges.length);
+
+        // Speed samples shared across all workers so the headline rate is
+        // the true aggregate throughput.
+        const WINDOW_MS = 2000;
+        const samples = [{ t: performance.now(), bytes: 0 }];
+
+        function tickProgress() {
+            const now = performance.now();
+            samples.push({ t: now, bytes: received });
+            while (samples.length > 1 && (now - samples[0].t) > WINDOW_MS) samples.shift();
+            const w0 = samples[0];
+            const dt = (now - w0.t) / 1000;
+            const db = received - w0.bytes;
+            setBytes(received, total);
+            setPct((received / total) * 100);
+            setSpeed(dt > 0.1 ? db / dt : 0);
+        }
+
+        await Promise.all(ranges.map(async ({ start, end, index }) => {
+            const resp = await fetch(url, {
+                mode: 'cors',
+                headers: { Range: `bytes=${start}-${end}` },
+            });
+            if (!resp.ok && resp.status !== 206) {
+                // If one worker gets 200 back, the server silently
+                // ignored Range — abort this strategy and throw so we
+                // fall back to single-connection.
+                throw new Error('Range not honored (HTTP ' + resp.status + ')');
+            }
+            const reader = resp.body.getReader();
+            const chunks = [];
+            while (true) {
+                const { done, value } = await reader.read();
+                if (done) break;
+                chunks.push(value);
+                received += value.length;
+                tickProgress();
+            }
+            buffers[index] = new Blob(chunks);
+        }));
+
+        return new Blob(buffers);
+    }
+
+    async function fetchSingle(url, knownTotal) {
+        const resp = await fetch(url, { mode: 'cors' });
+        if (!resp.ok) throw new Error('HTTP ' + resp.status);
+        const total = knownTotal || parseInt(resp.headers.get('content-length') || '0', 10);
+        const reader = resp.body.getReader();
+        const chunks = [];
+        let received = 0;
+        const WINDOW_MS = 2000;
+        const samples = [{ t: performance.now(), bytes: 0 }];
+        const t0 = performance.now();
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            chunks.push(value);
+            received += value.length;
+            const now = performance.now();
+            samples.push({ t: now, bytes: received });
+            while (samples.length > 1 && (now - samples[0].t) > WINDOW_MS) samples.shift();
+            const w0 = samples[0];
+            const dt = (now - w0.t) / 1000;
+            const db = received - w0.bytes;
+            setSpeed(dt > 0.1 ? db / dt : 0);
+            setBytes(received, total);
+            if (total) setPct((received / total) * 100);
+            else {
+                const cycle = ((now - t0) / 1500) % 1;
+                setPct(cycle * 100);
+                pctEl.textContent = (received / 1048576).toFixed(1) + ' MB';
+            }
+        }
+        return new Blob(chunks);
+    }
+
+    // ─── Wait for Play!'s file picker then feed it a File ──────────────
+    async function feedFileToPlay(blob) {
         const input = await new Promise((resolve) => {
             const tryFind = () => {
                 const el = document.querySelector('input[type="file"]');
@@ -301,83 +457,83 @@
             };
             tryFind();
         });
-
-        // Stream the ROM. Using fetch keeps memory pressure reasonable
-        // (vs. loading the whole thing into a string).
-        let resp;
-        try {
-            resp = await fetch(romUrl, { mode: 'cors' });
-        } catch (e) {
-            setTitle('ROM fetch failed: ' + e.message);
-            setPct(null);
-            return;
-        }
-        if (!resp.ok) {
-            setTitle(`ROM fetch failed: HTTP ${resp.status}`);
-            setPct(null);
-            return;
-        }
-        const total = parseInt(resp.headers.get('content-length') || '0', 10);
-        const reader = resp.body.getReader();
-        const chunks = [];
-        let received = 0;
-        // Windowed throughput: average over the last ~2 seconds so the speed
-        // readout isn't too jumpy per-chunk.
-        const WINDOW_MS = 2000;
-        const samples = [];  // {t, bytes}
-        const t0 = performance.now();
-
-        while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            chunks.push(value);
-            received += value.length;
-
-            const now = performance.now();
-            samples.push({ t: now, bytes: received });
-            while (samples.length > 1 && (now - samples[0].t) > WINDOW_MS) samples.shift();
-            const windowStart = samples[0];
-            const dt = (now - windowStart.t) / 1000;
-            const db = received - windowStart.bytes;
-            const speed = dt > 0.1 ? db / dt : 0;
-
-            setBytes(received, total);
-            setSpeed(speed);
-            if (total) {
-                setPct((received / total) * 100);
-            } else {
-                // No content-length header — indeterminate. Animate the bar
-                // in a loop so the user knows something is happening.
-                const cycle = ((now - t0) / 1500) % 1;
-                setPct(cycle * 100);
-                pctEl.textContent = (received / 1048576).toFixed(1) + ' MB';
-            }
-        }
-
-        setTitle('Booting…');
-        setPct(100);
-        setSpeed(0);
-
-        const blob = new Blob(chunks);
         const file = new File([blob], filename, { type: blob.type || 'application/octet-stream' });
-
-        // DataTransfer is the one portable way to synthesize a FileList
-        // for an <input type="file">.
         const dt = new DataTransfer();
         dt.items.add(file);
         input.files = dt.files;
         input.dispatchEvent(new Event('change', { bubbles: true }));
+    }
 
-        // Hide the banner after a moment — the emulator canvas takes over.
+    // ─── Main flow ─────────────────────────────────────────────────────
+    async function run() {
+        // 1. Try the IDB cache first — second-play is near-instant.
+        setTitle('Checking cache…');
+        const cached = await cacheGet(romUrl);
+        if (cached && cached.size > 0) {
+            console.log('[arcade-play] ROM cache HIT, size =', cached.size);
+            setTitle('Loading cached ROM…');
+            setPct(100);
+            setBytes(cached.size, cached.size);
+            setSpeed(0);
+            await feedFileToPlay(cached);
+            setTitle('Booting…');
+            setTimeout(hide, 2000);
+            return;
+        }
+
+        // 2. Miss — download. Try parallel first, fall back to single
+        //    if the server ignores Range.
+        setTitle(`Downloading ${gameName || 'ROM'}…`);
+        setPct(0);
+        let blob;
+        try {
+            blob = await fetchInParallel(romUrl);
+        } catch (e) {
+            console.warn('[arcade-play] parallel failed, falling back to single:', e);
+            try {
+                blob = await fetchSingle(romUrl);
+            } catch (e2) {
+                setTitle('ROM fetch failed: ' + (e2.message || 'unknown'));
+                setPct(null);
+                return;
+            }
+        }
+
+        // 3. Boot FIRST (user plays immediately), cache in background.
+        setTitle('Booting…');
+        setPct(100);
+        setSpeed(0);
+        await feedFileToPlay(blob);
         setTimeout(hide, 2500);
+
+        // Don't await — let the emulator start while we write to disk.
+        cachePut(romUrl, blob).then((ok) => {
+            if (ok) console.log('[arcade-play] ROM cached (' + (blob.size / 1048576).toFixed(1) + ' MB)');
+        });
     }
 
-    // Kick off once the page is interactive — the React app loads via defer.
     if (document.readyState === 'loading') {
-        document.addEventListener('DOMContentLoaded', feedRomToPlay);
+        document.addEventListener('DOMContentLoaded', run);
     } else {
-        feedRomToPlay();
+        run();
     }
+
+    // ─── Expose a "clear cached ROMs" helper on window for debugging ───
+    // Users can call  arcadePlayClearCache()  from the devtools console
+    // to wipe the IDB store if they need the disk back. (A proper UI
+    // button for this can come later.)
+    window.arcadePlayClearCache = async function () {
+        try {
+            const db = await openDb();
+            await new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE, 'readwrite');
+                tx.objectStore(STORE).clear();
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
+            });
+            console.log('[arcade-play] ROM cache cleared');
+        } catch (e) { console.warn('clear failed', e); }
+    };
 })();
 </script>
 
