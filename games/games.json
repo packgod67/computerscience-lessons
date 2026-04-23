@@ -13316,64 +13316,95 @@
   },
   {
     "id": "clnfscarbonowncity",
-    "title": "Nfscarbonowncity",
+    "title": "Need for Speed: Carbon - Own the City",
     "category": "Racing",
     "path": "games/clnfscarbonowncity.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20Carbon%20-%20Own%20the%20City%20(USA).png",
     "tags": [
-      "gba",
       "racing",
+      "cars",
+      "nfs",
+      "need-for-speed",
+      "arcade",
+      "gba",
       "retro"
-    ]
+    ],
+    "description": "GBA port of Carbon spin-off — Rockport is controlled by crews and you rebuild your own to reclaim the city in canyon duels."
   },
   {
     "id": "clnfsmostwanted",
-    "title": "Nfsmostwanted",
-    "category": "Other",
+    "title": "Need for Speed: Most Wanted",
+    "category": "Racing",
     "path": "games/clnfsmostwanted.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Most%20Wanted%20(USA).png",
     "tags": [
+      "racing",
+      "cars",
+      "nfs",
+      "need-for-speed",
+      "arcade",
       "gba",
       "retro"
-    ]
+    ],
+    "description": "GBA port of the Blacklist classic — climb the ranks from #15 to #1, dodging heat from the cops and taking out rival racers."
   },
   {
     "id": "clnfsporcheunleashed",
-    "title": "Nfsporcheunleashed",
-    "category": "Other",
+    "title": "Need for Speed: Porsche Unleashed",
+    "category": "Racing",
     "path": "games/clnfsporcheunleashed.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Porsche%20Unleashed%20(USA%2C%20Europe).png",
     "tags": [
+      "racing",
+      "cars",
+      "nfs",
+      "need-for-speed",
+      "arcade",
       "gba",
       "retro"
-    ]
+    ],
+    "description": "Porsche-exclusive NFS entry — race 1948-2000 Porsches across career, factory driver, and knockout modes."
   },
   {
     "id": "clnfsunderground",
-    "title": "Nfsunderground",
-    "category": "Other",
+    "title": "Need for Speed: Underground",
+    "category": "Racing",
     "path": "games/clnfsunderground.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Underground%20(USA).png",
     "tags": [
+      "racing",
+      "cars",
+      "nfs",
+      "need-for-speed",
+      "tuner",
+      "arcade",
       "gba",
       "retro"
-    ]
+    ],
+    "description": "GBA port of the street-tuner classic — drift, drag, and circuit races through neon-lit Olympic City with your tuned coupe."
   },
   {
     "id": "clnfsunderground2",
-    "title": "Nfsunderground 2",
-    "category": "Other",
+    "title": "Need for Speed: Underground 2",
+    "category": "Racing",
     "path": "games/clnfsunderground2.html",
     "rom": "gba",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Underground%202%20(USA).png",
     "tags": [
+      "racing",
+      "cars",
+      "nfs",
+      "need-for-speed",
+      "tuner",
+      "arcade",
       "gba",
       "retro"
-    ]
+    ],
+    "description": "Sequel to Underground — bigger open-world Bayview with outrun, drift, and URL modes, and deeper visual customization."
   },
   {
     "id": "clngon",
