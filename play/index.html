@@ -122,17 +122,81 @@
   }
   #arcade-intro strong { color: #e5e5e5; }
 
+  /* ROM download UI — shown while the ?rom= fetch is in progress. Solid
+     panel at the top of the viewport with a visible percentage, download
+     rate, and filling progress bar so users don't stare at a static
+     "Downloading…" string for minutes on 2-5 GB PS2 ROMs. */
   #arcade-rom-banner {
-    position:fixed; top:10px; left:50%; transform:translateX(-50%);
-    background:rgba(0,0,0,.85); color:#fff; padding:8px 18px;
-    border-radius:20px; font-size:0.9rem; z-index:9999;
-    display:none; box-shadow: 0 2px 12px rgba(0,0,0,.5);
+    position: fixed;
+    top: 12px; left: 50%;
+    transform: translateX(-50%);
+    min-width: 380px;
+    max-width: calc(100vw - 40px);
+    background: rgba(10, 10, 15, 0.96);
+    color: #fff;
+    padding: 12px 18px;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 14px;
+    font-size: 0.88rem;
+    z-index: 9999;
+    display: none;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
   }
-  #arcade-rom-banner.visible { display:block; }
+  #arcade-rom-banner.visible { display: block; }
+  #arcade-rom-label {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 8px;
+  }
+  #arcade-rom-title {
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  #arcade-rom-pct {
+    font-variant-numeric: tabular-nums;
+    color: #a5b4fc;
+    flex-shrink: 0;
+  }
+  #arcade-rom-bar {
+    width: 100%;
+    height: 6px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 3px;
+    overflow: hidden;
+    margin-bottom: 6px;
+  }
+  #arcade-rom-bar-fill {
+    height: 100%;
+    background: linear-gradient(90deg, #7c3aed, #dc2626);
+    width: 0%;
+    transition: width 0.15s ease-out;
+  }
+  #arcade-rom-details {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    font-size: 0.72rem;
+    color: #9ca3af;
+    font-variant-numeric: tabular-nums;
+  }
 </style>
 </head>
 <body>
-<div id="arcade-rom-banner"></div>
+<div id="arcade-rom-banner">
+    <div id="arcade-rom-label">
+        <span id="arcade-rom-title">Preparing…</span>
+        <span id="arcade-rom-pct"></span>
+    </div>
+    <div id="arcade-rom-bar"><div id="arcade-rom-bar-fill"></div></div>
+    <div id="arcade-rom-details">
+        <span id="arcade-rom-bytes"></span>
+        <span id="arcade-rom-speed"></span>
+    </div>
+</div>
 <div class="global-row">
   <div class="global-column">
     <div><canvas id="outputCanvas" width="640" height="480" tabindex="-1"></canvas></div>
@@ -162,12 +226,41 @@
     if (!romUrl) return;
 
     const banner = document.getElementById('arcade-rom-banner');
-    function status(msg, visible) {
-        if (!banner) return;
-        banner.textContent = msg;
-        banner.classList.toggle('visible', !!visible);
+    const titleEl = document.getElementById('arcade-rom-title');
+    const pctEl = document.getElementById('arcade-rom-pct');
+    const fillEl = document.getElementById('arcade-rom-bar-fill');
+    const bytesEl = document.getElementById('arcade-rom-bytes');
+    const speedEl = document.getElementById('arcade-rom-speed');
+
+    function show() { banner.classList.add('visible'); }
+    function hide() { banner.classList.remove('visible'); }
+    function setTitle(s) { if (titleEl) titleEl.textContent = s; }
+    function setPct(pct) {    // null = indeterminate
+        if (!pctEl || !fillEl) return;
+        if (pct == null) { pctEl.textContent = ''; fillEl.style.width = '0%'; return; }
+        const clamped = Math.max(0, Math.min(100, pct));
+        pctEl.textContent = clamped.toFixed(0) + '%';
+        fillEl.style.width = clamped + '%';
     }
-    status(`Downloading ${gameName || 'ROM'}…`, true);
+    function setBytes(received, total) {
+        if (!bytesEl) return;
+        const mb = (n) => (n / 1048576).toFixed(1) + ' MB';
+        bytesEl.textContent = total
+            ? `${mb(received)} / ${mb(total)}`
+            : mb(received);
+    }
+    function setSpeed(bytesPerSec) {
+        if (!speedEl) return;
+        if (!bytesPerSec || !isFinite(bytesPerSec)) { speedEl.textContent = ''; return; }
+        const mbps = bytesPerSec / 1048576;
+        speedEl.textContent = mbps >= 1 ? mbps.toFixed(1) + ' MB/s' : (bytesPerSec / 1024).toFixed(0) + ' KB/s';
+    }
+
+    setTitle(`Downloading ${gameName || 'ROM'}…`);
+    setPct(null);
+    setBytes(0, 0);
+    setSpeed(0);
+    show();
 
     // Pick a sensible filename — Play! keys off the extension (.iso/.chd/…)
     // to decide disc vs ELF boot mode.
@@ -197,32 +290,57 @@
         try {
             resp = await fetch(romUrl, { mode: 'cors' });
         } catch (e) {
-            status('ROM fetch failed: ' + e.message, true);
+            setTitle('ROM fetch failed: ' + e.message);
+            setPct(null);
             return;
         }
         if (!resp.ok) {
-            status(`ROM fetch failed: HTTP ${resp.status}`, true);
+            setTitle(`ROM fetch failed: HTTP ${resp.status}`);
+            setPct(null);
             return;
         }
         const total = parseInt(resp.headers.get('content-length') || '0', 10);
         const reader = resp.body.getReader();
         const chunks = [];
         let received = 0;
+        // Windowed throughput: average over the last ~2 seconds so the speed
+        // readout isn't too jumpy per-chunk.
+        const WINDOW_MS = 2000;
+        const samples = [];  // {t, bytes}
+        const t0 = performance.now();
+
         while (true) {
             const { done, value } = await reader.read();
             if (done) break;
             chunks.push(value);
             received += value.length;
+
+            const now = performance.now();
+            samples.push({ t: now, bytes: received });
+            while (samples.length > 1 && (now - samples[0].t) > WINDOW_MS) samples.shift();
+            const windowStart = samples[0];
+            const dt = (now - windowStart.t) / 1000;
+            const db = received - windowStart.bytes;
+            const speed = dt > 0.1 ? db / dt : 0;
+
+            setBytes(received, total);
+            setSpeed(speed);
             if (total) {
-                const pct = Math.floor((received / total) * 100);
-                status(`Downloading ${gameName || 'ROM'}… ${pct}%`, true);
+                setPct((received / total) * 100);
             } else {
-                status(`Downloading ${gameName || 'ROM'}… ${(received / 1048576).toFixed(1)} MB`, true);
+                // No content-length header — indeterminate. Animate the bar
+                // in a loop so the user knows something is happening.
+                const cycle = ((now - t0) / 1500) % 1;
+                setPct(cycle * 100);
+                pctEl.textContent = (received / 1048576).toFixed(1) + ' MB';
             }
         }
-        const blob = new Blob(chunks);
-        status('Booting…', true);
 
+        setTitle('Booting…');
+        setPct(100);
+        setSpeed(0);
+
+        const blob = new Blob(chunks);
         const file = new File([blob], filename, { type: blob.type || 'application/octet-stream' });
 
         // DataTransfer is the one portable way to synthesize a FileList
@@ -233,7 +351,7 @@
         input.dispatchEvent(new Event('change', { bubbles: true }));
 
         // Hide the banner after a moment — the emulator canvas takes over.
-        setTimeout(() => status('', false), 2500);
+        setTimeout(hide, 2500);
     }
 
     // Kick off once the page is interactive — the React app loads via defer.
