@@ -30,25 +30,41 @@
 <style>
   html, body { margin:0; padding:0; height:100%; background:#0a0a0f; color:#e5e5e5; font-family:Arial,sans-serif; }
 
-  /* Override Play!'s built-in layout (.global-row/.global-column use flex
-     50% split + 20px margin) — we want the canvas centered and the file
-     picker prominent, not competing with the stock marketing sidebar. */
+  /* Override Play!'s built-in layout. The stock HTML puts the canvas
+     above the file picker and has an absolute-positioned version string
+     at the bottom. We use CSS order to flip that so the picker is the
+     first thing visible, canvas below, so the user sees the upload UI
+     without scrolling. */
   .global-row {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
-    min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
+    min-height: 100vh;
+    gap: 16px;
   }
-  .global-column { flex: 0 1 auto; margin: 0; width: 100%; max-width: 960px; }
+  .global-column {
+    flex: 0 1 auto;
+    margin: 0;
+    width: 100%;
+    max-width: 960px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
   .global-column + .global-column { display: none; }   /* hide stock info column */
+
+  /* Re-order children of .global-column: file picker first, intro second,
+     canvas last. Canvas's parent <div> is what the DOM has — target that. */
+  .global-column > div:has(canvas) { order: 3; }
+  #root { order: 1; }
+  #arcade-intro { order: 2; }
 
   canvas {
     aspect-ratio: 4 / 3;
     width: 100%;
-    max-height: 75vh;
+    max-height: 60vh;
     background: #000;
     border-radius: 8px;
     outline: none;
@@ -58,7 +74,6 @@
      a DIY upload — this is what they'll see. */
   #root {
     text-align: center;
-    margin-top: 20px;
   }
   #root input[type="file"] {
     display: inline-block;
@@ -95,7 +110,9 @@
     font-family: monospace;
     color: #a0a0a0;
   }
-  .version { display: none; }  /* stock version string — we show our own */
+  /* Stock version string is position:absolute bottom:0 left:0. CSS
+     specificity: span.version beats .version, so target the element. */
+  span.version { display: none !important; }
 
   #arcade-intro {
     text-align: center;
