@@ -4055,9 +4055,22 @@
   },
   {
     "id": "clctgpnitro",
-    "title": "Clctgpnitro",
-    "category": "Other",
-    "path": "games/clctgpnitro.html"
+    "title": "CTGP-Nitro",
+    "category": "Racing",
+    "path": "games/clctgpnitro.html",
+    "description": "Community-built custom track pack for Mario Kart DS — dozens of fan-designed tracks swapped over the vanilla cups.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "racing",
+      "kart",
+      "mario",
+      "rom-hack",
+      "custom-tracks",
+      "ds"
+    ],
+    "thumbnail": "assets/thumbnails/platforms/ds.png",
+    "addedAt": "2026-04-23T20:04:04.647Z"
   },
   {
     "id": "clctr",
@@ -11333,18 +11346,21 @@
   {
     "id": "clmariokartds",
     "title": "Mario Kart DS",
-    "category": "Mario",
+    "category": "Racing",
     "path": "games/clmariokartds.html",
+    "description": "The franchise DS entry — 16 new tracks plus 16 retro classics from past games, snaking-era online, and Mission mode. Gen-defining handheld kart racer.",
+    "popular": true,
     "rom": "ds",
-    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Mario%20Kart%20DS%20%28Europe%29%20%28Demo%29%20%28Kiosk%2C%20Multiplayer%29.png",
     "tags": [
+      "racing",
       "kart",
       "mario",
-      "nds",
-      "platformer",
-      "racing",
-      "retro"
-    ]
+      "nintendo",
+      "multiplayer",
+      "ds"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Mario%20Kart%20DS%20(USA)%20(En%2CFr%2CDe%2CEs%2CIt).png",
+    "addedAt": "2026-04-23T20:04:04.647Z"
   },
   {
     "id": "clmariokartsupercircuit",
@@ -26714,5 +26730,100 @@
     ],
     "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2023/07/Pokemon-Rijon-Adventures.jpg",
     "addedAt": "2026-04-23T18:04:50.382Z"
+  },
+  {
+    "id": "clnfsmostwantedds",
+    "title": "Need for Speed: Most Wanted (DS)",
+    "category": "Racing",
+    "path": "games/clnfsmostwantedds.html",
+    "description": "2005 Nintendo DS port of Most Wanted — climb the 15-racer Blacklist and shake police heat across Rockport in 3D on the dual-screen hardware.",
+    "popular": true,
+    "rom": "ds",
+    "tags": [
+      "racing",
+      "cars",
+      "nfs",
+      "need-for-speed",
+      "arcade",
+      "ds",
+      "3d"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Need%20for%20Speed%20-%20Most%20Wanted%20(USA).png",
+    "addedAt": "2026-04-23T20:04:04.647Z"
+  },
+  {
+    "id": "clburnoutlegends",
+    "title": "Burnout Legends",
+    "category": "Racing",
+    "path": "games/clburnoutlegends.html",
+    "description": "Portable greatest-hits entry in the arcade crash-em-up series — 95+ cars, tracks from Burnout 1-3, and the signature bone-shaking Crash Mode.",
+    "popular": true,
+    "rom": "ds",
+    "tags": [
+      "racing",
+      "cars",
+      "arcade",
+      "burnout",
+      "crash",
+      "ds"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Burnout%20Legends%20(USA).png",
+    "addedAt": "2026-04-23T20:04:04.647Z"
+  },
+  {
+    "id": "clhotwheelsbeatthat",
+    "title": "Hot Wheels: Beat That!",
+    "category": "Racing",
+    "path": "games/clhotwheelsbeatthat.html",
+    "description": "Diecast-scale arcade racer across oversized environments — race through kitchens, garages, and construction zones with iconic Hot Wheels cars.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "racing",
+      "cars",
+      "arcade",
+      "hot-wheels",
+      "ds"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Hot%20Wheels%20-%20Beat%20That!%20(USA)%20(En%2CFr%2CDe%2CEs%2CIt).png",
+    "addedAt": "2026-04-23T20:04:04.647Z"
+  },
+  {
+    "id": "clcarsds",
+    "title": "Cars",
+    "category": "Racing",
+    "path": "games/clcarsds.html",
+    "description": "Disney/Pixar movie tie-in — race as Lightning McQueen through Radiator Springs and the Piston Cup circuit.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "racing",
+      "cars",
+      "arcade",
+      "disney",
+      "pixar",
+      "kids",
+      "ds"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Cars%20(USA).png",
+    "addedAt": "2026-04-23T20:04:04.647Z"
+  },
+  {
+    "id": "clmariokartdsdeluxe",
+    "title": "Mario Kart DS Deluxe",
+    "category": "Racing",
+    "path": "games/clmariokartdsdeluxe.html",
+    "description": "Fan-made ROM hack of Mario Kart DS with new characters, karts, tracks, and rebalanced stats. A definitive-edition upgrade of the original.",
+    "popular": false,
+    "rom": "ds",
+    "tags": [
+      "racing",
+      "kart",
+      "mario",
+      "rom-hack",
+      "ds"
+    ],
+    "thumbnail": "assets/thumbnails/platforms/ds.png",
+    "addedAt": "2026-04-23T20:04:04.647Z"
   }
 ]
