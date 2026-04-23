@@ -8538,23 +8538,41 @@
   },
   {
     "id": "clgranturismo",
-    "title": "Clgranturismo",
-    "category": "Other",
+    "title": "Gran Turismo",
+    "category": "Racing",
     "path": "games/clgranturismo.html",
     "tags": [
+      "racing",
       "cars",
-      "racing"
-    ]
+      "simulation",
+      "gran-turismo",
+      "psx",
+      "retro",
+      "sports"
+    ],
+    "rom": "psx",
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Gran%20Turismo%20(USA).png",
+    "description": "The original 1997 driving sim that defined the genre — 140+ real cars across license tests, arcade mode, and a deep simulation career. Sony PS1.",
+    "popular": true
   },
   {
     "id": "clgranturismo2",
-    "title": "Clgranturismo 2",
-    "category": "Other",
+    "title": "Gran Turismo 2",
+    "category": "Racing",
     "path": "games/clgranturismo2.html",
     "tags": [
+      "racing",
       "cars",
-      "racing"
-    ]
+      "simulation",
+      "gran-turismo",
+      "psx",
+      "retro",
+      "sports"
+    ],
+    "rom": "psx",
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Gran%20Turismo%202%20(USA)%20(Arcade%20Mode).png",
+    "description": "Bigger sequel packing 650+ cars, 27 tracks, and separate Arcade + Simulation discs — one of the deepest PS1 games ever released.",
+    "popular": true
   },
   {
     "id": "clgrassmowing",
