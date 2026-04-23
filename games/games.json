@@ -25455,9 +25455,24 @@
   },
   {
     "id": "lime",
-    "title": "Lime",
-    "category": "Other",
-    "path": "games/lime.html"
+    "title": "Pokemon Lime",
+    "category": "Pokemon",
+    "path": "games/lime.html",
+    "rom": "gba",
+    "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2026/01/Pokemon-Lime.webp",
+    "description": "GBA fan hack paired with Pokemon Peach — a 3-gym demo on the same engine, different starter line, and a Lime-themed dex swap.",
+    "tags": [
+      "pokemon",
+      "fakemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ],
+    "popular": false,
+    "addedAt": "2026-04-23T20:15:36.472Z"
   },
   {
     "id": "lucid",
@@ -25483,9 +25498,24 @@
   },
   {
     "id": "peach",
-    "title": "Peach",
-    "category": "Other",
-    "path": "games/peach.html"
+    "title": "Pokemon Peach",
+    "category": "Pokemon",
+    "path": "games/peach.html",
+    "rom": "gba",
+    "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2026/01/Pokemon-Peach.webp",
+    "description": "GBA fan hack and sister entry to Pokemon Lime — an unfinished 3-gym demo with a fresh region, original sprites, and a Peach-themed dex swap.",
+    "tags": [
+      "pokemon",
+      "fakemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ],
+    "popular": false,
+    "addedAt": "2026-04-23T20:15:36.472Z"
   },
   {
     "id": "pvzm",
