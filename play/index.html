@@ -28,12 +28,88 @@
 </script>
 <script src="coi-serviceworker.js"></script>
 <style>
-  body { background:#0a0a0f; color:#e5e5e5; font-family:Arial,sans-serif; }
+  html, body { margin:0; padding:0; height:100%; background:#0a0a0f; color:#e5e5e5; font-family:Arial,sans-serif; }
+
+  /* Override Play!'s built-in layout (.global-row/.global-column use flex
+     50% split + 20px margin) — we want the canvas centered and the file
+     picker prominent, not competing with the stock marketing sidebar. */
+  .global-row {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  .global-column { flex: 0 1 auto; margin: 0; width: 100%; max-width: 960px; }
+  .global-column + .global-column { display: none; }   /* hide stock info column */
+
+  canvas {
+    aspect-ratio: 4 / 3;
+    width: 100%;
+    max-height: 75vh;
+    background: #000;
+    border-radius: 8px;
+    outline: none;
+  }
+
+  /* Style the file picker div. When no ?rom= is set the user is doing
+     a DIY upload — this is what they'll see. */
+  #root {
+    text-align: center;
+    margin-top: 20px;
+  }
+  #root input[type="file"] {
+    display: inline-block;
+    padding: 14px 24px;
+    background: linear-gradient(135deg, #7c3aed, #dc2626);
+    color: #fff;
+    border: none;
+    border-radius: 10px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+  }
+  #root input[type="file"]::file-selector-button {
+    padding: 8px 16px;
+    margin-right: 12px;
+    background: rgba(255,255,255,0.15);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+  }
+  #root input[type="file"]::file-selector-button:hover {
+    background: rgba(255,255,255,0.25);
+  }
+
+  .stats {
+    display: inline-block;
+    margin-left: 20px;
+    padding: 4px 10px;
+    background: rgba(255,255,255,0.08);
+    border-radius: 6px;
+    font-family: monospace;
+    color: #a0a0a0;
+  }
+  .version { display: none; }  /* stock version string — we show our own */
+
+  #arcade-intro {
+    text-align: center;
+    color: #a0a0a0;
+    font-size: 0.88rem;
+    margin-top: 12px;
+  }
+  #arcade-intro strong { color: #e5e5e5; }
+
   #arcade-rom-banner {
     position:fixed; top:10px; left:50%; transform:translateX(-50%);
-    background:rgba(0,0,0,.75); color:#fff; padding:6px 14px;
-    border-radius:20px; font-size:0.85rem; z-index:9999;
-    display:none;
+    background:rgba(0,0,0,.85); color:#fff; padding:8px 18px;
+    border-radius:20px; font-size:0.9rem; z-index:9999;
+    display:none; box-shadow: 0 2px 12px rgba(0,0,0,.5);
   }
   #arcade-rom-banner.visible { display:block; }
 </style>
@@ -44,7 +120,14 @@
   <div class="global-column">
     <div><canvas id="outputCanvas" width="640" height="480" tabindex="-1"></canvas></div>
     <div id="root"></div>
+    <div id="arcade-intro">
+      <strong>Play! PS2 Emulator.</strong> Pick a .iso/.chd/.bin/.elf to boot.
+      Supported: ISO, CSO, CHD, ISZ, BIN, ELF. No BIOS needed.
+      <br>
+      <span style="opacity:.7;">Experimental — compatibility varies per game.</span>
+    </div>
   </div>
+  <div class="global-column"><!-- hidden by CSS, kept so React's layout doesn't break --></div>
 </div>
 
 <!--
