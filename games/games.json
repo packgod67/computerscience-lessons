@@ -15849,7 +15849,8 @@
       "pokemon",
       "retro",
       "rpg",
-      "turn-based"
+      "turn-based",
+      "fakemon"
     ]
   },
   {
@@ -17395,7 +17396,8 @@
       "pokemon",
       "retro",
       "rpg",
-      "turn-based"
+      "turn-based",
+      "fakemon"
     ]
   },
   {
@@ -25698,7 +25700,8 @@
       "rpg",
       "turn-based",
       "gba",
-      "rom-hack"
+      "rom-hack",
+      "fakemon"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
     "thumbnail": "https://pokemonrom.net/wp-content/uploads/2023/04/Pokemon_Prism_ROM.png"
@@ -25738,7 +25741,8 @@
       "rpg",
       "turn-based",
       "gba",
-      "rom-hack"
+      "rom-hack",
+      "fakemon"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
     "thumbnail": "https://pokemonrom.net/wp-content/uploads/2023/04/Pokemon_Dark_Cry_Version_ROM.png"
@@ -25758,7 +25762,8 @@
       "rpg",
       "turn-based",
       "gba",
-      "rom-hack"
+      "rom-hack",
+      "fakemon"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
     "thumbnail": "https://pokemonrom.net/wp-content/uploads/2023/04/Pokemon_Glazed_ROM.png"
@@ -25838,7 +25843,8 @@
       "rpg",
       "turn-based",
       "gba",
-      "rom-hack"
+      "rom-hack",
+      "fakemon"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
     "thumbnail": "https://pokemonrom.net/wp-content/uploads/2023/04/Pokemon_Flora_Sky_ROM.png"
@@ -25878,7 +25884,8 @@
       "rpg",
       "turn-based",
       "nds",
-      "rom-hack"
+      "rom-hack",
+      "fakemon"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
     "thumbnail": "https://pokemonrom.net/wp-content/uploads/2023/04/Pokemon_Snakewood_ROM.png"
@@ -25918,7 +25925,8 @@
       "rpg",
       "turn-based",
       "gba",
-      "rom-hack"
+      "rom-hack",
+      "fakemon"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
     "thumbnail": "https://pokemonrom.net/wp-content/uploads/2023/04/Pokemon_Blazed_Glazed_ROM.png"
@@ -26018,7 +26026,8 @@
       "rpg",
       "turn-based",
       "gba",
-      "rom-hack"
+      "rom-hack",
+      "fakemon"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
     "thumbnail": "https://pokemonrom.net/wp-content/uploads/2022/06/Pokemon_Curse.png"
@@ -26505,7 +26514,7 @@
       "turn-based",
       "gba",
       "rom-hack",
-      "fakedex"
+      "fakemon"
     ],
     "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2023/08/Pokemon-Vega-Minus.jpg",
     "addedAt": "2026-04-23T16:14:01.014Z"
@@ -26526,9 +26535,135 @@
       "turn-based",
       "gba",
       "rom-hack",
-      "fakedex"
+      "fakemon"
     ],
     "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2023/04/Pokemon-Quartz.jpg",
     "addedAt": "2026-04-23T16:14:01.014Z"
+  },
+  {
+    "id": "clpokemonsweet2th",
+    "title": "Pokemon Sweet 2th",
+    "category": "Pokemon",
+    "path": "games/clpokemonsweet2th.html",
+    "description": "FireRed hack with 386 candified PokeSweets, a brand-new 12-flavor ice-cream type chart, and 25 Megas.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "fakemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ],
+    "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2023/06/Pokemon-Sweet-2th.jpg",
+    "addedAt": "2026-04-23T18:04:50.382Z"
+  },
+  {
+    "id": "clpokemonemeraldz",
+    "title": "Pokemon Emerald Z",
+    "category": "Pokemon",
+    "path": "games/clpokemonemeraldz.html",
+    "description": "Emerald hack by Z-nogyroP featuring 100+ original fakemon with custom cries, icons, and learnsets inside a curated 500-mon Pokedex.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "fakemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ],
+    "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2025/05/Pokemon-Emerald-Z.webp",
+    "addedAt": "2026-04-23T18:04:50.382Z"
+  },
+  {
+    "id": "clpokemonfakemonfirered",
+    "title": "Pokemon Fakemon FireRed",
+    "category": "Pokemon",
+    "path": "games/clpokemonfakemonfirered.html",
+    "description": "FireRed hack where every official pokemon is stripped out and replaced with a full national dex of 386 original fakemon plus 25 Megas.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "fakemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ],
+    "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2023/06/Pokemon-Fakemon-Firered.jpg",
+    "addedAt": "2026-04-23T18:04:50.382Z"
+  },
+  {
+    "id": "clpokemonaltairsirius",
+    "title": "Pokemon Altair and Sirius",
+    "category": "Pokemon",
+    "path": "games/clpokemonaltairsirius.html",
+    "description": "Emerald hack from the Pokemon Vega team set in post-meteor Hoenn, with a full fakedex of Meteoric Pokemon that predates and inspired Vega.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "fakemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ],
+    "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2023/07/Pokemon-Altair-and-Sirius.jpg",
+    "addedAt": "2026-04-23T18:04:50.382Z"
+  },
+  {
+    "id": "clpokemondarkrisingrebirth",
+    "title": "Pokemon Dark Rising Rebirth",
+    "category": "Pokemon",
+    "path": "games/clpokemondarkrisingrebirth.html",
+    "description": "Sequel in DarkRisingGirl's Dark Rising series featuring the signature fake legendaries (Darugis, Blazard) and a Hoopa-driven plot.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "fakemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ],
+    "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2024/09/Pokemon-Dark-Rising-Rebirth.webp",
+    "addedAt": "2026-04-23T18:04:50.382Z"
+  },
+  {
+    "id": "clpokemonrijonadventures",
+    "title": "Pokemon Rijon Adventures",
+    "category": "Pokemon",
+    "path": "games/clpokemonrijonadventures.html",
+    "description": "FireRed-based sequel to Koolboyman's Pokemon Brown, exploring the Rijon region and introducing its original Naljo-style fakemon legendaries.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "fakemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack"
+    ],
+    "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2023/07/Pokemon-Rijon-Adventures.jpg",
+    "addedAt": "2026-04-23T18:04:50.382Z"
   }
 ]

@@ -9,6 +9,11 @@
     let filtered = [];
     let activeCategory = 'all';
     let activeRomPlatform = 'all'; // sub-filter inside ROMs tab
+    // Sub-filter inside the Pokemon category — 'all' shows every pokemon
+    // game, other values filter by tag (e.g. 'fakemon' shows only fakedex
+    // hacks). Mirrors how activeRomPlatform works for the ROMs category.
+    let activePokemonSubtag = 'all';
+    let pokemonSubBar = null;
     let currentPage = 0;
     const PAGE_SIZE = 36;
     let loading = false;
@@ -40,6 +45,7 @@
         }
         buildCategories();
         buildRomSubBar();
+        buildPokemonSubBar();
         buildDropdownPanel();
         applyFilters();
         renderPage();
@@ -415,6 +421,13 @@
             }
             if (!matchesCategory) continue;
 
+            // Pokemon subtag filter — only active when we're inside the
+            // Pokemon category and the user picked a specific subtag.
+            if (activeCategory === 'Pokemon' && activePokemonSubtag !== 'all') {
+                const tags = g.tags || [];
+                if (!tags.includes(activePokemonSubtag)) continue;
+            }
+
             if (tagQueries) {
                 // Every requested tag must be on the game
                 const tags = g.tags || [];
@@ -476,6 +489,9 @@
         if (romSubBar) {
             romSubBar.style.display = activeCategory === '__roms__' ? '' : 'none';
         }
+        if (pokemonSubBar) {
+            pokemonSubBar.style.display = activeCategory === 'Pokemon' ? '' : 'none';
+        }
     }
 
     function buildRomSubBar() {
@@ -511,6 +527,62 @@
         const controls = document.querySelector('.controls');
         if (controls && controls.parentNode) {
             controls.parentNode.insertBefore(romSubBar, controls.nextSibling);
+        }
+    }
+
+    // Sub-filter bar that appears only when the Pokemon category is active.
+    // Pills narrow the visible set to a specific subtype — currently just
+    // "Fakemon" (full or partial custom-species hacks) but easy to extend.
+    // Same styling/placement pattern as the ROMs sub-bar for consistency.
+    function buildPokemonSubBar() {
+        const SUBTAGS = [
+            { key: 'all',      label: 'All',      emoji: '' },
+            { key: 'fakemon',  label: 'Fakemon',  emoji: '🧬' },
+        ];
+
+        // Count games per subtag for the small number pill on each button.
+        const pokemonGames = games.filter(g => g.category === 'Pokemon');
+        const counts = {};
+        for (const g of pokemonGames) {
+            for (const t of (g.tags || [])) {
+                counts[t] = (counts[t] || 0) + 1;
+            }
+        }
+        counts.all = pokemonGames.length;
+
+        pokemonSubBar = document.createElement('div');
+        // Reuses .rom-subbar styling so the visual matches without new CSS.
+        pokemonSubBar.className = 'rom-subbar pokemon-subbar';
+        pokemonSubBar.style.display = 'none';
+
+        for (const { key, label, emoji } of SUBTAGS) {
+            const btn = document.createElement('button');
+            btn.className = 'rom-sub-btn' + (key === activePokemonSubtag ? ' active' : '');
+            btn.dataset.subtag = key;
+            const count = counts[key] || 0;
+            const labelText = emoji ? `${emoji} ${label}` : label;
+            btn.innerHTML = `${labelText} <span class="rom-sub-count">${count}</span>`;
+            btn.addEventListener('click', () => {
+                activePokemonSubtag = key;
+                pokemonSubBar.querySelectorAll('.rom-sub-btn').forEach(b => {
+                    b.classList.toggle('active', b.dataset.subtag === key);
+                });
+                currentPage = 0;
+                gameGrid.innerHTML = '';
+                applyFilters();
+                renderPage();
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            });
+            pokemonSubBar.appendChild(btn);
+        }
+
+        const controls = document.querySelector('.controls');
+        if (controls && controls.parentNode) {
+            // Insert right after the ROM sub-bar so the two stay visually
+            // adjacent — they're mutually exclusive (visibility is toggled
+            // by the active category).
+            const afterRom = romSubBar?.nextSibling || controls.nextSibling;
+            controls.parentNode.insertBefore(pokemonSubBar, afterRom);
         }
     }
 
