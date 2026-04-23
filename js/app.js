@@ -30,6 +30,7 @@
         ['n64',     'N64'],
         ['ds',      'DS'],
         ['psx',     'PlayStation'],
+        ['ps2',     'PS2'],
         ['arcade',  'Arcade'],
         ['atari',   'Atari/Lynx/Jaguar'],
         ['oldsega', 'Older Sega'],
@@ -638,7 +639,7 @@
         const map = {
             gba: 'gba', gbc: 'gba', gb: 'gba',
             ds: 'ds', n64: 'n64', snes: 'snes', nes: 'nes',
-            psx: 'psx', genesis: 'genesis', arcade: 'arcade', atari: 'atari',
+            psx: 'psx', ps2: 'psx', genesis: 'genesis', arcade: 'arcade', atari: 'atari',
         };
         const p = map[rom] || 'misc';
         return `assets/thumbnails/platforms/${p}.png`;

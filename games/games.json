@@ -26878,5 +26878,87 @@
     ],
     "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Need%20for%20Speed%20-%20Porsche%20Unleashed%20(USA).png",
     "addedAt": "2026-04-23T20:23:19.410Z"
+  },
+  {
+    "id": "clnfsunderground2ps2",
+    "title": "Need for Speed: Underground 2 (PS2)",
+    "category": "Racing",
+    "path": "games/clnfsunderground2ps2.html",
+    "description": "The PS2 original of Underground 2 — tuner culture, nighttime Bayview, deep visual customization. ~2.87 GB download, first load is slow. Compatibility varies in the browser Play! build.",
+    "popular": false,
+    "rom": "ps2",
+    "tags": [
+      "racing",
+      "cars",
+      "nfs",
+      "need-for-speed",
+      "tuner",
+      "arcade",
+      "ps2",
+      "3d"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation%202/Named_Boxarts/Need%20for%20Speed%20-%20Underground%202%20(USA).png",
+    "addedAt": "2026-04-23T20:55:19.635Z"
+  },
+  {
+    "id": "clnfsmostwantedps2",
+    "title": "Need for Speed: Most Wanted (PS2, Black Edition)",
+    "category": "Racing",
+    "path": "games/clnfsmostwantedps2.html",
+    "description": "The 2005 Black Edition of Most Wanted — Rockport, cops, and the Blacklist. NOTE: only clean direct-download ISO is the Brazilian-Portuguese dub, so in-game voice/text is PT-BR (gameplay identical). ~1.84 GB.",
+    "popular": true,
+    "rom": "ps2",
+    "tags": [
+      "racing",
+      "cars",
+      "nfs",
+      "need-for-speed",
+      "arcade",
+      "ps2",
+      "3d",
+      "popular"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation%202/Named_Boxarts/Need%20for%20Speed%20-%20Most%20Wanted%20-%20Black%20Edition%20(USA).png",
+    "addedAt": "2026-04-23T20:55:19.635Z"
+  },
+  {
+    "id": "clnfscarbonps2",
+    "title": "Need for Speed: Carbon (PS2)",
+    "category": "Racing",
+    "path": "games/clnfscarbonps2.html",
+    "description": "PS2 Carbon — Palmont City, canyon duels, and crew-based street racing. PAL Platinum rip (English), ~4.38 GB. Expect a long first-load.",
+    "popular": false,
+    "rom": "ps2",
+    "tags": [
+      "racing",
+      "cars",
+      "nfs",
+      "need-for-speed",
+      "arcade",
+      "ps2",
+      "3d"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation%202/Named_Boxarts/Need%20for%20Speed%20-%20Carbon%20(USA).png",
+    "addedAt": "2026-04-23T20:55:19.635Z"
+  },
+  {
+    "id": "clgranturismo4",
+    "title": "Gran Turismo 4",
+    "category": "Racing",
+    "path": "games/clgranturismo4.html",
+    "description": "Polyphony Digital's flagship PS2 sim — 700+ cars, licensed real-world tracks, a 100-hour career. USA NTSC v1.01, ~5.31 GB. Huge first-load; Play! compatibility varies.",
+    "popular": true,
+    "rom": "ps2",
+    "tags": [
+      "racing",
+      "cars",
+      "gran-turismo",
+      "simulation",
+      "ps2",
+      "3d",
+      "popular"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation%202/Named_Boxarts/Gran%20Turismo%204%20(USA)%20(v1.01).png",
+    "addedAt": "2026-04-23T20:55:19.635Z"
   }
 ]
