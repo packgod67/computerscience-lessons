@@ -145,6 +145,12 @@ export default {
             respHeaders.set('Access-Control-Allow-Origin', '*');
             respHeaders.set('Access-Control-Expose-Headers', 'Content-Length, Content-Range, Accept-Ranges');
             respHeaders.set('Cache-Control', 'public, max-age=86400');
+            // The /play PS2 emulator runs under Cross-Origin-Embedder-Policy:
+            // require-corp (mandatory for SharedArrayBuffer). Under that
+            // policy, cross-origin subresources must advertise CORP or the
+            // browser blocks them. Adding CORP: cross-origin here lets the
+            // Play! iframe fetch PS2 ROMs through this proxy.
+            respHeaders.set('Cross-Origin-Resource-Policy', 'cross-origin');
             return new Response(upstream.body, {
                 status: upstream.status,
                 headers: respHeaders,
