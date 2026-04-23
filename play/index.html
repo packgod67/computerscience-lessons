@@ -200,6 +200,18 @@
     color: #9ca3af;
     font-variant-numeric: tabular-nums;
   }
+  #arcade-rom-speed-line {
+    display: inline-flex;
+    gap: 10px;
+  }
+  #arcade-rom-eta::before {
+    content: '~';
+    opacity: 0.5;
+    margin-right: 2px;
+  }
+  /* Hide the stock intro text once a ROM download is active — redundant
+     with the banner and looks cluttered behind it. */
+  body.arcade-rom-loading #arcade-intro { display: none; }
 </style>
 </head>
 <body>
@@ -212,7 +224,10 @@
     <div id="arcade-rom-bar"><div id="arcade-rom-bar-fill"></div></div>
     <div id="arcade-rom-details">
         <span id="arcade-rom-bytes"></span>
-        <span id="arcade-rom-speed"></span>
+        <span id="arcade-rom-speed-line">
+            <span id="arcade-rom-speed"></span>
+            <span id="arcade-rom-eta"></span>
+        </span>
     </div>
 </div>
 <div class="global-row">
@@ -250,9 +265,16 @@
     const fillEl = document.getElementById('arcade-rom-bar-fill');
     const bytesEl = document.getElementById('arcade-rom-bytes');
     const speedEl = document.getElementById('arcade-rom-speed');
+    const etaEl = document.getElementById('arcade-rom-eta');
 
-    function show() { banner.classList.add('visible'); }
-    function hide() { banner.classList.remove('visible'); }
+    function show() {
+        banner.classList.add('visible');
+        document.body.classList.add('arcade-rom-loading');
+    }
+    function hide() {
+        banner.classList.remove('visible');
+        document.body.classList.remove('arcade-rom-loading');
+    }
     function setTitle(s) { if (titleEl) titleEl.textContent = s; }
     function setPct(pct) {
         if (!pctEl || !fillEl) return;
@@ -271,6 +293,31 @@
         if (!bps || !isFinite(bps)) { speedEl.textContent = ''; return; }
         const mbps = bps / 1048576;
         speedEl.textContent = mbps >= 1 ? mbps.toFixed(1) + ' MB/s' : (bps / 1024).toFixed(0) + ' KB/s';
+    }
+    // ETA = (bytes remaining) / (current speed). Shows as m:ss for short
+    // waits, h:mm:ss once over an hour. Blanks out at <3 seconds to avoid
+    // a jumpy countdown ending. Called every progress tick.
+    function setEta(remainingBytes, bps) {
+        if (!etaEl) return;
+        if (!bps || bps < 1024 || !isFinite(bps) || remainingBytes <= 0) {
+            etaEl.textContent = '';
+            return;
+        }
+        const secs = Math.round(remainingBytes / bps);
+        if (secs < 3) { etaEl.textContent = ''; return; }
+        const pad = (n) => String(n).padStart(2, '0');
+        let txt;
+        if (secs >= 3600) {
+            const h = Math.floor(secs / 3600);
+            const m = Math.floor((secs % 3600) / 60);
+            const s = secs % 60;
+            txt = `${h}:${pad(m)}:${pad(s)}`;
+        } else {
+            const m = Math.floor(secs / 60);
+            const s = secs % 60;
+            txt = `${m}:${pad(s)}`;
+        }
+        etaEl.textContent = txt + ' left';
     }
 
     setTitle(`Preparing ${gameName || 'ROM'}…`);
@@ -400,9 +447,11 @@
             const w0 = samples[0];
             const dt = (now - w0.t) / 1000;
             const db = received - w0.bytes;
+            const speed = dt > 0.1 ? db / dt : 0;
             setBytes(received, total);
             setPct((received / total) * 100);
-            setSpeed(dt > 0.1 ? db / dt : 0);
+            setSpeed(speed);
+            setEta(total - received, speed);
         }
 
         await Promise.all(ranges.map(async ({ start, end, index }) => {
@@ -452,13 +501,17 @@
             const w0 = samples[0];
             const dt = (now - w0.t) / 1000;
             const db = received - w0.bytes;
-            setSpeed(dt > 0.1 ? db / dt : 0);
+            const speed = dt > 0.1 ? db / dt : 0;
+            setSpeed(speed);
             setBytes(received, total);
-            if (total) setPct((received / total) * 100);
-            else {
+            if (total) {
+                setPct((received / total) * 100);
+                setEta(total - received, speed);
+            } else {
                 const cycle = ((now - t0) / 1500) % 1;
                 setPct(cycle * 100);
                 pctEl.textContent = (received / 1048576).toFixed(1) + ' MB';
+                setEta(0, 0);  // no ETA without a known total
             }
         }
         return new Blob(chunks);
@@ -520,6 +573,7 @@
         setTitle('Booting…');
         setPct(100);
         setSpeed(0);
+        setEta(0, 0);
         await feedFileToPlay(blob);
         setTimeout(hide, 2500);
 
