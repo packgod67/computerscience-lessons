@@ -18,6 +18,14 @@
   is cross-origin-isolated, SharedArrayBuffer becomes transferable, and
   Play! initializes. MIT-licensed, well-maintained.
 -->
+<script>
+    // Diagnostic — surfaces the isolation state at page load so we can tell
+    // from the console whether the SW is doing its job.
+    console.log('[arcade-play] crossOriginIsolated =', window.crossOriginIsolated);
+    console.log('[arcade-play] isSecureContext =', window.isSecureContext);
+    console.log('[arcade-play] SharedArrayBuffer =', typeof SharedArrayBuffer);
+    console.log('[arcade-play] SW controller =', navigator.serviceWorker?.controller ? 'yes' : 'no');
+</script>
 <script src="coi-serviceworker.js"></script>
 <style>
   body { background:#0a0a0f; color:#e5e5e5; font-family:Arial,sans-serif; }
