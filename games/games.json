@@ -26855,5 +26855,28 @@
     ],
     "thumbnail": "assets/thumbnails/platforms/ds.png",
     "addedAt": "2026-04-23T20:04:04.647Z"
+  },
+  {
+    "id": "clnfsporscheunleashedpsx",
+    "title": "Need for Speed: Porsche Unleashed (PS1)",
+    "category": "Racing",
+    "path": "games/clnfsporscheunleashedpsx.html",
+    "description": "Real 3D PS1 NFS with 80+ Porsches spanning 1948-2000 — the Evolution career mode lets you buy, upgrade, and sell cars through five decades of Porsche history. Arguably the best-looking PS1-era NFS.",
+    "popular": true,
+    "rom": "psx",
+    "tags": [
+      "racing",
+      "cars",
+      "nfs",
+      "need-for-speed",
+      "porsche",
+      "simulation",
+      "arcade",
+      "psx",
+      "3d",
+      "retro"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Need%20for%20Speed%20-%20Porsche%20Unleashed%20(USA).png",
+    "addedAt": "2026-04-23T20:23:19.410Z"
   }
 ]
