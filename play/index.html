@@ -143,6 +143,23 @@
     box-shadow: 0 4px 24px rgba(0, 0, 0, 0.55);
   }
   #arcade-rom-banner.visible { display: block; }
+
+  /* Persistent 'back to arcade' link so users who break out of play.html
+     into /play/ (PS2 games) have a way back. Subtle top-left chip. */
+  #arcade-back-link {
+    position: fixed;
+    top: 12px; left: 14px;
+    padding: 6px 12px;
+    background: rgba(10, 10, 15, 0.85);
+    color: #d4d4d8;
+    text-decoration: none;
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 999px;
+    font-size: 0.8rem;
+    z-index: 9998;
+    transition: background 0.15s, color 0.15s;
+  }
+  #arcade-back-link:hover { background: rgba(20, 20, 30, 1); color: #fff; }
   #arcade-rom-label {
     display: flex;
     justify-content: space-between;
@@ -186,6 +203,7 @@
 </style>
 </head>
 <body>
+<a id="arcade-back-link" href="/">&larr; Back to arcade</a>
 <div id="arcade-rom-banner">
     <div id="arcade-rom-label">
         <span id="arcade-rom-title">Preparing…</span>
