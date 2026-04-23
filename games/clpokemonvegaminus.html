@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Pokemon Prism</title>
+<title>Pokemon Vega Minus</title>
 <style>
   body, html { margin:0; padding:0; width:100%; height:100%; background:#121212; color:#fff; font-family:Arial,sans-serif; }
   #game-container { width:100%; height:100vh; display:flex; align-items:center; justify-content:center; }
@@ -12,20 +12,20 @@
 <body>
 <div id="game-container">
   <div id="game"></div>
-  <div id="loading-progress">Loading Pokemon Prism...</div>
+  <div id="loading-progress">Loading Pokemon Vega Minus...</div>
 </div>
 <script>
   EJS_player = "#game";
-  EJS_core = "gbc";
-  EJS_gameName = "Pokemon Prism";
-  EJS_color = "#0064ff";
+  EJS_core = "gba";
+  EJS_gameName = "Pokemon Vega Minus";
+  EJS_color = "#7c3aed";
   EJS_startOnLoaded = true;
   EJS_threads = false;
   EJS_cacheLimit = 0;
   if (typeof EJS_VirtualGamepadEnabled === 'undefined') EJS_VirtualGamepadEnabled = true;
   EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
   EJS_netplayServer = "https://netplay.emulatorjs.org";
-  EJS_gameUrl = "https://arcad-groq.gatabanumai.workers.dev/rom?src=https%3A%2F%2Farchive.org%2Fdownload%2Fpkm_2%2FPokemon%2520Prism%2520%2528v0.95.0254%2529%2520%2520%2528Pokemonrom.net%2529.zip";
+  EJS_gameUrl = "https://arcad-groq.gatabanumai.workers.dev/rom?src=https%3A%2F%2Farchive.org%2Fdownload%2Fpokemon-pocket-monsters-pkmn-vba-gba-roms-mods-hacks%2FPok%25C3%25A9mon%2520-%2520Vega%2520Minus%2520%2528v1.02%2529%2520%255BEng%255D%2520%257BMod%257D.gba";
   EJS_onGameStart = function() { document.getElementById("loading-progress")?.remove(); };
   var script = document.createElement("script");
   script.src = "https://cdn.jsdelivr.net/gh/genizy/emu@master/loader.js";

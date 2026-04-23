@@ -25690,7 +25690,7 @@
     "path": "games/clpokemonprism.html",
     "description": "Legendary Crystal-based fan game set in the Naljo region, with remixed gyms, a brand-new Sound type, side quests, and mining mini-games.",
     "popular": false,
-    "rom": "gba",
+    "rom": "gbc",
     "tags": [
       "pokemon",
       "jrpg",
@@ -26488,5 +26488,47 @@
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
     "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy/Named_Boxarts/Pocket%20Monsters%20Midori%20(Japan)%20(SGB%20Enhanced).png"
+  },
+  {
+    "id": "clpokemonvegaminus",
+    "title": "Pokemon Vega Minus",
+    "category": "Pokemon",
+    "path": "games/clpokemonvegaminus.html",
+    "description": "Rebalanced easier edition of Pokemon Vega — keeps the full Fakemon roster and Tohoak region but dials back trainer AI, level curves, and grind walls so the original's brutal difficulty doesn't get in the way.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack",
+      "fakedex"
+    ],
+    "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2023/08/Pokemon-Vega-Minus.jpg",
+    "addedAt": "2026-04-23T16:14:01.014Z"
+  },
+  {
+    "id": "clpokemonquartz",
+    "title": "Pokemon Quartz",
+    "category": "Pokemon",
+    "path": "games/clpokemonquartz.html",
+    "description": "Spanish-origin Ruby hack by Baro — brand-new Ivara region, an entirely original Fakemon roster, and a reworked storyline. A cult-classic early-era GBA hack.",
+    "popular": false,
+    "rom": "gba",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "rpg",
+      "turn-based",
+      "gba",
+      "rom-hack",
+      "fakedex"
+    ],
+    "thumbnail": "https://visualboyadvance.org/wp-content/uploads/2023/04/Pokemon-Quartz.jpg",
+    "addedAt": "2026-04-23T16:14:01.014Z"
   }
 ]

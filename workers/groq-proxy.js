@@ -72,12 +72,16 @@ function pickKey(env, names) {
 
 // Hosts this worker is allowed to proxy ROM downloads from. All archive.org
 // subdomains (archive.org, dn*.archive.org, ia*.archive.org) are safe
-// public file hosting — no auth, no abuse surface. Anything else returns 403.
+// public file hosting — no auth, no abuse surface. raw.githubusercontent.com
+// is also allowed for ROMs hosted in public GitHub repos (useful for hacks
+// that don't have an archive.org item, e.g. Pokemon Quartz). Anything else
+// returns 403.
 const ROM_ALLOWED_HOSTS = [
     'archive.org',
     'us.archive.org',
     'ca.archive.org',
     'dn720006.ca.archive.org',
+    'raw.githubusercontent.com',
     // Wildcards matched via endsWith('.archive.org') below
 ];
 
@@ -105,7 +109,10 @@ export default {
                 return json({ error: 'https only' }, 400);
             }
             const host = target.hostname;
-            const allowed = host.endsWith('.archive.org') || host === 'archive.org';
+            const allowed =
+                host.endsWith('.archive.org') ||
+                host === 'archive.org' ||
+                host === 'raw.githubusercontent.com';
             if (!allowed) {
                 return json({ error: 'host not allowed', host }, 403);
             }
