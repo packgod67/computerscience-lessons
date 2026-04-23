@@ -10,6 +10,15 @@
 <meta http-equiv="Cross-Origin-Embedder-Policy" content="require-corp">
 <link rel="icon" href="/favicon.ico"/>
 <link href="static/css/main.5a525eca.css" rel="stylesheet">
+<!--
+  Service-worker-based COOP/COEP injector. Render's static hosting doesn't
+  honor our `_headers` file and we don't want to hardcode dashboard state
+  in the repo, so we synthesize cross-origin isolation client-side instead.
+  On first visit the SW registers and the page reloads; the second load
+  is cross-origin-isolated, SharedArrayBuffer becomes transferable, and
+  Play! initializes. MIT-licensed, well-maintained.
+-->
+<script src="coi-serviceworker.js"></script>
 <style>
   body { background:#0a0a0f; color:#e5e5e5; font-family:Arial,sans-serif; }
   #arcade-rom-banner {

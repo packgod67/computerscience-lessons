@@ -34,7 +34,15 @@
     </div>
 
     <div class="player-container" id="playerContainer">
-        <iframe id="gameFrame" class="game-frame" allowfullscreen></iframe>
+        <!-- allow=cross-origin-isolated lets PS2 games (which nest into
+             /play/ with its own COOP/COEP) actually get cross-origin
+             isolation. Without this the inner iframe falls back to
+             non-isolated mode and SharedArrayBuffer can't transfer to
+             workers. autoplay/gamepad/fullscreen enable controller input
+             and fullscreen toggles on every game. -->
+        <iframe id="gameFrame" class="game-frame"
+                allow="cross-origin-isolated; autoplay; gamepad *; fullscreen"
+                allowfullscreen></iframe>
         <div class="game-loading" id="gameLoading">
             <div class="loader"></div>
             <p id="loadingText">Loading game...</p>
