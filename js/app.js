@@ -697,26 +697,30 @@
                 btn.title = 'Already downloaded — clicking the card boots instantly';
                 break;
             case 'downloading': {
-                // If we have a known total → show percentage. If not (Background
-                // Fetch path with unknown total), fall back to '347.2 MB'-style
-                // raw byte counter so the chip is clearly moving even when we
-                // can't compute %. The bar still animates from received progress.
-                const pct = state.total ? Math.floor((state.received / state.total) * 100) : null;
+                // Show the actual MB transferred — early-stage downloads round
+                // to "0%" and the user can't tell if anything is happening.
+                // Layout: "230 / 4382 MB • 10.6 MB/s" when total is known,
+                //         "230 MB • 10.6 MB/s" when total is unknown.
+                // The visual bar still fills based on percentage.
+                const mb = (n) => (n / 1048576).toFixed(0);
+                const received = state.received || 0;
+                const total = state.total || 0;
                 const speed = state.speed
                     ? (state.speed >= 1048576
                         ? (state.speed / 1048576).toFixed(1) + ' MB/s'
                         : (state.speed / 1024).toFixed(0) + ' KB/s')
                     : '';
                 let primary;
-                if (pct != null) {
-                    primary = `${pct}%`;
-                } else if (state.received) {
-                    primary = `${(state.received / 1048576).toFixed(0)} MB`;
-                } else {
+                if (received <= 0) {
                     primary = 'starting…';
+                } else if (total) {
+                    primary = `${mb(received)}/${mb(total)} MB`;
+                } else {
+                    primary = `${mb(received)} MB`;
                 }
+                const pct = total ? (received / total) * 100 : 0;
                 labelEl.textContent = `${primary}${speed ? ' • ' + speed : ''}`;
-                if (fillEl) fillEl.style.width = (pct != null ? pct : 0) + '%';
+                if (fillEl) fillEl.style.width = pct + '%';
                 btn.title = state._backgrounded
                     ? 'Downloading in background — you can navigate or close the tab'
                     : 'Downloading… stay on this page';
