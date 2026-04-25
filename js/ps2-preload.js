@@ -26,7 +26,9 @@
     const WORKER = 'https://arcad-groq.gatabanumai.workers.dev/rom';
     const DB_NAME = 'arcade-play-roms';   // SAME db /play/ uses
     const STORE = 'roms';
-    const PARALLEL = 2;
+    // Higher parallel = better chance of beating archive.org's per-connection
+    // throttle. 4 is the sweet spot — 8+ tends to trip per-IP limits.
+    const PARALLEL = 4;
 
     // gameId → { state, pct, received, total, speed, error }
     const downloads = new Map();
@@ -150,6 +152,87 @@
         return { state: 'idle' };
     }
 
+    // ─── Background Fetch API support (Chrome/Edge) ────────────────────
+    // Lets the download survive page navigation — user can browse, click
+    // other games, even close the tab, and the OS continues the fetch in
+    // the background. On completion the SW writes to IDB and notifies any
+    // open arcade tabs.
+    let swReadyPromise = null;
+    function ensureSw() {
+        if (swReadyPromise) return swReadyPromise;
+        if (!('serviceWorker' in navigator)) {
+            return Promise.reject(new Error('no SW support'));
+        }
+        swReadyPromise = navigator.serviceWorker.register('/preload-sw.js', { scope: '/' })
+            .then(() => navigator.serviceWorker.ready);
+        return swReadyPromise;
+    }
+
+    function bgFetchSupported() {
+        return 'serviceWorker' in navigator && 'BackgroundFetchManager' in self;
+    }
+
+    // Listen for SW → page messages so we can flip the chip to 'cached' /
+    // 'error' when a backgrounded download finishes.
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.addEventListener('message', (event) => {
+            const data = event.data || {};
+            if (data.type === 'preload-cached') {
+                // Map the worker URL back to a gameId via our active downloads.
+                for (const [gid, st] of downloads.entries()) {
+                    if (st && st._key === data.id) {
+                        setState(gid, { state: 'cached' });
+                        return;
+                    }
+                }
+            } else if (data.type === 'preload-failed' || data.type === 'preload-aborted') {
+                for (const [gid, st] of downloads.entries()) {
+                    if (st && st._key === data.id) {
+                        setState(gid, { state: 'error', error: data.error || 'aborted' });
+                        return;
+                    }
+                }
+            }
+        });
+    }
+
+    async function trackBgFetch(gameId, key, bgFetch) {
+        setState(gameId, {
+            state: 'downloading',
+            pct: 0,
+            received: 0,
+            total: bgFetch.downloadTotal || 0,
+            speed: 0,
+            _key: key,
+            _backgrounded: true,
+        });
+        bgFetch.addEventListener('progress', () => {
+            const total = bgFetch.downloadTotal || 0;
+            const received = bgFetch.downloaded || 0;
+            // BG fetch doesn't expose live speed — derive a moving average.
+            const now = performance.now();
+            const st = downloads.get(gameId) || {};
+            const last = st._lastSample;
+            let speed = st.speed || 0;
+            if (last && (now - last.t) > 250) {
+                speed = (received - last.bytes) / ((now - last.t) / 1000);
+            }
+            setState(gameId, {
+                state: 'downloading',
+                received,
+                total,
+                pct: total ? (received / total) * 100 : 0,
+                speed,
+                _key: key,
+                _backgrounded: true,
+                _lastSample: last && (now - last.t) <= 250 ? last : { t: now, bytes: received },
+            });
+        });
+        // Final state transitions are handled via SW postMessage above —
+        // this lets backgrounded fetches that complete after the user
+        // closed the tab still flip to 'cached' on next visit.
+    }
+
     async function startPreload(gameId, archiveRomUrl, displayName) {
         const live = downloads.get(gameId);
         if (live && (live.state === 'downloading' || live.state === 'saving')) {
@@ -158,13 +241,35 @@
         }
         const key = workerUrlFor(archiveRomUrl);
 
-        // Skip if already cached
         if (await cacheHas(key)) {
-            setState(gameId, { state: 'cached' });
+            setState(gameId, { state: 'cached', _key: key });
             return;
         }
 
-        setState(gameId, { state: 'downloading', pct: 0, received: 0, total: 0, speed: 0 });
+        // Try Background Fetch first — survives nav/tab close.
+        if (bgFetchSupported()) {
+            try {
+                const reg = await ensureSw();
+                // Pick up an existing fetch for this URL (resume after reload)
+                let bg = await reg.backgroundFetch.get(key);
+                if (!bg) {
+                    bg = await reg.backgroundFetch.fetch(key, [key], {
+                        title: displayName || 'PS2 ROM',
+                        downloadTotal: 0,  // unknown — UI shows received MB only
+                    });
+                }
+                console.log('[ps2-preload] background fetch started for', gameId);
+                trackBgFetch(gameId, key, bg);
+                return;
+            } catch (e) {
+                console.warn('[ps2-preload] BG fetch unavailable, falling back to in-page:', e);
+            }
+        }
+
+        // Fallback: in-page download (Firefox/Safari, or BG fetch refused).
+        setState(gameId, {
+            state: 'downloading', pct: 0, received: 0, total: 0, speed: 0, _key: key,
+        });
         let blob;
         try {
             blob = await downloadBlob(key, (received, total, speed) => {
@@ -174,22 +279,22 @@
                     total,
                     pct: total ? (received / total) * 100 : 0,
                     speed,
+                    _key: key,
                 });
             });
         } catch (e) {
             console.warn('[ps2-preload] download failed:', e);
-            setState(gameId, { state: 'error', error: e.message });
+            setState(gameId, { state: 'error', error: e.message, _key: key });
             return;
         }
 
-        setState(gameId, { state: 'saving' });
+        setState(gameId, { state: 'saving', _key: key });
         try {
             await cachePut(key, blob);
-            setState(gameId, { state: 'cached' });
+            setState(gameId, { state: 'cached', _key: key });
         } catch (e) {
-            // Quota exceeded or IDB error — keep the user informed.
             console.warn('[ps2-preload] cache write failed:', e);
-            setState(gameId, { state: 'error', error: 'storage full' });
+            setState(gameId, { state: 'error', error: 'storage full', _key: key });
         }
     }
 
