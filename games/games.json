@@ -26898,7 +26898,8 @@
       "3d"
     ],
     "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation%202/Named_Boxarts/Need%20for%20Speed%20-%20Underground%202%20(USA).png",
-    "addedAt": "2026-04-23T20:55:19.635Z"
+    "addedAt": "2026-04-23T20:55:19.635Z",
+    "archiveRomUrl": "https://archive.org/download/slus-210.65.-need-for-speed-underground-2/SLUS_210.65.Need%20for%20Speed%20Underground%202.iso"
   },
   {
     "id": "clnfsmostwantedps2",
@@ -26919,7 +26920,8 @@
       "popular"
     ],
     "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation%202/Named_Boxarts/Need%20for%20Speed%20-%20Most%20Wanted%20-%20Black%20Edition%20(USA).png",
-    "addedAt": "2026-04-23T20:55:19.635Z"
+    "addedAt": "2026-04-23T20:55:19.635Z",
+    "archiveRomUrl": "https://archive.org/download/slus-213.51.-need-for-speed-mw-black-pt-br/SLUS_213.51.Need%20for%20Speed%20MW%20Black%20%28PT-BR%29.iso"
   },
   {
     "id": "clnfscarbonps2",
@@ -26939,7 +26941,8 @@
       "3d"
     ],
     "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation%202/Named_Boxarts/Need%20for%20Speed%20-%20Carbon%20(USA).png",
-    "addedAt": "2026-04-23T20:55:19.635Z"
+    "addedAt": "2026-04-23T20:55:19.635Z",
+    "archiveRomUrl": "https://archive.org/download/SLES-54322-P/nfsc.iso"
   },
   {
     "id": "clgranturismo4",
@@ -26959,6 +26962,7 @@
       "popular"
     ],
     "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation%202/Named_Boxarts/Gran%20Turismo%204%20(USA)%20(v1.01).png",
-    "addedAt": "2026-04-23T20:55:19.635Z"
+    "addedAt": "2026-04-23T20:55:19.635Z",
+    "archiveRomUrl": "https://archive.org/download/scus-973.28.-gran-turismo-4/SCUS_973.28.Gran%20Turismo%204.iso"
   }
 ]

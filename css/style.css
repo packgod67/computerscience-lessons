@@ -6611,6 +6611,79 @@ body.theme-transitioning * {
 }
 
 /* =========================================================================
+   PS2 pre-download button (game cards)
+   Sits on the game card alongside the favorite + info buttons. States:
+     - idle       → "📥 Pre-download"
+     - downloading→ "47% • 8.3 MB/s" + filling bar
+     - saving     → "Saving…" + full bar
+     - cached     → "✓ Ready" + full bar (green tint)
+     - error      → "Retry" (red tint)
+   ========================================================================= */
+.ps2-preload-btn {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    z-index: 5;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 4px 9px;
+    background: rgba(10, 10, 15, 0.85);
+    color: #e5e5e5;
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    border-radius: 999px;
+    font-size: 0.66rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+}
+.ps2-preload-btn:hover {
+    background: rgba(124, 58, 237, 0.85);
+    border-color: rgba(255, 255, 255, 0.4);
+}
+.ps2-preload-label {
+    line-height: 1;
+    white-space: nowrap;
+}
+.ps2-preload-bar {
+    display: block;
+    height: 3px;
+    background: rgba(255, 255, 255, 0.12);
+    border-radius: 2px;
+    overflow: hidden;
+}
+.ps2-preload-bar-fill {
+    display: block;
+    height: 100%;
+    width: 0%;
+    background: linear-gradient(90deg, #7c3aed, #dc2626);
+    transition: width 0.2s ease-out;
+}
+.ps2-preload-btn[data-state="downloading"],
+.ps2-preload-btn[data-state="saving"] {
+    background: rgba(20, 20, 30, 0.95);
+    border-color: rgba(124, 58, 237, 0.6);
+    cursor: default;
+}
+.ps2-preload-btn[data-state="cached"] {
+    background: rgba(16, 185, 129, 0.9);
+    border-color: #10b981;
+    color: #fff;
+    cursor: default;
+}
+.ps2-preload-btn[data-state="cached"] .ps2-preload-bar { display: none; }
+.ps2-preload-btn[data-state="error"] {
+    background: rgba(239, 68, 68, 0.9);
+    border-color: #ef4444;
+    color: #fff;
+}
+.ps2-preload-btn[data-state="error"] .ps2-preload-bar-fill {
+    background: #fff;
+}
+
+/* =========================================================================
    DM / group message image + emoji support
    ========================================================================= */
 

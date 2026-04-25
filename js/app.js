@@ -621,11 +621,109 @@
             const newBadge = g.addedAt && (Date.now() - Date.parse(g.addedAt)) < 30 * 24 * 60 * 60 * 1000
                 ? `<span class="card-new-badge">NEW</span>`
                 : '';
-            html += `<a class="game-card" href="play.html?game=${encodeURIComponent(g.id)}">${thumb}${newBadge}${favBtn}${infoBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
+            // Pre-download button — only for PS2 games that have an
+            // archive URL configured. Lets users start the multi-GB
+            // download in the background while browsing other cards;
+            // /play/'s loader picks up the cached blob and skips
+            // straight to boot when they actually click the card.
+            // Live state is wired in startObservingPreloads() after
+            // the grid is appended to the DOM.
+            const ps2PreloadBtn = (g.rom === 'ps2' && g.archiveRomUrl)
+                ? `<button class="ps2-preload-btn" data-game-id="${esc(g.id)}" data-state="idle" title="Pre-download so the next click boots instantly">
+                       <span class="ps2-preload-label">&#128229; Pre-download</span>
+                       <span class="ps2-preload-bar"><span class="ps2-preload-bar-fill"></span></span>
+                   </button>`
+                : '';
+            html += `<a class="game-card" href="play.html?game=${encodeURIComponent(g.id)}">${thumb}${newBadge}${favBtn}${infoBtn}${ps2PreloadBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
         }
 
         gameGrid.insertAdjacentHTML('beforeend', html);
+        wireUpPs2PreloadButtons(pageGames);
         loading = false;
+    }
+
+    // ─── PS2 pre-download wiring ──────────────────────────────────────
+    // For each PS2 card just rendered, query the IDB cache once to
+    // initialize button state (cached vs idle), wire the click handler,
+    // and subscribe to live state events so the button reflects ongoing
+    // downloads.
+    let ps2PreloadObserved = false;
+    function wireUpPs2PreloadButtons(pageGames) {
+        const buttons = gameGrid.querySelectorAll('.ps2-preload-btn:not([data-wired="1"])');
+        if (!buttons.length || !window.ArcadePs2Preload) return;
+
+        for (const btn of buttons) {
+            btn.dataset.wired = '1';
+            const gameId = btn.dataset.gameId;
+            const game = pageGames.find(x => x.id === gameId)
+                || games.find(x => x.id === gameId);
+            if (!game || !game.archiveRomUrl) continue;
+
+            // Click → start preload (don't navigate away).
+            btn.addEventListener('click', (e) => {
+                // The button is inside an <a> — stop the navigation.
+                e.preventDefault();
+                e.stopPropagation();
+                const cur = ArcadePs2Preload.getState(gameId);
+                if (cur.state === 'cached' || cur.state === 'downloading' || cur.state === 'saving') return;
+                ArcadePs2Preload.startPreload(gameId, game.archiveRomUrl, game.title);
+            });
+
+            // Initial state — async cache check.
+            ArcadePs2Preload.getInitialState(gameId, game.archiveRomUrl).then((state) => {
+                renderPs2ButtonState(btn, state);
+            });
+        }
+
+        // Subscribe once to broadcast live state changes to all buttons.
+        if (!ps2PreloadObserved) {
+            ps2PreloadObserved = true;
+            ArcadePs2Preload.onChange((gameId, state) => {
+                gameGrid.querySelectorAll(`.ps2-preload-btn[data-game-id="${gameId.replace(/"/g, '\\"')}"]`)
+                    .forEach((b) => renderPs2ButtonState(b, state));
+            });
+        }
+    }
+
+    function renderPs2ButtonState(btn, state) {
+        const labelEl = btn.querySelector('.ps2-preload-label');
+        const fillEl = btn.querySelector('.ps2-preload-bar-fill');
+        if (!labelEl) return;
+        btn.dataset.state = state.state || 'idle';
+        switch (state.state) {
+            case 'cached':
+                labelEl.innerHTML = '&#10003; Ready';
+                if (fillEl) fillEl.style.width = '100%';
+                btn.title = 'Already downloaded — clicking the card boots instantly';
+                break;
+            case 'downloading': {
+                const pct = Math.floor(state.pct || 0);
+                const speed = state.speed
+                    ? (state.speed >= 1048576
+                        ? (state.speed / 1048576).toFixed(1) + ' MB/s'
+                        : (state.speed / 1024).toFixed(0) + ' KB/s')
+                    : '';
+                labelEl.textContent = `${pct}%${speed ? ' • ' + speed : ''}`;
+                if (fillEl) fillEl.style.width = pct + '%';
+                btn.title = 'Downloading… stay on this page';
+                break;
+            }
+            case 'saving':
+                labelEl.textContent = 'Saving…';
+                if (fillEl) fillEl.style.width = '100%';
+                break;
+            case 'error':
+                labelEl.textContent = 'Retry';
+                if (fillEl) fillEl.style.width = '0%';
+                btn.title = 'Download failed: ' + (state.error || 'unknown') + '. Click to retry.';
+                break;
+            case 'idle':
+            default:
+                labelEl.innerHTML = '&#128229; Pre-download';
+                if (fillEl) fillEl.style.width = '0%';
+                btn.title = 'Pre-download so the next click boots instantly';
+                break;
+        }
     }
 
     function esc(s) {
