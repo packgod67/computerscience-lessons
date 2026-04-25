@@ -313,6 +313,25 @@
         }
     }
 
+    // Cache a user-supplied File (manual download path). Same IDB key as
+    // the auto-download flow so /play/'s loader picks it up identically.
+    // The file picker accepts any .iso/.chd/.bin/.cso — we don't validate
+    // contents, just trust the user dropped the right thing. /play/ will
+    // surface a real error if Play! can't boot it.
+    async function cacheUploadedFile(gameId, archiveRomUrl, file) {
+        const key = workerUrlFor(archiveRomUrl);
+        setState(gameId, { state: 'saving', _key: key });
+        try {
+            await cachePut(key, file);
+            setState(gameId, { state: 'cached', _key: key });
+            return true;
+        } catch (e) {
+            console.warn('[ps2-preload] manual cache write failed:', e);
+            setState(gameId, { state: 'error', error: 'storage full', _key: key });
+            throw e;
+        }
+    }
+
     function getState(gameId) {
         return downloads.get(gameId) || { state: 'idle' };
     }
@@ -324,6 +343,7 @@
 
     window.ArcadePs2Preload = {
         startPreload,
+        cacheUploadedFile,
         getInitialState,
         getState,
         onChange,

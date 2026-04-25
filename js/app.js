@@ -659,14 +659,17 @@
                 || games.find(x => x.id === gameId);
             if (!game || !game.archiveRomUrl) continue;
 
-            // Click → start preload (don't navigate away).
+            // Click → open a modal that lets the user pick auto vs manual.
+            // Manual is typically much faster: the browser downloads from
+            // archive.org direct from the user's residential IP (not pooled
+            // with everyone else through our worker). Auto-download is
+            // simpler but throttled.
             btn.addEventListener('click', (e) => {
-                // The button is inside an <a> — stop the navigation.
                 e.preventDefault();
                 e.stopPropagation();
                 const cur = ArcadePs2Preload.getState(gameId);
                 if (cur.state === 'cached' || cur.state === 'downloading' || cur.state === 'saving') return;
-                ArcadePs2Preload.startPreload(gameId, game.archiveRomUrl, game.title);
+                showPs2GetModal(game);
             });
 
             // Initial state — async cache check.
@@ -683,6 +686,102 @@
                     .forEach((b) => renderPs2ButtonState(b, state));
             });
         }
+    }
+
+    // ─── PS2 "Get ROM" modal ──────────────────────────────────────────
+    // Shown when a user clicks the pre-download chip on a PS2 card.
+    // Two routes: auto (Background Fetch via worker) or manual (download
+    // direct from archive.org, drop the file back). Manual is faster
+    // because each user's residential IP gets its own archive.org rate
+    // limit pool; the worker's pool is shared across all arcade users.
+    function showPs2GetModal(game) {
+        document.getElementById('ps2GetModal')?.remove();
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.id = 'ps2GetModal';
+        overlay.innerHTML = `
+            <div class="modal-box ps2-get-modal">
+                <div class="modal-header">
+                    <h2>Get ${esc(game.title)}</h2>
+                    <button class="modal-close" id="ps2GetClose">&times;</button>
+                </div>
+                <div class="ps2-get-body">
+                    <section class="ps2-get-option">
+                        <h3>&#9881;&#65039; Auto-download</h3>
+                        <p>We download via our proxy. Survives navigation but may be slow when archive.org is throttling our IP.</p>
+                        <button class="auth-submit" id="ps2GetAuto">Start auto-download</button>
+                    </section>
+
+                    <div class="ps2-get-divider"><span>OR</span></div>
+
+                    <section class="ps2-get-option">
+                        <h3>&#128640; Manual (typically much faster)</h3>
+                        <ol class="ps2-get-steps">
+                            <li>
+                                <a href="${esc(game.archiveRomUrl)}" download target="_blank" rel="noopener" class="ps2-get-direct">
+                                    &#128229; Download ROM from archive.org
+                                </a>
+                                <span class="ps2-get-substep">(saves to your Downloads folder — ~2-5 GB)</span>
+                            </li>
+                            <li>
+                                <span>Drop the file here when it's done:</span>
+                                <label class="ps2-get-dropzone" id="ps2GetDropzone">
+                                    <input type="file" id="ps2GetFile" accept=".iso,.chd,.bin,.cso,.isz,.elf" hidden>
+                                    <span class="ps2-get-dropzone-label">Click or drag a .iso file here</span>
+                                </label>
+                            </li>
+                        </ol>
+                        <div class="ps2-get-status" id="ps2GetStatus" hidden></div>
+                    </section>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const close = () => overlay.remove();
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+        document.getElementById('ps2GetClose').addEventListener('click', close);
+
+        document.getElementById('ps2GetAuto').addEventListener('click', () => {
+            ArcadePs2Preload.startPreload(game.id, game.archiveRomUrl, game.title);
+            close();
+        });
+
+        const fileInput = document.getElementById('ps2GetFile');
+        const dropzone = document.getElementById('ps2GetDropzone');
+        const status = document.getElementById('ps2GetStatus');
+
+        function setStatus(msg, visible) {
+            if (!status) return;
+            status.textContent = msg;
+            status.hidden = !visible;
+        }
+
+        function handleFile(file) {
+            if (!file) return;
+            setStatus(`Saving ${file.name} to cache…`, true);
+            ArcadePs2Preload.cacheUploadedFile(game.id, game.archiveRomUrl, file)
+                .then(() => {
+                    setStatus(`✅ Ready! Close this dialog and click the card to play.`, true);
+                    setTimeout(close, 1800);
+                })
+                .catch((e) => {
+                    setStatus(`Save failed: ${e.message || 'storage full?'}`, true);
+                });
+        }
+
+        fileInput.addEventListener('change', (e) => handleFile(e.target.files[0]));
+
+        dropzone.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            dropzone.classList.add('drag-over');
+        });
+        dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+        dropzone.addEventListener('drop', (e) => {
+            e.preventDefault();
+            dropzone.classList.remove('drag-over');
+            handleFile(e.dataTransfer.files[0]);
+        });
     }
 
     function renderPs2ButtonState(btn, state) {

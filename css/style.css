@@ -6611,6 +6611,110 @@ body.theme-transitioning * {
 }
 
 /* =========================================================================
+   PS2 "Get ROM" modal — auto vs manual download options
+   ========================================================================= */
+.ps2-get-modal { max-width: 540px; }
+.ps2-get-body {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 0.5rem;
+}
+.ps2-get-option {
+    padding: 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+}
+.ps2-get-option h3 {
+    margin: 0 0 0.4rem;
+    font-size: 0.95rem;
+    color: var(--text-primary);
+}
+.ps2-get-option p {
+    margin: 0 0 0.7rem;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.4;
+}
+.ps2-get-divider {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    text-align: center;
+    color: var(--text-secondary);
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+.ps2-get-divider::before,
+.ps2-get-divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+}
+.ps2-get-steps {
+    margin: 0;
+    padding-left: 1.2rem;
+    color: var(--text-primary);
+    font-size: 0.88rem;
+    line-height: 1.5;
+}
+.ps2-get-steps li {
+    margin-bottom: 0.7rem;
+}
+.ps2-get-steps li:last-child {
+    margin-bottom: 0;
+}
+.ps2-get-direct {
+    display: inline-block;
+    padding: 6px 14px;
+    background: linear-gradient(135deg, #7c3aed, #dc2626);
+    color: #fff;
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: filter 0.15s;
+}
+.ps2-get-direct:hover { filter: brightness(1.1); }
+.ps2-get-substep {
+    display: block;
+    margin-top: 0.3rem;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+.ps2-get-dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 0.5rem;
+    padding: 1.2rem;
+    background: var(--bg-secondary);
+    border: 2px dashed var(--border);
+    border-radius: 10px;
+    cursor: pointer;
+    transition: border-color 0.15s, background 0.15s;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+.ps2-get-dropzone:hover,
+.ps2-get-dropzone.drag-over {
+    border-color: var(--accent);
+    background: color-mix(in oklab, var(--accent) 8%, var(--bg-secondary));
+    color: var(--text-primary);
+}
+.ps2-get-status {
+    margin-top: 0.7rem;
+    padding: 0.6rem 0.8rem;
+    background: var(--bg-secondary);
+    border-radius: 6px;
+    font-size: 0.83rem;
+    color: var(--text-primary);
+}
+
+/* =========================================================================
    PS2 pre-download button (game cards)
    Sits on the game card alongside the favorite + info buttons. States:
      - idle       → "📥 Pre-download"
