@@ -253,12 +253,27 @@
                 // Pick up an existing fetch for this URL (resume after reload)
                 let bg = await reg.backgroundFetch.get(key);
                 if (!bg) {
+                    // Probe for total size BEFORE starting BG fetch — passing
+                    // downloadTotal lets the browser compute percentage and
+                    // the progress event carries useful numbers. Without it
+                    // we'd be stuck at 0% forever.
+                    let downloadTotal = 0;
+                    try {
+                        const probe = await fetch(key, { mode: 'cors', headers: { Range: 'bytes=0-1' } });
+                        if (probe.status === 206) {
+                            const cr = probe.headers.get('content-range') || '';
+                            const m = cr.match(/\/(\d+)$/);
+                            if (m) downloadTotal = parseInt(m[1], 10);
+                        }
+                        probe.body?.cancel().catch(() => {});
+                    } catch (_) { /* fall through with 0 — UI handles it */ }
+
                     bg = await reg.backgroundFetch.fetch(key, [key], {
                         title: displayName || 'PS2 ROM',
-                        downloadTotal: 0,  // unknown — UI shows received MB only
+                        downloadTotal,
                     });
                 }
-                console.log('[ps2-preload] background fetch started for', gameId);
+                console.log('[ps2-preload] background fetch started for', gameId, '(total:', bg.downloadTotal, ')');
                 trackBgFetch(gameId, key, bg);
                 return;
             } catch (e) {

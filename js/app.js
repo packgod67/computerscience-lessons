@@ -697,15 +697,29 @@
                 btn.title = 'Already downloaded — clicking the card boots instantly';
                 break;
             case 'downloading': {
-                const pct = Math.floor(state.pct || 0);
+                // If we have a known total → show percentage. If not (Background
+                // Fetch path with unknown total), fall back to '347.2 MB'-style
+                // raw byte counter so the chip is clearly moving even when we
+                // can't compute %. The bar still animates from received progress.
+                const pct = state.total ? Math.floor((state.received / state.total) * 100) : null;
                 const speed = state.speed
                     ? (state.speed >= 1048576
                         ? (state.speed / 1048576).toFixed(1) + ' MB/s'
                         : (state.speed / 1024).toFixed(0) + ' KB/s')
                     : '';
-                labelEl.textContent = `${pct}%${speed ? ' • ' + speed : ''}`;
-                if (fillEl) fillEl.style.width = pct + '%';
-                btn.title = 'Downloading… stay on this page';
+                let primary;
+                if (pct != null) {
+                    primary = `${pct}%`;
+                } else if (state.received) {
+                    primary = `${(state.received / 1048576).toFixed(0)} MB`;
+                } else {
+                    primary = 'starting…';
+                }
+                labelEl.textContent = `${primary}${speed ? ' • ' + speed : ''}`;
+                if (fillEl) fillEl.style.width = (pct != null ? pct : 0) + '%';
+                btn.title = state._backgrounded
+                    ? 'Downloading in background — you can navigate or close the tab'
+                    : 'Downloading… stay on this page';
                 break;
             }
             case 'saving':
