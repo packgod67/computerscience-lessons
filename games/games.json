@@ -29135,5 +29135,41 @@
     "tags": ["sandbox", "procgen", "space", "low-poly", "creator", "first-person", "simulation", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1nLzE5OTE5NTYzLnBuZw==/original/U2Qb33.png",
     "addedAt": "2026-04-26T16:00:00.000Z"
+  },
+  {
+    "id": "cloverdose",
+    "title": "OVERDOSE",
+    "category": "Action",
+    "path": "games/cloverdose.html",
+    "description": "Stop moving and you're dead — frantic top-down one-hit-kill action shooter drenched in psychedelic cyberpunk pixel art.",
+    "popular": false,
+    "rom": null,
+    "tags": ["action", "shooter", "top-down", "one-hit-kill", "cyberpunk", "psychedelic", "pixel-art", "souls-like", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI1OTY1NTkzLnBuZw==/original/osCglc.png",
+    "addedAt": "2026-04-26T16:15:00.000Z"
+  },
+  {
+    "id": "clbriarflame",
+    "title": "Briar Flame (Demo)",
+    "category": "Platformer",
+    "path": "games/clbriarflame.html",
+    "description": "World choked by thorns, a single ember fighting back — atmospheric souls-like metroidvania platformer demo with boss battles and exploration.",
+    "popular": false,
+    "rom": null,
+    "tags": ["platformer", "metroidvania", "souls-like", "atmospheric", "boss-battle", "exploration", "demo", "action-adventure", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI0NzMwNjQ2LnBuZw==/original/nAYads.png",
+    "addedAt": "2026-04-26T16:15:00.000Z"
+  },
+  {
+    "id": "clportraitofblood",
+    "title": "Portrait of Blood",
+    "category": "Horror",
+    "path": "games/clportraitofblood.html",
+    "description": "Enter the tomb of an accursed picture — short horror-action jam game where you delve into a cursed painting's haunted depths.",
+    "popular": false,
+    "rom": null,
+    "tags": ["horror", "action", "atmospheric", "short", "jam-game", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzIyMDIzOTU5LmdpZg==/original/mnMO4v.gif",
+    "addedAt": "2026-04-26T16:15:00.000Z"
   }
 ]
