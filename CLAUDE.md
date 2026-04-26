@@ -63,8 +63,8 @@ or category. Use it as a pre-flight check after batch-adding games.
   | GitHub Pages | `packgod67.github.io/computerscience-lessons` | none (coi-serviceworker covers /play/) |
   | Deno Deploy | `<project>.deno.dev` | `serve.ts` (TS handler adds them) |
   | Netlify | `computer-sciencelessons.netlify.app` | `_headers` (native — same syntax as CF Pages) |
-  All git-connected hosts auto-deploy on push to `main`. Surge requires
-  manual `surge .` from repo root.
+  | Wasmer Edge | `computerscience-lessons.wasmer.app` | none (static-server preset; coi-serviceworker covers /play/) |
+  All git-connected hosts auto-deploy on push to `main`.
 - **`_headers`** (Render/Netlify/Cloudflare Pages syntax) is honored
   on Cloudflare Pages and Netlify natively. Vercel ignores it (uses
   `vercel.json`). Render ignores it (relies on coi-serviceworker for
