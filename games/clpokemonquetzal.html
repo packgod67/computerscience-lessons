@@ -85,19 +85,31 @@
                 EJS_color = "#000000";
                 EJS_startOnLoaded = true;
                 EJS_cacheLimit = 0;
-                EJS_pathtodata = "https://cdn.jsdelivr.net/gh/a456pur/seraph@81f551ca0aa8e3d6018d32d8ac5904ac9bc78f76/storage/emulatorjs/data";
-                // Read from arcade config so we can swap to a self-hosted
-                // netplay relay when the official one (netplay.emulatorjs.org)
-                // is down. Falls back to the official server if no override.
+                // Switched from the a456pur/seraph fork to the official
+                // EmulatorJS CDN. The fork strips the netplay button
+                // from the toolbar UI even though the protocol code is
+                // present, so multiplayer was invisible. The official
+                // CDN ships the full toolbar including the people-icon
+                // netplay button.
+                EJS_pathtodata = "https://cdn.emulatorjs.org/stable/data/";
+                // Read netplay server from arcade config — points at our
+                // self-hosted Render relay because the official one at
+                // netplay.emulatorjs.org has been HTTP 525 (Cloudflare
+                // SSL handshake failed) for months. Falls back to the
+                // relay's known URL if the config isn't reachable.
                 EJS_netplayServer = (window.parent && window.parent.ARCADE_CONFIG && window.parent.ARCADE_CONFIG.netplayServer)
-                    || "https://netplay.emulatorjs.org";
+                    || "https://arcade-netplay-relay.onrender.com";
                 EJS_gameUrl = "https://cdn.jsdelivr.net/gh/bubbls/UGS-file-encryption@d40fb3bf8cd8db6131e55cf6970ce2a85be36f7d/PokemonQuetzalEnglishAlpha8v2.zip";
                 loadGame();  
             }
             document.getElementById("startButton").addEventListener("click", startGame);
             function loadGame() {
                 var script = document.createElement("script");
-                script.src = "https://cdn.jsdelivr.net/gh/a456pur/seraph@81f551ca0aa8e3d6018d32d8ac5904ac9bc78f76/storage/emulatorjs/data/loader.js";
+                // Match the official CDN we set EJS_pathtodata to above.
+                // Loading loader.js from a different origin than
+                // EJS_pathtodata causes the fork to fight itself —
+                // assets like cores get fetched from the wrong URL.
+                script.src = "https://cdn.emulatorjs.org/stable/data/loader.js";
                 document.body.appendChild(script);
 		var script = document.createElement("script");
                 script.src = "https://cdn.jsdelivr.net/gh/a456pur/seraph@ae2fcc6d6a9cd051654fcc0519080db1f79cf2a7/storage/js/cloak.js";
