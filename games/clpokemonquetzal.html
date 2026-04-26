@@ -85,6 +85,15 @@
                 EJS_color = "#000000";
                 EJS_startOnLoaded = true;
                 EJS_cacheLimit = 0;
+                // Netplay is gated in official EmulatorJS behind TWO
+                // experimental flags. Without both, the toolbar hides
+                // the netplay button even if EJS_netplayServer is set.
+                // Source confirmation:
+                //   netplayEnabled = window.EJS_DEBUG_XX===true
+                //                 && window.EJS_EXPERIMENTAL_NETPLAY===true
+                //   if !netplayEnabled: bottomBar.netplay[0].style.display="none"
+                EJS_DEBUG_XX = true;
+                EJS_EXPERIMENTAL_NETPLAY = true;
                 // Switched from the a456pur/seraph fork to the official
                 // EmulatorJS CDN. The fork strips the netplay button
                 // from the toolbar UI even though the protocol code is
