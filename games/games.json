@@ -28517,5 +28517,29 @@
     "tags": ["adventure", "maze", "puzzle", "gamemaker", "shitpost", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1nLzIwMDA4NTQ2LnBuZw==/original/Nayq6V.png",
     "addedAt": "2026-04-26T13:30:00.000Z"
+  },
+  {
+    "id": "clphonki",
+    "title": "Phonki",
+    "category": "Other",
+    "path": "games/clphonki.html",
+    "description": "Phonk-themed Sprunki-style rhythm mixer where you drag and drop characters onto a stage to layer beats, vocals, and dark phonk loops into your own track.",
+    "popular": false,
+    "rom": null,
+    "tags": ["rhythm", "music", "phonk", "sprunki", "mixer", "drag-and-drop", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzIyNTQzODYxLmpwZw==/original/dbYl1N.jpg",
+    "addedAt": "2026-04-26T13:45:00.000Z"
+  },
+  {
+    "id": "clmemerush",
+    "title": "The Great Meme Rush",
+    "category": "Simulation",
+    "path": "games/clmemerush.html",
+    "description": "Satirical doomscrolling clicker simulator where you scroll memes to earn crypto, buy legendary meme characters, and rot your brain until you literally implode from wealth.",
+    "popular": false,
+    "rom": null,
+    "tags": ["simulation", "clicker", "idle", "meme", "satire", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI0MjE5MjYyLnBuZw==/original/zciwUj.png",
+    "addedAt": "2026-04-26T13:45:00.000Z"
   }
 ]
