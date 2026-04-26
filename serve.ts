@@ -33,9 +33,15 @@ Deno.serve(async (req: Request) => {
         quiet: true,
     });
 
+    // Always wrap the response so we can attach a diagnostic header that
+    // proves serve.ts is the active handler on Deno Deploy. Without this,
+    // we can't tell from outside whether the deploy is using our handler
+    // or Deno's zero-config static fallback (which would skip COOP/COEP).
+    const headers = new Headers(response.headers);
+    headers.set("x-arcade-serve-ts", "v1");
+
     // Layer on COOP/COEP for /play/* (and the WASM file specifically).
     if (url.pathname.startsWith("/play/")) {
-        const headers = new Headers(response.headers);
         for (const [k, v] of Object.entries(PLAY_HEADERS)) {
             headers.set(k, v);
         }
@@ -44,12 +50,11 @@ Deno.serve(async (req: Request) => {
         if (url.pathname.endsWith(".wasm")) {
             headers.set("Content-Type", "application/wasm");
         }
-        return new Response(response.body, {
-            status: response.status,
-            statusText: response.statusText,
-            headers,
-        });
     }
 
-    return response;
+    return new Response(response.body, {
+        status: response.status,
+        statusText: response.statusText,
+        headers,
+    });
 });
