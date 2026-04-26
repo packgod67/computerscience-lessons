@@ -61,7 +61,10 @@
     "path": "games/cl13bones.html",
     "thumbnail": "assets/thumbnails/cl13bones.jpg",
     "tags": [
-      "retro"
+      "retro",
+      "itch",
+      "html5",
+      "browser-native"
     ]
   },
   {
@@ -1206,7 +1209,7 @@
       "html5",
       "itch"
     ],
-    "thumbnail": "https://img.itch.zone/aW1nLzI0MTc0OTkucG5n/original/EAdlKu.png",
+    "thumbnail": "https://img.itch.zone/aW1nLzE1NDE5NTk2LmpwZw==/original/koNhgv.jpg",
     "addedAt": "2026-04-26T11:50:19.370Z"
   },
   {
@@ -24593,7 +24596,9 @@
       "run-based",
       "permadeath",
       "meta-progression",
-      "2d-roguelite"
+      "2d-roguelite",
+      "itch",
+      "browser-native"
     ],
     "description": "The reverse-bullet-hell that started a whole subgenre — survive ever-thicker hordes by picking weapon/passive synergies. Auto-attack, you only move. Massive replayability.",
     "popular": true,
@@ -24614,9 +24619,25 @@
   },
   {
     "id": "clvaportrails",
-    "title": "Clvaportrails",
-    "category": "Other",
-    "path": "games/clvaportrails.html"
+    "title": "Vapor Trails",
+    "category": "Platformer",
+    "path": "games/clvaportrails.html",
+    "description": "Pixel-art metroidvania action-platformer with separate arm and leg attacks — explore Vapor City, fight bosses, and unlock movement abilities. Closest itch HTML5 has to Dead Cells' combat feel.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "metroidvania",
+      "action-platformer",
+      "platformer",
+      "pixel-art",
+      "combat",
+      "dead-cells-like",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzM2OTk5NzQucG5n/original/trGcjv.png",
+    "addedAt": "2026-04-26T12:00:00.000Z"
   },
   {
     "id": "clvex",
@@ -27536,7 +27557,7 @@
       "html5",
       "itch"
     ],
-    "thumbnail": "https://img.itch.zone/aW1nLzEyMzAxMjg5LmpwZw==/original/zlCZxE.jpg",
+    "thumbnail": "https://img.itch.zone/aW1nLzEwMDAwNDM5LnBuZw==/original/wIYbZE.png",
     "addedAt": "2026-04-26T11:50:19.370Z"
   },
   {
@@ -27559,7 +27580,7 @@
       "html5",
       "itch"
     ],
-    "thumbnail": "https://img.itch.zone/aW1nLzEwMDAwNDM5LnBuZw==/original/wIYbZE.png",
+    "thumbnail": "https://img.itch.zone/aW1nLzg2MDAwNDEuanBn/original/TMw4fQ.jpg",
     "addedAt": "2026-04-26T11:50:19.370Z"
   },
   {
@@ -27580,7 +27601,7 @@
       "html5",
       "itch"
     ],
-    "thumbnail": "https://img.itch.zone/aW1nLzg2MDAwNDEuanBn/original/TMw4fQ.jpg",
+    "thumbnail": "https://img.itch.zone/aW1nLzEyMzAxMjg5LmpwZw==/original/zlCZxE.jpg",
     "addedAt": "2026-04-26T11:50:19.370Z"
   },
   {
@@ -27708,7 +27729,7 @@
       "html5",
       "itch"
     ],
-    "thumbnail": "https://img.itch.zone/aW1nLzI0MTc0NzIucG5n/original/iRrMOg.png",
+    "thumbnail": "https://img.itch.zone/aW1nLzI0MTc0OTkucG5n/original/EAdlKu.png",
     "addedAt": "2026-04-26T11:50:19.370Z"
   },
   {
@@ -27731,5 +27752,302 @@
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzIyNTU0OTg0LmdpZg==/original/a117h8.gif",
     "addedAt": "2026-04-26T11:50:19.370Z"
+  },
+  {
+    "id": "clincar",
+    "title": "inCARceration",
+    "category": "Adventure",
+    "path": "games/clincar.html",
+    "description": "Surreal short driving piece where you steer your life back through dreamlike highways — moody narrative experience over arcade racing.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "narrative",
+      "driving",
+      "surreal",
+      "atmospheric",
+      "short",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzIwMDY3NTYyLmdpZg==/original/w0tfxi.gif",
+    "addedAt": "2026-04-26T12:00:00.000Z"
+  },
+  {
+    "id": "clsmashndab",
+    "title": "Smash 'n Dab",
+    "category": "Action",
+    "path": "games/clsmashndab.html",
+    "description": "Rhythm party game where Dad has to impress a squad of rowdy teens with his sick dance moves and outrageous dabs. Short, silly, and cathartic.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "rhythm",
+      "party",
+      "comedy",
+      "arcade",
+      "short",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzE3MTczNzEuZ2lm/original/eXymdf.gif",
+    "addedAt": "2026-04-26T12:00:00.000Z"
+  },
+  {
+    "id": "cleggdogextend",
+    "title": "Eggdog Extended",
+    "category": "Other",
+    "path": "games/cleggdogextend.html",
+    "description": "Absurd meme toy where you stretch the cursed egg-shaped dog as high as you can. Internet humor crystallized into a clickable plaything.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "meme",
+      "toy",
+      "clicker",
+      "absurd",
+      "short",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzEzODg4OTc4LnBuZw==/original/yosMR4.png",
+    "addedAt": "2026-04-26T12:00:00.000Z"
+  },
+  {
+    "id": "clhawking",
+    "title": "Stephen Hawking: Ultimate Wheelchair",
+    "category": "Racing",
+    "path": "games/clhawking.html",
+    "description": "Build and pilot Stephen Hawking's ultimate wheelchair in this irreverent vehicle-builder where physics, crafting, and chaotic momentum collide.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "physics",
+      "vehicle-builder",
+      "crafting",
+      "comedy",
+      "arcade",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzI0NzYwNTgucG5n/original/IcZXmj.png",
+    "addedAt": "2026-04-26T12:00:00.000Z"
+  },
+  {
+    "id": "cltuxracer",
+    "title": "TuxRacer.js",
+    "category": "Racing",
+    "path": "games/cltuxracer.html",
+    "description": "Browser port of the classic Tux Racer — slide a happy penguin downhill through icy slalom courses collecting herring against the clock.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "racing",
+      "arcade",
+      "downhill",
+      "port",
+      "casual",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzIxMDY4NjI1LmpwZw==/original/tBD6Ax.jpg",
+    "addedAt": "2026-04-26T12:00:00.000Z"
+  },
+  {
+    "id": "clfastcar",
+    "title": "fast car",
+    "category": "Racing",
+    "path": "games/clfastcar.html",
+    "description": "Short, melancholy driving piece set to an 'i remember when we were driving' mood — atmospheric road-trip vignette over arcade racing.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "driving",
+      "narrative",
+      "atmospheric",
+      "short",
+      "chill",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzE1MDQ1OTA3LnBuZw==/original/qoPrGV.png",
+    "addedAt": "2026-04-26T12:00:00.000Z"
+  },
+  {
+    "id": "clspectralslash",
+    "title": "Spectral Slash",
+    "category": "Action",
+    "path": "games/clspectralslash.html",
+    "description": "Melee combat deckbuilder — slash enemies to gain energy, then spend that energy to play powerful cards in a tight action-roguelite hybrid.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "deckbuilder",
+      "roguelite",
+      "card-roguelite",
+      "melee-combat",
+      "action-roguelike",
+      "run-based",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzEyNjk3Mjk1LmdpZg==/original/vU2pUL.gif",
+    "addedAt": "2026-04-26T12:00:00.000Z"
+  },
+  {
+    "id": "clgetyoked2",
+    "title": "GET YOKED: Extreme Bodybuilding",
+    "category": "Strategy",
+    "path": "games/clgetyoked2.html",
+    "description": "Card-based bodybuilding roguelite where you draft lifts, stack gains across runs, and chase peak swole through deckbuilt training arcs.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "roguelite",
+      "deckbuilder",
+      "card-roguelite",
+      "run-based",
+      "meta-progression",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzE5NDg3OTk2LnBuZw==/original/axbMzw.png",
+    "addedAt": "2026-04-26T12:30:00.000Z"
+  },
+  {
+    "id": "clfreddydatesim",
+    "title": "Freddy Fazbear's Dating Simulator",
+    "category": "Adventure",
+    "path": "games/clfreddydatesim.html",
+    "description": "Date Freddy Fazbear in this absurd FNAF parody mashing visual-novel romance with RPG fighting mechanics — pick choices, then brawl your animatronic crush.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "visual-novel",
+      "dating-sim",
+      "fnaf-parody",
+      "rpg",
+      "horror-comedy",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzEyOTMzNDY5LnBuZw==/original/vRux6S.png",
+    "addedAt": "2026-04-26T12:30:00.000Z"
+  },
+  {
+    "id": "clcinconoitadas",
+    "title": "Cinco Noitadas com Eduardo",
+    "category": "Horror",
+    "path": "games/clcinconoitadas.html",
+    "description": "Brazilian Portuguese FNAF parody — survive five nights at Eduardo's by watching cameras, slamming doors, and managing power as the animatronics close in.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "fnaf-clone",
+      "survival-horror",
+      "point-and-click",
+      "portuguese",
+      "indie",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzI0NTczNzc4LnBuZw==/original/r8vU7J.png",
+    "addedAt": "2026-04-26T12:30:00.000Z"
+  },
+  {
+    "id": "clbabyshooter",
+    "title": "Baby Shooter",
+    "category": "Shooter",
+    "path": "games/clbabyshooter.html",
+    "description": "Self-described shitpost shooter — point, click, and unload as the absurd premise plays itself out in chaotic low-budget fashion. Strictly not serious.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "shooter",
+      "shitpost",
+      "comedy",
+      "arcade",
+      "indie",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzcxNjY3NDkuanBn/original/%2BqxHQU.jpg",
+    "addedAt": "2026-04-26T12:30:00.000Z"
+  },
+  {
+    "id": "cljohnwicklario",
+    "title": "John Wick vs. Lario at 3:00 AM, Gone Wrong",
+    "category": "Shooter",
+    "path": "games/cljohnwicklario.html",
+    "description": "Punishing bullet-hell boss fight pitting John Wick against Lario in an unfair 3 AM showdown — dodge nightmare patterns through escalating phases.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "bullet-hell",
+      "boss-rush",
+      "danmaku",
+      "parody",
+      "hard",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzEzMjEzNjUzLnBuZw==/original/ZIdCEr.png",
+    "addedAt": "2026-04-26T12:30:00.000Z"
+  },
+  {
+    "id": "clfreddydatesim2",
+    "title": "Freddy Fazbear's Dating Simulator 2",
+    "category": "Adventure",
+    "path": "games/clfreddydatesim2.html",
+    "description": "Sequel to the cursed Freddy dating sim — more animatronic suitors, more punchable choices, more visual-novel-meets-fighter chaos.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "visual-novel",
+      "dating-sim",
+      "fnaf-parody",
+      "rpg",
+      "sequel",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzEyOTMzNzczLnBuZw==/original/x2XsqJ.png",
+    "addedAt": "2026-04-26T12:30:00.000Z"
+  },
+  {
+    "id": "clchinesesocialcredit",
+    "title": "Chinese Social Credit Test",
+    "category": "Simulation",
+    "path": "games/clchinesesocialcredit.html",
+    "description": "Satirical Unity quiz where you answer prompts as a Chinese citizen and get scored across multiple branching endings — short, meme-y, text-based.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "simulation",
+      "quiz",
+      "meme",
+      "satire",
+      "multiple-endings",
+      "short",
+      "text-based",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzczNDA4MzMucG5n/original/IfkMsu.png",
+    "addedAt": "2026-04-26T12:30:00.000Z"
   }
 ]

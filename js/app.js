@@ -48,8 +48,24 @@
         buildRomSubBar();
         buildPokemonSubBar();
         buildDropdownPanel();
+        buildAdminTagButton();
         applyFilters();
         renderPage();
+
+        // When admin-managed tags / applications change, re-run filtering
+        // so newly-applied custom tags surface immediately for everyone.
+        window.addEventListener('arcade:custom-tags-changed', () => {
+            currentPage = 0;
+            gameGrid.innerHTML = '';
+            applyFilters();
+            renderPage();
+            buildAdminTagButton(); // role might've just resolved
+        });
+        // Auth state can flip after init (login/logout) — re-evaluate the
+        // admin button whenever it does.
+        if (window.ArcadeAuth?.onAuthChange) {
+            ArcadeAuth.onAuthChange(() => buildAdminTagButton());
+        }
 
         searchInput.addEventListener('input', debounce(() => {
             currentPage = 0;
@@ -389,6 +405,45 @@
         return best <= tolerance ? best : Infinity;
     }
 
+    // Inject the "Manage Tags" admin button into the controls row, beside
+    // the game count. Only visible to admins; idempotent so re-evaluating
+    // on auth-change just toggles its presence rather than duplicating.
+    function buildAdminTagButton() {
+        const isAdmin = !!window.ArcadeAuth?.isAdmin?.();
+        let btn = document.getElementById('manageTagsBtn');
+        if (!isAdmin) {
+            if (btn) btn.remove();
+            return;
+        }
+        if (btn) return;
+        btn = document.createElement('button');
+        btn.id = 'manageTagsBtn';
+        btn.className = 'manage-tags-btn';
+        btn.type = 'button';
+        btn.title = 'Manage custom tags';
+        btn.innerHTML = '&#127991; Manage Tags';
+        btn.addEventListener('click', () => {
+            window.ArcadeAdminTags?.showTagManagementModal?.();
+        });
+        // Slot it next to the game count in the existing controls row.
+        const countEl = document.getElementById('gameCount');
+        if (countEl && countEl.parentNode) {
+            countEl.parentNode.insertBefore(btn, countEl);
+        }
+    }
+
+    // Merged tag list for filtering: the baked-in `tags` from games.json
+    // plus any admin-applied custom tags from Firestore. Returns a plain
+    // array (deduped) so callers can use `Array.includes` and `.every`.
+    function effectiveTags(g) {
+        const baseline = Array.isArray(g.tags) ? g.tags : [];
+        const custom = window.ArcadeAdminTags?.getCustomTagsForGame?.(g.id) || [];
+        if (!custom.length) return baseline;
+        const merged = baseline.slice();
+        for (const t of custom) if (!merged.includes(t)) merged.push(t);
+        return merged;
+    }
+
     function applyFilters() {
         let query = searchInput.value.toLowerCase().trim();
 
@@ -426,13 +481,14 @@
             // Pokemon subtag filter — only active when we're inside the
             // Pokemon category and the user picked a specific subtag.
             if (activeCategory === 'Pokemon' && activePokemonSubtag !== 'all') {
-                const tags = g.tags || [];
+                const tags = effectiveTags(g);
                 if (!tags.includes(activePokemonSubtag)) continue;
             }
 
             if (tagQueries) {
-                // Every requested tag must be on the game
-                const tags = g.tags || [];
+                // Every requested tag must be on the game (either baked-in
+                // games.json tags or admin-applied custom tags).
+                const tags = effectiveTags(g);
                 if (tagQueries.every(t => tags.includes(t))) {
                     substringMatches.push(g);
                 }
@@ -703,9 +759,16 @@
             return;
         }
         wrap.hidden = false;
+        function pillInner(tag) {
+            const def = window.ArcadeAdminTags?.getTagDef?.(tag);
+            if (def && def.image) {
+                return `<img class="custom-tag-img" src="${esc(def.image)}" alt="#${esc(tag)}"><span class="active-tag-pill-name">#${esc(tag)}</span>`;
+            }
+            return `<span class="active-tag-pill-name">#${esc(tag)}</span>`;
+        }
         wrap.innerHTML = tagQueries.map(tag => `
             <button class="active-tag-pill" data-tag="${esc(tag)}" title="Remove this tag from filter">
-                <span class="active-tag-pill-name">#${esc(tag)}</span>
+                ${pillInner(tag)}
                 <span class="active-tag-pill-x">&times;</span>
             </button>
         `).join('') + (tagQueries.length > 1 ? `
@@ -926,13 +989,28 @@
             : '';
 
         // Render tags as clickable pills. Clicking one runs a tag search.
-        const tags = Array.isArray(g.tags) ? g.tags : [];
+        // Merge baked-in games.json tags with admin-applied custom tags.
+        // Custom tags can carry an image — render <img> inside the chip
+        // when present (fallback to `#name` text otherwise).
+        const tags = effectiveTags(g);
+        function renderInfoTagInner(t) {
+            const def = window.ArcadeAdminTags?.getTagDef?.(t);
+            if (def && def.image) {
+                return `<img class="custom-tag-img" src="${esc(def.image)}" alt="#${esc(t)}"><span>#${esc(t)}</span>`;
+            }
+            return `#${esc(t)}`;
+        }
         const tagsHtml = tags.length ? `
             <div class="game-info-tags">
                 ${tags.map(t =>
-                    `<button class="game-info-tag" data-tag="${esc(t)}">#${esc(t)}</button>`
+                    `<button class="game-info-tag" data-tag="${esc(t)}">${renderInfoTagInner(t)}</button>`
                 ).join('')}
             </div>` : '';
+
+        const isAdmin = !!window.ArcadeAuth?.isAdmin?.();
+        const adminTagBtn = isAdmin ? `
+            <button class="game-info-edit-tags" id="gameInfoEditTagsBtn" title="Edit custom tags for this game">&#9998; Edit Tags</button>
+        ` : '';
 
         overlay.innerHTML = `
             <div class="game-info-modal">
@@ -941,6 +1019,7 @@
                 <h2 class="game-info-title">${esc(g.title)}</h2>
                 <span class="game-info-category">${esc(g.category)}</span>
                 ${tagsHtml}
+                ${adminTagBtn}
                 <p class="game-info-desc">${esc(g.description)}</p>
                 <a class="game-info-play" href="play.html?game=${encodeURIComponent(g.id)}">Play Now</a>
             </div>`;
@@ -951,6 +1030,16 @@
             if (e.target === overlay) overlay.remove();
         });
         overlay.querySelector('.game-info-close').addEventListener('click', () => overlay.remove());
+
+        // Admin: open the per-game custom-tag picker. Modal stacks on top
+        // of the game info modal — closing it returns to the info view.
+        const editBtn = overlay.querySelector('#gameInfoEditTagsBtn');
+        if (editBtn) {
+            editBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                window.ArcadeAdminTags?.showApplyTagsModal?.(g);
+            });
+        }
 
         // Tag clicks → ADD `#tag` to the search box. If the search already
         // has tags, append to narrow the filter further (multi-tag AND).

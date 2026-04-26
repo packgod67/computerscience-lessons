@@ -3184,6 +3184,220 @@ body.auth-gated .player-container {
     color: #ef4444;
 }
 
+/* ===== Admin custom tags =====
+   Reuses the emoji modal aesthetic (file picker + grid) but with chip-style
+   previews so admins can see how tags will look once applied. Image tags
+   render as a 1.1em <img> inline; text tags fall back to `#name`. */
+
+.manage-tags-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.7rem;
+    margin-right: 0.6rem;
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s;
+}
+.manage-tags-btn:hover {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+
+.custom-tag-img {
+    height: 1.1em;
+    width: auto;
+    max-height: 18px;
+    vertical-align: middle;
+    margin-right: 0.25em;
+    border-radius: 3px;
+    object-fit: contain;
+}
+
+/* In active filter pills, give the image a hair more breathing room. */
+.active-tag-pill .custom-tag-img {
+    margin-right: 0.3em;
+}
+
+/* In game-info modal tag pills, support inline image+text. */
+.game-info-tag .custom-tag-img {
+    height: 16px;
+    margin-right: 0.3em;
+}
+
+.game-info-edit-tags {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.5rem;
+    padding: 0.4rem 0.8rem;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: color 0.15s, border-color 0.15s;
+}
+.game-info-edit-tags:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
+.custom-tag-create-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    margin: 0.6rem 0 1rem;
+    padding: 0.8rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+
+.custom-tag-upload-row {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.custom-tag-file-label {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.custom-tag-file-clear {
+    background: none;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--text-secondary);
+    font-size: 1rem;
+    padding: 0 0.4rem;
+    line-height: 1;
+    cursor: pointer;
+}
+.custom-tag-file-clear:hover { color: #ef4444; border-color: #ef4444; }
+
+.custom-tag-preview-row {
+    display: flex;
+    justify-content: center;
+    padding: 0.4rem 0;
+}
+.custom-tag-preview-img {
+    width: 64px;
+    height: 64px;
+    object-fit: contain;
+    border-radius: 6px;
+    background: var(--bg-secondary);
+    padding: 4px;
+}
+
+.custom-tag-manage-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 0.5rem;
+    max-height: 50vh;
+    overflow-y: auto;
+}
+
+.custom-tag-manage-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.45rem 0.6rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.custom-tag-manage-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.2rem;
+    padding: 0.15rem 0.45rem;
+    background: var(--bg-secondary);
+    border-radius: 999px;
+    font-size: 0.78rem;
+    flex-shrink: 0;
+}
+.custom-tag-manage-chip .custom-tag-img { height: 16px; margin-right: 2px; }
+.custom-tag-text { color: var(--text-primary); }
+
+.custom-tag-manage-name {
+    flex: 1;
+    color: var(--text-primary);
+    font-size: 0.78rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.custom-tag-delete-btn {
+    background: none;
+    border: none;
+    color: var(--text-secondary);
+    font-size: 1.05rem;
+    cursor: pointer;
+    padding: 0 0.25rem;
+    line-height: 1;
+    transition: color 0.15s;
+}
+.custom-tag-delete-btn:hover { color: #ef4444; }
+
+/* Per-game apply modal — toggle chips for every available custom tag. */
+.apply-tags-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+
+.apply-tag-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.75rem;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background 0.15s, color 0.15s, border-color 0.15s, transform 0.05s;
+}
+.apply-tag-chip:hover {
+    color: var(--text-primary);
+    border-color: var(--accent);
+}
+.apply-tag-chip:active { transform: scale(0.97); }
+.apply-tag-chip.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+}
+.apply-tag-chip .custom-tag-img { height: 18px; }
+
+@media (max-width: 600px) {
+    .custom-tag-manage-grid {
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    }
+    .apply-tag-chip { font-size: 0.75rem; padding: 0.3rem 0.6rem; }
+}
+
 /* ===== Theme Picker ===== */
 .theme-picker-wrapper {
     position: relative;
