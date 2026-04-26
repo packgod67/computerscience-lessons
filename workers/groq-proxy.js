@@ -72,20 +72,57 @@ function pickKey(env, names) {
     return null;
 }
 
-// Hosts this worker is allowed to proxy ROM downloads from. All archive.org
-// subdomains (archive.org, dn*.archive.org, ia*.archive.org) are safe
-// public file hosting — no auth, no abuse surface. raw.githubusercontent.com
-// is also allowed for ROMs hosted in public GitHub repos (useful for hacks
-// that don't have an archive.org item, e.g. Pokemon Quartz). Anything else
-// returns 403.
-const ROM_ALLOWED_HOSTS = [
-    'archive.org',
-    'us.archive.org',
-    'ca.archive.org',
-    'dn720006.ca.archive.org',
-    'raw.githubusercontent.com',
-    // Wildcards matched via endsWith('.archive.org') below
-];
+// Hosts the ROM proxy will fetch from. The full allow-list is checked
+// in `isHostAllowed()` below, which understands wildcards. Anything else
+// returns 403. Adding a host here means we trust its content and our
+// users to not abuse it as a generic open proxy.
+//
+// Mix of:
+//   - Archive.org (primary retail-ROM source)
+//   - GitHub family (ROM hacks in repos, big files via Releases)
+//   - Mirroring CDNs (jsDelivr, Statically — both proxy GitHub)
+//   - Other code-hosting platforms (GitLab, Codeberg) for projects
+//     that moved off GitHub
+//   - Cloudflare Pages / R2 — for self-hosted ROM mirrors
+//   - itch.io's underlying CDN (game assets, occasionally needed for
+//     CORS-blocked fetches inside iframed itch games)
+const ROM_ALLOWED_HOSTS_DOC = `
+  archive.org and *.archive.org      retail console ROMs
+  raw.githubusercontent.com          GitHub raw files (100 MB cap)
+  objects.githubusercontent.com      GitHub Releases assets (up to 2 GB)
+  github.com                         direct repo URLs (rare)
+  cdn.jsdelivr.net                   GitHub + npm CDN proxy
+  cdn.statically.io                  alt CDN proxy for GitHub
+  gitlab.com                         GitLab raw URLs
+  *.gitlab.io                        GitLab Pages
+  codeberg.org                       Gitea-based GitHub alternative
+  *.pages.dev                        Cloudflare Pages
+  *.r2.dev                           Cloudflare R2 public buckets
+  *.itch.zone                        itch.io game asset CDN
+`;
+
+function isHostAllowed(host) {
+    // archive.org and any subdomain (us.archive.org, dn720006.ca.archive.org, …)
+    if (host === 'archive.org' || host.endsWith('.archive.org')) return true;
+
+    // Exact-match hosts
+    const exact = new Set([
+        'raw.githubusercontent.com',
+        'objects.githubusercontent.com',
+        'github.com',
+        'cdn.jsdelivr.net',
+        'cdn.statically.io',
+        'gitlab.com',
+        'codeberg.org',
+    ]);
+    if (exact.has(host)) return true;
+
+    // Wildcard suffixes — any subdomain of these
+    const suffixes = ['.gitlab.io', '.pages.dev', '.r2.dev', '.itch.zone'];
+    for (const s of suffixes) if (host.endsWith(s)) return true;
+
+    return false;
+}
 
 export default {
     async fetch(request, env) {
@@ -111,11 +148,7 @@ export default {
                 return json({ error: 'https only' }, 400);
             }
             const host = target.hostname;
-            const allowed =
-                host.endsWith('.archive.org') ||
-                host === 'archive.org' ||
-                host === 'raw.githubusercontent.com';
-            if (!allowed) {
+            if (!isHostAllowed(host)) {
                 return json({ error: 'host not allowed', host }, 403);
             }
 

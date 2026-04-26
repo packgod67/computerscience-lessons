@@ -64,6 +64,25 @@ or category. Use it as a pre-flight check after batch-adding games.
   the LLM proxy + ROM proxy + needs manual redeploy from
   `workers/groq-proxy.js` whenever you change it. Source-of-truth
   is the file, NOT the dashboard.
+  - **ROM-proxy allowed hosts** (anything else returns 403):
+    | Host | What it's for |
+    | --- | --- |
+    | `archive.org` and `*.archive.org` | retail console ROMs |
+    | `raw.githubusercontent.com` | GitHub raw files (100 MB cap) |
+    | `objects.githubusercontent.com` | GitHub Releases (2 GB/file) |
+    | `github.com` | direct repo URLs (rare) |
+    | `cdn.jsdelivr.net` | GitHub + npm CDN proxy |
+    | `cdn.statically.io` | alt CDN proxy for GitHub |
+    | `gitlab.com` | GitLab raw URLs |
+    | `*.gitlab.io` | GitLab Pages |
+    | `codeberg.org` | Gitea-based GitHub alternative |
+    | `*.pages.dev` | Cloudflare Pages |
+    | `*.r2.dev` | Cloudflare R2 public buckets |
+    | `*.itch.zone` | itch.io game asset CDN |
+  - When sourcing a new game ROM, prefer hosts already in this
+    list. If the only working source is on a host NOT here, add
+    it (with a comment justifying why) — but be skeptical: any
+    new host expands the abuse surface of the open proxy.
 - **`/play/`** subdir hosts the BSD-licensed Play! PS2 emulator
   build with a URL-loader shim, IDB cache, parallel-Range downloader,
   and Background Fetch support. Path-scoped service workers handle
