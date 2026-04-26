@@ -6611,6 +6611,63 @@ body.theme-transitioning * {
 }
 
 /* =========================================================================
+   Active tag-filter pills — shows below the search bar when the user
+   has #tag queries, lets them remove each tag individually so combining
+   tags is discoverable. Toggled visibility via [hidden] from app.js.
+   ========================================================================= */
+.active-tag-pills {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 8px;
+    padding: 0 4px;
+}
+.active-tag-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px 4px 12px;
+    background: color-mix(in oklab, var(--accent) 18%, var(--bg-card));
+    color: var(--text-primary);
+    border: 1px solid color-mix(in oklab, var(--accent) 40%, var(--border));
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.15s, border-color 0.15s, transform 0.05s;
+}
+.active-tag-pill:hover {
+    background: color-mix(in oklab, var(--accent) 30%, var(--bg-card));
+    border-color: var(--accent);
+}
+.active-tag-pill:active { transform: scale(0.97); }
+.active-tag-pill-x {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.1);
+    font-size: 0.85rem;
+    line-height: 1;
+}
+.active-tag-pill:hover .active-tag-pill-x {
+    background: rgba(255, 255, 255, 0.25);
+}
+.active-tag-pill-clear {
+    background: transparent;
+    color: var(--text-secondary);
+    border-color: var(--border);
+    font-weight: 500;
+}
+.active-tag-pill-clear:hover {
+    background: var(--bg-card);
+    color: var(--text-primary);
+    border-color: var(--text-secondary);
+}
+
+/* =========================================================================
    PS2 "Get ROM" modal — auto vs manual download options
    ========================================================================= */
 .ps2-get-modal { max-width: 540px; }

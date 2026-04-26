@@ -41,9 +41,13 @@
                         <circle cx="11" cy="11" r="8"/>
                         <path d="m21 21-4.35-4.35"/>
                     </svg>
-                    <input type="text" id="search" class="search-input" placeholder="Search games or #tag...">
+                    <input type="text" id="search" class="search-input" placeholder="Search games or #tag (combine: #rpg #roguelite)">
                     <button id="randomGameBtn" class="random-btn" title="Random game" aria-label="Random game">&#127922;</button>
                 </div>
+                <!-- Active tag-filter pills, populated by app.js when the
+                     search box has #tag queries. Each pill has a × to
+                     remove just that one tag. Hidden when no tags active. -->
+                <div class="active-tag-pills" id="activeTagPills" hidden></div>
                 <div class="controls-row">
                     <!-- Mobile dropdown — only visible on small screens. Shows
                          the active category and opens a full category picker

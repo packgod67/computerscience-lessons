@@ -401,6 +401,7 @@
                 .map(t => t.slice(1));
             query = ''; // suppress text search when in tag mode
         }
+        renderActiveTagPills(tagQueries);
 
         // First pass: substring matches (fast path, covers 99% of typing)
         const substringMatches = [];
@@ -688,6 +689,50 @@
         }
     }
 
+    // ─── Active tag-filter pills ──────────────────────────────────────
+    // Renders the tags the user is currently filtering by as removable
+    // chips below the search bar. Each chip has × to drop just that tag.
+    // Hidden when there are no tags active. Helps users see what's
+    // narrowing their results and combine multiple tags discoverably.
+    function renderActiveTagPills(tagQueries) {
+        const wrap = document.getElementById('activeTagPills');
+        if (!wrap) return;
+        if (!tagQueries || tagQueries.length === 0) {
+            wrap.hidden = true;
+            wrap.innerHTML = '';
+            return;
+        }
+        wrap.hidden = false;
+        wrap.innerHTML = tagQueries.map(tag => `
+            <button class="active-tag-pill" data-tag="${esc(tag)}" title="Remove this tag from filter">
+                <span class="active-tag-pill-name">#${esc(tag)}</span>
+                <span class="active-tag-pill-x">&times;</span>
+            </button>
+        `).join('') + (tagQueries.length > 1 ? `
+            <button class="active-tag-pill active-tag-pill-clear" id="clearAllTagsBtn" title="Clear all tag filters">Clear all</button>
+        ` : '');
+        wrap.querySelectorAll('.active-tag-pill[data-tag]').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const remaining = tagQueries.filter(t => t !== btn.dataset.tag);
+                searchInput.value = remaining.length ? remaining.map(t => '#' + t).join(' ') : '';
+                currentPage = 0;
+                gameGrid.innerHTML = '';
+                applyFilters();
+                renderPage();
+            });
+        });
+        const clearBtn = document.getElementById('clearAllTagsBtn');
+        if (clearBtn) {
+            clearBtn.addEventListener('click', () => {
+                searchInput.value = '';
+                currentPage = 0;
+                gameGrid.innerHTML = '';
+                applyFilters();
+                renderPage();
+            });
+        }
+    }
+
     // ─── PS2 "Get ROM" modal ──────────────────────────────────────────
     // Shown when a user clicks the pre-download chip on a PS2 card.
     // Two routes: auto (Background Fetch via worker) or manual (download
@@ -907,12 +952,26 @@
         });
         overlay.querySelector('.game-info-close').addEventListener('click', () => overlay.remove());
 
-        // Tag clicks → put `#tag` into the search box and filter. Closes modal.
+        // Tag clicks → ADD `#tag` to the search box. If the search already
+        // has tags, append to narrow the filter further (multi-tag AND).
+        // If the same tag is already there, remove it (toggle).
         overlay.querySelectorAll('.game-info-tag').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 e.stopPropagation();
                 const tag = btn.dataset.tag;
-                searchInput.value = '#' + tag;
+                const current = searchInput.value.trim();
+                const tagsInBox = current.startsWith('#')
+                    ? current.split(/\s+/).filter(t => t.startsWith('#')).map(t => t.slice(1))
+                    : [];
+                let nextTags;
+                if (tagsInBox.includes(tag)) {
+                    // Already filtering by this tag — clicking again removes it (toggle).
+                    nextTags = tagsInBox.filter(t => t !== tag);
+                } else {
+                    // Add to existing filter (or start a new one if the box was empty).
+                    nextTags = [...tagsInBox, tag];
+                }
+                searchInput.value = nextTags.length ? nextTags.map(t => '#' + t).join(' ') : '';
                 activeCategory = 'all';
                 updateCategoryButtons();
                 currentPage = 0;
