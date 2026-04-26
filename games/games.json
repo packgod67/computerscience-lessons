@@ -8773,7 +8773,7 @@
     "title": "Gun Knight",
     "category": "Adventure",
     "path": "games/clgunknight.html",
-    "description": "Itch.io roguelike shooter — a knight wielding gun magic, collecting modular weapon parts each run. Inspired by Enter the Gungeon and Binding of Isaac. Opens at itch.io.",
+    "description": "Itch.io roguelike shooter — a knight wielding gun magic, collecting modular weapon parts each run. Inspired by Enter the Gungeon and Binding of Isaac.",
     "popular": false,
     "rom": null,
     "thumbnail": "https://img.itch.zone/aW1nLzI3NjM4NjUucG5n/original/yEt%2Fn0.png",
@@ -8784,7 +8784,6 @@
       "fantasy",
       "indie",
       "itch",
-      "external",
       "roguelite",
       "roguelike",
       "permadeath",
@@ -15559,7 +15558,7 @@
     "id": "clpokeemeraldrogueex",
     "title": "Pokemon Emerald Rogue EX",
     "category": "Pokemon",
-    "path": "games/clPokeEmeraldRogueEX.html",
+    "path": "games/clpokeemeraldrogueex.html",
     "description": "Expanded successor to Emerald Rogue — more starters, more difficulty modifiers, optional fakedex packs, brand-new run modifiers.",
     "tags": [
       "pokemon",
@@ -15576,7 +15575,8 @@
       "meta-progression"
     ],
     "rom": "gba",
-    "popular": true
+    "popular": true,
+    "thumbnail": "https://pokemonrom.net/wp-content/uploads/2023/04/Pokemon_Emerald_Rogue_ROM.png"
   },
   {
     "id": "clPokeEmeraldRogueEX",
@@ -27077,5 +27077,76 @@
       "rpg"
     ],
     "addedAt": "2026-04-26T09:23:26.006Z"
+  },
+  {
+    "id": "clbrotato",
+    "title": "Brotato",
+    "category": "Action",
+    "path": "games/clbrotato.html",
+    "description": "Top-down arena auto-attacker — play a potato wielding 6 weapons, survive 20-minute waves, pick stat upgrades between waves. Bullet-heaven energy with build variety.",
+    "popular": true,
+    "rom": null,
+    "thumbnail": "https://www1.minijuegosgratis.com/v3/games/thumbnails/250804_1.jpg",
+    "tags": [
+      "action",
+      "arcade",
+      "html5",
+      "roguelite",
+      "bullet-heaven",
+      "auto-attacker",
+      "run-based",
+      "permadeath",
+      "meta-progression",
+      "arena-roguelite"
+    ],
+    "addedAt": "2026-04-26T09:33:05.154Z"
+  },
+  {
+    "id": "cldiceofdusk",
+    "title": "Dice of Dusk",
+    "category": "Adventure",
+    "path": "games/cldiceofdusk.html",
+    "description": "Dice-rolling deckbuilder roguelite — mix & match dice abilities, fight bosses across procgen runs. Tight, quick sessions.",
+    "popular": false,
+    "rom": null,
+    "thumbnail": "https://img.itch.zone/aW1nLzI2MjczMTg2LmdpZg==/original/FZaoBB.gif",
+    "tags": [
+      "strategy",
+      "turn-based",
+      "html5",
+      "itch",
+      "roguelite",
+      "card-roguelite",
+      "deck-builder",
+      "dice",
+      "run-based",
+      "meta-progression",
+      "permadeath"
+    ],
+    "addedAt": "2026-04-26T09:33:05.154Z"
+  },
+  {
+    "id": "clcultofpin",
+    "title": "Cult of PiN",
+    "category": "Adventure",
+    "path": "games/clcultofpin.html",
+    "description": "Pinball roguelite from kennymakesgames — smack the ball through cult-themed dungeons, pick upgrades between rooms. Charming pixel art.",
+    "popular": false,
+    "rom": null,
+    "thumbnail": "https://img.itch.zone/aW1nLzE3OTM3OTQ1LnBuZw==/original/yEt%2Fn0.png",
+    "tags": [
+      "action",
+      "arcade",
+      "html5",
+      "itch",
+      "pinball",
+      "roguelite",
+      "roguelike",
+      "permadeath",
+      "procgen",
+      "run-based",
+      "pixel-art"
+    ],
+    "addedAt": "2026-04-26T09:33:05.154Z"
   }
 ]
