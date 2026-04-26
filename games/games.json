@@ -21551,9 +21551,15 @@
   },
   {
     "id": "clstationsaturn",
-    "title": "Clstationsaturn",
-    "category": "Other",
-    "path": "games/clstationsaturn.html"
+    "title": "Station Saturn",
+    "category": "Shooter",
+    "path": "games/clstationsaturn.html",
+    "description": "Fast-paced endless first-person shooter set in a voxel space station — blast waves of robots with momentum-based movement and gamepad support.",
+    "popular": false,
+    "rom": null,
+    "tags": ["fps", "first-person", "shooter", "endless", "voxel", "fast-paced", "robots", "arcade-shooter", "singleplayer", "gamepad", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzExNDMzMzU2LnBuZw==/original/IvErVH.png",
+    "addedAt": "2026-04-26T15:30:00.000Z"
   },
   {
     "id": "clsteakandjake",
@@ -28997,5 +29003,29 @@
     "tags": ["tower-defense", "base-building", "factory", "zombies", "futuristic", "2d", "strategy", "mobile", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1hZ2UvMjQxODEwLzExNTMzMTgucG5n/original/UtG3OL.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
+  },
+  {
+    "id": "clfallenties",
+    "title": "Fallen Ties",
+    "category": "Adventure",
+    "path": "games/clfallenties.html",
+    "description": "First-person immersive sim where you board a luxury cruise ship as a spy, sneak through its corridors, and uncover the secrets of its passengers across multiple endings.",
+    "popular": false,
+    "rom": null,
+    "tags": ["immersive-sim", "first-person", "stealth", "adventure", "atmospheric", "mystery", "multiple-endings", "3d", "godot", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2ODYxNTUwLnBuZw==/original/R3Jh%2BP.png",
+    "addedAt": "2026-04-26T15:30:00.000Z"
+  },
+  {
+    "id": "clnxtwpn10",
+    "title": "NXTWPN10",
+    "category": "Shooter",
+    "path": "games/clnxtwpn10.html",
+    "description": "Minimalist arena shooter where your weapon swaps every 10 seconds — adapt fast, blast through enemies, and clear the run before the timer flips again.",
+    "popular": false,
+    "rom": null,
+    "tags": ["arena-shooter", "shooter", "arcade", "fast-paced", "minimalist", "short", "singleplayer", "weapon-swap", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzIzMTg2Njk2LnBuZw==/original/QZDtAD.png",
+    "addedAt": "2026-04-26T15:30:00.000Z"
   }
 ]
