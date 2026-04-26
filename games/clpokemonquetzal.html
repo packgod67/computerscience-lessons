@@ -120,7 +120,29 @@
                 EJS_netplayServer = (window.parent && window.parent.ARCADE_CONFIG && window.parent.ARCADE_CONFIG.netplayServer)
                     || "https://arcade-netplay-relay.onrender.com";
                 EJS_gameUrl = "https://cdn.jsdelivr.net/gh/bubbls/UGS-file-encryption@d40fb3bf8cd8db6131e55cf6970ce2a85be36f7d/PokemonQuetzalEnglishAlpha8v2.zip";
-                loadGame();  
+
+                // Force-unhide the netplay button. EJS's checkSupportedOpts()
+                // runs early in init and may hide netplay/saveState/loadState
+                // before our globals have populated this.config. After we see
+                // a netplayEnabled+netplayUrl+gameId-as-number combo through
+                // diagnostics it stays display:none because no code re-shows
+                // it. Poll until the button appears, then unhide.
+                var unhideTries = 0;
+                var unhideTimer = setInterval(function() {
+                    var btn = window.EJS_emulator
+                        && window.EJS_emulator.elements
+                        && window.EJS_emulator.elements.bottomBar
+                        && window.EJS_emulator.elements.bottomBar.netplay
+                        && window.EJS_emulator.elements.bottomBar.netplay[0];
+                    if (btn) {
+                        btn.style.display = '';
+                        clearInterval(unhideTimer);
+                    } else if (++unhideTries > 60) {
+                        clearInterval(unhideTimer);
+                    }
+                }, 500);
+
+                loadGame();
             }
             document.getElementById("startButton").addEventListener("click", startGame);
             function loadGame() {
