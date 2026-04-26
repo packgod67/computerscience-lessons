@@ -1,6 +1,10 @@
 node_modules/
-package.json
-package-lock.json
+# Anchor with leading / so this only ignores root-level package.json
+# (a leftover from old root-package experiments). Subdirectory
+# package.json files like netplay-server/package.json need to be
+# committed for their respective deploy targets.
+/package.json
+/package-lock.json
 import_games.py
 screenshot_games.js
 split_games.py
