@@ -15520,57 +15520,70 @@
     "title": "Pokemon Emerald Rogue",
     "category": "Pokemon",
     "path": "games/clpokeemeraldrogue.html",
-    "description": "A groundbreaking roguelike hack of Pokemon Emerald. Each run generates random routes, encounters, and challenges. Collect items, build a team, and try to beat all 8 Gyms in a single run. Death means starting over. Features Pokemon from all generations and unlockable perks between runs.",
+    "description": "GBA roguelite hack — pick a starter, plow through randomized routes and gym leaders, lose a battle = run over. The original Pokemon roguelite that kicked off the whole subgenre.",
     "thumbnail": "https://static.pokemoncoders.com/wp-content/uploads/2022/11/EmeraldRogueFeature.jpg",
     "rom": "gba",
     "tags": [
-      "gba",
-      "hack",
-      "hacking",
+      "pokemon",
       "jrpg",
       "monster-tamer",
-      "pokemon",
-      "retro",
-      "roguelike",
       "rpg",
-      "turn-based"
-    ]
+      "turn-based",
+      "gba",
+      "rom-hack",
+      "roguelite",
+      "run-based",
+      "permadeath",
+      "monster-tamer-roguelite",
+      "meta-progression"
+    ],
+    "popular": true
   },
   {
     "id": "clpokeemeraldrogueex",
     "title": "Pokemon Emerald Rogue EX",
     "category": "Pokemon",
     "path": "games/clPokeEmeraldRogueEX.html",
-    "description": "The expanded edition of Emerald Rogue with even more Pokemon, items, challenges, and unlockables. This roguelike experience generates a new adventure each run with random routes, trainers, and wild encounters. Features enhanced difficulty modes and more strategic depth.",
+    "description": "Expanded successor to Emerald Rogue — more starters, more difficulty modifiers, optional fakedex packs, brand-new run modifiers.",
     "tags": [
-      "hard",
-      "jrpg",
-      "meta",
-      "monster-tamer",
       "pokemon",
-      "roguelike",
+      "jrpg",
+      "monster-tamer",
       "rpg",
-      "turn-based"
-    ]
+      "turn-based",
+      "gba",
+      "rom-hack",
+      "roguelite",
+      "run-based",
+      "permadeath",
+      "monster-tamer-roguelite",
+      "meta-progression"
+    ],
+    "rom": "gba",
+    "popular": true
   },
   {
     "id": "clPokeEmeraldRogueEX",
     "title": "Pokemon Emerald Rogue EX",
-    "category": "Retro",
+    "category": "Pokemon",
     "path": "games/clPokeEmeraldRogueEX.html",
     "thumbnail": "assets/thumbnails/platforms/gba.png",
     "rom": "gba",
     "tags": [
-      "gba",
-      "hack",
+      "pokemon",
       "jrpg",
       "monster-tamer",
-      "pokemon",
-      "retro",
-      "roguelike",
       "rpg",
-      "turn-based"
-    ]
+      "turn-based",
+      "gba",
+      "rom-hack",
+      "roguelite",
+      "run-based",
+      "permadeath",
+      "monster-tamer-roguelite",
+      "meta-progression"
+    ],
+    "description": "Expanded successor to Emerald Rogue — more starters, more difficulty modifiers, optional fakedex packs, brand-new run modifiers."
   },
   {
     "id": "clpokeemeraldz",
@@ -16032,20 +16045,24 @@
   },
   {
     "id": "clpokemonemeraldrouge",
-    "title": "Pokemon Emerald Rogue (Alt)",
+    "title": "Pokemon Emerald Rogue (alt)",
     "category": "Pokemon",
     "path": "games/clPokemonemeraldrouge.html",
-    "description": "An alternate build of the popular Emerald Rogue roguelike hack. Procedurally generated routes and encounters make every run unique. Build your team strategically, defeat Gym Leaders, and try to complete the Pokemon League before your run ends.",
+    "description": "Alternate dump of Pokemon Emerald Rogue. Same roguelite gameplay; kept around in case the main entry has issues.",
     "tags": [
-      "hack",
-      "hacking",
+      "pokemon",
       "jrpg",
       "monster-tamer",
-      "pokemon",
-      "roguelike",
       "rpg",
-      "turn-based"
-    ]
+      "turn-based",
+      "gba",
+      "rom-hack",
+      "roguelite",
+      "run-based",
+      "permadeath",
+      "monster-tamer-roguelite"
+    ],
+    "rom": "gba"
   },
   {
     "id": "clpokemonemeraldseaglass",
@@ -16269,20 +16286,22 @@
     "title": "Pokemon Mystery Dungeon: Red Rescue Team",
     "category": "Pokemon",
     "path": "games/clpokemonmysterydungeon.html",
-    "description": "You wake up as a Pokemon with no memory of being human! Form a rescue team and explore randomly generated dungeons in this roguelike spinoff. Recruit over 400 Pokemon to your team, take on rescue missions, and uncover the mystery of your transformation and the natural disasters plaguing the world.",
+    "description": "Classic dungeon-crawler — you ARE a Pokemon, exploring procgen dungeons floor by floor, recruiting partners, dying = back to entrance with item loss. The genre OG for monster-tamer roguelikes.",
     "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Pokemon%20Mystery%20Dungeon%20-%20Red%20Rescue%20Team%20%28USA%2C%20Australia%29.png",
     "rom": "gba",
     "tags": [
-      "gba",
-      "hack",
-      "jrpg",
-      "monster-tamer",
       "pokemon",
-      "retro",
-      "roguelike",
+      "monster-tamer",
       "rpg",
-      "turn-based"
-    ]
+      "turn-based",
+      "gba",
+      "roguelike",
+      "dungeon-crawler",
+      "permadeath",
+      "procgen",
+      "monster-tamer-roguelite"
+    ],
+    "popular": true
   },
   {
     "id": "clpokemonperfectemerald5-5",
@@ -16796,15 +16815,22 @@
     "title": "Pokemon Mystery Dungeon: Explorers of Sky",
     "category": "Pokemon",
     "path": "games/clpokemysteryexplorersofsky.html",
-    "description": "The definitive version of the Explorers series with one of the most emotional stories in any Pokemon game. Join an exploration guild, travel through time, and save the world from a dark future. Features new starter Pokemon, Special Episodes that expand the story, and the beloved Grovyle storyline.",
+    "description": "The definitive Mystery Dungeon entry — bigger sequel duology with a deeper story, more recruitable mons, harder dungeons. Considered the best PMD by most fans.",
     "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%20DS/Named_Boxarts/Pokemon%20Mystery%20Dungeon%20-%20Explorers%20of%20Sky%20%28USA%29.png",
     "tags": [
-      "jrpg",
-      "monster-tamer",
       "pokemon",
+      "monster-tamer",
       "rpg",
-      "turn-based"
-    ]
+      "turn-based",
+      "ds",
+      "roguelike",
+      "dungeon-crawler",
+      "permadeath",
+      "procgen",
+      "monster-tamer-roguelite"
+    ],
+    "rom": "ds",
+    "popular": true
   },
   {
     "id": "clpokenameless",
@@ -17238,20 +17264,20 @@
     "title": "Pokemon Run and Bun",
     "category": "Pokemon",
     "path": "games/clpokerunandbun.html",
-    "description": "A fast-paced roguelike Pokemon hack where speed and efficiency matter. Make quick decisions, build a team on the fly, and race through challenges. Features randomized elements, time pressure mechanics, and a unique blend of Pokemon battling and speedrun-style gameplay.",
+    "description": "Brutal Emerald difficulty hack with run-based design philosophy — every fight is a tactical puzzle, every loss teaches you something for the next attempt.",
     "tags": [
-      "card-game",
-      "hack",
-      "hacking",
+      "pokemon",
       "jrpg",
       "monster-tamer",
-      "pokemon",
-      "racing",
-      "randomizer",
-      "roguelike",
       "rpg",
-      "turn-based"
-    ]
+      "turn-based",
+      "gba",
+      "rom-hack",
+      "difficulty-hack",
+      "tactical",
+      "run-based"
+    ],
+    "rom": "gba"
   },
   {
     "id": "clpokescorchedsilver",
@@ -18662,15 +18688,37 @@
   },
   {
     "id": "clroguesoul",
-    "title": "Clroguesoul",
-    "category": "Other",
-    "path": "games/clroguesoul.html"
+    "title": "Rogue Soul",
+    "category": "Adventure",
+    "path": "games/clroguesoul.html",
+    "description": "Fast-paced 2D action roguelite — slash through procgen levels, die a lot, unlock new abilities between runs. Quick sessions, heavy meta-progression.",
+    "tags": [
+      "action",
+      "platformer",
+      "html5",
+      "roguelite",
+      "permadeath",
+      "2d-roguelite",
+      "run-based",
+      "meta-progression"
+    ]
   },
   {
     "id": "clroguesoul2",
-    "title": "Clroguesoul 2",
-    "category": "Other",
-    "path": "games/clroguesoul2.html"
+    "title": "Rogue Soul 2",
+    "category": "Adventure",
+    "path": "games/clroguesoul2.html",
+    "description": "Sequel to Rogue Soul with bigger biomes, more abilities, deeper meta-progression. More polished and forgiving than the original.",
+    "tags": [
+      "action",
+      "platformer",
+      "html5",
+      "roguelite",
+      "permadeath",
+      "2d-roguelite",
+      "run-based",
+      "meta-progression"
+    ]
   },
   {
     "id": "clrollerballer",
@@ -21140,9 +21188,22 @@
   },
   {
     "id": "clspelunky",
-    "title": "Clspelunky",
-    "category": "Other",
-    "path": "games/clspelunky.html"
+    "title": "Spelunky",
+    "category": "Adventure",
+    "path": "games/clspelunky.html",
+    "description": "The indie that defined modern roguelites — procgen caves, permadeath, tightly-integrated mechanics where every item interacts with every other. Required reading.",
+    "tags": [
+      "action",
+      "platformer",
+      "html5",
+      "roguelite",
+      "permadeath",
+      "procgen",
+      "2d-roguelite",
+      "run-based",
+      "classic"
+    ],
+    "popular": true
   },
   {
     "id": "clspewer",
@@ -24450,12 +24511,23 @@
   },
   {
     "id": "clvampiresurvivors",
-    "title": "Clvampiresurvivors",
-    "category": "Other",
+    "title": "Vampire Survivors",
+    "category": "Action",
     "path": "games/clvampiresurvivors.html",
     "tags": [
-      "horror"
-    ]
+      "action",
+      "arcade",
+      "html5",
+      "roguelite",
+      "bullet-heaven",
+      "auto-attacker",
+      "run-based",
+      "permadeath",
+      "meta-progression",
+      "2d-roguelite"
+    ],
+    "description": "The reverse-bullet-hell that started a whole subgenre — survive ever-thicker hordes by picking weapon/passive synergies. Auto-attack, you only move. Massive replayability.",
+    "popular": true
   },
   {
     "id": "clvanguard",
@@ -26964,5 +27036,30 @@
     "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation%202/Named_Boxarts/Gran%20Turismo%204%20(USA)%20(v1.01).png",
     "addedAt": "2026-04-23T20:55:19.635Z",
     "archiveRomUrl": "https://archive.org/download/scus-973.28.-gran-turismo-4/SCUS_973.28.Gran%20Turismo%204.iso"
+  },
+  {
+    "id": "clpokerogue",
+    "title": "PokeRogue",
+    "category": "Pokemon",
+    "path": "games/clpokerogue.html",
+    "description": "Browser-native fan Pokemon roguelite — endless biome runs with permadeath, candies, IV/EV stat shards, and cross-gen mons. Hugely popular community project. Optional account for cloud saves.",
+    "popular": true,
+    "rom": null,
+    "thumbnail": "https://pokerogue.net/images/logo.png",
+    "tags": [
+      "pokemon",
+      "jrpg",
+      "monster-tamer",
+      "roguelite",
+      "run-based",
+      "permadeath",
+      "meta-progression",
+      "monster-tamer-roguelite",
+      "browser-native",
+      "html5",
+      "turn-based",
+      "rpg"
+    ],
+    "addedAt": "2026-04-26T09:23:26.006Z"
   }
 ]
