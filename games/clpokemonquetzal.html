@@ -94,6 +94,17 @@
                 //   if !netplayEnabled: bottomBar.netplay[0].style.display="none"
                 EJS_DEBUG_XX = true;
                 EJS_EXPERIMENTAL_NETPLAY = true;
+                // EJS_gameID is REQUIRED for the netplay button to render —
+                // without it, the visibility check fails:
+                //   "number" === typeof this.config.gameId
+                //     && this.config.netplayUrl
+                //     && !1 !== this.netplayEnabled
+                // Numeric ID also scopes netplay rooms — only players with the
+                // same gameID see each other's open rooms (so Quetzal players
+                // don't end up matchmaking with random Pokemon Emerald players).
+                // Picked an arbitrary 7-digit ID; any other Quetzal wrapper on
+                // the arcade should use the same number to share rooms.
+                EJS_gameID = 4567890;
                 // Switched from the a456pur/seraph fork to the official
                 // EmulatorJS CDN. The fork strips the netplay button
                 // from the toolbar UI even though the protocol code is
