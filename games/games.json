@@ -28661,5 +28661,113 @@
     "tags": ["endless-runner", "meme", "shitpost", "survival", "godot", "short", "mobile", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1nLzE4Mjk2NDI2LmpwZw==/original/%2FhsS42.jpg",
     "addedAt": "2026-04-26T14:00:00.000Z"
+  },
+  {
+    "id": "clspongremastered",
+    "title": "One Night with Spong: Remastered",
+    "category": "Horror",
+    "path": "games/clspongremastered.html",
+    "description": "Remastered edition of the original FNAF/SpongeBob parody — point-and-click survive-the-night meme horror, redone with updated visuals.",
+    "popular": false,
+    "rom": null,
+    "tags": ["fnaf", "horror", "parody", "spongebob", "fangame", "meme", "remaster", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzg5MzUzNzEuanBn/original/To0ZXt.jpg",
+    "addedAt": "2026-04-26T14:15:00.000Z"
+  },
+  {
+    "id": "clnathaniel",
+    "title": "One Night with Spong: Nathaniel's Origins",
+    "category": "Horror",
+    "path": "games/clnathaniel.html",
+    "description": "Prequel teaser to the One Night with Spong series — short 2D meme parody exploring lore origins of the Spongebob FNAF saga.",
+    "popular": false,
+    "rom": null,
+    "tags": ["fnaf", "horror", "parody", "spongebob", "fangame", "meme", "prequel", "2d", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzgxNzY5MjcuanBn/original/H7Y93x.jpg",
+    "addedAt": "2026-04-26T14:15:00.000Z"
+  },
+  {
+    "id": "clnapoli2027",
+    "title": "Napoli 2027",
+    "category": "Adventure",
+    "path": "games/clnapoli2027.html",
+    "description": "Italian-language meme survival game set in a dystopian 2027 Naples — short comedic shitpost adventure from MYCUS.",
+    "popular": false,
+    "rom": null,
+    "tags": ["meme", "survival", "italian", "shitpost", "comedy", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzg0NjA5NTcucG5n/original/JQtG8n.png",
+    "addedAt": "2026-04-26T14:15:00.000Z"
+  },
+  {
+    "id": "clflyingchad",
+    "title": "Flying Chad",
+    "category": "Other",
+    "path": "games/clflyingchad.html",
+    "description": "Flappy Bird clone where you tap to make Gigachad flap through obstacles — one-button casual meme arcade game.",
+    "popular": false,
+    "rom": null,
+    "tags": ["flappy-bird", "casual", "meme", "one-button", "arcade", "gigachad", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzE0NDQzNzcxLnBuZw==/original/LswzAh.png",
+    "addedAt": "2026-04-26T14:15:00.000Z"
+  },
+  {
+    "id": "clboners",
+    "title": "Shootjak Boners",
+    "category": "Shooter",
+    "path": "games/clboners.html",
+    "description": "Soyjak-themed 3D maze shooter with creepy survival-horror vibes — escape the maze while blasting through Boners in this meme webcomic FPS.",
+    "popular": false,
+    "rom": null,
+    "tags": ["shooter", "fps", "3d", "survival-horror", "maze", "soyjak", "meme", "creepy", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzE3OTMyNTU2LnBuZw==/original/Vp7QVo.png",
+    "addedAt": "2026-04-26T14:15:00.000Z"
+  },
+  {
+    "id": "clrampagerobins",
+    "title": "Rampaging Robins",
+    "category": "Puzzle",
+    "path": "games/clrampagerobins.html",
+    "description": "Angry Birds-style physics puzzler meme fangame — slingshot rampaging robins at structures in this short 2D alpha build.",
+    "popular": false,
+    "rom": null,
+    "tags": ["puzzle", "physics", "angry-birds", "slingshot", "meme", "fangame", "2d", "alpha", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzE5NDI2NTAxLnBuZw==/original/1upX4w.png",
+    "addedAt": "2026-04-26T14:15:00.000Z"
+  },
+  {
+    "id": "clpenguinstrike",
+    "title": "Penguin Strike",
+    "category": "Sports",
+    "path": "games/clpenguinstrike.html",
+    "description": "Bowl with a penguin: a quirky strike-the-pins novelty game, the first of five 'bad, no good, weird games' from Lucky Catapult.",
+    "popular": false,
+    "rom": null,
+    "tags": ["bowling", "arcade", "weird", "short", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzMzNDkxOTEucG5n/original/ZGUj8o.png",
+    "addedAt": "2026-04-26T14:15:00.000Z"
+  },
+  {
+    "id": "clfreakybob",
+    "title": "Don't Kill Freaky Bob",
+    "category": "Other",
+    "path": "games/clfreakybob.html",
+    "description": "Tiny meme game with one rule in the title: please do not kill Freaky Bob. Resist the urge.",
+    "popular": false,
+    "rom": null,
+    "tags": ["meme", "short", "novelty", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzE2MzgzMjg5LnBuZw==/original/1sISOM.png",
+    "addedAt": "2026-04-26T14:15:00.000Z"
+  },
+  {
+    "id": "clspongadv2",
+    "title": "Spong Adventure 2",
+    "category": "Platformer",
+    "path": "games/clspongadv2.html",
+    "description": "Open-world 2D meme platformer billed as 'the greatest sequel ever' — open beta v0.0.1 of the Spong Adventure saga.",
+    "popular": false,
+    "rom": null,
+    "tags": ["platformer", "2d", "meme", "open-world", "indie", "spongebob", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzY4ODY1OTIucG5n/original/CdXLf6.png",
+    "addedAt": "2026-04-26T14:15:00.000Z"
   }
 ]
