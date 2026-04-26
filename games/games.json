@@ -20259,9 +20259,15 @@
   },
   {
     "id": "clsolarsandbox",
-    "title": "Clsolarsandbox",
-    "category": "Other",
-    "path": "games/clsolarsandbox.html"
+    "title": "Solar Sandbox",
+    "category": "Simulation",
+    "path": "games/clsolarsandbox.html",
+    "description": "Live-gravity space sandbox with 42+ objects, real-time temperature, light and atmosphere — build planets, smash them, watch the physics unfold.",
+    "popular": false,
+    "rom": null,
+    "tags": ["sandbox", "physics", "space", "simulation", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzIyNDE4OTgxLmdpZg==/original/DCQDYF.gif",
+    "addedAt": "2026-04-26T14:30:00.000Z"
   },
   {
     "id": "clsolarsmash",
@@ -28769,5 +28775,89 @@
     "tags": ["platformer", "2d", "meme", "open-world", "indie", "spongebob", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1nLzY4ODY1OTIucG5n/original/IEbvpT.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
+  },
+  {
+    "id": "cloutrideobama",
+    "title": "Outride Obama",
+    "category": "Action",
+    "path": "games/cloutrideobama.html",
+    "description": "Frantic mouse-only chase game about Barack Obama outriding a crisis on a motorcycle through escalating mayhem.",
+    "popular": false,
+    "rom": null,
+    "tags": ["action", "arcade", "mouse-only", "comedy", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzg1NTY2NzQuZ2lm/original/HSlfSp.gif",
+    "addedAt": "2026-04-26T14:30:00.000Z"
+  },
+  {
+    "id": "clunderagedriving",
+    "title": "Underage Driving",
+    "category": "Racing",
+    "path": "games/clunderagedriving.html",
+    "description": "Short driving puzzler where each level controls a little differently, daring you to wrangle wonky vehicles to the finish line.",
+    "popular": false,
+    "rom": null,
+    "tags": ["driving", "puzzle", "arcade", "short", "racing", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzEzOTg4OTE3LmpwZw==/original/KgZ8tW.jpg",
+    "addedAt": "2026-04-26T14:30:00.000Z"
+  },
+  {
+    "id": "climmortalityfactory",
+    "title": "Immortality Factory",
+    "category": "Simulation",
+    "path": "games/climmortalityfactory.html",
+    "description": "Incremental crafting game where a shunned wizard's apprentice harvests cursed valley resources and brews their way toward forbidden immortality.",
+    "popular": false,
+    "rom": null,
+    "tags": ["incremental", "idle", "crafting", "wizard", "fantasy", "simulation", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzIzMDgyNzM3LnBuZw==/original/ytb1g4.png",
+    "addedAt": "2026-04-26T14:30:00.000Z"
+  },
+  {
+    "id": "clbitmaker",
+    "title": "BitMaker",
+    "category": "Puzzle",
+    "path": "games/clbitmaker.html",
+    "description": "Small Ludum Dare 59 incremental about circuit automation — wire pulse nodes from a core, redirect bits, and grow a logic factory.",
+    "popular": false,
+    "rom": null,
+    "tags": ["incremental", "automation", "puzzle", "ludum-dare", "circuits", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2ODI3NDg1LnBuZw==/original/fGoJIE.png",
+    "addedAt": "2026-04-26T14:30:00.000Z"
+  },
+  {
+    "id": "clwaxweaver",
+    "title": "Waxweaver",
+    "category": "Minecraft",
+    "path": "games/clwaxweaver.html",
+    "description": "First-person voxel sandbox where you mine, craft, and weave wax-based magic — a Minecraft-like with its own crafting hook.",
+    "popular": false,
+    "rom": null,
+    "tags": ["sandbox", "voxel", "crafting", "first-person", "minecraft-like", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzE5OTQwMjgwLnBuZw==/original/%2BP3Tmm.png",
+    "addedAt": "2026-04-26T14:30:00.000Z"
+  },
+  {
+    "id": "clislander",
+    "title": "Islander",
+    "category": "Adventure",
+    "path": "games/clislander.html",
+    "description": "Idle crafting game in the vein of Forager and Minecraft — mine the islands, craft tools, and progress your way off them.",
+    "popular": false,
+    "rom": null,
+    "tags": ["crafting", "idle", "2d", "pixel-art", "exploration", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzQxOTIxOTAucG5n/original/zy5BoD.png",
+    "addedAt": "2026-04-26T14:30:00.000Z"
+  },
+  {
+    "id": "cloverengineered",
+    "title": "OverEngineered",
+    "category": "Simulation",
+    "path": "games/cloverengineered.html",
+    "description": "Block-based vehicle builder — assemble engines, blocks and wheels, then drive your contraption around to test it.",
+    "popular": false,
+    "rom": null,
+    "tags": ["vehicle-builder", "sandbox", "physics", "building", "3d", "simulation", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI1NDEwOTIxLnBuZw==/original/UoagZr.png",
+    "addedAt": "2026-04-26T14:30:00.000Z"
   }
 ]
