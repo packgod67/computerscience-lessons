@@ -28895,5 +28895,29 @@
     "tags": ["puzzle", "simulation", "contraption", "physics", "crafting", "sandbox", "dieselpunk", "post-apocalyptic", "vehicles", "mobile", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1nLzI2OTExMzg5LnBuZw==/original/Ozu8aM.png",
     "addedAt": "2026-04-26T14:45:00.000Z"
+  },
+  {
+    "id": "cltinygenesis",
+    "title": "Tiny Genesis",
+    "category": "Puzzle",
+    "path": "games/cltinygenesis.html",
+    "description": "Cozy puzzle-builder where you create worlds by merging hex tiles — combine forests, lakes and villages to evolve your tiny planet.",
+    "popular": false,
+    "rom": null,
+    "tags": ["puzzle", "merge", "tile-based", "cozy", "hex", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzEwNTg5NjczLnBuZw==/original/W2%2F7E%2F.png",
+    "addedAt": "2026-04-26T15:00:00.000Z"
+  },
+  {
+    "id": "clcelestial",
+    "title": "Celestial",
+    "category": "Simulation",
+    "path": "games/clcelestial.html",
+    "description": "Pixel-art planet simulator where you balance a tiny world's runaway temperature by tweaking its atmosphere, terrain and life.",
+    "popular": false,
+    "rom": null,
+    "tags": ["simulation", "planet-sim", "pixel-art", "sandbox", "ecosystem", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1hZ2UvMTQ4NDI0LzY4MTc1NC5naWY=/original/rGN%2Fw5.gif",
+    "addedAt": "2026-04-26T15:00:00.000Z"
   }
 ]
