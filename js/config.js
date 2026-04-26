@@ -15,5 +15,5 @@ window.ARCADE_CONFIG = {
     //
     // If empty/null, EmulatorJS falls back to its `EJS_netplayServer`
     // default which is the broken official one.
-    netplayServer: 'https://arcade-netplay.onrender.com',
+    netplayServer: 'https://arcade-netplay-relay.onrender.com',
 };
