@@ -9659,7 +9659,17 @@
     "description": "Flight sim-cade with jet-fighter air combat in a cyberpunk futurist dystopia, packing dogfights, target lock and HUD-driven missions.",
     "popular": false,
     "rom": null,
-    "tags": ["flight-sim", "arcade", "dogfight", "cyberpunk", "futuristic", "simulation", "browser-native", "html5", "itch"],
+    "tags": [
+      "flight-sim",
+      "arcade",
+      "dogfight",
+      "cyberpunk",
+      "futuristic",
+      "simulation",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzgxNTM4MjgucG5n/original/e8ejD4.png",
     "addedAt": "2026-04-26T16:00:00.000Z"
   },
@@ -20271,7 +20281,16 @@
     "description": "Live-gravity space sandbox with 42+ objects, real-time temperature, light and atmosphere — build planets, smash them, watch the physics unfold.",
     "popular": false,
     "rom": null,
-    "tags": ["sandbox", "physics", "space", "simulation", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "sandbox",
+      "physics",
+      "space",
+      "simulation",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIyNDE4OTgxLmdpZg==/original/DCQDYF.gif",
     "addedAt": "2026-04-26T14:30:00.000Z"
   },
@@ -21542,7 +21561,19 @@
     "description": "Short old-school FPS with fast gameplay, punchy weapons, and voxel sci-fi visuals — clear the station and don't get cornered.",
     "popular": false,
     "rom": null,
-    "tags": ["fps", "first-person", "shooter", "arcade", "voxel", "sci-fi", "retro", "action", "browser-native", "html5", "itch"],
+    "tags": [
+      "fps",
+      "first-person",
+      "shooter",
+      "arcade",
+      "voxel",
+      "sci-fi",
+      "retro",
+      "action",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzU4ODM5NjMucG5n/original/75wxYs.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
   },
@@ -21563,7 +21594,21 @@
     "description": "Fast-paced endless first-person shooter set in a voxel space station — blast waves of robots with momentum-based movement and gamepad support.",
     "popular": false,
     "rom": null,
-    "tags": ["fps", "first-person", "shooter", "endless", "voxel", "fast-paced", "robots", "arcade-shooter", "singleplayer", "gamepad", "browser-native", "html5", "itch"],
+    "tags": [
+      "fps",
+      "first-person",
+      "shooter",
+      "endless",
+      "voxel",
+      "fast-paced",
+      "robots",
+      "arcade-shooter",
+      "singleplayer",
+      "gamepad",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzExNDMzMzU2LnBuZw==/original/IvErVH.png",
     "addedAt": "2026-04-26T15:30:00.000Z"
   },
@@ -23200,7 +23245,16 @@
     "description": "Horror game about managing a taco stand alone at night, taking orders one by one while something out in the dark gets closer between customers.",
     "popular": false,
     "rom": null,
-    "tags": ["horror", "management", "night-shift", "first-person", "demo", "browser-native", "html5", "itch"],
+    "tags": [
+      "horror",
+      "management",
+      "night-shift",
+      "first-person",
+      "demo",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0OTMyNDY0LnBuZw==/original/ytoyM5.png",
     "addedAt": "2026-04-26T16:00:00.000Z"
   },
@@ -28088,7 +28142,16 @@
     "description": "Retro PS1-style DDR rhythm game starring KSI, with 23 tracks, global leaderboards, and authentic dancepad-friendly charting.",
     "popular": false,
     "rom": null,
-    "tags": ["rhythm", "ddr", "music", "meme", "ps1-style", "browser-native", "html5", "itch"],
+    "tags": [
+      "rhythm",
+      "ddr",
+      "music",
+      "meme",
+      "ps1-style",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE5NTgyMDY5LnBuZw==/original/ZKfnOx.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28100,7 +28163,16 @@
     "description": "First-person parkour comedy platformer where you sprint, jump, and slide your way out of a marriage in low-poly retro environments.",
     "popular": false,
     "rom": null,
-    "tags": ["parkour", "first-person", "meme", "comedy", "speedrun", "browser-native", "html5", "itch"],
+    "tags": [
+      "parkour",
+      "first-person",
+      "meme",
+      "comedy",
+      "speedrun",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE2OTM0MzE0LnBuZw==/original/8E7RuX.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28112,7 +28184,16 @@
     "description": "Click-to-drive comedy where you play a Ukrainian tractor driver towing abandoned Russian tanks back to garages while dodging marauders.",
     "popular": false,
     "rom": null,
-    "tags": ["meme", "vehicle", "mouse-only", "comedy", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "meme",
+      "vehicle",
+      "mouse-only",
+      "comedy",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzkxNTM2NzYucG5n/original/1w8cui.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28124,7 +28205,16 @@
     "description": "Dark-humor FNAF-format parody with point-and-click survival mechanics; satirical, not a glorification.",
     "popular": false,
     "rom": null,
-    "tags": ["fnaf", "parody", "meme", "point-and-click", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "fnaf",
+      "parody",
+      "meme",
+      "point-and-click",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MzM4NzA5LmpwZw==/original/qQV3I7.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28136,7 +28226,15 @@
     "description": "Final chapter of the meme series, with two endings, unlockable DLC, and full WASD-shooter movement closing the ice age baby saga.",
     "popular": false,
     "rom": null,
-    "tags": ["meme", "parody", "first-person", "fps", "browser-native", "html5", "itch"],
+    "tags": [
+      "meme",
+      "parody",
+      "first-person",
+      "fps",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0MTMyNTUxLnBuZw==/original/ZVjGOT.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28148,7 +28246,15 @@
     "description": "Open-world meme RPG set in New Coolsvile where Shaggy runs heists like Prison Break in a crime-as-norm sandbox.",
     "popular": false,
     "rom": null,
-    "tags": ["rpg", "open-world", "meme", "unity", "browser-native", "html5", "itch"],
+    "tags": [
+      "rpg",
+      "open-world",
+      "meme",
+      "unity",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI5OTIwODMucG5n/original/TsyEW7.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28160,7 +28266,16 @@
     "description": "PSX-style horror short where you scavenge oddly colored shakes and escape a legally distinct fast-food mascot in 5-10 minutes.",
     "popular": false,
     "rom": null,
-    "tags": ["psx-style", "survival-horror", "short", "first-person", "meme", "browser-native", "html5", "itch"],
+    "tags": [
+      "psx-style",
+      "survival-horror",
+      "short",
+      "first-person",
+      "meme",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzEyNjUxNTkwLnBuZw==/original/1wL53%2F.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28172,7 +28287,16 @@
     "description": "Bite-size 2D speedrun meme starring Stan Smith, with sub-30-second runs that have spawned a small leaderboard culture.",
     "popular": false,
     "rom": null,
-    "tags": ["meme", "speedrun", "2d", "short", "platformer", "browser-native", "html5", "itch"],
+    "tags": [
+      "meme",
+      "speedrun",
+      "2d",
+      "short",
+      "platformer",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI4MTU4OTkucG5n/original/89h7D1.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28184,7 +28308,16 @@
     "description": "Better Call Saul-themed Bad Game Jam platformer built in GDevelop, played for the meme more than the mechanics.",
     "popular": false,
     "rom": null,
-    "tags": ["meme", "game-jam", "2d", "short", "platformer", "browser-native", "html5", "itch"],
+    "tags": [
+      "meme",
+      "game-jam",
+      "2d",
+      "short",
+      "platformer",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzEwNjQyMjkwLmpwZw==/original/ZdMFzB.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28196,7 +28329,15 @@
     "description": "Endless-runner where salmon swim upstream, dodging bears and triggering arrow-key QTEs to reach the spawning grounds.",
     "popular": false,
     "rom": null,
-    "tags": ["endless-runner", "meme", "score-attack", "arcade", "browser-native", "html5", "itch"],
+    "tags": [
+      "endless-runner",
+      "meme",
+      "score-attack",
+      "arcade",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIwNDcwMjgucG5n/original/8o3kDa.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28208,7 +28349,16 @@
     "description": "FNAF-style point-and-click parody where a 900-year-old Spongebob challenges you to survive the night for cash.",
     "popular": false,
     "rom": null,
-    "tags": ["fnaf", "parody", "meme", "point-and-click", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "fnaf",
+      "parody",
+      "meme",
+      "point-and-click",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzcyNTM2ODUuanBn/original/%2FcPpOX.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28220,7 +28370,15 @@
     "description": "Astolfo-themed idle clicker where you tap to buy accessories and crank up the femininity stat — pure mouse-driven progression.",
     "popular": false,
     "rom": null,
-    "tags": ["clicker", "idle", "meme", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "clicker",
+      "idle",
+      "meme",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0NjM5MTg5LmpwZw==/original/1fwbvH.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28232,7 +28390,16 @@
     "description": "Pilot the fictional Borzoi airliner with mouse-only controls — hold left-click for supersonic boost while completing strict mission objectives.",
     "popular": false,
     "rom": null,
-    "tags": ["flight-sim", "mouse-only", "arcade", "mobile", "simulation", "browser-native", "html5", "itch"],
+    "tags": [
+      "flight-sim",
+      "mouse-only",
+      "arcade",
+      "mobile",
+      "simulation",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIyODM0NDY5LnBuZw==/347x500/1e6TD%2B.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28244,7 +28411,16 @@
     "description": "Low-quality satirical adventure-puzzle where you stop Obama from causing every world ill at once, speedrunnable in under 3 minutes.",
     "popular": false,
     "rom": null,
-    "tags": ["meme", "comedy", "speedrun", "short", "puzzle", "browser-native", "html5", "itch"],
+    "tags": [
+      "meme",
+      "comedy",
+      "speedrun",
+      "short",
+      "puzzle",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzkzNzM1MzcucG5n/original/ZKvyjV.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28256,7 +28432,17 @@
     "description": "2D top-down driving meme where DaBaby weaves around obstacles and cops while collecting coins on a casual joyride.",
     "popular": false,
     "rom": null,
-    "tags": ["driving", "2d", "meme", "casual", "unity", "racing", "browser-native", "html5", "itch"],
+    "tags": [
+      "driving",
+      "2d",
+      "meme",
+      "casual",
+      "unity",
+      "racing",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzYwNDYwNjMuanBlZw==/original/2yZgq6.jpeg",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28268,7 +28454,17 @@
     "description": "Cute-but-disturbing platformer where you flee FNAF-styled pig models using arrow keys and variable-height spacebar jumps.",
     "popular": false,
     "rom": null,
-    "tags": ["horror", "meme", "short", "2d", "fnaf", "platformer", "browser-native", "html5", "itch"],
+    "tags": [
+      "horror",
+      "meme",
+      "short",
+      "2d",
+      "fnaf",
+      "platformer",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0NzcwNzI3LmpwZw==/original/TCZCQr.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28280,7 +28476,15 @@
     "description": "Garry's Mod-inspired chase game where you flee Obunga, Quandale Dingle, Baldi and other meme nextbots through navigable arenas.",
     "popular": false,
     "rom": null,
-    "tags": ["nextbot", "gmod-inspired", "meme", "first-person", "browser-native", "html5", "itch"],
+    "tags": [
+      "nextbot",
+      "gmod-inspired",
+      "meme",
+      "first-person",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzk2NjQyODUuanBn/original/AqL2wQ.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28292,7 +28496,16 @@
     "description": "Prequel parkour-comedy with 2014-flavored physics — slide-jump and sprint through a surreal divorce narrative.",
     "popular": false,
     "rom": null,
-    "tags": ["parkour", "first-person", "meme", "comedy", "surreal", "browser-native", "html5", "itch"],
+    "tags": [
+      "parkour",
+      "first-person",
+      "meme",
+      "comedy",
+      "surreal",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0ODEzNTY3LnBuZw==/original/YoY4fJ.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28304,7 +28517,16 @@
     "description": "Skeuomorphic cookie-clicker reskin where you tap the WhatsApp logo and buy upgrades from an in-app shop to grow your score.",
     "popular": false,
     "rom": null,
-    "tags": ["clicker", "idle", "meme", "unity", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "clicker",
+      "idle",
+      "meme",
+      "unity",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIwMjEyMzU0LnBuZw==/original/vyFaB0.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28316,7 +28538,15 @@
     "description": "RPG Maker meme adventure inspired by Metal Gear Rising Revengeance, built in 16 hours as a story-rich joke that escalated.",
     "popular": false,
     "rom": null,
-    "tags": ["rpg-maker", "meme", "story-rich", "parody", "browser-native", "html5", "itch"],
+    "tags": [
+      "rpg-maker",
+      "meme",
+      "story-rich",
+      "parody",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzEzNDY5NzExLnBuZw==/original/27rwIV.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28328,7 +28558,16 @@
     "description": "Dodge falling Kumalalas with arrow-key sidestepping to chase the max-prestige lightskin highscore — short, score-attack meme.",
     "popular": false,
     "rom": null,
-    "tags": ["dodger", "score-attack", "meme", "short", "casual", "browser-native", "html5", "itch"],
+    "tags": [
+      "dodger",
+      "score-attack",
+      "meme",
+      "short",
+      "casual",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzk0NDgyNTcuanBn/original/UD4zC%2B.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28340,7 +28579,16 @@
     "description": "Third entry in the Spong saga — point-and-click FNAF parody crossed with SpongeBob, all mouse-driven camera and button mashing.",
     "popular": false,
     "rom": null,
-    "tags": ["fnaf", "parody", "meme", "point-and-click", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "fnaf",
+      "parody",
+      "meme",
+      "point-and-click",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzk4MzY1MjAuanBn/original/qaS%2FL9.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28352,7 +28600,15 @@
     "description": "Year-2090 Bomberman tribute where you blast a path through tower blocks haunted by walking unholy Skibidi toilets.",
     "popular": false,
     "rom": null,
-    "tags": ["bomberman", "meme", "skibidi", "arcade", "browser-native", "html5", "itch"],
+    "tags": [
+      "bomberman",
+      "meme",
+      "skibidi",
+      "arcade",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE4ODA1MjQ4LmpwZw==/original/P7HNq3.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28364,7 +28620,17 @@
     "description": "Tiny absurd HTML5 micro-game where you swim a pixel sturgeon around with the mouse and gobble up coins.",
     "popular": false,
     "rom": null,
-    "tags": ["arcade", "casual", "meme", "mouse-only", "micro-game", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "arcade",
+      "casual",
+      "meme",
+      "mouse-only",
+      "micro-game",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzEyMTU5ODk2LnBuZw==/original/tBnsMO.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28376,7 +28642,17 @@
     "description": "GDevelop platformer parody where two siblings and a friend wield 'good moral dictation' to save the world from evil symbols, played as a meme/MLG comedy.",
     "popular": false,
     "rom": null,
-    "tags": ["platformer", "2d", "meme", "comedy", "parody", "gdevelop", "browser-native", "html5", "itch"],
+    "tags": [
+      "platformer",
+      "2d",
+      "meme",
+      "comedy",
+      "parody",
+      "gdevelop",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0ODg3MjIxLmdpZg==/original/L1Mqts.gif",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28388,7 +28664,19 @@
     "description": "Fast-paced first-person Scratch-built horror chase where a creepy 'big zamn' hunts you through atmospheric 3D corridors — run or die.",
     "popular": false,
     "rom": null,
-    "tags": ["horror", "first-person", "3d", "atmospheric", "creepy", "fast-paced", "chase", "scratch", "browser-native", "html5", "itch"],
+    "tags": [
+      "horror",
+      "first-person",
+      "3d",
+      "atmospheric",
+      "creepy",
+      "fast-paced",
+      "chase",
+      "scratch",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI1MzA0NzM3LnBuZw==/original/6sWEcT.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28400,7 +28688,17 @@
     "description": "GB Studio meme adventure where you trek across a Game Boy world arrow-keying your way to your brother in pursuit of some oats.",
     "popular": false,
     "rom": null,
-    "tags": ["adventure", "gb-studio", "gameboy-style", "pixel-art", "meme", "short", "browser-native", "html5", "itch"],
+    "tags": [
+      "adventure",
+      "gb-studio",
+      "gameboy-style",
+      "pixel-art",
+      "meme",
+      "short",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NjIzMDY1LnBuZw==/original/phfADT.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28412,7 +28710,18 @@
     "description": "Janky low-poly kart racer where you drive a monke around silly tracks; funny meme racing with WASD/arrow controls.",
     "popular": false,
     "rom": null,
-    "tags": ["racing", "kart", "arcade", "meme", "funny", "low-poly", "3d", "browser-native", "html5", "itch"],
+    "tags": [
+      "racing",
+      "kart",
+      "arcade",
+      "meme",
+      "funny",
+      "low-poly",
+      "3d",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzU3NTc3MzMucG5n/original/RmsRcn.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28424,7 +28733,17 @@
     "description": "Janky 2D meme platformer where pingus heads out on a taco run for the other guy across short comedic levels.",
     "popular": false,
     "rom": null,
-    "tags": ["platformer", "2d", "meme", "funny", "short", "comedy", "browser-native", "html5", "itch"],
+    "tags": [
+      "platformer",
+      "2d",
+      "meme",
+      "funny",
+      "short",
+      "comedy",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE5MjAxOTE4LnBuZw==/original/QhAwPe.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28436,7 +28755,19 @@
     "description": "Mouse-only Godot arcade defense where you protect Asmongold from waves of roach armies while he plays Classic WoW until he hits level 60.",
     "popular": false,
     "rom": null,
-    "tags": ["action", "arcade", "2d", "defense", "wave-survival", "godot", "mouse-only", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "action",
+      "arcade",
+      "2d",
+      "defense",
+      "wave-survival",
+      "godot",
+      "mouse-only",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0MzIxOTA4LnBuZw==/original/8beofW.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
   },
@@ -28448,7 +28779,18 @@
     "description": "FNAF-style Christmas parody where SpongeBob ('Spong') stalks you through the night in a shitpost survival horror minigame.",
     "popular": false,
     "rom": null,
-    "tags": ["fnaf", "horror", "parody", "spongebob", "christmas", "shitpost", "first-person", "browser-native", "html5", "itch"],
+    "tags": [
+      "fnaf",
+      "horror",
+      "parody",
+      "spongebob",
+      "christmas",
+      "shitpost",
+      "first-person",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzc3NDE0MzEuanBn/original/SMAE91.jpg",
     "addedAt": "2026-04-26T13:30:00.000Z"
   },
@@ -28460,7 +28802,17 @@
     "description": "Joke 2D platformer mashing Big Chungus, Among Us, and Walmart breakfast-casserole errands into peak shitpost meme energy.",
     "popular": false,
     "rom": null,
-    "tags": ["platformer", "meme", "shitpost", "among-us", "big-chungus", "2d", "browser-native", "html5", "itch"],
+    "tags": [
+      "platformer",
+      "meme",
+      "shitpost",
+      "among-us",
+      "big-chungus",
+      "2d",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzU5NjExOTYucG5n/original/E%2BaM6W.png",
     "addedAt": "2026-04-26T13:30:00.000Z"
   },
@@ -28472,7 +28824,17 @@
     "description": "2D shitpost platformer sequel where Guy Dude infiltrates EVIL Corp through stock-image levels and dumb-by-design horror gags.",
     "popular": false,
     "rom": null,
-    "tags": ["platformer", "2d", "shitpost", "stock-images", "horror", "indie", "browser-native", "html5", "itch"],
+    "tags": [
+      "platformer",
+      "2d",
+      "shitpost",
+      "stock-images",
+      "horror",
+      "indie",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0OTU2MDUyLmpwZw==/original/aY6mEK.jpg",
     "addedAt": "2026-04-26T13:30:00.000Z"
   },
@@ -28484,7 +28846,19 @@
     "description": "3D isometric arena bullet-hell boss fight where Lewis Hamilton, in ball form, takes on FNAF's purple guy.",
     "popular": false,
     "rom": null,
-    "tags": ["bullet-hell", "arena-shooter", "boss-battle", "3d", "isometric", "fnaf", "hamilton", "shitpost", "browser-native", "html5", "itch"],
+    "tags": [
+      "bullet-hell",
+      "arena-shooter",
+      "boss-battle",
+      "3d",
+      "isometric",
+      "fnaf",
+      "hamilton",
+      "shitpost",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NjYyNjE5LmdpZg==/original/xI55Hr.gif",
     "addedAt": "2026-04-26T13:30:00.000Z"
   },
@@ -28496,7 +28870,18 @@
     "description": "Detective Patapih investigates Gabagool's Deli in a clicker-style FNAF parody RPG stuffed with Elvis, iShowSpeed, and brainrot memes.",
     "popular": false,
     "rom": null,
-    "tags": ["fnaf", "horror", "clicker", "parody", "rpg", "shitpost", "joke-game", "browser-native", "html5", "itch"],
+    "tags": [
+      "fnaf",
+      "horror",
+      "clicker",
+      "parody",
+      "rpg",
+      "shitpost",
+      "joke-game",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2ODc0MTAxLnBuZw==/original/%2By2Lhi.png",
     "addedAt": "2026-04-26T13:30:00.000Z"
   },
@@ -28508,7 +28893,19 @@
     "description": "Top-down survivor-like bullet-heaven where you mow down waves of brainrot meme creatures, made for the Brainrot Game Jam.",
     "popular": false,
     "rom": null,
-    "tags": ["bullet-heaven", "auto-attacker", "top-down-shooter", "survival", "2d", "shitpost", "skibidi", "roguelite", "browser-native", "html5", "itch"],
+    "tags": [
+      "bullet-heaven",
+      "auto-attacker",
+      "top-down-shooter",
+      "survival",
+      "2d",
+      "shitpost",
+      "skibidi",
+      "roguelite",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE5MzA4NTg2LnBuZw==/original/kATUoj.png",
     "addedAt": "2026-04-26T13:30:00.000Z"
   },
@@ -28520,7 +28917,18 @@
     "description": "2D dark-humor action shitpost starring a perpetually stoned bird stumbling through a dumb movie tie-in plot.",
     "popular": false,
     "rom": null,
-    "tags": ["action", "2d", "dark-humor", "funny", "shitpost", "indie", "singleplayer", "browser-native", "html5", "itch"],
+    "tags": [
+      "action",
+      "2d",
+      "dark-humor",
+      "funny",
+      "shitpost",
+      "indie",
+      "singleplayer",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIyMzc2NDQwLnBuZw==/original/Chk%2BER.png",
     "addedAt": "2026-04-26T13:30:00.000Z"
   },
@@ -28532,7 +28940,16 @@
     "description": "Frogger-inspired action mini answering life's great mystery: can the chicken cross the road? (Spoiler: yeah.)",
     "popular": false,
     "rom": null,
-    "tags": ["action", "frogger", "crossy-road", "arcade", "shitpost", "browser-native", "html5", "itch"],
+    "tags": [
+      "action",
+      "frogger",
+      "crossy-road",
+      "arcade",
+      "shitpost",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0ODA5NTQyLnBuZw==/original/ZAP5y9.png",
     "addedAt": "2026-04-26T13:30:00.000Z"
   },
@@ -28544,7 +28961,16 @@
     "description": "Help Grant Wisler escape Edward Robinson's three-room maze house, hoarding edcoins along the way in this absurd GameMaker romp.",
     "popular": false,
     "rom": null,
-    "tags": ["adventure", "maze", "puzzle", "gamemaker", "shitpost", "browser-native", "html5", "itch"],
+    "tags": [
+      "adventure",
+      "maze",
+      "puzzle",
+      "gamemaker",
+      "shitpost",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIwMDA4NTQ2LnBuZw==/original/Nayq6V.png",
     "addedAt": "2026-04-26T13:30:00.000Z"
   },
@@ -28556,7 +28982,18 @@
     "description": "Phonk-themed Sprunki-style rhythm mixer where you drag and drop characters onto a stage to layer beats, vocals, and dark phonk loops into your own track.",
     "popular": false,
     "rom": null,
-    "tags": ["rhythm", "music", "phonk", "sprunki", "mixer", "drag-and-drop", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "rhythm",
+      "music",
+      "phonk",
+      "sprunki",
+      "mixer",
+      "drag-and-drop",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIyNTQzODYxLmpwZw==/original/dbYl1N.jpg",
     "addedAt": "2026-04-26T13:45:00.000Z"
   },
@@ -28568,7 +29005,17 @@
     "description": "Satirical doomscrolling clicker simulator where you scroll memes to earn crypto, buy legendary meme characters, and rot your brain until you literally implode from wealth.",
     "popular": false,
     "rom": null,
-    "tags": ["simulation", "clicker", "idle", "meme", "satire", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "simulation",
+      "clicker",
+      "idle",
+      "meme",
+      "satire",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0MjE5MjYyLnBuZw==/original/zciwUj.png",
     "addedAt": "2026-04-26T13:45:00.000Z"
   },
@@ -28580,7 +29027,17 @@
     "description": "Doodle Jump variation themed around Molchat Doma — endlessly hop up cabinets, beds and Soviet apartment furniture to a post-punk soundtrack.",
     "popular": false,
     "rom": null,
-    "tags": ["platformer", "endless", "doodle-jump", "meme", "vertical", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "platformer",
+      "endless",
+      "doodle-jump",
+      "meme",
+      "vertical",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIzMjMxNjg3LmpwZw==/original/R%2Fe%2ByZ.jpg",
     "addedAt": "2026-04-26T14:00:00.000Z"
   },
@@ -28592,7 +29049,17 @@
     "description": "Incredibox-style rhythm/music toy — drag sound icons onto characters and watch a beatbox track build up out of a single cardboard box.",
     "popular": false,
     "rom": null,
-    "tags": ["rhythm", "music", "incredibox", "fangame", "meme", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "rhythm",
+      "music",
+      "incredibox",
+      "fangame",
+      "meme",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIxNjc0NDU3LnBuZw==/original/K9fDGL.png",
     "addedAt": "2026-04-26T14:00:00.000Z"
   },
@@ -28604,7 +29071,17 @@
     "description": "3-minute joke horror game made in Godot for the Out Of Stock jam — wander a tiny corporate office and witness whatever Huge Business INC. is selling.",
     "popular": false,
     "rom": null,
-    "tags": ["horror", "comedy", "3d", "short", "meme", "godot", "browser-native", "html5", "itch"],
+    "tags": [
+      "horror",
+      "comedy",
+      "3d",
+      "short",
+      "meme",
+      "godot",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzk3MTIzNjQucG5n/original/2OduhB.png",
     "addedAt": "2026-04-26T14:00:00.000Z"
   },
@@ -28616,7 +29093,17 @@
     "description": "Short Ren'Py visual novel where Chud heads home to visit his parents for Christmas — a wojak-cast holiday jam game with multiple choices.",
     "popular": false,
     "rom": null,
-    "tags": ["visual-novel", "short", "wojak", "chud", "renpy", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "visual-novel",
+      "short",
+      "wojak",
+      "chud",
+      "renpy",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0NjI3Mjg2LnBuZw==/original/Ts%2BhFq.png",
     "addedAt": "2026-04-26T14:00:00.000Z"
   },
@@ -28628,7 +29115,18 @@
     "description": "Pixel-art point-and-click zine made in Decker that asks 'have you lived life to its fullest?' — a tiny slice-of-life autobiography starring a chud.",
     "popular": false,
     "rom": null,
-    "tags": ["point-and-click", "interactive-fiction", "pixel-art", "slice-of-life", "decker", "wojak", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "point-and-click",
+      "interactive-fiction",
+      "pixel-art",
+      "slice-of-life",
+      "decker",
+      "wojak",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI1MjYzNTY4LnBuZw==/original/bxEUjn.png",
     "addedAt": "2026-04-26T14:00:00.000Z"
   },
@@ -28640,7 +29138,19 @@
     "description": "Help Chud transcend to the promised land by closing every distraction — a fake-desktop popup-clicker made in 48h for Nordic Game Jam 2026's 'Nothing' theme.",
     "popular": false,
     "rom": null,
-    "tags": ["simulation", "popup", "desktop-pet", "comedy", "chud", "gamemaker", "short", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "simulation",
+      "popup",
+      "desktop-pet",
+      "comedy",
+      "chud",
+      "gamemaker",
+      "short",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NjQzNjg2LnBuZw==/original/MyK4WM.png",
     "addedAt": "2026-04-26T14:00:00.000Z"
   },
@@ -28652,7 +29162,18 @@
     "description": "FNAF parody starring SpongeBob — survive five nights at the Krusty Krab as Spong's bird friends animate and try to find you. Joke fangame.",
     "popular": false,
     "rom": null,
-    "tags": ["horror", "fnaf", "parody", "spongebob", "fangame", "meme", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "horror",
+      "fnaf",
+      "parody",
+      "spongebob",
+      "fangame",
+      "meme",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzgxNTEwNTEuanBn/original/XXo74g.jpg",
     "addedAt": "2026-04-26T14:00:00.000Z"
   },
@@ -28664,7 +29185,18 @@
     "description": "Cancelled fourth entry in the SpongeBob/FNAF parody series — a short, abandoned demo build preserved for fans of the One Night with Spong saga.",
     "popular": false,
     "rom": null,
-    "tags": ["horror", "fnaf", "parody", "spongebob", "fangame", "meme", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "horror",
+      "fnaf",
+      "parody",
+      "spongebob",
+      "fangame",
+      "meme",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzgyNjYwMTAuanBn/original/TV5TEU.jpg",
     "addedAt": "2026-04-26T14:00:00.000Z"
   },
@@ -28676,7 +29208,18 @@
     "description": "Unofficial fan-made Hollow Knight side-story — a Godot-built 2D action-adventure with boss battles set in the bug kingdom's universe.",
     "popular": false,
     "rom": null,
-    "tags": ["metroidvania", "fangame", "hollow-knight", "boss-battle", "action", "platformer", "godot", "browser-native", "html5", "itch"],
+    "tags": [
+      "metroidvania",
+      "fangame",
+      "hollow-knight",
+      "boss-battle",
+      "action",
+      "platformer",
+      "godot",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NTYxOTk5LnBuZw==/original/SwRRD%2F.png",
     "addedAt": "2026-04-26T14:00:00.000Z"
   },
@@ -28688,7 +29231,18 @@
     "description": "The Welsh flag reimagined as the Chrome offline dinosaur runner — jump the dragon over cacti in a one-joke endless-runner shitpost made in Godot.",
     "popular": false,
     "rom": null,
-    "tags": ["endless-runner", "meme", "shitpost", "survival", "godot", "short", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "endless-runner",
+      "meme",
+      "shitpost",
+      "survival",
+      "godot",
+      "short",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE4Mjk2NDI2LmpwZw==/original/%2FhsS42.jpg",
     "addedAt": "2026-04-26T14:00:00.000Z"
   },
@@ -28700,7 +29254,19 @@
     "description": "Remastered edition of the original FNAF/SpongeBob parody — point-and-click survive-the-night meme horror, redone with updated visuals.",
     "popular": false,
     "rom": null,
-    "tags": ["fnaf", "horror", "parody", "spongebob", "fangame", "meme", "remaster", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "fnaf",
+      "horror",
+      "parody",
+      "spongebob",
+      "fangame",
+      "meme",
+      "remaster",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzg5MzUzNzEuanBn/original/To0ZXt.jpg",
     "addedAt": "2026-04-26T14:15:00.000Z"
   },
@@ -28712,7 +29278,20 @@
     "description": "Prequel teaser to the One Night with Spong series — short 2D meme parody exploring lore origins of the Spongebob FNAF saga.",
     "popular": false,
     "rom": null,
-    "tags": ["fnaf", "horror", "parody", "spongebob", "fangame", "meme", "prequel", "2d", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "fnaf",
+      "horror",
+      "parody",
+      "spongebob",
+      "fangame",
+      "meme",
+      "prequel",
+      "2d",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzgxNzY5MjcuanBn/original/H7Y93x.jpg",
     "addedAt": "2026-04-26T14:15:00.000Z"
   },
@@ -28724,7 +29303,16 @@
     "description": "Italian-language meme survival game set in a dystopian 2027 Naples — short comedic shitpost adventure from MYCUS.",
     "popular": false,
     "rom": null,
-    "tags": ["meme", "survival", "italian", "shitpost", "comedy", "browser-native", "html5", "itch"],
+    "tags": [
+      "meme",
+      "survival",
+      "italian",
+      "shitpost",
+      "comedy",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzg0NjA5NTcucG5n/original/JQtG8n.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
   },
@@ -28736,7 +29324,18 @@
     "description": "Flappy Bird clone where you tap to make Gigachad flap through obstacles — one-button casual meme arcade game.",
     "popular": false,
     "rom": null,
-    "tags": ["flappy-bird", "casual", "meme", "one-button", "arcade", "gigachad", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "flappy-bird",
+      "casual",
+      "meme",
+      "one-button",
+      "arcade",
+      "gigachad",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE0NDQzNzcxLnBuZw==/original/LswzAh.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
   },
@@ -28748,7 +29347,19 @@
     "description": "Soyjak-themed 3D maze shooter with creepy survival-horror vibes — escape the maze while blasting through Boners in this meme webcomic FPS.",
     "popular": false,
     "rom": null,
-    "tags": ["shooter", "fps", "3d", "survival-horror", "maze", "soyjak", "meme", "creepy", "browser-native", "html5", "itch"],
+    "tags": [
+      "shooter",
+      "fps",
+      "3d",
+      "survival-horror",
+      "maze",
+      "soyjak",
+      "meme",
+      "creepy",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE3OTMyNTU2LnBuZw==/original/Vp7QVo.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
   },
@@ -28760,7 +29371,20 @@
     "description": "Angry Birds-style physics puzzler meme fangame — slingshot rampaging robins at structures in this short 2D alpha build.",
     "popular": false,
     "rom": null,
-    "tags": ["puzzle", "physics", "angry-birds", "slingshot", "meme", "fangame", "2d", "alpha", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "puzzle",
+      "physics",
+      "angry-birds",
+      "slingshot",
+      "meme",
+      "fangame",
+      "2d",
+      "alpha",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE5NDI2NTAxLnBuZw==/original/1upX4w.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
   },
@@ -28772,7 +29396,16 @@
     "description": "Bowl with a penguin: a quirky strike-the-pins novelty game, the first of five 'bad, no good, weird games' from Lucky Catapult.",
     "popular": false,
     "rom": null,
-    "tags": ["bowling", "arcade", "weird", "short", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "bowling",
+      "arcade",
+      "weird",
+      "short",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzMzNDkxOTEucG5n/original/J%2F3ESX.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
   },
@@ -28784,7 +29417,15 @@
     "description": "Tiny meme game with one rule in the title: please do not kill Freaky Bob. Resist the urge.",
     "popular": false,
     "rom": null,
-    "tags": ["meme", "short", "novelty", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "meme",
+      "short",
+      "novelty",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE2MzgzMjg5LnBuZw==/original/TbWqLF.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
   },
@@ -28796,7 +29437,17 @@
     "description": "Open-world 2D meme platformer billed as 'the greatest sequel ever' — open beta v0.0.1 of the Spong Adventure saga.",
     "popular": false,
     "rom": null,
-    "tags": ["platformer", "2d", "meme", "open-world", "indie", "spongebob", "browser-native", "html5", "itch"],
+    "tags": [
+      "platformer",
+      "2d",
+      "meme",
+      "open-world",
+      "indie",
+      "spongebob",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzY4ODY1OTIucG5n/original/IEbvpT.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
   },
@@ -28808,7 +29459,16 @@
     "description": "Frantic mouse-only chase game about Barack Obama outriding a crisis on a motorcycle through escalating mayhem.",
     "popular": false,
     "rom": null,
-    "tags": ["action", "arcade", "mouse-only", "comedy", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "action",
+      "arcade",
+      "mouse-only",
+      "comedy",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzg1NTY2NzQuZ2lm/original/HSlfSp.gif",
     "addedAt": "2026-04-26T14:30:00.000Z"
   },
@@ -28820,7 +29480,16 @@
     "description": "Short driving puzzler where each level controls a little differently, daring you to wrangle wonky vehicles to the finish line.",
     "popular": false,
     "rom": null,
-    "tags": ["driving", "puzzle", "arcade", "short", "racing", "browser-native", "html5", "itch"],
+    "tags": [
+      "driving",
+      "puzzle",
+      "arcade",
+      "short",
+      "racing",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzEzOTg4OTE3LmpwZw==/original/KgZ8tW.jpg",
     "addedAt": "2026-04-26T14:30:00.000Z"
   },
@@ -28832,7 +29501,17 @@
     "description": "Incremental crafting game where a shunned wizard's apprentice harvests cursed valley resources and brews their way toward forbidden immortality.",
     "popular": false,
     "rom": null,
-    "tags": ["incremental", "idle", "crafting", "wizard", "fantasy", "simulation", "browser-native", "html5", "itch"],
+    "tags": [
+      "incremental",
+      "idle",
+      "crafting",
+      "wizard",
+      "fantasy",
+      "simulation",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIzMDgyNzM3LnBuZw==/original/ytb1g4.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
   },
@@ -28844,7 +29523,16 @@
     "description": "Small Ludum Dare 59 incremental about circuit automation — wire pulse nodes from a core, redirect bits, and grow a logic factory.",
     "popular": false,
     "rom": null,
-    "tags": ["incremental", "automation", "puzzle", "ludum-dare", "circuits", "browser-native", "html5", "itch"],
+    "tags": [
+      "incremental",
+      "automation",
+      "puzzle",
+      "ludum-dare",
+      "circuits",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2ODI3NDg1LnBuZw==/original/fGoJIE.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
   },
@@ -28856,7 +29544,16 @@
     "description": "First-person voxel sandbox where you mine, craft, and weave wax-based magic — a Minecraft-like with its own crafting hook.",
     "popular": false,
     "rom": null,
-    "tags": ["sandbox", "voxel", "crafting", "first-person", "minecraft-like", "browser-native", "html5", "itch"],
+    "tags": [
+      "sandbox",
+      "voxel",
+      "crafting",
+      "first-person",
+      "minecraft-like",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE5OTQwMjgwLnBuZw==/original/%2BP3Tmm.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
   },
@@ -28868,7 +29565,16 @@
     "description": "Idle crafting game in the vein of Forager and Minecraft — mine the islands, craft tools, and progress your way off them.",
     "popular": false,
     "rom": null,
-    "tags": ["crafting", "idle", "2d", "pixel-art", "exploration", "browser-native", "html5", "itch"],
+    "tags": [
+      "crafting",
+      "idle",
+      "2d",
+      "pixel-art",
+      "exploration",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzQxOTIxOTAucG5n/original/zy5BoD.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
   },
@@ -28880,21 +29586,19 @@
     "description": "Block-based vehicle builder — assemble engines, blocks and wheels, then drive your contraption around to test it.",
     "popular": false,
     "rom": null,
-    "tags": ["vehicle-builder", "sandbox", "physics", "building", "3d", "simulation", "browser-native", "html5", "itch"],
+    "tags": [
+      "vehicle-builder",
+      "sandbox",
+      "physics",
+      "building",
+      "3d",
+      "simulation",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI1NDEwOTIxLnBuZw==/original/UoagZr.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
-  },
-  {
-    "id": "clswordbanner",
-    "title": "Sword & Banner",
-    "category": "Strategy",
-    "path": "games/clswordbanner.html",
-    "description": "Pixel-art real-time strategy where you lead a warband across a medieval fantasy world, raiding settlements and commanding shield walls, archers, and cavalry charges in large-scale battles.",
-    "popular": false,
-    "rom": null,
-    "tags": ["strategy", "rts", "real-time-strategy", "medieval", "pixel-art", "fantasy", "tactics", "browser-native", "html5", "itch"],
-    "thumbnail": "https://img.itch.zone/aW1nLzI2NDU5Nzg5LnBuZw==/original/yBIuJk.png",
-    "addedAt": "2026-04-26T14:45:00.000Z"
   },
   {
     "id": "clatsconcord",
@@ -28904,7 +29608,18 @@
     "description": "Sky-island survival sandbox where you build airship factories, dispatch blimps, and grow a floating city while defending against attackers across procedurally spawning islands.",
     "popular": false,
     "rom": null,
-    "tags": ["survival", "city-builder", "sandbox", "exploration", "top-down", "procgen", "fantasy", "browser-native", "html5", "itch"],
+    "tags": [
+      "survival",
+      "city-builder",
+      "sandbox",
+      "exploration",
+      "top-down",
+      "procgen",
+      "fantasy",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1hZ2UvMjk1MjkwLzE0NDQ1OTcucG5n/original/PSzY%2BZ.png",
     "addedAt": "2026-04-26T14:45:00.000Z"
   },
@@ -28916,7 +29631,21 @@
     "description": "Dieselpunk contraption-builder: snap rusted parts into a war-machine, attach if-this-then-that rules, deploy into missions, then watch it ride or blow up.",
     "popular": false,
     "rom": null,
-    "tags": ["puzzle", "simulation", "contraption", "physics", "crafting", "sandbox", "dieselpunk", "post-apocalyptic", "vehicles", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "puzzle",
+      "simulation",
+      "contraption",
+      "physics",
+      "crafting",
+      "sandbox",
+      "dieselpunk",
+      "post-apocalyptic",
+      "vehicles",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2OTExMzg5LnBuZw==/original/Ozu8aM.png",
     "addedAt": "2026-04-26T14:45:00.000Z"
   },
@@ -28928,7 +29657,17 @@
     "description": "Cozy puzzle-builder where you create worlds by merging hex tiles — combine forests, lakes and villages to evolve your tiny planet.",
     "popular": false,
     "rom": null,
-    "tags": ["puzzle", "merge", "tile-based", "cozy", "hex", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "puzzle",
+      "merge",
+      "tile-based",
+      "cozy",
+      "hex",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzEwNTg5NjczLnBuZw==/original/W2%2F7E%2F.png",
     "addedAt": "2026-04-26T15:00:00.000Z"
   },
@@ -28940,7 +29679,17 @@
     "description": "Pixel-art planet simulator where you balance a tiny world's runaway temperature by tweaking its atmosphere, terrain and life.",
     "popular": false,
     "rom": null,
-    "tags": ["simulation", "planet-sim", "pixel-art", "sandbox", "ecosystem", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "simulation",
+      "planet-sim",
+      "pixel-art",
+      "sandbox",
+      "ecosystem",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1hZ2UvMTQ4NDI0LzY4MTc1NC5naWY=/original/rGN%2Fw5.gif",
     "addedAt": "2026-04-26T15:00:00.000Z"
   },
@@ -28952,7 +29701,18 @@
     "description": "Short incremental game about defending from undead hordes — cast magic spells, build your army, and break the enemy's legions.",
     "popular": false,
     "rom": null,
-    "tags": ["incremental", "idle", "clicker", "tower-defense", "dark-fantasy", "one-button", "strategy", "browser-native", "html5", "itch"],
+    "tags": [
+      "incremental",
+      "idle",
+      "clicker",
+      "tower-defense",
+      "dark-fantasy",
+      "one-button",
+      "strategy",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MTk2NjUwLnBuZw==/original/8INXax.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
   },
@@ -28964,7 +29724,19 @@
     "description": "Active incremental game where you defend your tiny pixel-art fortress from hordes of tiny mobs by clicking and upgrading.",
     "popular": false,
     "rom": null,
-    "tags": ["incremental", "idle", "clicker", "tower-defense", "pixel-art", "2d", "strategy", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "incremental",
+      "idle",
+      "clicker",
+      "tower-defense",
+      "pixel-art",
+      "2d",
+      "strategy",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NzI0MzAyLnBuZw==/original/pf58tg.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
   },
@@ -28976,7 +29748,18 @@
     "description": "Short, minimalistic incremental tower defense — hold out and grow your defenses with mouse-only clicks.",
     "popular": false,
     "rom": null,
-    "tags": ["incremental", "idle", "clicker", "tower-defense", "minimalist", "strategy", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "incremental",
+      "idle",
+      "clicker",
+      "tower-defense",
+      "minimalist",
+      "strategy",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIxMzk2OTMzLnBuZw==/original/5xcBq4.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
   },
@@ -28988,7 +29771,19 @@
     "description": "Build a medieval network of buildings around your throne and defend it from enemy waves in this Ludum Dare 59 incremental tower defense.",
     "popular": false,
     "rom": null,
-    "tags": ["incremental", "tower-defense", "clicker", "idle", "medieval", "ludum-dare", "strategy", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "incremental",
+      "tower-defense",
+      "clicker",
+      "idle",
+      "medieval",
+      "ludum-dare",
+      "strategy",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NzkzNjI4LnBuZw==/original/1PyQGO.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
   },
@@ -29000,7 +29795,19 @@
     "description": "Fan remake of Plants vs Zombies DS built in Java/Greenfoot — plant your defenders and stop the zombie waves on a 2D grid.",
     "popular": false,
     "rom": null,
-    "tags": ["tower-defense", "pvz", "fan-remake", "pixel-art", "2d", "strategy", "puzzle", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "tower-defense",
+      "pvz",
+      "fan-remake",
+      "pixel-art",
+      "2d",
+      "strategy",
+      "puzzle",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzEyMjYxMDE1LnBuZw==/original/IP36P0.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
   },
@@ -29012,7 +29819,19 @@
     "description": "Build supply chains, factories, and turrets to defend your base against escalating zombie waves in this 2D futuristic tower defense.",
     "popular": false,
     "rom": null,
-    "tags": ["tower-defense", "base-building", "factory", "zombies", "futuristic", "2d", "strategy", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "tower-defense",
+      "base-building",
+      "factory",
+      "zombies",
+      "futuristic",
+      "2d",
+      "strategy",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1hZ2UvMjQxODEwLzExNTMzMTgucG5n/original/UtG3OL.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
   },
@@ -29024,7 +29843,20 @@
     "description": "First-person immersive sim where you board a luxury cruise ship as a spy, sneak through its corridors, and uncover the secrets of its passengers across multiple endings.",
     "popular": false,
     "rom": null,
-    "tags": ["immersive-sim", "first-person", "stealth", "adventure", "atmospheric", "mystery", "multiple-endings", "3d", "godot", "browser-native", "html5", "itch"],
+    "tags": [
+      "immersive-sim",
+      "first-person",
+      "stealth",
+      "adventure",
+      "atmospheric",
+      "mystery",
+      "multiple-endings",
+      "3d",
+      "godot",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2ODYxNTUwLnBuZw==/original/R3Jh%2BP.png",
     "addedAt": "2026-04-26T15:30:00.000Z"
   },
@@ -29036,33 +29868,21 @@
     "description": "Minimalist arena shooter where your weapon swaps every 10 seconds — adapt fast, blast through enemies, and clear the run before the timer flips again.",
     "popular": false,
     "rom": null,
-    "tags": ["arena-shooter", "shooter", "arcade", "fast-paced", "minimalist", "short", "singleplayer", "weapon-swap", "browser-native", "html5", "itch"],
+    "tags": [
+      "arena-shooter",
+      "shooter",
+      "arcade",
+      "fast-paced",
+      "minimalist",
+      "short",
+      "singleplayer",
+      "weapon-swap",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIzMTg2Njk2LnBuZw==/original/QZDtAD.png",
     "addedAt": "2026-04-26T15:30:00.000Z"
-  },
-  {
-    "id": "cllightseeker",
-    "title": "Lightseeker",
-    "category": "Adventure",
-    "path": "games/cllightseeker.html",
-    "description": "Retro Game Boy roguelite dungeon crawler where you delve a starving abyss, hunt monsters for rations, and keep your loot through every death.",
-    "popular": false,
-    "rom": null,
-    "tags": ["roguelite", "dungeon-crawler", "gameboy", "pixel-art", "retro", "permadeath", "browser-native", "html5", "itch"],
-    "thumbnail": "https://img.itch.zone/aW1nLzIzMTc1NTc2LnBuZw==/original/Gxo63I.png",
-    "addedAt": "2026-04-26T15:45:00.000Z"
-  },
-  {
-    "id": "cltonypigeon",
-    "title": "Tony Pigeon's Street Skater",
-    "category": "Sports",
-    "path": "games/cltonypigeon.html",
-    "description": "2D endless-runner skating jam game where you play Tony Pigeon dodging obstacles down a rebellious street, made for Street Jam.",
-    "popular": false,
-    "rom": null,
-    "tags": ["2d", "endless-runner", "skating", "game-jam", "arcade", "sports", "browser-native", "html5", "itch"],
-    "thumbnail": "https://img.itch.zone/aW1nLzE2MTE1NTY0LnBuZw==/original/7sWh%2Fs.png",
-    "addedAt": "2026-04-26T15:45:00.000Z"
   },
   {
     "id": "clshredoka",
@@ -29072,7 +29892,18 @@
     "description": "3D skatepark-vania where you grind through a dreamy mindscape, learn 8 tricks and 4 traversal abilities, and reignite your friend's heart.",
     "popular": false,
     "rom": null,
-    "tags": ["3d", "metroidvania", "skateboarding", "cute", "surreal", "singleplayer", "platformer", "browser-native", "html5", "itch"],
+    "tags": [
+      "3d",
+      "metroidvania",
+      "skateboarding",
+      "cute",
+      "surreal",
+      "singleplayer",
+      "platformer",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MTMyNDA3LnBuZw==/original/LNkl3H.png",
     "addedAt": "2026-04-26T15:45:00.000Z"
   },
@@ -29084,7 +29915,18 @@
     "description": "Physics-based motorcycle high-score game where you ride a Globe of Death loop, grab nitrous canisters, and rack up stunts; built for GMTK Jam 2025.",
     "popular": false,
     "rom": null,
-    "tags": ["racing", "physics", "stunt", "high-score", "psx", "game-jam", "driving", "browser-native", "html5", "itch"],
+    "tags": [
+      "racing",
+      "physics",
+      "stunt",
+      "high-score",
+      "psx",
+      "game-jam",
+      "driving",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIyNDcyMTEyLnBuZw==/original/79UY%2BA.png",
     "addedAt": "2026-04-26T15:45:00.000Z"
   },
@@ -29096,20 +29938,20 @@
     "description": "Short Halloween horror visual novel where masked teenagers' pranks turn violent under the moonlight; two endings, ~30 minutes, gore warning.",
     "popular": false,
     "rom": null,
-    "tags": ["visual-novel", "horror", "story-rich", "furry", "multiple-endings", "short", "renpy", "mobile", "browser-native", "html5", "itch"],
+    "tags": [
+      "visual-novel",
+      "horror",
+      "story-rich",
+      "furry",
+      "multiple-endings",
+      "short",
+      "renpy",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE3OTcxNjI3LnBuZw==/original/9uRecB.png",
-    "addedAt": "2026-04-26T15:45:00.000Z"
-  },
-  {
-    "id": "clwormomancy",
-    "title": "Wormomancy",
-    "category": "Simulation",
-    "path": "games/clwormomancy.html",
-    "description": "Goofy idle clicker where you mass-harvest worms' souls before the devil claims yours.",
-    "popular": false,
-    "rom": null,
-    "tags": ["idle", "clicker", "incremental", "comedy", "mobile", "browser-native", "html5", "itch"],
-    "thumbnail": "https://img.itch.zone/aW1nLzI2MTU2NzM2LnBuZw==/original/WhDMoR.png",
     "addedAt": "2026-04-26T15:45:00.000Z"
   },
   {
@@ -29120,7 +29962,16 @@
     "description": "Build and paint your own vehicle, then ram it into enemies to destroy them, earn parts, and upgrade for the next skirmish.",
     "popular": false,
     "rom": null,
-    "tags": ["vehicular-combat", "arena", "build-and-battle", "jam-game", "action", "browser-native", "html5", "itch"],
+    "tags": [
+      "vehicular-combat",
+      "arena",
+      "build-and-battle",
+      "jam-game",
+      "action",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE2NjU1NzkzLnBuZw==/original/iOEpEH.png",
     "addedAt": "2026-04-26T16:00:00.000Z"
   },
@@ -29132,7 +29983,18 @@
     "description": "Procedurally generate planets and solar systems, place trees, statues, and creatures on their surface, then fly a ship and walk around in first person.",
     "popular": false,
     "rom": null,
-    "tags": ["sandbox", "procgen", "space", "low-poly", "creator", "first-person", "simulation", "browser-native", "html5", "itch"],
+    "tags": [
+      "sandbox",
+      "procgen",
+      "space",
+      "low-poly",
+      "creator",
+      "first-person",
+      "simulation",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzE5OTE5NTYzLnBuZw==/original/U2Qb33.png",
     "addedAt": "2026-04-26T16:00:00.000Z"
   },
@@ -29144,7 +30006,19 @@
     "description": "Stop moving and you're dead — frantic top-down one-hit-kill action shooter drenched in psychedelic cyberpunk pixel art.",
     "popular": false,
     "rom": null,
-    "tags": ["action", "shooter", "top-down", "one-hit-kill", "cyberpunk", "psychedelic", "pixel-art", "souls-like", "browser-native", "html5", "itch"],
+    "tags": [
+      "action",
+      "shooter",
+      "top-down",
+      "one-hit-kill",
+      "cyberpunk",
+      "psychedelic",
+      "pixel-art",
+      "souls-like",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI1OTY1NTkzLnBuZw==/original/osCglc.png",
     "addedAt": "2026-04-26T16:15:00.000Z"
   },
@@ -29156,7 +30030,19 @@
     "description": "World choked by thorns, a single ember fighting back — atmospheric souls-like metroidvania platformer demo with boss battles and exploration.",
     "popular": false,
     "rom": null,
-    "tags": ["platformer", "metroidvania", "souls-like", "atmospheric", "boss-battle", "exploration", "demo", "action-adventure", "browser-native", "html5", "itch"],
+    "tags": [
+      "platformer",
+      "metroidvania",
+      "souls-like",
+      "atmospheric",
+      "boss-battle",
+      "exploration",
+      "demo",
+      "action-adventure",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0NzMwNjQ2LnBuZw==/original/nAYads.png",
     "addedAt": "2026-04-26T16:15:00.000Z"
   },
@@ -29168,7 +30054,16 @@
     "description": "Enter the tomb of an accursed picture — short horror-action jam game where you delve into a cursed painting's haunted depths.",
     "popular": false,
     "rom": null,
-    "tags": ["horror", "action", "atmospheric", "short", "jam-game", "browser-native", "html5", "itch"],
+    "tags": [
+      "horror",
+      "action",
+      "atmospheric",
+      "short",
+      "jam-game",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
     "thumbnail": "https://img.itch.zone/aW1nLzIyMDIzOTU5LmdpZg==/original/mnMO4v.gif",
     "addedAt": "2026-04-26T16:15:00.000Z"
   },
@@ -29180,7 +30075,17 @@
     "description": "Tom Fulp's iconic 1999 Newgrounds Flash classic — fight your way through a school siege as Pico, the original Newgrounds mascot. Played via Ruffle.",
     "popular": false,
     "rom": null,
-    "tags": ["action", "shooter", "classic", "flash", "ruffle", "newgrounds", "as2", "browser-native", "html5"],
+    "tags": [
+      "action",
+      "shooter",
+      "classic",
+      "flash",
+      "ruffle",
+      "newgrounds",
+      "as2",
+      "browser-native",
+      "html5"
+    ],
     "thumbnail": "https://picon.ngfiles.com/59000/flash_59593_card.png",
     "addedAt": "2026-04-26T16:30:00.000Z"
   },
@@ -29192,8 +30097,19 @@
     "description": "The original Madness Combat — Krinkels' ultraviolent Flash short reborn as a playable artefact. Hank takes on Nevada in stark stick-figure carnage.",
     "popular": false,
     "rom": null,
-    "tags": ["action", "violent", "classic", "flash", "ruffle", "newgrounds", "as2", "stickman", "browser-native", "html5"],
-    "thumbnail": "https://picon.ngfiles.com/87000/flash_87599_card.png",
+    "tags": [
+      "action",
+      "violent",
+      "classic",
+      "flash",
+      "ruffle",
+      "newgrounds",
+      "as2",
+      "stickman",
+      "browser-native",
+      "html5"
+    ],
+    "thumbnail": "https://picon.ngfiles.com/87000/flash_87599.jpg",
     "addedAt": "2026-04-26T16:30:00.000Z"
   },
   {
@@ -29204,7 +30120,18 @@
     "description": "The Behemoth's Alien Hominid in its Newgrounds form — frantic 2D run-and-gun where a yellow alien blasts FBI agents across stylized side-scrolling levels.",
     "popular": false,
     "rom": null,
-    "tags": ["action", "shooter", "run-and-gun", "classic", "flash", "ruffle", "newgrounds", "as3", "browser-native", "html5"],
+    "tags": [
+      "action",
+      "shooter",
+      "run-and-gun",
+      "classic",
+      "flash",
+      "ruffle",
+      "newgrounds",
+      "as3",
+      "browser-native",
+      "html5"
+    ],
     "thumbnail": "https://picon.ngfiles.com/594000/flash_594607_card.png",
     "addedAt": "2026-04-26T16:30:00.000Z"
   },
@@ -29216,7 +30143,18 @@
     "description": "Edmund McMillen's mind-bending Flash puzzle-platformer — descend through paradoxical boxes inside boxes, narrated by a future version of yourself.",
     "popular": false,
     "rom": null,
-    "tags": ["puzzle", "platformer", "classic", "flash", "ruffle", "newgrounds", "as3", "indie", "browser-native", "html5"],
+    "tags": [
+      "puzzle",
+      "platformer",
+      "classic",
+      "flash",
+      "ruffle",
+      "newgrounds",
+      "as3",
+      "indie",
+      "browser-native",
+      "html5"
+    ],
     "thumbnail": "https://picon.ngfiles.com/511000/flash_511754_card.png",
     "addedAt": "2026-04-26T16:30:00.000Z"
   },
@@ -29228,8 +30166,18 @@
     "description": "Wholesome point-and-click day-in-the-life of Pico the Newgrounds mascot — clean and friendly counterpart to the original Pico's School.",
     "popular": false,
     "rom": null,
-    "tags": ["adventure", "point-and-click", "flash", "ruffle", "newgrounds", "as3", "wholesome", "browser-native", "html5"],
-    "thumbnail": "https://picon.ngfiles.com/310000/flash_310316_card.png",
+    "tags": [
+      "adventure",
+      "point-and-click",
+      "flash",
+      "ruffle",
+      "newgrounds",
+      "as3",
+      "wholesome",
+      "browser-native",
+      "html5"
+    ],
+    "thumbnail": "https://picon.ngfiles.com/310000/flash_310316.gif",
     "addedAt": "2026-04-26T16:30:00.000Z"
   },
   {
@@ -29240,7 +30188,17 @@
     "description": "Top-down 2D real-time strategy with Civil-War-flavoured units — command lines of infantry and cavalry across hand-drawn battlefields.",
     "popular": false,
     "rom": null,
-    "tags": ["strategy", "rts", "classic", "flash", "ruffle", "newgrounds", "as2", "browser-native", "html5"],
+    "tags": [
+      "strategy",
+      "rts",
+      "classic",
+      "flash",
+      "ruffle",
+      "newgrounds",
+      "as2",
+      "browser-native",
+      "html5"
+    ],
     "thumbnail": "https://picon.ngfiles.com/137000/flash_137842_card.png",
     "addedAt": "2026-04-26T16:30:00.000Z"
   },
@@ -29252,8 +30210,19 @@
     "description": "Fourth entry in the cult Spawn of Satan series — irreverent Newgrounds Flash arcade where you battle through devil-themed levels.",
     "popular": false,
     "rom": null,
-    "tags": ["action", "arcade", "classic", "flash", "ruffle", "newgrounds", "as2", "demonic", "browser-native", "html5"],
-    "thumbnail": "https://picon.ngfiles.com/100000/flash_100501_card.png",
+    "tags": [
+      "action",
+      "arcade",
+      "classic",
+      "flash",
+      "ruffle",
+      "newgrounds",
+      "as2",
+      "demonic",
+      "browser-native",
+      "html5"
+    ],
+    "thumbnail": "https://picon.ngfiles.com/100000/flash_100501.gif",
     "addedAt": "2026-04-26T16:30:00.000Z"
   },
   {
@@ -29264,8 +30233,18 @@
     "description": "Quirky narrative point-and-click Flash adventure following Fred — short, sweet, and emblematic of late-2000s Newgrounds storytelling.",
     "popular": false,
     "rom": null,
-    "tags": ["adventure", "point-and-click", "story", "flash", "ruffle", "newgrounds", "as3", "browser-native", "html5"],
-    "thumbnail": "https://picon.ngfiles.com/542000/flash_542391_card.png",
+    "tags": [
+      "adventure",
+      "point-and-click",
+      "story",
+      "flash",
+      "ruffle",
+      "newgrounds",
+      "as3",
+      "browser-native",
+      "html5"
+    ],
+    "thumbnail": "https://picon.ngfiles.com/542000/flash_542391.gif",
     "addedAt": "2026-04-26T16:30:00.000Z"
   },
   {
@@ -29276,8 +30255,16 @@
     "description": "Modern HTML5 Newgrounds upload — frenetic GameMaker arcade where you wrangle a swarm of panicking cats. Iframed natively, no Ruffle needed.",
     "popular": false,
     "rom": null,
-    "tags": ["action", "arcade", "cats", "gamemaker", "newgrounds", "browser-native", "html5"],
-    "thumbnail": "https://picon.ngfiles.com/1028000/flash_1028693_card.png",
+    "tags": [
+      "action",
+      "arcade",
+      "cats",
+      "gamemaker",
+      "newgrounds",
+      "browser-native",
+      "html5"
+    ],
+    "thumbnail": "https://picon.ngfiles.com/1028000/flash_1028693_card_fallback.jpg",
     "addedAt": "2026-04-26T16:30:00.000Z"
   }
 ]
