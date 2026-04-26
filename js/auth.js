@@ -316,12 +316,14 @@
                     <h1>ARCADE</h1>
                 </div>
                 <p class="login-gate-tagline">Log in or register to access the arcade</p>
-                <input type="text" id="gateUsername" placeholder="Username" class="auth-input" autocomplete="username">
-                <input type="password" id="gatePassword" placeholder="Password" class="auth-input" autocomplete="current-password">
-                <div class="auth-actions">
-                    <button class="auth-submit" id="gateLoginBtn">Log in</button>
-                    <button class="auth-submit auth-secondary" id="gateRegisterBtn">Register</button>
-                </div>
+                <form class="auth-form" onsubmit="return false;" autocomplete="on">
+                    <input type="text" id="gateUsername" placeholder="Username" class="auth-input" autocomplete="username">
+                    <input type="password" id="gatePassword" placeholder="Password" class="auth-input" autocomplete="current-password">
+                    <div class="auth-actions">
+                        <button type="submit" class="auth-submit" id="gateLoginBtn">Log in</button>
+                        <button type="button" class="auth-submit auth-secondary" id="gateRegisterBtn">Register</button>
+                    </div>
+                </form>
                 <p class="auth-error" id="gateError"></p>
             </div>`;
         document.body.appendChild(gate);
@@ -389,12 +391,14 @@
             authArea.innerHTML = `
                 <button class="auth-btn" id="authToggle">Log in</button>
                 <div class="auth-dropdown" id="authDropdown">
-                    <input type="text" id="authUsername" placeholder="Username" class="auth-input" autocomplete="username">
-                    <input type="password" id="authPassword" placeholder="Password" class="auth-input" autocomplete="current-password">
-                    <div class="auth-actions">
-                        <button class="auth-submit" id="loginBtn">Log in</button>
-                        <button class="auth-submit auth-secondary" id="registerBtn">Register</button>
-                    </div>
+                    <form class="auth-form" onsubmit="return false;" autocomplete="on">
+                        <input type="text" id="authUsername" placeholder="Username" class="auth-input" autocomplete="username">
+                        <input type="password" id="authPassword" placeholder="Password" class="auth-input" autocomplete="current-password">
+                        <div class="auth-actions">
+                            <button type="submit" class="auth-submit" id="loginBtn">Log in</button>
+                            <button type="button" class="auth-submit auth-secondary" id="registerBtn">Register</button>
+                        </div>
+                    </form>
                     <p class="auth-error" id="authError"></p>
                 </div>`;
             bindDropdown();
