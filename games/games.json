@@ -28859,5 +28859,41 @@
     "tags": ["vehicle-builder", "sandbox", "physics", "building", "3d", "simulation", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1nLzI1NDEwOTIxLnBuZw==/original/UoagZr.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
+  },
+  {
+    "id": "clswordbanner",
+    "title": "Sword & Banner",
+    "category": "Strategy",
+    "path": "games/clswordbanner.html",
+    "description": "Pixel-art real-time strategy where you lead a warband across a medieval fantasy world, raiding settlements and commanding shield walls, archers, and cavalry charges in large-scale battles.",
+    "popular": false,
+    "rom": null,
+    "tags": ["strategy", "rts", "real-time-strategy", "medieval", "pixel-art", "fantasy", "tactics", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2NDU5Nzg5LnBuZw==/original/yBIuJk.png",
+    "addedAt": "2026-04-26T14:45:00.000Z"
+  },
+  {
+    "id": "clatsconcord",
+    "title": "After the Shift: Concord",
+    "category": "Strategy",
+    "path": "games/clatsconcord.html",
+    "description": "Sky-island survival sandbox where you build airship factories, dispatch blimps, and grow a floating city while defending against attackers across procedurally spawning islands.",
+    "popular": false,
+    "rom": null,
+    "tags": ["survival", "city-builder", "sandbox", "exploration", "top-down", "procgen", "fantasy", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1hZ2UvMjk1MjkwLzE0NDQ1OTcucG5n/original/PSzY%2BZ.png",
+    "addedAt": "2026-04-26T14:45:00.000Z"
+  },
+  {
+    "id": "clscrapyardautomata",
+    "title": "Scrapyard Automata",
+    "category": "Puzzle",
+    "path": "games/clscrapyardautomata.html",
+    "description": "Dieselpunk contraption-builder: snap rusted parts into a war-machine, attach if-this-then-that rules, deploy into missions, then watch it ride or blow up.",
+    "popular": false,
+    "rom": null,
+    "tags": ["puzzle", "simulation", "contraption", "physics", "crafting", "sandbox", "dieselpunk", "post-apocalyptic", "vehicles", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2OTExMzg5LnBuZw==/original/Ozu8aM.png",
+    "addedAt": "2026-04-26T14:45:00.000Z"
   }
 ]
