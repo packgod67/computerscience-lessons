@@ -53,13 +53,24 @@ or category. Use it as a pre-flight check after batch-adding games.
 
 ## Other site-wide notes
 
-- **Render** is the primary host. **Vercel** is a secondary deploy of
-  the same repo. Both get every push. Custom DNS lives in each
-  platform's dashboard.
+- **Hosting mirrors** — the same repo deploys to several hosts so we
+  have multiple URLs and no single-host outage takes the arcade down:
+  | Host | URL | Headers config |
+  | --- | --- | --- |
+  | Render (primary) | `computerscience-lessons.onrender.com` | `_headers` (ignored — coi-serviceworker covers /play/) |
+  | Vercel | `computer-sciencelessons.vercel.app` | `vercel.json` |
+  | Cloudflare Pages | `computerscience-lessons.pages.dev` | `_headers` (native) |
+  | GitHub Pages | `packgod67.github.io/computerscience-lessons` | none (coi-serviceworker covers /play/) |
+  | Deno Deploy | `<project>.deno.dev` | `serve.ts` (TS handler adds them) |
+  | Surge.sh (manual) | `<chosen>.surge.sh` | none (coi-serviceworker covers /play/) |
+  All git-connected hosts auto-deploy on push to `main`. Surge requires
+  manual `surge .` from repo root.
 - **`_headers`** (Render/Netlify/Cloudflare Pages syntax) is honored
-  on Vercel via `vercel.json` not by the file. Both files exist; they
-  define the same COOP/COEP rules for `/play/*` (Play! PS2 emulator
-  needs cross-origin isolation).
+  on Cloudflare Pages and Netlify natively. Vercel ignores it (uses
+  `vercel.json`). Render ignores it (relies on coi-serviceworker for
+  PS2). All three header configs (`_headers`, `vercel.json`, the
+  COOP/COEP block in `serve.ts`) define the SAME rules — keep them in
+  sync when changing the policy.
 - **Cloudflare worker** at `arcad-groq.gatabanumai.workers.dev` is
   the LLM proxy + ROM proxy + needs manual redeploy from
   `workers/groq-proxy.js` whenever you change it. Source-of-truth
