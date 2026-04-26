@@ -99,6 +99,12 @@ const ROM_ALLOWED_HOSTS_DOC = `
   *.pages.dev                        Cloudflare Pages
   *.r2.dev                           Cloudflare R2 public buckets
   *.itch.zone                        itch.io game asset CDN
+  uploads.ungrounded.net             Newgrounds Flash SWF + HTML5 game
+                                     uploads. ACAO is pinned to
+                                     newgrounds.com so direct fetch from
+                                     the arcade fails — Ruffle needs the
+                                     SWF bytes via fetch(), so they have
+                                     to come through this proxy.
 `;
 
 function isHostAllowed(host) {
@@ -114,6 +120,7 @@ function isHostAllowed(host) {
         'cdn.statically.io',
         'gitlab.com',
         'codeberg.org',
+        'uploads.ungrounded.net',  // Newgrounds Flash SWFs (Ruffle source)
     ]);
     if (exact.has(host)) return true;
 

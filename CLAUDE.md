@@ -90,6 +90,7 @@ or category. Use it as a pre-flight check after batch-adding games.
     | `*.pages.dev` | Cloudflare Pages |
     | `*.r2.dev` | Cloudflare R2 public buckets |
     | `*.itch.zone` | itch.io game asset CDN |
+    | `uploads.ungrounded.net` | Newgrounds Flash + HTML5 uploads |
   - When sourcing a new game ROM, prefer hosts already in this
     list. If the only working source is on a host NOT here, add
     it (with a comment justifying why) — but be skeptical: any
@@ -107,3 +108,20 @@ or category. Use it as a pre-flight check after batch-adding games.
   `frame-ancestors`, but the underlying build URL has no such
   restriction. Extract the embed ID from the itch page's
   `iframe_placeholder` data.
+- **Newgrounds Flash pattern**: iframe `play/flash/?title=<t>&swf=<encoded SWF URL>`.
+  The page bundles Ruffle (Rust/WASM Flash emulator) from unpkg, fetches
+  the SWF via the worker's ROM proxy (Newgrounds' `uploads.ungrounded.net`
+  pins ACAO to newgrounds.com so direct fetch fails), and plays it.
+  Save data persists per-origin via SharedObject in localStorage.
+  - **SWF URL discovery**: portal page HTML contains a JSON blob like
+    `embedController([{"url":"https:\/\/uploads.ungrounded.net\/<bucket>\/<id>_<slug>.swf",...}])`.
+    Bucket = `floor(portal_id / 1000) * 1000`. Extract via regex.
+  - **Cover URL**: `https://picon.ngfiles.com/<bucket>/flash_<id>_card.png`
+    is the canonical thumbnail.
+  - **Tags**: always include `flash`, `ruffle`, `newgrounds` plus
+    `as2` or `as3` to mark the runtime — useful when triaging
+    "doesn't work in Ruffle" reports.
+- **Newgrounds HTML5 pattern**: iframe
+  `https://uploads.ungrounded.net/alternate/<bucket>/<id>_alternate_<asset>_r<rev>.zip/index.html`
+  directly (no Ruffle, no proxy needed — the .zip path acts as a
+  server-side directory). Same iframable behaviour as itch HTML5 games.

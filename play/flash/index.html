@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+<title>Flash player — Arcade</title>
+<style>
+  /* Full-window canvas like the PS2 player. The Ruffle <ruffle-player>
+     custom element fills its container; we just need the host page to
+     be 100vh and dark-themed so the loading flash isn't jarring. */
+  html, body {
+      margin: 0;
+      padding: 0;
+      width: 100%;
+      height: 100%;
+      background: #0a0a0f;
+      color: #e8e8f0;
+      font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      overflow: hidden;
+  }
+  #ruffle-host {
+      width: 100vw;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+  }
+  #ruffle-host > * {
+      width: 100% !important;
+      height: 100% !important;
+  }
+  /* Status overlay shown until the SWF is fully loaded. Disappears once
+     Ruffle dispatches `loadeddata` on its player. */
+  #status {
+      position: fixed;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      background: rgba(10, 10, 15, 0.95);
+      pointer-events: none;
+      transition: opacity 0.3s;
+      z-index: 10;
+  }
+  #status.hidden { opacity: 0; }
+  .spinner {
+      width: 40px;
+      height: 40px;
+      border: 3px solid #2a2a3a;
+      border-top-color: #7c3aed;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  #status-text {
+      font-size: 14px;
+      color: #a0a0b0;
+      max-width: 90vw;
+      text-align: center;
+      line-height: 1.5;
+  }
+  #status-detail {
+      font-size: 12px;
+      color: #606080;
+      font-family: ui-monospace, "SF Mono", Menlo, monospace;
+      max-width: 90vw;
+      word-break: break-all;
+      text-align: center;
+  }
+  /* Error state — replaces spinner with × */
+  #status.error .spinner {
+      border-color: #ef4444;
+      border-top-color: #ef4444;
+      animation: none;
+      transform: rotate(45deg);
+  }
+  #status.error .spinner::before,
+  #status.error .spinner::after {
+      content: '';
+      position: absolute;
+      width: 22px;
+      height: 3px;
+      background: #ef4444;
+      top: 16px;
+      left: 6px;
+  }
+  #status.error .spinner::after { transform: rotate(90deg); }
+  #status.error .spinner { position: relative; }
+  /* Back button overlay — small chip in the top-left so users can bail
+     out of a stuck game. Only visible after Ruffle loads. */
+  #back {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      padding: 6px 12px;
+      background: rgba(20, 20, 30, 0.85);
+      border: 1px solid #2a2a3a;
+      color: #e8e8f0;
+      border-radius: 6px;
+      font-size: 13px;
+      text-decoration: none;
+      z-index: 20;
+      backdrop-filter: blur(4px);
+      opacity: 0;
+      transition: opacity 0.2s;
+  }
+  #back.show { opacity: 1; }
+  #back:hover { background: rgba(40, 40, 60, 0.9); }
+</style>
+</head>
+<body>
+<a href="../../index.html" id="back" title="Back to arcade">← Back</a>
+<div id="ruffle-host"></div>
+<div id="status">
+    <div class="spinner"></div>
+    <div id="status-text">Loading Flash player…</div>
+    <div id="status-detail"></div>
+</div>
+
+<!-- Ruffle CDN. The "newest" build auto-self-hosts WASM from unpkg, so
+     no separate WASM file is needed. ACAO:* on unpkg means CORS just
+     works. If unpkg ever has an outage, swap to jsdelivr:
+       https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle/ruffle.js -->
+<script src="https://unpkg.com/@ruffle-rs/ruffle/ruffle.js"></script>
+
+<script>
+// ─── Ruffle Flash player for the Arcade ─────────────────────────────────
+//
+// Loads a Newgrounds (or other allowlisted) SWF through the Cloudflare
+// ROM proxy, hands the bytes to Ruffle's WASM emulator, and embeds the
+// resulting <ruffle-player> as a fullscreen canvas.
+//
+// Reads its target URL from `?swf=<url>` (URL-encoded). The URL must be
+// reachable through the worker's allowlist — Newgrounds' uploads.
+// ungrounded.net pins ACAO to newgrounds.com so direct browser fetches
+// fail; the proxy strips that and serves with ACAO:* + CORP:cross-origin.
+//
+// URL params:
+//   ?swf=<encoded SWF URL>         — required
+//   ?proxy=1                       — wrap the SWF URL in the worker proxy
+//                                    (default: 1; set to 0 only for SWFs
+//                                    that are already CORS-friendly)
+//   ?title=<game title>            — sets <title> for tab/bookmark
+//
+// Example:
+//   /play/flash/?title=Pico%27s%20School&swf=https%3A%2F%2Fuploads.ungrounded.net%2F59000%2F59593_alien_booya.swf
+//
+// Note on save data: Ruffle stores AS2/AS3 SharedObject (".sol") data in
+// localStorage scoped to this iframe's origin. That means saves persist
+// across plays AS LONG AS the user comes back through the same arcade
+// host. They won't transfer between mirror deployments (Render, Vercel,
+// CF Pages) because each has its own origin. Acceptable trade-off.
+
+const params = new URLSearchParams(window.location.search);
+const swfRaw = params.get('swf');
+const useProxy = params.get('proxy') !== '0';
+const title = params.get('title');
+
+if (title) document.title = `${title} — Arcade`;
+
+const statusEl = document.getElementById('status');
+const statusText = document.getElementById('status-text');
+const statusDetail = document.getElementById('status-detail');
+const backBtn = document.getElementById('back');
+const host = document.getElementById('ruffle-host');
+
+function showError(msg, detail) {
+    statusEl.classList.add('error');
+    statusText.textContent = msg;
+    statusDetail.textContent = detail || '';
+    backBtn.classList.add('show');
+}
+function hideStatus() {
+    statusEl.classList.add('hidden');
+    backBtn.classList.add('show');
+}
+
+if (!swfRaw) {
+    showError('Missing SWF URL', 'Add ?swf=<url> to play a Flash game.');
+} else {
+    statusDetail.textContent = decodeURIComponent(swfRaw);
+
+    // Build the actual fetch URL. By default we route through the
+    // Cloudflare worker's ROM proxy so cross-origin SWFs (Newgrounds,
+    // archive.org, GitHub) all work uniformly. ?proxy=0 disables this
+    // for SWFs that are already CORS-friendly (rare).
+    const PROXY_BASE = 'https://arcad-groq.gatabanumai.workers.dev/rom';
+    const swfUrl = useProxy
+        ? `${PROXY_BASE}?src=${encodeURIComponent(decodeURIComponent(swfRaw))}`
+        : decodeURIComponent(swfRaw);
+
+    // Wait for the Ruffle script to install window.RufflePlayer. The CDN
+    // load is async but typically resolves before this script runs; poll
+    // briefly just in case to handle slow networks gracefully.
+    function waitForRuffle(retries = 50) {
+        if (window.RufflePlayer) return Promise.resolve();
+        if (retries <= 0) return Promise.reject(new Error('Ruffle failed to load from CDN'));
+        return new Promise((r) => setTimeout(r, 100)).then(() => waitForRuffle(retries - 1));
+    }
+
+    waitForRuffle().then(() => {
+        statusText.textContent = 'Booting Ruffle…';
+        const ruffle = window.RufflePlayer.newest();
+        const player = ruffle.createPlayer();
+
+        // Player sizing — the CSS rule above forces width/height:100% on
+        // children of #ruffle-host so the canvas fills the window.
+        host.appendChild(player);
+
+        // Configure before load(). Most defaults are fine; we explicitly
+        // set autoplay so users don't have to click through Ruffle's
+        // built-in click-to-play overlay (the arcade's own Play button
+        // already serves as user gesture). Quality "high" matches what
+        // most NG games shipped with.
+        const swfRef = swfUrl;
+        player.load({
+            url: swfRef,
+            autoplay: 'on',
+            unmuteOverlay: 'visible',
+            quality: 'high',
+            // Most Newgrounds games are AS2; let Ruffle auto-detect.
+            // backgroundColor:null lets the SWF's own stage colour show.
+            preferredRenderer: 'webgl',
+            // Allow scripts in the SWF to access network — a few NG
+            // games fetch leaderboards. They'll fail silently because
+            // CORS won't allow ngfiles.com responses, but the games
+            // continue running. allowScriptAccess:'sameDomain' is the
+            // default and what we want.
+            allowScriptAccess: false,
+            allowNetworking: 'all',
+        }).then(() => {
+            statusText.textContent = 'Loaded.';
+            // Give Ruffle a beat to actually paint the first frame
+            // before we hide the overlay; otherwise users see a flash
+            // of the dark background.
+            setTimeout(hideStatus, 200);
+        }).catch((e) => {
+            showError('Failed to load SWF', e.message || String(e));
+        });
+
+        // Some SWFs throw inside their own AS code; Ruffle dispatches
+        // 'panic' events for unrecoverable errors. Surface those to the
+        // user instead of leaving the loading spinner up forever.
+        player.addEventListener('panic', (ev) => {
+            showError('Flash playback crashed', ev.detail?.error?.message || 'Ruffle panic');
+        });
+        // 'loadeddata' fires when the SWF metadata is parsed.
+        player.addEventListener('loadeddata', () => {
+            hideStatus();
+        });
+    }).catch((e) => {
+        showError('Could not load Ruffle', e.message || String(e));
+    });
+}
+</script>
+</body>
+</html>

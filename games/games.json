@@ -29171,5 +29171,113 @@
     "tags": ["horror", "action", "atmospheric", "short", "jam-game", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1nLzIyMDIzOTU5LmdpZg==/original/mnMO4v.gif",
     "addedAt": "2026-04-26T16:15:00.000Z"
+  },
+  {
+    "id": "clpicoschool",
+    "title": "Pico's School",
+    "category": "Action",
+    "path": "games/clpicoschool.html",
+    "description": "Tom Fulp's iconic 1999 Newgrounds Flash classic — fight your way through a school siege as Pico, the original Newgrounds mascot. Played via Ruffle.",
+    "popular": false,
+    "rom": null,
+    "tags": ["action", "shooter", "classic", "flash", "ruffle", "newgrounds", "as2", "browser-native", "html5"],
+    "thumbnail": "https://picon.ngfiles.com/59000/flash_59593_card.png",
+    "addedAt": "2026-04-26T16:30:00.000Z"
+  },
+  {
+    "id": "clmadnesscombat1",
+    "title": "Madness Combat 1",
+    "category": "Action",
+    "path": "games/clmadnesscombat1.html",
+    "description": "The original Madness Combat — Krinkels' ultraviolent Flash short reborn as a playable artefact. Hank takes on Nevada in stark stick-figure carnage.",
+    "popular": false,
+    "rom": null,
+    "tags": ["action", "violent", "classic", "flash", "ruffle", "newgrounds", "as2", "stickman", "browser-native", "html5"],
+    "thumbnail": "https://picon.ngfiles.com/87000/flash_87599_card.png",
+    "addedAt": "2026-04-26T16:30:00.000Z"
+  },
+  {
+    "id": "clalienhominidx",
+    "title": "Alien Hominid Xtreme",
+    "category": "Action",
+    "path": "games/clalienhominidx.html",
+    "description": "The Behemoth's Alien Hominid in its Newgrounds form — frantic 2D run-and-gun where a yellow alien blasts FBI agents across stylized side-scrolling levels.",
+    "popular": false,
+    "rom": null,
+    "tags": ["action", "shooter", "run-and-gun", "classic", "flash", "ruffle", "newgrounds", "as3", "browser-native", "html5"],
+    "thumbnail": "https://picon.ngfiles.com/594000/flash_594607_card.png",
+    "addedAt": "2026-04-26T16:30:00.000Z"
+  },
+  {
+    "id": "cltimefcuk",
+    "title": "Time Fcuk",
+    "category": "Puzzle",
+    "path": "games/cltimefcuk.html",
+    "description": "Edmund McMillen's mind-bending Flash puzzle-platformer — descend through paradoxical boxes inside boxes, narrated by a future version of yourself.",
+    "popular": false,
+    "rom": null,
+    "tags": ["puzzle", "platformer", "classic", "flash", "ruffle", "newgrounds", "as3", "indie", "browser-native", "html5"],
+    "thumbnail": "https://picon.ngfiles.com/511000/flash_511754_card.png",
+    "addedAt": "2026-04-26T16:30:00.000Z"
+  },
+  {
+    "id": "cldaywithpico",
+    "title": "Day With Pico",
+    "category": "Adventure",
+    "path": "games/cldaywithpico.html",
+    "description": "Wholesome point-and-click day-in-the-life of Pico the Newgrounds mascot — clean and friendly counterpart to the original Pico's School.",
+    "popular": false,
+    "rom": null,
+    "tags": ["adventure", "point-and-click", "flash", "ruffle", "newgrounds", "as3", "wholesome", "browser-native", "html5"],
+    "thumbnail": "https://picon.ngfiles.com/310000/flash_310316_card.png",
+    "addedAt": "2026-04-26T16:30:00.000Z"
+  },
+  {
+    "id": "clbattleoakridge",
+    "title": "Battle for Oak Ridge",
+    "category": "Strategy",
+    "path": "games/clbattleoakridge.html",
+    "description": "Top-down 2D real-time strategy with Civil-War-flavoured units — command lines of infantry and cavalry across hand-drawn battlefields.",
+    "popular": false,
+    "rom": null,
+    "tags": ["strategy", "rts", "classic", "flash", "ruffle", "newgrounds", "as2", "browser-native", "html5"],
+    "thumbnail": "https://picon.ngfiles.com/137000/flash_137842_card.png",
+    "addedAt": "2026-04-26T16:30:00.000Z"
+  },
+  {
+    "id": "clspawnsatan4",
+    "title": "Spawn of Satan 4",
+    "category": "Action",
+    "path": "games/clspawnsatan4.html",
+    "description": "Fourth entry in the cult Spawn of Satan series — irreverent Newgrounds Flash arcade where you battle through devil-themed levels.",
+    "popular": false,
+    "rom": null,
+    "tags": ["action", "arcade", "classic", "flash", "ruffle", "newgrounds", "as2", "demonic", "browser-native", "html5"],
+    "thumbnail": "https://picon.ngfiles.com/100000/flash_100501_card.png",
+    "addedAt": "2026-04-26T16:30:00.000Z"
+  },
+  {
+    "id": "clfredstory",
+    "title": "The Fred Story",
+    "category": "Adventure",
+    "path": "games/clfredstory.html",
+    "description": "Quirky narrative point-and-click Flash adventure following Fred — short, sweet, and emblematic of late-2000s Newgrounds storytelling.",
+    "popular": false,
+    "rom": null,
+    "tags": ["adventure", "point-and-click", "story", "flash", "ruffle", "newgrounds", "as3", "browser-native", "html5"],
+    "thumbnail": "https://picon.ngfiles.com/542000/flash_542391_card.png",
+    "addedAt": "2026-04-26T16:30:00.000Z"
+  },
+  {
+    "id": "clcatspanic",
+    "title": "Cats Panic!",
+    "category": "Action",
+    "path": "games/clcatspanic.html",
+    "description": "Modern HTML5 Newgrounds upload — frenetic GameMaker arcade where you wrangle a swarm of panicking cats. Iframed natively, no Ruffle needed.",
+    "popular": false,
+    "rom": null,
+    "tags": ["action", "arcade", "cats", "gamemaker", "newgrounds", "browser-native", "html5"],
+    "thumbnail": "https://picon.ngfiles.com/1028000/flash_1028693_card.png",
+    "addedAt": "2026-04-26T16:30:00.000Z"
   }
 ]
