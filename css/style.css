@@ -3357,6 +3357,106 @@ body.auth-gated .player-container {
 }
 .custom-tag-delete-btn:hover { color: #ef4444; }
 
+/* Co-op host modal — shown when user clicks "Co-op" in game info.
+   Stacks on top of the game info modal (z-index 11000), shows the
+   room code prominently + invite link + status messages. */
+
+#coopHostOverlay { z-index: 11000; }
+
+.coop-host-modal {
+    max-width: 520px;
+    width: 92vw;
+}
+
+.coop-room-code {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 1.2rem 1rem;
+    margin: 0.8rem 0;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+.coop-room-code-label {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+.coop-room-code-value {
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 2.4rem;
+    font-weight: bold;
+    letter-spacing: 6px;
+    color: var(--accent);
+    background: transparent;
+    padding: 0;
+}
+
+.coop-invite-row {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
+}
+.coop-invite-input {
+    flex: 1;
+    padding: 0.5rem 0.7rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--text-secondary);
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    font-size: 0.78rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.coop-invite-input:focus {
+    color: var(--text-primary);
+    outline: 1px solid var(--accent);
+}
+
+.coop-hint {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+    margin: 0.6rem 0 0.4rem;
+}
+.coop-status {
+    padding: 0.6rem 0.75rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    color: var(--text-primary);
+    margin: 0;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+    text-align: center;
+}
+
+/* Co-op button in game info modal */
+.game-info-coop-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.6rem;
+    padding: 0.4rem 0.85rem;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: color 0.15s, border-color 0.15s;
+    font-family: inherit;
+}
+.game-info-coop-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+
 /* Save-offline button in game info modal. Looks like the Edit Tags
    pill — secondary action, dashed border, sits between Play Now and
    the recommendations strip. Saved state is solid + green. */

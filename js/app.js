@@ -1136,6 +1136,17 @@
             ? `<button class="game-info-offline-btn" id="gameInfoOfflineBtn" data-id="${esc(g.id)}" title="Save this game so it works offline">&#128229; Save offline</button>`
             : '';
 
+        // Co-op button — share your screen so a friend can watch.
+        // Hidden on mobile since getDisplayMedia isn't supported there
+        // and the UX would be confusing. Only shown when signed in
+        // (Firestore signaling needs auth).
+        const canCoop = !!navigator.mediaDevices?.getDisplayMedia
+            && !!window.ArcadeAuth?.isLoggedIn?.()
+            && !!window.ArcadeCoop;
+        const coopBtn = canCoop
+            ? `<button class="game-info-coop-btn" id="gameInfoCoopBtn" title="Share your screen with a friend so they can watch you play">&#128106; Co-op</button>`
+            : '';
+
         // Smart recommendations — score every other game in the catalog
         // by tag overlap with the current game, give a boost for matching
         // category + matching ROM platform, and surface the top 6.
@@ -1169,6 +1180,7 @@
                 <p class="game-info-desc">${esc(g.description)}</p>
                 <a class="game-info-play" href="play.html?game=${encodeURIComponent(g.id)}">Play Now</a>
                 ${offlineBtn}
+                ${coopBtn}
                 ${recsHtml}
             </div>`;
 
@@ -1219,6 +1231,16 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
+
+        // Co-op button — opens a host modal where the user grants screen
+        // share, gets a 6-char room code + invite link, and waits for a
+        // friend to join. Stream goes peer-to-peer via WebRTC.
+        const coopButton = overlay.querySelector('#gameInfoCoopBtn');
+        if (coopButton && window.ArcadeCoop) {
+            coopButton.addEventListener('click', () => {
+                window.ArcadeCoop.startCoopAsHost(g);
+            });
+        }
 
         // Save-offline button — fetches the wrapper + iframe target +
         // thumbnail through the SW so they're available when offline.

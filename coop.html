@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Co-op viewer — Arcade</title>
+    <meta name="theme-color" content="#7c3aed">
+    <link rel="icon" href="assets/logo.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            margin: 0;
+            background: #0a0a0f;
+            color: #e8e8f0;
+            font-family: system-ui, -apple-system, sans-serif;
+            overflow: hidden;
+        }
+        .coop-viewer {
+            position: fixed;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #000;
+        }
+        .coop-viewer video {
+            max-width: 100%;
+            max-height: 100%;
+            background: #000;
+        }
+        .coop-viewer-status {
+            position: fixed;
+            top: 12px;
+            left: 12px;
+            padding: 8px 14px;
+            background: rgba(20, 20, 30, 0.85);
+            border: 1px solid #2a2a3a;
+            border-radius: 6px;
+            font-size: 13px;
+            backdrop-filter: blur(4px);
+            max-width: calc(100vw - 24px);
+        }
+        .coop-viewer-back {
+            position: fixed;
+            top: 12px;
+            right: 12px;
+            padding: 6px 12px;
+            background: rgba(20, 20, 30, 0.85);
+            border: 1px solid #2a2a3a;
+            color: #e8e8f0;
+            border-radius: 6px;
+            font-size: 13px;
+            text-decoration: none;
+            backdrop-filter: blur(4px);
+        }
+        .coop-viewer-back:hover { background: rgba(40, 40, 60, 0.9); }
+        .coop-viewer-empty {
+            text-align: center;
+            color: #a0a0b0;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        .coop-viewer-empty .spinner {
+            width: 36px;
+            height: 36px;
+            border: 3px solid #2a2a3a;
+            border-top-color: #7c3aed;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 14px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+        .coop-viewer-join {
+            text-align: center;
+        }
+        .coop-viewer-join input {
+            display: block;
+            margin: 1rem auto 0.5rem;
+            padding: 0.5rem 0.8rem;
+            background: #1a1a25;
+            border: 1px solid #2a2a3a;
+            border-radius: 6px;
+            color: #e8e8f0;
+            font-family: ui-monospace, monospace;
+            font-size: 1.2rem;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 4px;
+            width: 180px;
+        }
+        .coop-viewer-join button {
+            margin-top: 0.5rem;
+            padding: 0.5rem 1.5rem;
+            background: #7c3aed;
+            color: #fff;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html" class="coop-viewer-back">← Arcade</a>
+    <div class="coop-viewer-status" id="status">Loading…</div>
+    <div class="coop-viewer">
+        <video id="remote" autoplay playsinline controls></video>
+        <div class="coop-viewer-empty" id="empty">
+            <div class="spinner"></div>
+            <p id="emptyMsg">Joining co-op room…</p>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+    <script src="js/config.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/coop.js"></script>
+    <script>
+    (function () {
+        const params = new URLSearchParams(location.search);
+        const roomCode = (params.get('room') || '').toUpperCase().replace(/[^A-Z0-9]/g, '');
+        const statusEl = document.getElementById('status');
+        const videoEl = document.getElementById('remote');
+        const emptyEl = document.getElementById('empty');
+        const emptyMsgEl = document.getElementById('emptyMsg');
+
+        function showJoinForm() {
+            // No room code in URL — show a manual entry form
+            emptyEl.innerHTML = `
+                <div class="coop-viewer-join">
+                    <p>Enter co-op room code from your friend:</p>
+                    <input type="text" id="manualRoom" maxlength="6" autofocus
+                           placeholder="ABCDEF">
+                    <br>
+                    <button id="joinBtn">Join</button>
+                </div>`;
+            const input = document.getElementById('manualRoom');
+            const btn = document.getElementById('joinBtn');
+            const submit = () => {
+                const code = input.value.trim().toUpperCase().replace(/[^A-Z0-9]/g, '');
+                if (code.length !== 6) {
+                    statusEl.textContent = 'Room codes are 6 characters.';
+                    return;
+                }
+                location.href = `coop.html?room=${code}`;
+            };
+            btn.addEventListener('click', submit);
+            input.addEventListener('keydown', (e) => { if (e.key === 'Enter') submit(); });
+        }
+
+        if (!roomCode) {
+            statusEl.textContent = 'No room code provided.';
+            showJoinForm();
+            return;
+        }
+
+        // Hide the spinner once video has data
+        videoEl.addEventListener('loadeddata', () => {
+            emptyEl.style.display = 'none';
+        });
+
+        // Wait for auth-ready, then join
+        if (window.ArcadeAuth?.waitForAuth) {
+            ArcadeAuth.waitForAuth().then(() => {
+                statusEl.textContent = `Joining room ${roomCode}…`;
+                emptyMsgEl.textContent = `Joining room ${roomCode}…`;
+                ArcadeCoop.joinAsViewer(roomCode, videoEl, statusEl);
+            });
+        } else {
+            // Fallback: wait a bit for ArcadeAuth to load
+            setTimeout(() => {
+                if (!window.ArcadeCoop) {
+                    statusEl.textContent = 'Failed to load co-op module. Try refreshing.';
+                    return;
+                }
+                ArcadeCoop.joinAsViewer(roomCode, videoEl, statusEl);
+            }, 1500);
+        }
+    })();
+    </script>
+</body>
+</html>
