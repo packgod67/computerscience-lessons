@@ -3465,6 +3465,155 @@ body.auth-gated .player-container {
 }
 .offline-item-remove:hover { color: #ef4444; border-color: #ef4444; }
 
+/* Catalog admin modal — edit/delete existing entries. Wider than
+   default to accommodate the row table (thumbnail + title + meta +
+   action buttons). Edit form modal is smaller, stacks on top. */
+
+#catalogAdminModal .modal-box.catalog-admin-modal {
+    max-width: 850px;
+    width: 92vw;
+    max-height: 88vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.catalog-admin-toolbar {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.6rem;
+}
+.catalog-admin-toolbar .auth-input { flex: 1; }
+.catalog-admin-toolbar .auth-submit { white-space: nowrap; }
+
+.catalog-admin-status {
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    margin-bottom: 0.4rem;
+    font-family: ui-monospace, "SF Mono", Menlo, monospace;
+}
+
+.catalog-admin-table {
+    flex: 1;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+}
+
+.catalog-admin-row {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0.45rem 0.6rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+}
+
+.catalog-admin-thumb {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    flex-shrink: 0;
+}
+
+.catalog-admin-info {
+    flex: 1;
+    min-width: 0;
+}
+.catalog-admin-title {
+    color: var(--text-primary);
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.catalog-admin-meta {
+    font-size: 0.72rem;
+    color: var(--text-secondary);
+}
+.catalog-admin-meta code {
+    background: var(--bg-secondary);
+    padding: 0.05rem 0.3rem;
+    border-radius: 3px;
+    font-size: 0.95em;
+}
+
+.catalog-admin-edit, .catalog-admin-delete {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-primary);
+    border-radius: 4px;
+    padding: 0.3rem 0.7rem;
+    cursor: pointer;
+    font-size: 0.78rem;
+    transition: border-color 0.15s, color 0.15s;
+}
+.catalog-admin-edit:hover { border-color: var(--accent); color: var(--accent); }
+.catalog-admin-delete {
+    padding: 0.2rem 0.55rem;
+    font-size: 1.05rem;
+    line-height: 1;
+}
+.catalog-admin-delete:hover { color: #ef4444; border-color: #ef4444; }
+
+.catalog-admin-more {
+    text-align: center;
+    color: var(--text-secondary);
+    padding: 0.8rem;
+    font-size: 0.82rem;
+}
+
+/* Edit form modal stacks on top of catalog admin modal. */
+#catalogEditOverlay { z-index: 11000; }
+.catalog-edit-modal { max-width: 560px; width: 90vw; }
+.catalog-edit-form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.6rem;
+    max-height: 60vh;
+    overflow-y: auto;
+}
+.catalog-edit-form label {
+    display: flex;
+    flex-direction: column;
+    font-size: 0.78rem;
+    color: var(--text-secondary);
+    gap: 0.25rem;
+}
+.catalog-edit-form input,
+.catalog-edit-form textarea {
+    padding: 0.45rem 0.6rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 5px;
+    color: var(--text-primary);
+    font-family: inherit;
+    font-size: 0.85rem;
+}
+.catalog-edit-form textarea {
+    resize: vertical;
+    font-family: inherit;
+}
+.catalog-edit-checkbox {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--text-primary);
+    font-size: 0.85rem;
+}
+.catalog-edit-checkbox input { width: auto; }
+
+.catalog-edit-actions {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.8rem;
+    justify-content: flex-end;
+}
+
 /* Bulk-add games modal (admin LLM-research tool). Wider than usual
    modals because it shows a list of researched entries with thumbnails
    and tag chips that need horizontal room. */

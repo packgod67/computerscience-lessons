@@ -498,6 +498,22 @@
             });
             countEl.parentNode.insertBefore(bulkBtn, countEl);
         }
+
+        // Edit Catalog — admin GUI for editing/deleting existing
+        // entries. Add is covered by Bulk Add; this fills the rest.
+        let editBtn = document.getElementById('editCatalogBtn');
+        if (!editBtn) {
+            editBtn = document.createElement('button');
+            editBtn.id = 'editCatalogBtn';
+            editBtn.className = 'manage-tags-btn';
+            editBtn.type = 'button';
+            editBtn.title = 'Edit existing catalog entries';
+            editBtn.innerHTML = '&#9998; Edit Catalog';
+            editBtn.addEventListener('click', () => {
+                window.ArcadeCatalogAdmin?.showCatalogAdminModal?.();
+            });
+            countEl.parentNode.insertBefore(editBtn, countEl);
+        }
     }
 
     // Merged tag list for filtering: the baked-in `tags` from games.json
