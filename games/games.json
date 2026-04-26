@@ -4069,7 +4069,7 @@
       "custom-tracks",
       "ds"
     ],
-    "thumbnail": "assets/thumbnails/platforms/ds.png",
+    "thumbnail": "https://dshack.org/ctgp-n/resources/logo.png",
     "addedAt": "2026-04-23T20:04:04.647Z"
   },
   {
@@ -25705,7 +25705,7 @@
       "rom-hack"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://gbacodes.com/wp-content/uploads/2025/04/Pokemon-Dreamstone-Mysteries-1024x683.png"
   },
   {
     "id": "clpokemonthelastfirered",
@@ -25725,7 +25725,7 @@
       "rom-hack"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://www.pokeharbor.com/wp-content/uploads/2021/04/pokemon-last-fire-red.jpg"
   },
   {
     "id": "clpokemonfuseddimensions",
@@ -25766,7 +25766,7 @@
       "rom-hack"
     ],
     "addedAt": "2026-04-19T18:21:27.772Z",
-    "thumbnail": "assets/thumbnails/platforms/gba.png"
+    "thumbnail": "https://www.pokeharbor.com/wp-content/uploads/2022/10/Pokemon-Fire-Red-Plus-3.webp"
   },
   {
     "id": "clpokemonvolume1gba",
@@ -26941,7 +26941,7 @@
       "rom-hack",
       "ds"
     ],
-    "thumbnail": "assets/thumbnails/platforms/ds.png",
+    "thumbnail": "https://images.launchbox-app.com/d911fb8a-dbdc-4379-947e-35df105d0269.jpg",
     "addedAt": "2026-04-23T20:04:04.647Z"
   },
   {
