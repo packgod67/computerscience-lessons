@@ -29027,5 +29027,77 @@
     "tags": ["arena-shooter", "shooter", "arcade", "fast-paced", "minimalist", "short", "singleplayer", "weapon-swap", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1nLzIzMTg2Njk2LnBuZw==/original/QZDtAD.png",
     "addedAt": "2026-04-26T15:30:00.000Z"
+  },
+  {
+    "id": "cllightseeker",
+    "title": "Lightseeker",
+    "category": "Adventure",
+    "path": "games/cllightseeker.html",
+    "description": "Retro Game Boy roguelite dungeon crawler where you delve a starving abyss, hunt monsters for rations, and keep your loot through every death.",
+    "popular": false,
+    "rom": null,
+    "tags": ["roguelite", "dungeon-crawler", "gameboy", "pixel-art", "retro", "permadeath", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzIzMTc1NTc2LnBuZw==/original/Gxo63I.png",
+    "addedAt": "2026-04-26T15:45:00.000Z"
+  },
+  {
+    "id": "cltonypigeon",
+    "title": "Tony Pigeon's Street Skater",
+    "category": "Sports",
+    "path": "games/cltonypigeon.html",
+    "description": "2D endless-runner skating jam game where you play Tony Pigeon dodging obstacles down a rebellious street, made for Street Jam.",
+    "popular": false,
+    "rom": null,
+    "tags": ["2d", "endless-runner", "skating", "game-jam", "arcade", "sports", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzE2MTE1NTY0LnBuZw==/original/7sWh%2Fs.png",
+    "addedAt": "2026-04-26T15:45:00.000Z"
+  },
+  {
+    "id": "clshredoka",
+    "title": "Shredoka: Magical Girl Skateboarding",
+    "category": "Platformer",
+    "path": "games/clshredoka.html",
+    "description": "3D skatepark-vania where you grind through a dreamy mindscape, learn 8 tricks and 4 traversal abilities, and reignite your friend's heart.",
+    "popular": false,
+    "rom": null,
+    "tags": ["3d", "metroidvania", "skateboarding", "cute", "surreal", "singleplayer", "platformer", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2MTMyNDA3LnBuZw==/original/LNkl3H.png",
+    "addedAt": "2026-04-26T15:45:00.000Z"
+  },
+  {
+    "id": "clcentripetal",
+    "title": "Centripetal",
+    "category": "Racing",
+    "path": "games/clcentripetal.html",
+    "description": "Physics-based motorcycle high-score game where you ride a Globe of Death loop, grab nitrous canisters, and rack up stunts; built for GMTK Jam 2025.",
+    "popular": false,
+    "rom": null,
+    "tags": ["racing", "physics", "stunt", "high-score", "psx", "game-jam", "driving", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzIyNDcyMTEyLnBuZw==/original/79UY%2BA.png",
+    "addedAt": "2026-04-26T15:45:00.000Z"
+  },
+  {
+    "id": "clcanidae",
+    "title": "Canidae",
+    "category": "Horror",
+    "path": "games/clcanidae.html",
+    "description": "Short Halloween horror visual novel where masked teenagers' pranks turn violent under the moonlight; two endings, ~30 minutes, gore warning.",
+    "popular": false,
+    "rom": null,
+    "tags": ["visual-novel", "horror", "story-rich", "furry", "multiple-endings", "short", "renpy", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzE3OTcxNjI3LnBuZw==/original/9uRecB.png",
+    "addedAt": "2026-04-26T15:45:00.000Z"
+  },
+  {
+    "id": "clwormomancy",
+    "title": "Wormomancy",
+    "category": "Simulation",
+    "path": "games/clwormomancy.html",
+    "description": "Goofy idle clicker where you mass-harvest worms' souls before the devil claims yours.",
+    "popular": false,
+    "rom": null,
+    "tags": ["idle", "clicker", "incremental", "comedy", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2MTU2NzM2LnBuZw==/original/WhDMoR.png",
+    "addedAt": "2026-04-26T15:45:00.000Z"
   }
 ]
