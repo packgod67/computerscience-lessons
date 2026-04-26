@@ -1,0 +1,24 @@
+# Render Blueprint — one-click deploy of the netplay relay as a Web
+# Service. After this lands on main, go to render.com → New →
+# Blueprint → connect this repo → Render reads this file and creates
+# the service.
+#
+# Free tier: 750 instance-hours/month with cold starts. Cold starts
+# (~30s after 15min idle) WILL drop active rooms — netplay is
+# stateful. Acceptable for occasional play; if you do regular sessions
+# upgrade to a paid plan ($7/mo for always-on).
+
+services:
+  - type: web
+    name: arcade-netplay
+    runtime: node
+    region: oregon
+    plan: free
+    rootDir: netplay-server
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeploy: true
+    healthCheckPath: /
+    envVars:
+      - key: NODE_VERSION
+        value: '20'

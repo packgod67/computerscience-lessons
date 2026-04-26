@@ -86,7 +86,11 @@
                 EJS_startOnLoaded = true;
                 EJS_cacheLimit = 0;
                 EJS_pathtodata = "https://cdn.jsdelivr.net/gh/a456pur/seraph@81f551ca0aa8e3d6018d32d8ac5904ac9bc78f76/storage/emulatorjs/data";
-                EJS_netplayServer = "https://netplay.emulatorjs.org";
+                // Read from arcade config so we can swap to a self-hosted
+                // netplay relay when the official one (netplay.emulatorjs.org)
+                // is down. Falls back to the official server if no override.
+                EJS_netplayServer = (window.parent && window.parent.ARCADE_CONFIG && window.parent.ARCADE_CONFIG.netplayServer)
+                    || "https://netplay.emulatorjs.org";
                 EJS_gameUrl = "https://cdn.jsdelivr.net/gh/bubbls/UGS-file-encryption@d40fb3bf8cd8db6131e55cf6970ce2a85be36f7d/PokemonQuetzalEnglishAlpha8v2.zip";
                 loadGame();  
             }
