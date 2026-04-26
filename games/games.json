@@ -21530,9 +21530,15 @@
   },
   {
     "id": "clstation141",
-    "title": "Clstation 141",
-    "category": "Other",
-    "path": "games/clstation141.html"
+    "title": "Station 141",
+    "category": "Shooter",
+    "path": "games/clstation141.html",
+    "description": "Short old-school FPS with fast gameplay, punchy weapons, and voxel sci-fi visuals — clear the station and don't get cornered.",
+    "popular": false,
+    "rom": null,
+    "tags": ["fps", "first-person", "shooter", "arcade", "voxel", "sci-fi", "retro", "action", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzU4ODM5NjMucG5n/original/75wxYs.png",
+    "addedAt": "2026-04-26T15:15:00.000Z"
   },
   {
     "id": "clstationmeltdown",
@@ -28919,5 +28925,77 @@
     "tags": ["simulation", "planet-sim", "pixel-art", "sandbox", "ecosystem", "mobile", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1hZ2UvMTQ4NDI0LzY4MTc1NC5naWY=/original/rGN%2Fw5.gif",
     "addedAt": "2026-04-26T15:00:00.000Z"
+  },
+  {
+    "id": "cllegionbreaker",
+    "title": "Legion Breaker",
+    "category": "Strategy",
+    "path": "games/cllegionbreaker.html",
+    "description": "Short incremental game about defending from undead hordes — cast magic spells, build your army, and break the enemy's legions.",
+    "popular": false,
+    "rom": null,
+    "tags": ["incremental", "idle", "clicker", "tower-defense", "dark-fantasy", "one-button", "strategy", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2MTk2NjUwLnBuZw==/original/8INXax.png",
+    "addedAt": "2026-04-26T15:15:00.000Z"
+  },
+  {
+    "id": "cltinytowers",
+    "title": "Tiny Towers",
+    "category": "Strategy",
+    "path": "games/cltinytowers.html",
+    "description": "Active incremental game where you defend your tiny pixel-art fortress from hordes of tiny mobs by clicking and upgrading.",
+    "popular": false,
+    "rom": null,
+    "tags": ["incremental", "idle", "clicker", "tower-defense", "pixel-art", "2d", "strategy", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2NzI0MzAyLnBuZw==/original/pf58tg.png",
+    "addedAt": "2026-04-26T15:15:00.000Z"
+  },
+  {
+    "id": "cloutold",
+    "title": "Outhold",
+    "category": "Strategy",
+    "path": "games/cloutold.html",
+    "description": "Short, minimalistic incremental tower defense — hold out and grow your defenses with mouse-only clicks.",
+    "popular": false,
+    "rom": null,
+    "tags": ["incremental", "idle", "clicker", "tower-defense", "minimalist", "strategy", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzIxMzk2OTMzLnBuZw==/original/5xcBq4.png",
+    "addedAt": "2026-04-26T15:15:00.000Z"
+  },
+  {
+    "id": "clsignalking",
+    "title": "Signal King",
+    "category": "Strategy",
+    "path": "games/clsignalking.html",
+    "description": "Build a medieval network of buildings around your throne and defend it from enemy waves in this Ludum Dare 59 incremental tower defense.",
+    "popular": false,
+    "rom": null,
+    "tags": ["incremental", "tower-defense", "clicker", "idle", "medieval", "ludum-dare", "strategy", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2NzkzNjI4LnBuZw==/original/1PyQGO.png",
+    "addedAt": "2026-04-26T15:15:00.000Z"
+  },
+  {
+    "id": "clpvzds",
+    "title": "Plants vs Zombies DS",
+    "category": "Strategy",
+    "path": "games/clpvzds.html",
+    "description": "Fan remake of Plants vs Zombies DS built in Java/Greenfoot — plant your defenders and stop the zombie waves on a 2D grid.",
+    "popular": false,
+    "rom": null,
+    "tags": ["tower-defense", "pvz", "fan-remake", "pixel-art", "2d", "strategy", "puzzle", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzEyMjYxMDE1LnBuZw==/original/IP36P0.png",
+    "addedAt": "2026-04-26T15:15:00.000Z"
+  },
+  {
+    "id": "clyorgio",
+    "title": "YORG.io",
+    "category": "Strategy",
+    "path": "games/clyorgio.html",
+    "description": "Build supply chains, factories, and turrets to defend your base against escalating zombie waves in this 2D futuristic tower defense.",
+    "popular": false,
+    "rom": null,
+    "tags": ["tower-defense", "base-building", "factory", "zombies", "futuristic", "2d", "strategy", "mobile", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1hZ2UvMjQxODEwLzExNTMzMTgucG5n/original/UtG3OL.png",
+    "addedAt": "2026-04-26T15:15:00.000Z"
   }
 ]
