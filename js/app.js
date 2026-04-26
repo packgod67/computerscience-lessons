@@ -462,24 +462,41 @@
     function buildAdminTagButton() {
         const isAdmin = !!window.ArcadeAuth?.isAdmin?.();
         let btn = document.getElementById('manageTagsBtn');
+        let bulkBtn = document.getElementById('bulkAddBtn');
         if (!isAdmin) {
             if (btn) btn.remove();
+            if (bulkBtn) bulkBtn.remove();
             return;
         }
-        if (btn) return;
-        btn = document.createElement('button');
-        btn.id = 'manageTagsBtn';
-        btn.className = 'manage-tags-btn';
-        btn.type = 'button';
-        btn.title = 'Manage custom tags';
-        btn.innerHTML = '&#127991; Manage Tags';
-        btn.addEventListener('click', () => {
-            window.ArcadeAdminTags?.showTagManagementModal?.();
-        });
-        // Slot it next to the game count in the existing controls row.
         const countEl = document.getElementById('gameCount');
-        if (countEl && countEl.parentNode) {
+        if (!countEl || !countEl.parentNode) return;
+
+        if (!btn) {
+            btn = document.createElement('button');
+            btn.id = 'manageTagsBtn';
+            btn.className = 'manage-tags-btn';
+            btn.type = 'button';
+            btn.title = 'Manage custom tags';
+            btn.innerHTML = '&#127991; Manage Tags';
+            btn.addEventListener('click', () => {
+                window.ArcadeAdminTags?.showTagManagementModal?.();
+            });
             countEl.parentNode.insertBefore(btn, countEl);
+        }
+
+        // Bulk-add games tool — sits next to Manage Tags. LLM-powered:
+        // paste itch URLs, get back catalog-ready entries.
+        if (!bulkBtn) {
+            bulkBtn = document.createElement('button');
+            bulkBtn.id = 'bulkAddBtn';
+            bulkBtn.className = 'manage-tags-btn';
+            bulkBtn.type = 'button';
+            bulkBtn.title = 'Bulk-add games via LLM research';
+            bulkBtn.innerHTML = '&#128190; Bulk Add';
+            bulkBtn.addEventListener('click', () => {
+                window.ArcadeBulkAdd?.showBulkAddModal?.();
+            });
+            countEl.parentNode.insertBefore(bulkBtn, countEl);
         }
     }
 
