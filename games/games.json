@@ -30288,5 +30288,49 @@
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzE2MTE1NTY0LnBuZw==/original/7sWh%2Fs.png",
     "addedAt": "2026-04-26T16:45:00.000Z"
+  },
+  {
+    "id": "clswordbanner",
+    "title": "Sword & Banner",
+    "category": "Strategy",
+    "path": "games/clswordbanner.html",
+    "description": "Pixel-art real-time strategy where you lead a warband across a medieval fantasy world, raiding settlements and commanding shield walls, archers, and cavalry charges in large-scale battles.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "strategy",
+      "rts",
+      "real-time-strategy",
+      "medieval",
+      "pixel-art",
+      "fantasy",
+      "tactics",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2NDU5Nzg5LnBuZw==/original/yBIuJk.png",
+    "addedAt": "2026-04-26T17:00:00.000Z"
+  },
+  {
+    "id": "clwormomancy",
+    "title": "Wormomancy",
+    "category": "Simulation",
+    "path": "games/clwormomancy.html",
+    "description": "Goofy idle clicker where you mass-harvest worms' souls before the devil claims yours.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "idle",
+      "clicker",
+      "incremental",
+      "comedy",
+      "mobile",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2MTU2NzM2LnBuZw==/original/WhDMoR.png",
+    "addedAt": "2026-04-26T17:00:00.000Z"
   }
 ]
