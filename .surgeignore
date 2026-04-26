@@ -1,0 +1,39 @@
+# Files NOT to upload to surge.sh. The arcade ships as a static site
+# so anything that's tooling/CI/build-related stays local. The site
+# itself is just HTML/CSS/JS/JSON + the games/ + assets/ + play/ dirs.
+
+# Tooling / build scripts
+audit-itch.mjs
+migrate-itch-proxy.mjs
+validate-catalog.mjs
+
+# Server-side files that Surge wouldn't run anyway
+serve.ts
+workers/
+
+# CI/CD config that doesn't belong on the deployed site
+.github/
+.gitlab/
+.gitignore
+.gitattributes
+
+# Secrets / local-only files
+.env
+.env.*
+*.local
+
+# Editor / OS noise
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Docs that aren't user-facing
+CLAUDE.md
+README.md
+
+# Surge's own files
+.surgeignore
+
+# Git repo data — surge doesn't need this
+.git/
