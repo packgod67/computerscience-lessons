@@ -19,7 +19,7 @@ import path from 'node:path';
 // (Chrome's Privacy Sandbox, AVs, school/work network filters) that
 // iframing from there breaks for some users in their normal browser
 // profile. *.deno.net isn't on those lists, so iframe loads succeed.
-const WORKER_BASE = 'https://computersciencelessons.packgod67.deno.net/itch/';
+const WORKER_BASE = 'https://arcad-groq.gatabanumai.workers.dev/itch/';
 const APPLY = process.argv.includes('--apply');
 
 const catalog = JSON.parse(fs.readFileSync('games/games.json', 'utf8'));
