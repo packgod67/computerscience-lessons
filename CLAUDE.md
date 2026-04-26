@@ -62,8 +62,7 @@ or category. Use it as a pre-flight check after batch-adding games.
   | Cloudflare Pages | `computerscience-lessons.pages.dev` | `_headers` (native) |
   | GitHub Pages | `packgod67.github.io/computerscience-lessons` | none (coi-serviceworker covers /play/) |
   | Deno Deploy | `<project>.deno.dev` | `serve.ts` (TS handler adds them) |
-  | Surge.sh (manual) | `<chosen>.surge.sh` | none (coi-serviceworker covers /play/) |
-  | Codeberg Pages (mirror) | `<user>.codeberg.page` | none (coi-serviceworker covers /play/) |
+  | Netlify | `computer-sciencelessons.netlify.app` | `_headers` (native — same syntax as CF Pages) |
   All git-connected hosts auto-deploy on push to `main`. Surge requires
   manual `surge .` from repo root.
 - **`_headers`** (Render/Netlify/Cloudflare Pages syntax) is honored
