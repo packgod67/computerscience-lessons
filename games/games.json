@@ -30266,5 +30266,27 @@
     ],
     "thumbnail": "https://picon.ngfiles.com/1028000/flash_1028693_card_fallback.jpg",
     "addedAt": "2026-04-26T16:30:00.000Z"
+  },
+  {
+    "id": "cltonypigeon",
+    "title": "Tony Pigeon's Street Skater",
+    "category": "Sports",
+    "path": "games/cltonypigeon.html",
+    "description": "2D endless-runner skating jam game where you play Tony Pigeon dodging obstacles down a rebellious street, made for Street Jam.",
+    "popular": false,
+    "rom": null,
+    "tags": [
+      "2d",
+      "endless-runner",
+      "skating",
+      "game-jam",
+      "arcade",
+      "sports",
+      "browser-native",
+      "html5",
+      "itch"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzE2MTE1NTY0LnBuZw==/original/7sWh%2Fs.png",
+    "addedAt": "2026-04-26T16:45:00.000Z"
   }
 ]

@@ -137,6 +137,127 @@ export default {
             return new Response(null, { status: 204, headers: CORS_HEADERS });
         }
 
+        const reqUrl = new URL(request.url);
+
+        // ───────────────────────────────────────────────────────────
+        // itch.io HTML proxy: GET /itch/<game_path>
+        //
+        // Routes around itch's hotlink protection. itch injects
+        // `static.itch.io/htmlgame.js` into HTML5 games — that script
+        // reads the parent frame's origin and redirects to
+        // itch.io/embed-hotlink/<id> when the parent isn't itch.io.
+        // 40% of recent itch games have it; modern Godot/GameMaker
+        // games hotlink-redirect before their own engine takes over,
+        // so they're broken when iframed from our arcade.
+        //
+        // Bypass: serve the game HTML through this worker, strip the
+        // htmlgame.js script tag, inject a <base href> so the game's
+        // relative-URL asset fetches loop back through this worker
+        // (which proxies them through to itch). The iframe's origin
+        // becomes the worker domain, the parent-origin check sees
+        // the same worker domain (which doesn't match itch.io →
+        // would normally trigger), but the script is gone before it
+        // can fire.
+        //
+        // Pattern:
+        //   /itch/<everything>           proxies html-classic.itch.zone/html/<everything>
+        //
+        //   /itch/17009622/index.html    →  html-classic.itch.zone/html/17009622/index.html
+        //   /itch/17009622/foo/bar.js    →  html-classic.itch.zone/html/17009622/foo/bar.js
+        //   /itch/1418191-733102/Vapor%20Trails/index.html
+        //                                →  html-classic.itch.zone/html/1418191-733102/Vapor%20Trails/index.html
+        //
+        // HTML responses get rewritten; everything else passes through
+        // with CORS + CORP headers added.
+        if (reqUrl.pathname.startsWith('/itch/')) {
+            const itchPath = reqUrl.pathname.slice('/itch/'.length);
+            if (!itchPath) return json({ error: 'missing itch path' }, 400);
+            const upstreamUrl = `https://html-classic.itch.zone/html/${itchPath}`;
+
+            let upstream;
+            try {
+                // Forward Range so the browser's video/audio streaming
+                // works. No special headers — itch returns a normal
+                // public asset for anonymous-and-no-referer requests.
+                const fwdHeaders = { 'User-Agent': 'arcade-itch-proxy' };
+                const range = request.headers.get('range');
+                if (range) fwdHeaders['Range'] = range;
+                upstream = await fetch(upstreamUrl, {
+                    method: request.method,
+                    headers: fwdHeaders,
+                    redirect: 'follow',
+                });
+            } catch (e) {
+                return json({ error: 'fetch failed: ' + (e.message || String(e)) }, 502);
+            }
+
+            const contentType = upstream.headers.get('content-type') || '';
+
+            // Build response headers — copy useful ones, force CORS,
+            // add CORP for cross-origin-isolation friendliness, set a
+            // short cache to keep proxy load down.
+            const respHeaders = new Headers();
+            for (const k of ['content-type', 'content-length', 'cache-control', 'last-modified', 'etag', 'accept-ranges', 'content-range']) {
+                const v = upstream.headers.get(k);
+                if (v) respHeaders.set(k, v);
+            }
+            respHeaders.set('Access-Control-Allow-Origin', '*');
+            respHeaders.set('Access-Control-Expose-Headers', 'Content-Length, Content-Range, Accept-Ranges');
+            respHeaders.set('Cross-Origin-Resource-Policy', 'cross-origin');
+            if (!respHeaders.get('cache-control')) {
+                respHeaders.set('Cache-Control', 'public, max-age=3600');
+            }
+
+            // HTML pages — rewrite to strip hotlink check + inject base href.
+            if (contentType.includes('text/html') && upstream.status === 200) {
+                let body = await upstream.text();
+
+                // Strip itch's hotlink-check script. Matches all known
+                // forms (https://, //, http://, with/without defer,
+                // any quoting). The script is `<script defer src="..."></script>`
+                // standalone — never inline content — so a single tag
+                // remove is safe.
+                body = body.replace(
+                    /<script[^>]*\bsrc\s*=\s*["'][^"']*\/\/static\.itch\.io\/htmlgame\.js[^"']*["'][^>]*><\/script>\s*/gi,
+                    ''
+                );
+
+                // Inject <base href> pointing back at this proxy so
+                // every relative URL in the page resolves to /itch/...
+                // and loops through this proxy. The base directory is
+                // everything up to (and including) the last slash of
+                // the original path.
+                const lastSlash = itchPath.lastIndexOf('/');
+                const baseDir = lastSlash >= 0 ? itchPath.slice(0, lastSlash + 1) : '';
+                const baseTag = `<base href="https://${reqUrl.host}/itch/${baseDir}">`;
+
+                // Insert right after <head ...>, falling back to before
+                // </head> or to the start of the doc if no head exists.
+                if (/<head[^>]*>/i.test(body)) {
+                    body = body.replace(/<head[^>]*>/i, m => `${m}${baseTag}`);
+                } else if (/<\/head>/i.test(body)) {
+                    body = body.replace(/<\/head>/i, `${baseTag}</head>`);
+                } else {
+                    body = `<head>${baseTag}</head>` + body;
+                }
+
+                // Drop content-length since we rewrote the body.
+                respHeaders.delete('content-length');
+                respHeaders.set('Content-Type', 'text/html; charset=utf-8');
+
+                return new Response(body, {
+                    status: upstream.status,
+                    headers: respHeaders,
+                });
+            }
+
+            // Everything else — passthrough binary stream.
+            return new Response(upstream.body, {
+                status: upstream.status,
+                headers: respHeaders,
+            });
+        }
+
         // ───────────────────────────────────────────────────────────
         // ROM proxy: GET /rom?src=<url>
         // Forwards a request to archive.org (and friends) with CORS
@@ -144,7 +265,6 @@ export default {
         // directly and archive.org's download endpoint doesn't send
         // Access-Control-Allow-Origin.
         // ───────────────────────────────────────────────────────────
-        const reqUrl = new URL(request.url);
         if (reqUrl.pathname.startsWith('/rom')) {
             const src = reqUrl.searchParams.get('src');
             if (!src) return json({ error: 'missing src' }, 400);

@@ -108,6 +108,24 @@ or category. Use it as a pre-flight check after batch-adding games.
   `frame-ancestors`, but the underlying build URL has no such
   restriction. Extract the embed ID from the itch page's
   `iframe_placeholder` data.
+  - **Hotlink-protection bypass**: itch injects
+    `static.itch.io/htmlgame.js` into ~40% of games. The script
+    reads the parent frame's origin and redirects to
+    `itch.io/embed-hotlink/<id>` if the parent isn't itch.io. Old
+    Unity games with synchronous loaders escape this (their engine
+    replaces the document before the deferred script runs); modern
+    Godot/GameMaker games don't.
+  - **Use the worker proxy** for any game whose HTML contains
+    `htmlgame.js`: iframe
+    `https://arcad-groq.gatabanumai.workers.dev/itch/<game_path>`
+    instead of the direct itch URL. The worker fetches itch's HTML,
+    strips the script, injects a `<base href>` so relative URLs
+    loop back through the proxy. Saves persist per-worker-origin.
+    See `workers/groq-proxy.js` `/itch/` handler.
+  - **Detection script**: `node audit-itch.mjs` reports every iframe
+    game with htmlgame.js or a dead URL.
+  - **Bulk migration**: `node migrate-itch-proxy.mjs --apply`
+    rewrites every wrapper that needs the proxy.
 - **Newgrounds Flash pattern**: iframe `play/flash/?title=<t>&swf=<encoded SWF URL>`.
   The page bundles Ruffle (Rust/WASM Flash emulator) from unpkg, fetches
   the SWF via the worker's ROM proxy (Newgrounds' `uploads.ungrounded.net`
