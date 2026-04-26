@@ -568,6 +568,16 @@ body.auth-gated .player-container {
 
 /* ===== Kirky — chat assistant ===== */
 
+/* On the player page (play.html has body.player-body) the chatbot
+   bubble would overlap the EmulatorJS toolbar at the bottom-right
+   of the game iframe — hiding the netplay button + settings cog
+   behind it. Kill it on the player page; users have plenty of
+   chatbot access on the main arcade. */
+.player-body .kirky-trigger,
+.player-body .kirky-panel {
+    display: none !important;
+}
+
 .kirky-trigger {
     position: fixed;
     bottom: 18px;
