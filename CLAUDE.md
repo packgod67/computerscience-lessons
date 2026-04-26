@@ -115,13 +115,16 @@ or category. Use it as a pre-flight check after batch-adding games.
     Unity games with synchronous loaders escape this (their engine
     replaces the document before the deferred script runs); modern
     Godot/GameMaker games don't.
-  - **Use the worker proxy** for any game whose HTML contains
+  - **Use the Deno proxy** for any game whose HTML contains
     `htmlgame.js`: iframe
-    `https://arcad-groq.gatabanumai.workers.dev/itch/<game_path>`
-    instead of the direct itch URL. The worker fetches itch's HTML,
+    `https://computersciencelessons.packgod67.deno.net/itch/<game_path>`
+    instead of the direct itch URL. The proxy fetches itch's HTML,
     strips the script, injects a `<base href>` so relative URLs
-    loop back through the proxy. Saves persist per-worker-origin.
-    See `workers/groq-proxy.js` `/itch/` handler.
+    loop back through it. Saves persist per-Deno-origin.
+    See `serve.ts` `/itch/` handler. (The same proxy logic also
+    lives at `workers/groq-proxy.js` `/itch/` as a backup; we
+    moved primary to Deno because *.workers.dev is on too many
+    tracker blocklists.)
   - **Detection script**: `node audit-itch.mjs` reports every iframe
     game with htmlgame.js or a dead URL.
   - **Bulk migration**: `node migrate-itch-proxy.mjs --apply`

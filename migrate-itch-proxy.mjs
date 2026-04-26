@@ -15,7 +15,11 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-const WORKER_BASE = 'https://arcad-groq.gatabanumai.workers.dev/itch/';
+// Use the Deno Deploy proxy. *.workers.dev is on enough tracker-blocklists
+// (Chrome's Privacy Sandbox, AVs, school/work network filters) that
+// iframing from there breaks for some users in their normal browser
+// profile. *.deno.net isn't on those lists, so iframe loads succeed.
+const WORKER_BASE = 'https://computersciencelessons.packgod67.deno.net/itch/';
 const APPLY = process.argv.includes('--apply');
 
 const catalog = JSON.parse(fs.readFileSync('games/games.json', 'utf8'));
