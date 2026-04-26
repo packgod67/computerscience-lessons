@@ -8770,13 +8770,29 @@
   },
   {
     "id": "clgunknight",
-    "title": "Clgunknight",
-    "category": "Shooting",
+    "title": "Gun Knight",
+    "category": "Adventure",
     "path": "games/clgunknight.html",
+    "description": "Itch.io roguelike shooter — a knight wielding gun magic, collecting modular weapon parts each run. Inspired by Enter the Gungeon and Binding of Isaac. Opens at itch.io.",
+    "popular": false,
+    "rom": null,
+    "thumbnail": "https://img.itch.zone/aW1nLzI3NjM4NjUucG5n/original/yEt%2Fn0.png",
     "tags": [
-      "medieval",
-      "shooter"
-    ]
+      "action",
+      "shooter",
+      "pixel-art",
+      "fantasy",
+      "indie",
+      "itch",
+      "external",
+      "roguelite",
+      "roguelike",
+      "permadeath",
+      "procgen",
+      "run-based",
+      "meta-progression"
+    ],
+    "addedAt": "2026-04-26T09:25:08.818Z"
   },
   {
     "id": "clgunmayhem",
