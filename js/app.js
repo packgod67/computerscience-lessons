@@ -54,7 +54,10 @@
 
         // When admin-managed tags / applications change, re-run filtering
         // so newly-applied custom tags surface immediately for everyone.
+        // Also re-renders the tag pills in the categories strip.
         window.addEventListener('arcade:custom-tags-changed', () => {
+            renderCustomTagPills();
+            updateCategoryButtons();
             currentPage = 0;
             gameGrid.innerHTML = '';
             applyFilters();
@@ -262,6 +265,54 @@
             renderPage();
             window.scrollTo({ top: 0, behavior: 'auto' });
         });
+
+        renderCustomTagPills();
+    }
+
+    // Render admin-managed custom tags as filter pills appended to the
+    // categories strip. Each pill drops `#tagname` into the search box so
+    // it flows through the existing tag-filter pipeline (multi-tag AND,
+    // active-pill row, etc.). Re-runs whenever Firestore tags change so
+    // newly created tags surface live for everyone.
+    function renderCustomTagPills() {
+        if (!categoriesContainer) return;
+        // Wipe previous batch
+        categoriesContainer.querySelectorAll('.cat-btn-customtag').forEach(b => b.remove());
+        const tags = window.ArcadeAdminTags?.getAllCustomTags?.() || [];
+        if (!tags.length) return;
+        for (const t of tags) {
+            const btn = document.createElement('button');
+            btn.className = 'cat-btn cat-btn-customtag';
+            btn.dataset.customtag = t.name;
+            const inner = t.image
+                ? `<img class="custom-tag-img" src="${esc(t.image)}" alt="#${esc(t.name)}"><span>#${esc(t.name)}</span>`
+                : `#${esc(t.name)}`;
+            btn.innerHTML = inner;
+            btn.title = `Filter by #${t.name}`;
+            btn.addEventListener('click', () => {
+                // Treat tag pill exactly like clicking a tag in the info modal:
+                // toggle the tag in the search box, reset category filter, refresh.
+                const current = searchInput.value.trim();
+                const tagsInBox = current.startsWith('#')
+                    ? current.split(/\s+/).filter(x => x.startsWith('#')).map(x => x.slice(1))
+                    : [];
+                let next;
+                if (tagsInBox.includes(t.name)) {
+                    next = tagsInBox.filter(x => x !== t.name);
+                } else {
+                    next = [...tagsInBox, t.name];
+                }
+                searchInput.value = next.length ? next.map(x => '#' + x).join(' ') : '';
+                activeCategory = 'all';
+                updateCategoryButtons();
+                currentPage = 0;
+                gameGrid.innerHTML = '';
+                applyFilters();
+                renderPage();
+                window.scrollTo({ top: 0, behavior: 'auto' });
+            });
+            categoriesContainer.appendChild(btn);
+        }
     }
 
     function updateCategoryButtons() {

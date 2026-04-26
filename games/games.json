@@ -27965,27 +27965,6 @@
     "addedAt": "2026-04-26T12:30:00.000Z"
   },
   {
-    "id": "clbabyshooter",
-    "title": "Baby Shooter",
-    "category": "Shooter",
-    "path": "games/clbabyshooter.html",
-    "description": "Self-described shitpost shooter — point, click, and unload as the absurd premise plays itself out in chaotic low-budget fashion. Strictly not serious.",
-    "popular": false,
-    "rom": null,
-    "tags": [
-      "shooter",
-      "shitpost",
-      "comedy",
-      "arcade",
-      "indie",
-      "browser-native",
-      "html5",
-      "itch"
-    ],
-    "thumbnail": "https://img.itch.zone/aW1nLzcxNjY3NDkuanBn/original/%2BqxHQU.jpg",
-    "addedAt": "2026-04-26T12:30:00.000Z"
-  },
-  {
     "id": "cljohnwicklario",
     "title": "John Wick vs. Lario at 3:00 AM, Gone Wrong",
     "category": "Shooter",

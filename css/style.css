@@ -3357,6 +3357,34 @@ body.auth-gated .player-container {
 }
 .custom-tag-delete-btn:hover { color: #ef4444; }
 
+/* The apply-tags modal stacks on top of an open game-info modal, so its
+   overlay needs a z-index above .game-info-overlay (z:9999). Same trick
+   for the manage-tags modal in case it ever opens over a game info. */
+#applyTagsModal,
+#customTagModal {
+    z-index: 11000;
+}
+
+/* Custom-tag filter pills in the categories strip — visually distinct
+   from regular category buttons (slightly tinted background + accent
+   border) so users can tell at a glance these are admin tags, not
+   built-in categories. Image-tags render the icon inside the pill. */
+.cat-btn.cat-btn-customtag {
+    border-color: var(--accent);
+    color: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+.cat-btn.cat-btn-customtag:hover {
+    background: var(--accent);
+    color: #fff;
+}
+.cat-btn.cat-btn-customtag .custom-tag-img {
+    height: 16px;
+    margin-right: 0;
+}
+
 /* Per-game apply modal — toggle chips for every available custom tag. */
 .apply-tags-grid {
     display: flex;
