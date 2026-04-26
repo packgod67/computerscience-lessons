@@ -9653,9 +9653,15 @@
   },
   {
     "id": "clintellisphere",
-    "title": "Clintellisphere",
-    "category": "Other",
-    "path": "games/clintellisphere.html"
+    "title": "Intellisphere",
+    "category": "Simulation",
+    "path": "games/clintellisphere.html",
+    "description": "Flight sim-cade with jet-fighter air combat in a cyberpunk futurist dystopia, packing dogfights, target lock and HUD-driven missions.",
+    "popular": false,
+    "rom": null,
+    "tags": ["flight-sim", "arcade", "dogfight", "cyberpunk", "futuristic", "simulation", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzgxNTM4MjgucG5n/original/e8ejD4.png",
+    "addedAt": "2026-04-26T16:00:00.000Z"
   },
   {
     "id": "clinteractivebuddy",
@@ -23188,9 +23194,15 @@
   },
   {
     "id": "cltacostand",
-    "title": "Cltacostand",
-    "category": "Other",
-    "path": "games/cltacostand.html"
+    "title": "Taco Stand",
+    "category": "Horror",
+    "path": "games/cltacostand.html",
+    "description": "Horror game about managing a taco stand alone at night, taking orders one by one while something out in the dark gets closer between customers.",
+    "popular": false,
+    "rom": null,
+    "tags": ["horror", "management", "night-shift", "first-person", "demo", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzI0OTMyNDY0LnBuZw==/original/ytoyM5.png",
+    "addedAt": "2026-04-26T16:00:00.000Z"
   },
   {
     "id": "cltacticalassasin2",
@@ -29099,5 +29111,29 @@
     "tags": ["idle", "clicker", "incremental", "comedy", "mobile", "browser-native", "html5", "itch"],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MTU2NzM2LnBuZw==/original/WhDMoR.png",
     "addedAt": "2026-04-26T15:45:00.000Z"
+  },
+  {
+    "id": "clmetalskirmish",
+    "title": "Metal Skirmish",
+    "category": "Action",
+    "path": "games/clmetalskirmish.html",
+    "description": "Build and paint your own vehicle, then ram it into enemies to destroy them, earn parts, and upgrade for the next skirmish.",
+    "popular": false,
+    "rom": null,
+    "tags": ["vehicular-combat", "arena", "build-and-battle", "jam-game", "action", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzE2NjU1NzkzLnBuZw==/original/iOEpEH.png",
+    "addedAt": "2026-04-26T16:00:00.000Z"
+  },
+  {
+    "id": "clplaneta2",
+    "title": "Planet-A2",
+    "category": "Simulation",
+    "path": "games/clplaneta2.html",
+    "description": "Procedurally generate planets and solar systems, place trees, statues, and creatures on their surface, then fly a ship and walk around in first person.",
+    "popular": false,
+    "rom": null,
+    "tags": ["sandbox", "procgen", "space", "low-poly", "creator", "first-person", "simulation", "browser-native", "html5", "itch"],
+    "thumbnail": "https://img.itch.zone/aW1nLzE5OTE5NTYzLnBuZw==/original/U2Qb33.png",
+    "addedAt": "2026-04-26T16:00:00.000Z"
   }
 ]
