@@ -7,7 +7,7 @@
 // - Never touch cross-origin requests (CDNs like libretro, jsdelivr handle
 //   their own caching via HTTP headers)
 
-const CACHE_NAME = 'arcade-shell-v67';
+const CACHE_NAME = 'arcade-shell-v68';
 const SHELL_ASSETS = [
     './',
     './index.html',
@@ -29,6 +29,7 @@ const SHELL_ASSETS = [
     './js/messages.js',
     './js/admintags.js',
     './js/bulkadd.js',
+    './js/offlinepack.js',
     './js/patchnotes.js',
     './js/saves.js',
     './js/requests.js',
@@ -65,14 +66,53 @@ self.addEventListener('activate', (event) => {
     );
 });
 
+// Offline-pack cache buckets are named `arcade-offline-<gameId>`. When
+// the user has saved a game for offline play, we cache its wrapper +
+// iframe target + thumbnail in these dedicated buckets. The fetch
+// handler below checks these FIRST (across any origin) before falling
+// through to network or the shell cache. This is what lets a saved
+// itch HTML5 game still load when the user is offline.
+async function checkOfflinePackCaches(req) {
+    try {
+        const names = await caches.keys();
+        for (const name of names) {
+            if (!name.startsWith('arcade-offline-')) continue;
+            const cache = await caches.open(name);
+            const match = await cache.match(req, { ignoreVary: true });
+            if (match) return match;
+        }
+    } catch {}
+    return null;
+}
+
 self.addEventListener('fetch', (event) => {
     const req = event.request;
     if (req.method !== 'GET') return;
 
     const url = new URL(req.url);
 
-    // Only handle same-origin requests — leave CDNs alone
-    if (url.origin !== self.location.origin) return;
+    // Cross-origin path: only intercept if the URL is in an offline-pack
+    // cache (i.e. user explicitly saved this for offline). This lets
+    // saved itch / Newgrounds games keep working when network is down,
+    // without us proxying every random CDN request the rest of the time.
+    if (url.origin !== self.location.origin) {
+        event.respondWith((async () => {
+            // Try network first (so we still get fresh content when online)
+            try {
+                const resp = await fetch(req);
+                if (resp.ok) return resp;
+                // Network OK but error response — fall through to cache
+            } catch {
+                // Network failed (offline) — fall through to cache
+            }
+            const cached = await checkOfflinePackCaches(req);
+            if (cached) return cached;
+            // Re-throw a network error so the iframe shows the standard
+            // offline page rather than a fake 200
+            return fetch(req);
+        })());
+        return;
+    }
 
     // Skip Firestore / Firebase live connections (websockets, listens)
     if (url.hostname.includes('firestore.googleapis.com') ||

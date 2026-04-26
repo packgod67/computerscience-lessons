@@ -1112,6 +1112,14 @@
             <button class="game-info-edit-tags" id="gameInfoEditTagsBtn" title="Edit custom tags for this game">&#9998; Edit Tags</button>
         ` : '';
 
+        // Save Offline button — only for iframe games (ROM games can't
+        // be cached by our SW pattern). Async-checks if already saved
+        // to render the right label, but starts as "Save offline" and
+        // updates after a beat.
+        const offlineBtn = window.ArcadeOfflinePack?.isEligible?.(g)
+            ? `<button class="game-info-offline-btn" id="gameInfoOfflineBtn" data-id="${esc(g.id)}" title="Save this game so it works offline">&#128229; Save offline</button>`
+            : '';
+
         // Smart recommendations — score every other game in the catalog
         // by tag overlap with the current game, give a boost for matching
         // category + matching ROM platform, and surface the top 6.
@@ -1144,6 +1152,7 @@
                 ${adminTagBtn}
                 <p class="game-info-desc">${esc(g.description)}</p>
                 <a class="game-info-play" href="play.html?game=${encodeURIComponent(g.id)}">Play Now</a>
+                ${offlineBtn}
                 ${recsHtml}
             </div>`;
 
@@ -1194,6 +1203,45 @@
                 window.scrollTo({ top: 0, behavior: 'smooth' });
             });
         });
+
+        // Save-offline button — fetches the wrapper + iframe target +
+        // thumbnail through the SW so they're available when offline.
+        const offlineButton = overlay.querySelector('#gameInfoOfflineBtn');
+        if (offlineButton && window.ArcadeOfflinePack) {
+            // Initial state: check if already saved
+            ArcadeOfflinePack.getSavedGame(g.id).then(saved => {
+                if (saved) {
+                    offlineButton.innerHTML = '&#10003; Saved offline';
+                    offlineButton.dataset.state = 'saved';
+                }
+            });
+            offlineButton.addEventListener('click', async () => {
+                if (offlineButton.dataset.state === 'saved') {
+                    if (!confirm('Remove this game from offline storage?')) return;
+                    offlineButton.disabled = true;
+                    offlineButton.textContent = 'Removing…';
+                    await ArcadeOfflinePack.uncacheGame(g.id);
+                    offlineButton.disabled = false;
+                    offlineButton.innerHTML = '\u{1F4E5} Save offline';
+                    offlineButton.dataset.state = '';
+                    return;
+                }
+                offlineButton.disabled = true;
+                offlineButton.textContent = 'Saving…';
+                try {
+                    await ArcadeOfflinePack.cacheGame(g, (msg) => {
+                        offlineButton.textContent = msg;
+                    });
+                    offlineButton.innerHTML = '\u{2713} Saved offline';
+                    offlineButton.dataset.state = 'saved';
+                } catch (e) {
+                    alert('Save failed: ' + e.message);
+                    offlineButton.innerHTML = '\u{1F4E5} Save offline';
+                } finally {
+                    offlineButton.disabled = false;
+                }
+            });
+        }
 
         // Rec card click → open the recommended game's info modal in place
         // of the current one. Lets users browse a recommendation chain

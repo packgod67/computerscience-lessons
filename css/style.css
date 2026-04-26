@@ -3357,6 +3357,114 @@ body.auth-gated .player-container {
 }
 .custom-tag-delete-btn:hover { color: #ef4444; }
 
+/* Save-offline button in game info modal. Looks like the Edit Tags
+   pill — secondary action, dashed border, sits between Play Now and
+   the recommendations strip. Saved state is solid + green. */
+
+.game-info-offline-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    margin-top: 0.6rem;
+    padding: 0.4rem 0.85rem;
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px dashed var(--border);
+    border-radius: 6px;
+    font-size: 0.82rem;
+    cursor: pointer;
+    align-self: flex-start;
+    transition: color 0.15s, border-color 0.15s, background 0.15s;
+    font-family: inherit;
+}
+.game-info-offline-btn:hover {
+    color: var(--accent);
+    border-color: var(--accent);
+}
+.game-info-offline-btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+.game-info-offline-btn[data-state="saved"] {
+    background: rgba(34, 197, 94, 0.12);
+    color: #22c55e;
+    border: 1px solid #22c55e;
+    border-style: solid;
+}
+.game-info-offline-btn[data-state="saved"]:hover {
+    background: rgba(34, 197, 94, 0.2);
+}
+
+/* Offline saved-games list (when there's an Offline view in tabs) */
+.offline-empty {
+    text-align: center;
+    padding: 3rem 1rem;
+    color: var(--text-secondary);
+}
+.offline-summary {
+    padding: 0.8rem 1rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    margin-bottom: 0.8rem;
+}
+.offline-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.offline-item {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.6rem;
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+}
+.offline-item-thumb {
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    border-radius: 6px;
+    background: var(--bg-secondary);
+    flex-shrink: 0;
+}
+.offline-item-info {
+    flex: 1;
+    min-width: 0;
+}
+.offline-item-title {
+    color: var(--text-primary);
+    font-weight: 500;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.offline-item-meta {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+}
+.offline-item-play {
+    padding: 0.4rem 0.85rem;
+    background: var(--accent);
+    color: #fff;
+    border-radius: 6px;
+    text-decoration: none;
+    font-size: 0.82rem;
+}
+.offline-item-remove {
+    background: none;
+    border: 1px solid var(--border);
+    color: var(--text-secondary);
+    border-radius: 4px;
+    padding: 0 0.5rem;
+    cursor: pointer;
+}
+.offline-item-remove:hover { color: #ef4444; border-color: #ef4444; }
+
 /* Bulk-add games modal (admin LLM-research tool). Wider than usual
    modals because it shows a list of researched entries with thumbnails
    and tag chips that need horizontal room. */
