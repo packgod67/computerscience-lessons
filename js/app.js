@@ -1027,6 +1027,38 @@
         };
     }
 
+    // Heuristic similar-game scorer. Looks at every other game in the
+    // catalog and ranks by:
+    //   +N for each tag in common (deduped, lowercase)
+    //   +3 for matching category
+    //   +2 for matching ROM platform
+    //   +1 if both are popular (popular games tend to recommend popular)
+    // Skips the source game itself + games whose tags overlap is 0
+    // (no shared tags = nothing to recommend, even if same category).
+    // Returns top N results.
+    function computeRecs(source, n) {
+        if (!source || !games.length) return [];
+        const sourceTags = new Set(effectiveTags(source).map(t => t.toLowerCase()));
+        if (sourceTags.size === 0) return [];
+        const scored = [];
+        for (const g of games) {
+            if (g.id === source.id) continue;
+            // Skip stub entries (no real metadata)
+            if (!g.tags && !g.thumbnail) continue;
+            const gtags = effectiveTags(g);
+            let overlap = 0;
+            for (const t of gtags) if (sourceTags.has(t.toLowerCase())) overlap++;
+            if (overlap === 0) continue;
+            let score = overlap;
+            if (g.category && g.category === source.category) score += 3;
+            if (g.rom && g.rom === source.rom) score += 2;
+            if (g.popular && source.popular) score += 1;
+            scored.push([score, g]);
+        }
+        scored.sort((a, b) => b[0] - a[0]);
+        return scored.slice(0, n).map(([, g]) => g);
+    }
+
     function showGameInfo(g) {
         const existing = document.getElementById('gameInfoOverlay');
         if (existing) existing.remove();
@@ -1063,6 +1095,28 @@
             <button class="game-info-edit-tags" id="gameInfoEditTagsBtn" title="Edit custom tags for this game">&#9998; Edit Tags</button>
         ` : '';
 
+        // Smart recommendations — score every other game in the catalog
+        // by tag overlap with the current game, give a boost for matching
+        // category + matching ROM platform, and surface the top 6.
+        // Pure heuristic, no API call, instant. Works even with the LLM
+        // worker offline.
+        const recs = computeRecs(g, 6);
+        const recsHtml = recs.length ? `
+            <div class="game-info-recs-wrap">
+                <div class="game-info-recs-label">Liked this? Try also&hellip;</div>
+                <div class="game-info-recs">
+                    ${recs.map(r => `
+                        <button class="game-info-rec" data-id="${esc(r.id)}">
+                            <img class="game-info-rec-thumb"
+                                 src="${esc(r.thumbnail || platformFallback(r.rom))}"
+                                 alt="${esc(r.title)}"
+                                 onerror="this.onerror=null;this.src='${platformFallback(r.rom)}'">
+                            <span class="game-info-rec-title">${esc(r.title)}</span>
+                        </button>
+                    `).join('')}
+                </div>
+            </div>` : '';
+
         overlay.innerHTML = `
             <div class="game-info-modal">
                 <button class="game-info-close">&times;</button>
@@ -1073,6 +1127,7 @@
                 ${adminTagBtn}
                 <p class="game-info-desc">${esc(g.description)}</p>
                 <a class="game-info-play" href="play.html?game=${encodeURIComponent(g.id)}">Play Now</a>
+                ${recsHtml}
             </div>`;
 
         document.body.appendChild(overlay);
@@ -1120,6 +1175,21 @@
                 renderPage();
                 overlay.remove();
                 window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+        });
+
+        // Rec card click → open the recommended game's info modal in place
+        // of the current one. Lets users browse a recommendation chain
+        // without going back to the grid each time.
+        overlay.querySelectorAll('.game-info-rec').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const recId = btn.dataset.id;
+                const recGame = games.find(x => x.id === recId);
+                if (recGame) {
+                    overlay.remove();
+                    showGameInfo(recGame);
+                }
             });
         });
     }
