@@ -1442,7 +1442,10 @@
     "id": "clballsandbricks",
     "title": "Clballsandbricks",
     "category": "Other",
-    "path": "games/clballsandbricks.html"
+    "path": "games/clballsandbricks.html",
+    "tags": [
+      "mobile"
+    ]
   },
   {
     "id": "clballsandbricksgood",
@@ -5246,7 +5249,10 @@
     "title": "Draw the Hill",
     "category": "Other",
     "path": "games/cldrawthehill.html",
-    "description": "Draw a hill to roll your character to the finish."
+    "description": "Draw a hill to roll your character to the finish.",
+    "tags": [
+      "mobile"
+    ]
   },
   {
     "id": "cldrawtheline",
@@ -7069,7 +7075,10 @@
     "id": "clfireblob",
     "title": "Clfireblob",
     "category": "Other",
-    "path": "games/clfireblob.html"
+    "path": "games/clfireblob.html",
+    "tags": [
+      "mobile"
+    ]
   },
   {
     "id": "clfireboyandwatergirl",
@@ -13118,7 +13127,8 @@
     "path": "games/clmonkeymartenc.html",
     "popular": true,
     "tags": [
-      "popular"
+      "popular",
+      "mobile"
     ]
   },
   {
@@ -14016,7 +14026,8 @@
       "action",
       "fighting",
       "ninja",
-      "popular"
+      "popular",
+      "mobile"
     ]
   },
   {
@@ -14750,7 +14761,8 @@
     "path": "games/clpaperio.html",
     "tags": [
       ".io",
-      "multiplayer"
+      "multiplayer",
+      "mobile"
     ]
   },
   {
@@ -20451,7 +20463,8 @@
     "tags": [
       "multiplayer",
       "popular",
-      "racing"
+      "racing",
+      "mobile"
     ]
   },
   {
@@ -20747,7 +20760,8 @@
     "path": "games/clsnowridergoodygumdrops.html",
     "popular": true,
     "tags": [
-      "popular"
+      "popular",
+      "mobile"
     ]
   },
   {
@@ -22043,7 +22057,8 @@
     "tags": [
       "casual",
       "popular",
-      "stacking"
+      "stacking",
+      "mobile"
     ]
   },
   {
@@ -22891,7 +22906,10 @@
     "id": "clsuika",
     "title": "Clsuika",
     "category": "Other",
-    "path": "games/clsuika.html"
+    "path": "games/clsuika.html",
+    "tags": [
+      "mobile"
+    ]
   },
   {
     "id": "clsuikapico",
@@ -23966,7 +23984,10 @@
     "id": "cltankmayhem",
     "title": "Cltankmayhem",
     "category": "Other",
-    "path": "games/cltankmayhem.html"
+    "path": "games/cltankmayhem.html",
+    "tags": [
+      "mobile"
+    ]
   },
   {
     "id": "cltankpixel",
@@ -26336,7 +26357,10 @@
     "id": "clzrist",
     "title": "Clzrist",
     "category": "Other",
-    "path": "games/clzrist.html"
+    "path": "games/clzrist.html",
+    "tags": [
+      "mobile"
+    ]
   },
   {
     "id": "clzuma",
@@ -28496,7 +28520,8 @@
       "permadeath",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzE1MjA3MTU1LnBuZw==/original/XRlJUj.png",
     "addedAt": "2026-04-26T11:50:19.370Z"
@@ -29500,7 +29525,8 @@
       "comedy",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzE5MjAxOTE4LnBuZw==/original/QhAwPe.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
@@ -30119,7 +30145,8 @@
       "creepy",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzE3OTMyNTU2LnBuZw==/original/Vp7QVo.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
