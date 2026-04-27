@@ -7875,6 +7875,35 @@ body.theme-transitioning * {
     .pwa-install-btn { display: none !important; }
 }
 
+/* PWA mobile-only filter toggle. Only renders in standalone mode.
+   "On" state (default in PWA) = mobile-only games shown, accent-colored.
+   "Off" state = full catalog shown, muted/dashed border. */
+.pwa-mobile-toggle {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.4rem 0.85rem;
+    margin-right: 0.5rem;
+    border-radius: 999px;
+    font-size: 0.78rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    transition: background 0.15s, color 0.15s, border-color 0.15s;
+    font-family: inherit;
+}
+.pwa-mobile-toggle[data-state="on"] {
+    background: var(--accent);
+    color: #fff;
+    border: 1px solid var(--accent);
+}
+.pwa-mobile-toggle[data-state="off"] {
+    background: var(--bg-card);
+    color: var(--text-secondary);
+    border: 1px dashed var(--border);
+}
+.pwa-mobile-toggle:hover { transform: translateY(-1px); }
+
 /* Install button (Android Chrome path) */
 .pwa-install-btn {
     display: inline-flex;

@@ -49,6 +49,7 @@
         buildPokemonSubBar();
         buildDropdownPanel();
         buildAdminTagButton();
+        buildPwaMobileToggle();
         applyFilters();
         renderPage();
 
@@ -456,6 +457,46 @@
         return best <= tolerance ? best : Infinity;
     }
 
+    // PWA mobile-only filter toggle. Only renders when the arcade is
+    // running in standalone (installed) mode. Lives in the header so
+    // it's visible without scrolling. Two states:
+    //   - Active (default): filtering, only #mobile games shown.
+    //     Pill says "📱 Mobile only" with a "show all" hint.
+    //   - Override: localStorage set to 'show-all', filter off,
+    //     pill says "📱 Show all" with hint to re-enable filter.
+    function buildPwaMobileToggle() {
+        if (!isPwaStandalone()) return;
+        let btn = document.getElementById('pwaMobileToggle');
+        if (btn) btn.remove();
+        btn = document.createElement('button');
+        btn.id = 'pwaMobileToggle';
+        btn.className = 'pwa-mobile-toggle';
+        btn.type = 'button';
+        const update = () => {
+            const filtering = shouldFilterToMobile();
+            btn.textContent = filtering ? '\u{1F4F1} Mobile only' : '\u{1F4F1} All games';
+            btn.title = filtering
+                ? 'Showing only games tagged #mobile (touch-friendly). Tap to show all games.'
+                : 'Showing every game in the catalog. Tap to filter to mobile-friendly only.';
+            btn.dataset.state = filtering ? 'on' : 'off';
+        };
+        update();
+        btn.addEventListener('click', () => {
+            const next = shouldFilterToMobile() ? 'show-all' : 'mobile-only';
+            localStorage.setItem('arcade-mobile-only-override', next);
+            update();
+            currentPage = 0;
+            gameGrid.innerHTML = '';
+            applyFilters();
+            renderPage();
+        });
+        // Insert into the header, before the auth area.
+        const authArea = document.getElementById('authArea');
+        if (authArea && authArea.parentNode) {
+            authArea.parentNode.insertBefore(btn, authArea);
+        }
+    }
+
     // Inject the "Manage Tags" admin button into the controls row, beside
     // the game count. Only visible to admins; idempotent so re-evaluating
     // on auth-change just toggles its presence rather than duplicating.
@@ -528,8 +569,25 @@
         return merged;
     }
 
+    // PWA mobile-only filter — when the user has installed the arcade
+    // and is running it from the home-screen icon, hide every game
+    // that isn't tagged `mobile`. Keyboard-required games are
+    // unplayable on phones (no on-screen controls), so showing them
+    // is just clutter. Toggleable via the "Show all" pill that
+    // appears in the header when filter is active. Stored in
+    // localStorage so the override persists.
+    function isPwaStandalone() {
+        return window.matchMedia('(display-mode: standalone)').matches
+            || window.navigator.standalone === true;
+    }
+    function shouldFilterToMobile() {
+        if (!isPwaStandalone()) return false;
+        return localStorage.getItem('arcade-mobile-only-override') !== 'show-all';
+    }
+
     function applyFilters() {
         let query = searchInput.value.toLowerCase().trim();
+        const mobileOnly = shouldFilterToMobile();
 
         // Tag-search mode: `#tagname` filters to games tagged with `tagname`.
         // Space-separated tags after the hash require ALL tags ("#rpg #jrpg").
@@ -561,6 +619,14 @@
                 matchesCategory = activeCategory === 'all' || g.category === activeCategory;
             }
             if (!matchesCategory) continue;
+
+            // PWA mobile-only filter: skip any game without the `mobile`
+            // tag when the arcade is launched as an installed app and
+            // the user hasn't opted into "show all".
+            if (mobileOnly) {
+                const tags = effectiveTags(g);
+                if (!tags.includes('mobile')) continue;
+            }
 
             // Pokemon subtag filter — only active when we're inside the
             // Pokemon category and the user picked a specific subtag.
