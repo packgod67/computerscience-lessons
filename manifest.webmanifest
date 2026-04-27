@@ -1,28 +1,66 @@
 {
   "name": "Arcade",
   "short_name": "Arcade",
-  "description": "A massive arcade of games — Pokemon, retro ROMs, browser classics. Cloud saves, themes, profiles.",
+  "description": "A massive arcade of games — Pokemon, retro ROMs, browser classics, modern itch picks, Newgrounds Flash. Cloud saves, themes, profiles, multiplayer.",
+  "id": "/",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
+  "display_override": ["window-controls-overlay", "standalone", "minimal-ui"],
   "orientation": "any",
   "theme_color": "#7c3aed",
   "background_color": "#0a0a0f",
   "icons": [
     {
       "src": "assets/logo.png",
-      "sizes": "any",
+      "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
       "src": "assets/logo.png",
-      "sizes": "any",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "assets/logo.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable"
+    },
+    {
+      "src": "assets/logo.png",
+      "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
     }
   ],
   "categories": ["games", "entertainment"],
   "lang": "en",
-  "dir": "ltr"
+  "dir": "ltr",
+  "shortcuts": [
+    {
+      "name": "Continue Playing",
+      "short_name": "Continue",
+      "description": "Resume your most recent game",
+      "url": "./?continue=1",
+      "icons": [{ "src": "assets/logo.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Random game",
+      "short_name": "Random",
+      "description": "Pick a random game from the catalog",
+      "url": "./?random=1",
+      "icons": [{ "src": "assets/logo.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Favorites",
+      "short_name": "Favorites",
+      "description": "Your starred games",
+      "url": "./?tab=favorites",
+      "icons": [{ "src": "assets/logo.png", "sizes": "192x192" }]
+    }
+  ],
+  "prefer_related_applications": false
 }
