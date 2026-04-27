@@ -173,8 +173,20 @@ const MANUAL_OVERRIDES = {
     clprocessortycoon: 'mobile',
 };
 
+// EmulatorJS renders on-screen touch controls on mobile for every
+// supported core. Most ROM platforms are practical on a phone. PS2's
+// dual-analog + 12-button layout is too cramped to be playable; we
+// exclude it. Everything else (GBA/GBC/GB/NES/SNES/Genesis/N64/PSX/DS/
+// Arcade/Atari/older Sega/Misc) is mobile-friendly via the EJS overlay.
+const ROM_NOT_MOBILE = new Set(['ps2']);
+
 function scoreGame(g) {
-    if (g.rom) return { mobile: false, score: -100, reason: 'ROM game (needs gamepad)' };
+    if (g.rom) {
+        if (ROM_NOT_MOBILE.has(g.rom)) {
+            return { mobile: false, score: -100, reason: `ROM platform ${g.rom} too complex for mobile` };
+        }
+        return { mobile: true, score: 100, reason: `ROM platform ${g.rom} has EmulatorJS on-screen controls` };
+    }
     if (MANUAL_OVERRIDES[g.id]) {
         const v = MANUAL_OVERRIDES[g.id];
         return { mobile: v === 'mobile', score: 100 * (v === 'mobile' ? 1 : -1), reason: 'manual override' };
