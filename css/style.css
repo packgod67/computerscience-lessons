@@ -8656,37 +8656,45 @@ html[data-theme="glitch"] body::before {
     93% { transform: translate(1px, -1px); }
 }
 
-/* ─── Matrix: falling green code rain via CSS ─── */
+/* ─── Matrix: real falling green characters via SVG (NEW) ─── */
 html[data-theme="matrix"] body { font-family: 'JetBrains Mono', 'SF Mono', Consolas, monospace; }
+/* Layer 1 — denser, smaller chars, faster fall (5s loop). 8 columns × 24 rows */
 html[data-theme="matrix"] body::before {
     content: "";
     position: fixed; inset: 0;
     pointer-events: none; z-index: 0;
-    background-image:
-        repeating-linear-gradient(180deg,
-            rgba(0, 255, 65, 0) 0,
-            rgba(0, 255, 65, 0.04) 50%,
-            transparent 50%, transparent 100%);
-    background-size: 100% 24px;
-    animation: matrix-rain 8s linear infinite;
-    opacity: 0.8;
+    background-image: url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20480%20432%22%20preserveAspectRatio%3D%22none%22%3E%3Cstyle%3Etext%7Bfont%3Abold%2014px%20monospace%3Bfill%3A%2300ff41%7D.b%7Bfill%3A%23dfffdf%7D.d%7Bfill%3A%23006611%7D%3C%2Fstyle%3E%3Ctext%20x%3D%2230%22%20y%3D%2218%22%20class%3D%22b%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%2236%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%2254%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%2272%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%2290%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22108%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22126%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22144%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22162%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22180%22%20class%3D%22d%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22198%22%20class%3D%22d%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22216%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22234%22%20class%3D%22d%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22252%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22270%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22288%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22306%22%20class%3D%22d%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22324%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22342%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22360%22%20class%3D%22d%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22378%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22396%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22414%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%2230%22%20y%3D%22432%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%2218%22%20class%3D%22b%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%2236%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%2254%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%2272%22%20class%3D%22d%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%2290%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22108%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22126%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22144%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22162%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22180%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22198%22%20class%3D%22d%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22216%22%20class%3D%22d%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22234%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22252%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22270%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22288%22%20class%3D%22d%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22306%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22324%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22342%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22360%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22378%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22396%22%20class%3D%22d%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22414%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%2290%22%20y%3D%22432%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%2218%22%20class%3D%22b%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%2236%22%20class%3D%22d%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%2254%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%2272%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%2290%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22108%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22126%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22144%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22162%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22180%22%20class%3D%22d%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22198%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22216%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22234%22%20class%3D%22d%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22252%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22270%22%20class%3D%22d%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22288%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22306%22%20class%3D%22d%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22324%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22342%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22360%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22378%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22396%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22414%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22150%22%20y%3D%22432%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%2218%22%20class%3D%22b%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%2236%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%2254%22%20class%3D%22d%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%2272%22%20class%3D%22d%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%2290%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22108%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22126%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22144%22%20class%3D%22d%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22162%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22180%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22198%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22216%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22234%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22252%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22270%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22288%22%20class%3D%22d%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22306%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22324%22%20class%3D%22d%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22342%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22360%22%20class%3D%22d%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22378%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22396%22%20class%3D%22d%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22414%22%20class%3D%22d%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22210%22%20y%3D%22432%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%2218%22%20class%3D%22b%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%2236%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%2254%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%2272%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%2290%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22108%22%20class%3D%22d%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22126%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22144%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22162%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22180%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22198%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22216%22%20class%3D%22d%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22234%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22252%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22270%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22288%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22306%22%20class%3D%22d%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22324%22%20class%3D%22d%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22342%22%20class%3D%22d%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22360%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22378%22%20class%3D%22d%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22396%22%20class%3D%22d%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22414%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22270%22%20y%3D%22432%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%2218%22%20class%3D%22b%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%2236%22%20class%3D%22d%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%2254%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%2272%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%2290%22%20class%3D%22d%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22108%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22126%22%20class%3D%22d%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22144%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22162%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22180%22%20class%3D%22d%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22198%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22216%22%20class%3D%22d%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22234%22%20class%3D%22d%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22252%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22270%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22288%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22306%22%20class%3D%22d%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22324%22%20class%3D%22d%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22342%22%20class%3D%22d%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22360%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22378%22%20class%3D%22d%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22396%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22414%22%20class%3D%22d%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22330%22%20y%3D%22432%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%2218%22%20class%3D%22b%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%2236%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%2254%22%20class%3D%22d%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%2272%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%2290%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22108%22%20class%3D%22d%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22126%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22144%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22162%22%20class%3D%22d%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22180%22%20class%3D%22d%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22198%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22216%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22234%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22252%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22270%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22288%22%20class%3D%22d%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22306%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22324%22%20class%3D%22d%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22342%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22360%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22378%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22396%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22414%22%20class%3D%22d%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22390%22%20y%3D%22432%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%2218%22%20class%3D%22b%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%2236%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%2254%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%2272%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%2290%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22108%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22126%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22144%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22162%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22180%22%20class%3D%22d%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22198%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22216%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22234%22%20class%3D%22d%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22252%22%20class%3D%22d%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22270%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22288%22%20class%3D%22d%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22306%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22324%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22342%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22360%22%20class%3D%22d%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22378%22%20class%3D%22d%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22396%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22414%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22450%22%20y%3D%22432%22%20class%3D%22d%22%3E1%3C%2Ftext%3E%3C%2Fsvg%3E");
+    background-size: 480px 432px;
+    background-repeat: repeat;
+    animation: matrix-fall-1 5s linear infinite;
+    opacity: 0.85;
 }
+/* Layer 2 — sparser, bigger chars, slower fall (9s loop) — stacked
+   on top of a soft green glow ambience. 5 columns × 18 rows */
 html[data-theme="matrix"] body::after {
     content: "";
     position: fixed; inset: 0;
     pointer-events: none; z-index: 0;
-    background:
+    background-image:
+        url("data:image/svg+xml;utf8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20400%20396%22%20preserveAspectRatio%3D%22none%22%3E%3Cstyle%3Etext%7Bfont%3Abold%2018px%20monospace%3Bfill%3A%2300ff41%7D.b%7Bfill%3A%23dfffdf%7D.d%7Bfill%3A%23006611%7D%3C%2Fstyle%3E%3Ctext%20x%3D%2240%22%20y%3D%2222%22%20class%3D%22b%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%2244%22%20class%3D%22d%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%2266%22%20class%3D%22d%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%2288%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22110%22%20class%3D%22d%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22132%22%20class%3D%22d%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22154%22%20class%3D%22d%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22176%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22198%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22220%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22242%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22264%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22286%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22308%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22330%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22352%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22374%22%20class%3D%22d%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%2240%22%20y%3D%22396%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%2222%22%20class%3D%22b%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%2244%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%2266%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%2288%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22110%22%20class%3D%22d%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22132%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22154%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22176%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22198%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22220%22%20class%3D%22d%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22242%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22264%22%20class%3D%22d%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22286%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22308%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22330%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22352%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22374%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22120%22%20y%3D%22396%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%2222%22%20class%3D%22b%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%2244%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%2266%22%20class%3D%22d%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%2288%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22110%22%3E%25%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22132%22%20class%3D%22d%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22154%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22176%22%20class%3D%22d%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22198%22%20class%3D%22d%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22220%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22242%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22264%22%20class%3D%22d%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22286%22%20class%3D%22d%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22308%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22330%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22352%22%20class%3D%22d%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22374%22%20class%3D%22d%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22200%22%20y%3D%22396%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%2222%22%20class%3D%22b%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%2244%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%2266%22%3EX%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%2288%22%20class%3D%22d%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22110%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22132%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22154%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22176%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22198%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22220%22%3EK%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22242%22%3E1%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22264%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22286%22%20class%3D%22d%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22308%22%20class%3D%22d%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22330%22%20class%3D%22d%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22352%22%20class%3D%22d%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22374%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22280%22%20y%3D%22396%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%2222%22%20class%3D%22b%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%2244%22%3E0%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%2266%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%2288%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22110%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22132%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22154%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22176%22%20class%3D%22d%22%3E7%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22198%22%20class%3D%22d%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22220%22%20class%3D%22d%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22242%22%3E9%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22264%22%20class%3D%22d%22%3E*%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22286%22%20class%3D%22d%22%3E3%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22308%22%3E%23%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22330%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22352%22%20class%3D%22d%22%3EZ%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22374%22%3EA%3C%2Ftext%3E%3Ctext%20x%3D%22360%22%20y%3D%22396%22%20class%3D%22d%22%3EK%3C%2Ftext%3E%3C%2Fsvg%3E"),
         radial-gradient(ellipse at top, rgba(0, 255, 65, 0.18), transparent 60%),
-        radial-gradient(ellipse at bottom, rgba(0, 100, 30, 0.1), transparent 70%);
+        radial-gradient(ellipse at bottom, rgba(0, 100, 30, 0.12), transparent 70%);
+    background-size: 400px 396px, 100% 100%, 100% 100%;
+    background-repeat: repeat, no-repeat, no-repeat;
+    animation: matrix-fall-2 9s linear infinite;
+    opacity: 0.75;
 }
+html[data-theme="matrix"] body { text-shadow: 0 0 6px rgba(0, 255, 65, 0.5); }
 html[data-theme="matrix"] .header,
 html[data-theme="matrix"] .main { position: relative; z-index: 1; }
-html[data-theme="matrix"] body {
-    text-shadow: 0 0 6px rgba(0, 255, 65, 0.5);
+@keyframes matrix-fall-1 {
+    0%   { background-position: 0 0; }
+    100% { background-position: 0 432px; }
 }
-@keyframes matrix-rain {
-    0% { background-position: 0 0; }
-    100% { background-position: 0 48px; }
+@keyframes matrix-fall-2 {
+    0%   { background-position: 0 0, 0 0, 0 0; }
+    100% { background-position: 0 396px, 0 0, 0 0; }
+}
 }
 
 /* ─── Vaporwave: perspective grid floor + neon sunset ─── */
@@ -8780,7 +8788,7 @@ html[data-theme="aurora"] .main { position: relative; z-index: 1; }
     100% { background-position: 25% 75%; }
 }
 
-/* ─── Amber Terminal: warm CRT cousin ─── */
+/* ─── Amber Terminal: warm CRT + falling leaves ─── */
 html[data-theme="amber"] body {
     font-family: 'IBM Plex Mono', 'Press Start 2P', 'Courier New', monospace;
     text-shadow: 0 0 4px rgba(255, 176, 0, 0.5);
@@ -8797,50 +8805,189 @@ html[data-theme="amber"] body::before {
     );
     pointer-events: none; z-index: 99999;
 }
+/* Falling leaves: 3 different SVG leaf glyphs in 3 sizes, each tiled
+   across the viewport. The whole layer drifts down and slightly to
+   the side, so the leaves appear to fall continuously. We swap-pair
+   the 3 SVGs into 6 background images (slightly different positions)
+   to break up the regularity of a perfect tile. */
 html[data-theme="amber"] body::after {
-    /* Subtle vignette */
     content: "";
     position: fixed; inset: 0;
-    pointer-events: none; z-index: 99997;
-    background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.5) 100%);
+    pointer-events: none; z-index: 99996;
+    background-image:
+        /* Light yellow oval leaf, large */
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 4 C24 4 28 16 16 28 C4 16 8 4 16 4 Z M16 4 L16 28' stroke='%23ffb000' stroke-width='0.5' fill='%23ffd070' fill-opacity='0.75' transform='rotate(-25 16 16)'/></svg>"),
+        /* Orange ginkgo-ish leaf, medium */
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 6 C8 8 4 16 8 22 C12 26 20 26 24 22 C28 16 24 8 16 6 Z' fill='%23ff8800' fill-opacity='0.7' transform='rotate(15 16 16)'/></svg>"),
+        /* Deep amber maple-ish leaf, small */
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><path d='M16 5 L19 11 L25 9 L22 15 L27 18 L21 19 L23 25 L17 22 L16 28 L15 22 L9 25 L11 19 L5 18 L10 15 L7 9 L13 11 Z' fill='%23ff6a00' fill-opacity='0.8'/></svg>");
+    background-size:
+        70px 70px,
+        50px 50px,
+        38px 38px;
+    background-repeat: repeat, repeat, repeat;
+    background-position:
+        7% -10%,
+        38% -25%,
+        72% -45%;
+    animation: amber-leaves-fall 22s linear infinite;
+}
+@keyframes amber-leaves-fall {
+    /* Drift down + slight rightward sway. Three layers move at the
+       same animated rate, but their starting offsets stagger so
+       leaves never line up — feels much more natural than a single
+       repeating tile. */
+    0%   {
+        background-position:
+            7% -10%,
+            38% -25%,
+            72% -45%;
+    }
+    100% {
+        background-position:
+            17% 110%,
+            28% 130%,
+            82% 160%;
+    }
 }
 
-/* ─── Galaxy: twinkling stars background ─── */
+/* ─── Galaxy: real Milky-Way band + nebulae + dense star field ─── */
 html[data-theme="galaxy"] body {
-    background: radial-gradient(ellipse at top, #0c0040 0%, #03001e 70%) !important;
+    background:
+        /* Soft galactic-core glow toward the upper-right of the viewport */
+        radial-gradient(ellipse 60% 35% at 65% 35%, rgba(120, 60, 180, 0.35), transparent 60%),
+        /* Overall deep-space gradient */
+        radial-gradient(ellipse at top, #110050 0%, #04001f 50%, #000010 100%) !important;
 }
+/* Two layers of stars + the milky way band stacked via two pseudo-
+   elements. ::before is the dense star field (twinkles); ::after is
+   the actual diagonal Milky-Way arm + colored nebulae (static). */
 html[data-theme="galaxy"] body::before {
     content: "";
     position: fixed; inset: 0;
     pointer-events: none; z-index: 0;
+    /* ~70 stars distributed pseudo-randomly across the viewport,
+       in varied sizes so they read as a real night sky. CSS's
+       lack of a "for loop" means we list them — verbose but cheap
+       at runtime since they all paint in a single layer. */
     background-image:
-        radial-gradient(2px 2px at 20% 30%, white, transparent),
-        radial-gradient(1px 1px at 80% 70%, white, transparent),
-        radial-gradient(2px 2px at 40% 80%, white, transparent),
-        radial-gradient(1px 1px at 90% 20%, white, transparent),
-        radial-gradient(1.5px 1.5px at 60% 50%, white, transparent),
-        radial-gradient(1px 1px at 10% 90%, white, transparent),
-        radial-gradient(2px 2px at 50% 15%, white, transparent),
-        radial-gradient(1px 1px at 70% 40%, white, transparent),
-        radial-gradient(1.5px 1.5px at 30% 60%, white, transparent),
-        radial-gradient(1px 1px at 85% 85%, white, transparent);
-    background-size: 100% 100%;
-    animation: galaxy-twinkle 4s ease-in-out infinite alternate;
+        /* Bright larger stars (~12) */
+        radial-gradient(2.5px 2.5px at 12% 8%, #fff, transparent 60%),
+        radial-gradient(2px 2px at 28% 22%, #ffe0a0, transparent 60%),
+        radial-gradient(2.5px 2.5px at 84% 14%, #fff, transparent 60%),
+        radial-gradient(2px 2px at 67% 38%, #fff, transparent 60%),
+        radial-gradient(2.5px 2.5px at 18% 78%, #cce0ff, transparent 60%),
+        radial-gradient(2px 2px at 92% 64%, #ffd9d9, transparent 60%),
+        radial-gradient(2.5px 2.5px at 41% 91%, #fff, transparent 60%),
+        radial-gradient(2px 2px at 53% 12%, #fff, transparent 60%),
+        radial-gradient(2.5px 2.5px at 75% 82%, #ffe0a0, transparent 60%),
+        radial-gradient(2px 2px at 8% 45%, #fff, transparent 60%),
+        radial-gradient(2px 2px at 96% 32%, #fff, transparent 60%),
+        radial-gradient(2.5px 2.5px at 35% 55%, #fff, transparent 60%),
+        /* Medium stars (~25) */
+        radial-gradient(1.5px 1.5px at 5% 18%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 22% 5%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 47% 33%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 61% 6%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 79% 28%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 14% 32%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 33% 49%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 55% 47%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 69% 51%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 87% 45%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 24% 64%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 44% 70%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 60% 75%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 81% 72%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 11% 88%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 31% 92%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 56% 98%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 88% 88%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 39% 17%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 73% 65%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 6% 62%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 95% 95%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 50% 60%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 17% 49%, #fff, transparent 60%),
+        radial-gradient(1.5px 1.5px at 64% 24%, #fff, transparent 60%),
+        /* Small / dim stars (~30+) */
+        radial-gradient(1px 1px at 3% 7%, #ddd, transparent 70%),
+        radial-gradient(1px 1px at 19% 13%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 31% 27%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 43% 4%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 58% 22%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 72% 11%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 89% 25%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 9% 27%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 26% 38%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 38% 36%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 51% 41%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 65% 29%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 83% 38%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 4% 39%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 16% 56%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 29% 58%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 42% 53%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 57% 56%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 71% 62%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 85% 56%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 7% 73%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 21% 81%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 36% 78%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 49% 84%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 63% 90%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 77% 95%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 90% 78%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 38% 64%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 82% 50%, #fff, transparent 70%),
+        radial-gradient(1px 1px at 99% 50%, #fff, transparent 70%);
+    animation: galaxy-twinkle 5s ease-in-out infinite alternate;
 }
+/* The Milky Way band: a tilted strip across the viewport with bright
+   dust + colored nebulae. Oversized and rotated so the strip extends
+   off-screen on both ends, like the actual band wraps the sky. */
 html[data-theme="galaxy"] body::after {
     content: "";
-    position: fixed; inset: 0;
+    position: fixed;
+    /* Oversize so rotation doesn't expose the corners */
+    left: -25%; top: -25%; width: 150%; height: 150%;
     pointer-events: none; z-index: 0;
+    transform: rotate(-22deg);
     background:
-        radial-gradient(ellipse 40% 60% at 70% 30%, rgba(236, 72, 153, 0.08), transparent),
-        radial-gradient(ellipse 50% 40% at 25% 70%, rgba(6, 182, 212, 0.08), transparent);
+        /* The dust band itself: a soft horizontal strip with a brighter
+           "galactic core" hotspot in the middle. Layered linear-gradient
+           gives the band fuzzy edges; the radial-gradient adds the core. */
+        radial-gradient(ellipse 14% 5% at 52% 50%, rgba(255, 230, 200, 0.55), rgba(255, 200, 230, 0.18) 60%, transparent 80%),
+        /* Pink H-alpha emission nebula inside the band */
+        radial-gradient(ellipse 11% 2.5% at 30% 50%, rgba(255, 100, 180, 0.4), transparent 70%),
+        /* Cyan/blue reflection nebula */
+        radial-gradient(ellipse 13% 2.8% at 70% 50%, rgba(80, 140, 255, 0.32), transparent 70%),
+        /* Wider faint dust bands above + below the bright core for depth */
+        radial-gradient(ellipse 38% 1.5% at 50% 47%, rgba(220, 200, 255, 0.12), transparent 80%),
+        radial-gradient(ellipse 38% 1.5% at 50% 53%, rgba(220, 200, 255, 0.12), transparent 80%),
+        /* The base milky-way streak as a soft horizontal gradient */
+        linear-gradient(
+            0deg,
+            transparent 0%,
+            transparent 42%,
+            rgba(200, 180, 220, 0.06) 46%,
+            rgba(220, 200, 240, 0.18) 49%,
+            rgba(255, 240, 255, 0.28) 50%,
+            rgba(220, 200, 240, 0.18) 51%,
+            rgba(200, 180, 220, 0.06) 54%,
+            transparent 58%,
+            transparent 100%
+        );
 }
 html[data-theme="galaxy"] .header,
 html[data-theme="galaxy"] .main { position: relative; z-index: 1; }
 @keyframes galaxy-twinkle {
-    0%   { opacity: 0.5; }
+    /* Subtle brightness pulse on the whole star layer — keeps the
+       individual stars visually consistent without 70 separate
+       animations. */
+    0%   { opacity: 0.7; }
     50%  { opacity: 1; }
-    100% { opacity: 0.7; }
+    100% { opacity: 0.85; }
 }
 
 /* ─── Holographic: hue-rotating iridescent background ─── */
