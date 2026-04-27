@@ -8164,6 +8164,22 @@ button, a, input[type="button"], input[type="submit"], .tab-btn, .cat-btn {
     }
 }
 
+/* Per-theme wallpaper override controls in Settings → Appearance */
+.arcade-settings-wp-row {
+    display: flex; gap: 8px; flex-wrap: wrap;
+}
+.arcade-settings-wp-row button { flex: 0 0 auto; }
+.arcade-settings-wp-status {
+    margin-top: 8px;
+    padding: 8px 10px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    word-break: break-all;
+}
+
 /* ===========================================================
    New components: share button, comments, top games, achievements,
    friends, coop control toggle, achievement-unlock animation.
@@ -8450,17 +8466,19 @@ button, a, input[type="button"], input[type="submit"], .tab-btn, .cat-btn {
 /* Font scale — applied via --font-scale CSS var on <html> */
 html { font-size: calc(16px * var(--font-scale, 1)); }
 
-/* Font families. The most distinctive ones load from Google Fonts via
-   a <link> in index.html / play.html so they always render the same
-   way regardless of the user's installed font set. */
-body.font-system { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-body.font-mono { font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', Consolas, ui-monospace, monospace; }
-body.font-pixel { font-family: 'Press Start 2P', 'Courier New', ui-monospace, monospace; letter-spacing: 0.02em; }
-body.font-serif { font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif; }
-body.font-rounded { font-family: 'Comic Neue', 'Comic Sans MS', 'Chalkboard SE', sans-serif; }
-body.font-handwritten { font-family: 'Caveat', 'Brush Script MT', 'Lucida Handwriting', cursive; letter-spacing: 0.02em; font-size: 1.05em; }
-body.font-futuristic { font-family: 'Orbitron', 'Eurostile', 'Bank Gothic', 'Bahnschrift', sans-serif; letter-spacing: 0.06em; }
-body.font-elegant { font-family: 'Cinzel', 'Didot', 'Bodoni 72', 'Iowan Old Style', serif; letter-spacing: 0.04em; }
+/* Font families. !important is required — several effect themes
+   (matrix, glitch, vaporwave, cyberpunk, amber, crt) set their own
+   font-family via `html[data-theme="X"] body` rules with higher
+   specificity than `body.font-X`. Without !important the user's
+   font choice silently lost when those themes were active. */
+body.font-system { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif !important; }
+body.font-mono { font-family: 'JetBrains Mono', 'SF Mono', 'Fira Code', Consolas, ui-monospace, monospace !important; }
+body.font-pixel { font-family: 'Press Start 2P', 'Courier New', ui-monospace, monospace !important; letter-spacing: 0.02em; }
+body.font-serif { font-family: Georgia, 'Iowan Old Style', 'Times New Roman', serif !important; }
+body.font-rounded { font-family: 'Comic Neue', 'Comic Sans MS', 'Chalkboard SE', sans-serif !important; }
+body.font-handwritten { font-family: 'Caveat', 'Brush Script MT', 'Lucida Handwriting', cursive !important; letter-spacing: 0.02em; font-size: 1.05em; }
+body.font-futuristic { font-family: 'Orbitron', 'Eurostile', 'Bank Gothic', 'Bahnschrift', sans-serif !important; letter-spacing: 0.06em; }
+body.font-elegant { font-family: 'Cinzel', 'Didot', 'Bodoni 72', 'Iowan Old Style', serif !important; letter-spacing: 0.04em; }
 
 /* Dyslexia-friendly mode is now a separate TOGGLE (not a font option),
    so it layers on top of whatever font the user picked. Switches to a
@@ -8962,8 +8980,11 @@ html[data-theme="holographic"] .card-title {
 
 /* ─── Black Hole: rotating accretion disk + photon ring + halo ─── */
 html[data-theme="blackhole"] body {
+    /* Path is relative to /css/style.css — needs ../ to walk up to
+       /assets. Earlier "assets/blackhole.gif" resolved to
+       /css/assets/... and 404'd silently. */
     background:
-        url("assets/blackhole.gif") center center / contain no-repeat fixed,
+        url("../assets/blackhole.gif") center center / contain no-repeat fixed,
         radial-gradient(ellipse 60% 40% at 50% 50%, rgba(80, 60, 200, 0.18), transparent 70%),
         #000 !important;
 }

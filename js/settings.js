@@ -57,6 +57,11 @@
         hiddenGames: [],                  // gameIds never shown
         // Power-user
         customCss: '',                    // <= 16 KiB
+        // Per-theme wallpaper overrides — { themeId: 'data:...'|'https://...' }.
+        // NOT mirrored to Firestore (data URLs can be huge — would blow
+        // past Firestore's 1 MB doc limit). Stays in localStorage so it's
+        // per-device.
+        themeWallpapers: {},
     };
 
     // ─── Storage ─────────────────────────────────────────────────────
@@ -85,7 +90,12 @@
                 const db = window.ArcadeAuth?.getDb?.();
                 const uid = window.ArcadeAuth?.getUser?.()?.uid;
                 if (!db || !uid) return;
-                await db.collection('users').doc(uid).set({ settings: s }, { merge: true });
+                // Strip themeWallpapers — they're too big for Firestore
+                // (1 MB doc cap; data URLs are routinely 4-6 MB). Per-
+                // device storage is fine for these.
+                const remoteSafe = Object.assign({}, s);
+                delete remoteSafe.themeWallpapers;
+                await db.collection('users').doc(uid).set({ settings: remoteSafe }, { merge: true });
             } catch {}
         }, 1200);
     }
@@ -152,6 +162,9 @@
         // Cap to 16 KiB so a runaway paste doesn't tank the page.
         styleEl.textContent = (SETTINGS.customCss || '').slice(0, 16384);
 
+        // Per-theme wallpaper override
+        applyThemeWallpaper();
+
         // Notify other modules
         try {
             window.dispatchEvent(new CustomEvent('arcade:settings-changed', {
@@ -159,6 +172,54 @@
             }));
         } catch {}
     }
+
+    // ─── Per-theme wallpaper override ───────────────────────────────
+    // For the currently-active theme, if the user has uploaded or
+    // pasted a wallpaper URL, inject a CSS rule that overrides the
+    // theme's body background AND suppresses any decorative
+    // pseudo-elements (matrix code rain, galaxy stars, etc) so the
+    // wallpaper isn't fighting with them.
+    //
+    // "Revert to default" just removes the override and re-runs apply,
+    // which clears the injected style and the theme's own decorations
+    // come back unchanged.
+    function applyThemeWallpaper() {
+        let style = document.getElementById('arcade-theme-wallpaper');
+        if (!style) {
+            style = document.createElement('style');
+            style.id = 'arcade-theme-wallpaper';
+            document.head.appendChild(style);
+        }
+        const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
+        const wp = SETTINGS.themeWallpapers || {};
+        const url = wp[themeId];
+        if (!url) {
+            style.textContent = '';
+            return;
+        }
+        // Escape any double-quotes / parens in the URL so we can drop
+        // it into a CSS string literal safely.
+        const safeUrl = String(url).replace(/"/g, '\\"');
+        // Use !important to beat any inline body backgrounds that
+        // themes.js sets via setProperty (the bg radial-gradient
+        // stack on dark themes).
+        style.textContent = `
+            html[data-theme="${themeId}"] body {
+                background:
+                    url("${safeUrl}") center center / cover no-repeat fixed,
+                    #000 !important;
+            }
+            html[data-theme="${themeId}"] body::before,
+            html[data-theme="${themeId}"] body::after {
+                display: none !important;
+            }
+        `;
+    }
+    // Re-apply wallpaper override whenever the user picks a new theme
+    // (the wallpaper choice is per-theme, so each theme has its own).
+    window.addEventListener('arcade:theme-changed', () => {
+        applyThemeWallpaper();
+    });
 
     function getSnapshot() {
         // Clone so callers can't accidentally mutate our state.
@@ -316,6 +377,17 @@
             </section>
 
             <section class="arcade-settings-section">
+                <h3>Wallpaper for current theme</h3>
+                <p class="arcade-settings-help">Override the active theme's background with your own image, GIF, or video URL. Each theme has its own override slot — switching themes brings the matching wallpaper back. Stored on this device only (too big to sync).</p>
+                <div class="arcade-settings-row arcade-settings-wp-row" id="setWpRow">
+                    <button class="auth-submit" id="setWpUpload" type="button">Upload file…</button>
+                    <button class="auth-submit-secondary" id="setWpUrl" type="button">Paste URL</button>
+                    <button class="auth-submit-secondary" id="setWpClear" type="button" style="display:none;">Revert to default</button>
+                </div>
+                <div class="arcade-settings-wp-status" id="setWpStatus"></div>
+            </section>
+
+            <section class="arcade-settings-section">
                 <h3>Font</h3>
                 <div class="arcade-settings-row">
                     <label>Family</label>
@@ -398,6 +470,117 @@
             dy.checked = !!SETTINGS.dyslexicMode;
             dy.addEventListener('change', () => set({ dyslexicMode: dy.checked }));
         }
+
+        // ─── Per-theme wallpaper controls ─────────────────────────
+        wireWallpaperControls(pane);
+
+        // Wallpaper buttons need to refresh whenever the user picks
+        // a different theme (since each theme has its own override).
+        function onThemeChange() { refreshWallpaperUi(pane); }
+        window.addEventListener('arcade:theme-changed', onThemeChange);
+        // Clean up listener if pane is replaced (we don't have a
+        // formal teardown; modal close removes the pane node).
+        const obs = new MutationObserver(() => {
+            if (!document.body.contains(pane)) {
+                window.removeEventListener('arcade:theme-changed', onThemeChange);
+                obs.disconnect();
+            }
+        });
+        obs.observe(document.body, { childList: true, subtree: true });
+    }
+
+    // ─── Per-theme wallpaper UI handlers ───────────────────────────
+    function refreshWallpaperUi(pane) {
+        const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
+        const wp = SETTINGS.themeWallpapers || {};
+        const cur = wp[themeId];
+        const status = pane.querySelector('#setWpStatus');
+        const clearBtn = pane.querySelector('#setWpClear');
+        if (!status || !clearBtn) return;
+        if (cur) {
+            const isData = cur.startsWith('data:');
+            const summary = isData
+                ? 'Custom upload (' + Math.round(cur.length / 1024) + ' KB)'
+                : cur.length > 60 ? cur.slice(0, 60) + '…' : cur;
+            status.textContent = 'Active: ' + summary;
+            clearBtn.style.display = '';
+        } else {
+            status.textContent = 'Using the theme\'s default background.';
+            clearBtn.style.display = 'none';
+        }
+    }
+
+    function wireWallpaperControls(pane) {
+        const upload = pane.querySelector('#setWpUpload');
+        const urlBtn = pane.querySelector('#setWpUrl');
+        const clear = pane.querySelector('#setWpClear');
+        if (!upload || !urlBtn || !clear) return;
+
+        upload.addEventListener('click', () => {
+            const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/*,video/*,.gif,.webm,.mp4';
+            input.style.display = 'none';
+            document.body.appendChild(input);
+            input.addEventListener('change', async () => {
+                const file = input.files?.[0];
+                input.remove();
+                if (!file) return;
+                // 8 MB hard cap — localStorage typically tops out at
+                // 5-10 MB per origin. Above that, ask the user to
+                // host externally and use the URL paste path instead.
+                if (file.size > 8 * 1024 * 1024) {
+                    alert('That file is ' + Math.round(file.size / 1024 / 1024) + ' MB. Local storage caps around 5–10 MB; please host the file externally and use the "Paste URL" button.');
+                    return;
+                }
+                upload.disabled = true;
+                upload.textContent = 'Reading…';
+                try {
+                    const dataUrl = await fileToDataUrl(file);
+                    const wp = Object.assign({}, SETTINGS.themeWallpapers || {});
+                    wp[themeId] = dataUrl;
+                    set({ themeWallpapers: wp });
+                    refreshWallpaperUi(pane);
+                } catch (e) {
+                    alert('Upload failed: ' + (e?.message || e));
+                } finally {
+                    upload.disabled = false;
+                    upload.textContent = 'Upload file…';
+                }
+            });
+            input.click();
+        });
+
+        urlBtn.addEventListener('click', () => {
+            const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
+            const url = prompt('Paste an image / GIF / MP4 / WebM URL:', '');
+            if (!url || !url.trim()) return;
+            const wp = Object.assign({}, SETTINGS.themeWallpapers || {});
+            wp[themeId] = url.trim();
+            set({ themeWallpapers: wp });
+            refreshWallpaperUi(pane);
+        });
+
+        clear.addEventListener('click', () => {
+            const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
+            const wp = Object.assign({}, SETTINGS.themeWallpapers || {});
+            delete wp[themeId];
+            set({ themeWallpapers: wp });
+            refreshWallpaperUi(pane);
+        });
+
+        // Initial state
+        refreshWallpaperUi(pane);
+    }
+
+    function fileToDataUrl(file) {
+        return new Promise((resolve, reject) => {
+            const r = new FileReader();
+            r.onload = () => resolve(String(r.result));
+            r.onerror = () => reject(new Error('read failed'));
+            r.readAsDataURL(file);
+        });
     }
 
     function swatchFor(themeId) {

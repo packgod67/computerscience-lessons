@@ -401,6 +401,14 @@
 
         // Re-apply user border overrides after theme-level --border was set
         applyBorderOverrides();
+
+        // Notify other modules so per-theme wallpaper overrides
+        // (settings.js) can swap the right user-uploaded background.
+        try {
+            window.dispatchEvent(new CustomEvent('arcade:theme-changed', {
+                detail: { themeId }
+            }));
+        } catch {}
     }
 
     async function loadCommunityImage(docId) {
