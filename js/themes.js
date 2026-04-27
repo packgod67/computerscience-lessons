@@ -99,6 +99,29 @@
             text: ['#1a1a2e', '#64648a'],
             accent: '#7c3aed', accent2: '#0891b2',
         }),
+        // ─── Themes added by the customization pass ─────────────────
+        // CRT: green-on-black with scanline overlay (the ::before
+        // scanline + glow text-shadow are added in css/style.css under
+        // html[data-theme="crt"] — buildTheme just gives us the colors).
+        crt: buildTheme('Retro CRT', {
+            bg: ['#001100', '#001a00', '#002200', '#003300', '#00aa44'],
+            text: ['#00ff66', '#00aa44'],
+            accent: '#00ff66', accent2: '#00cc55',
+        }),
+        // Pastel: soft pinks + lavender, light background
+        pastel: buildTheme('Pastel', {
+            bg: ['#fff7fb', '#fef2f8', '#ffffff', '#fdf4ff', '#fbcfe8'],
+            text: ['#57214b', '#9d4f7c'],
+            accent: '#ec4899', accent2: '#a78bfa',
+        }),
+        // High Contrast: pure black + white + yellow accent for
+        // accessibility. Extra a11y tweaks (no shadows, thicker
+        // borders) live in style.css.
+        highcontrast: buildTheme('High Contrast', {
+            bg: ['#000000', '#000000', '#000000', '#1a1a1a', '#ffffff'],
+            text: ['#ffffff', '#ffffff'],
+            accent: '#ffff00', accent2: '#ffffff',
+        }),
     };
 
     const STORAGE_KEY = 'arcade-theme';

@@ -613,7 +613,9 @@
     async function updateProfile(fields) {
         if (!currentUser) throw new Error('Not logged in');
         // Whitelist to prevent clients overwriting protected fields
-        const allowed = ['avatar', 'bio', 'wallpaper', 'accent', 'showcase'];
+        // (role, banned, approved are blocked by the Firestore rule
+        // anyway — this whitelist is belt-and-suspenders).
+        const allowed = ['avatar', 'bio', 'wallpaper', 'accent', 'showcase', 'widgets'];
         const safe = {};
         for (const k of allowed) {
             if (fields[k] !== undefined) safe[k] = fields[k];

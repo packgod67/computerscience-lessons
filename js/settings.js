@@ -260,14 +260,18 @@
         const presets = [
             { id: 'midnight', label: 'Midnight (default)' },
             { id: 'ocean', label: 'Ocean' },
+            { id: 'crimson', label: 'Crimson' },
             { id: 'forest', label: 'Forest' },
             { id: 'sunset', label: 'Sunset' },
+            { id: 'synthwave', label: 'Synthwave' },
+            { id: 'sakura', label: 'Sakura' },
             { id: 'oled', label: 'OLED Black' },
+            { id: 'nord', label: 'Nord' },
+            { id: 'monokai', label: 'Monokai' },
             { id: 'light', label: 'Light' },
             { id: 'crt', label: 'Retro CRT' },
             { id: 'pastel', label: 'Pastel' },
             { id: 'highcontrast', label: 'High Contrast' },
-            { id: 'synthwave', label: 'Synthwave' },
         ];
         const currentTheme = window.ArcadeThemes?.getCurrentTheme?.() || 'midnight';
 
@@ -357,16 +361,20 @@
 
     function swatchFor(themeId) {
         const map = {
-            midnight: 'linear-gradient(135deg,#7c3aed,#a855f7)',
-            ocean: 'linear-gradient(135deg,#0ea5e9,#06b6d4)',
+            midnight: 'linear-gradient(135deg,#7c3aed,#06b6d4)',
+            ocean: 'linear-gradient(135deg,#0ea5e9,#22d3ee)',
+            crimson: 'linear-gradient(135deg,#ef4444,#f97316)',
             forest: 'linear-gradient(135deg,#22c55e,#84cc16)',
-            sunset: 'linear-gradient(135deg,#f59e0b,#ef4444)',
-            oled: 'linear-gradient(135deg,#0a0a0a,#262626)',
-            light: 'linear-gradient(135deg,#f4f4f5,#e4e4e7)',
+            sunset: 'linear-gradient(135deg,#f59e0b,#ec4899)',
+            synthwave: 'linear-gradient(135deg,#ff2e9a,#01f9ff)',
+            sakura: 'linear-gradient(135deg,#ec4899,#fb7185)',
+            oled: 'linear-gradient(135deg,#0a0a0a,#a78bfa)',
+            nord: 'linear-gradient(135deg,#88c0d0,#81a1c1)',
+            monokai: 'linear-gradient(135deg,#a6e22e,#f92672)',
+            light: 'linear-gradient(135deg,#f4f4f5,#7c3aed)',
             crt: 'linear-gradient(135deg,#001100,#00ff66)',
-            pastel: 'linear-gradient(135deg,#fbcfe8,#bae6fd)',
-            highcontrast: 'linear-gradient(135deg,#000,#fff)',
-            synthwave: 'linear-gradient(135deg,#ff00ff,#00ffff)',
+            pastel: 'linear-gradient(135deg,#fbcfe8,#a78bfa)',
+            highcontrast: 'linear-gradient(135deg,#000,#ffff00)',
         };
         return map[themeId] || map.midnight;
     }

@@ -192,6 +192,20 @@
                         <p class="profile-bio">${escape(profile.bio)}</p>
                     </div>` : (isSelf ? '<div class="profile-bio-empty">Add a bio in Edit profile →</div>' : '')}
 
+                    ${(Array.isArray(profile.widgets) && profile.widgets.length) || isSelf ? `
+                    <div class="profile-section profile-widgets-section">
+                        <div class="profile-widgets-header">
+                            <h3 class="profile-section-title">Widgets</h3>
+                            ${isSelf ? `<div class="profile-widgets-actions">
+                                <button class="profile-widget-btn" id="profileWidgetAddImage" type="button">+ Image</button>
+                                <button class="profile-widget-btn profile-widget-btn-secondary" id="profileWidgetEditToggle" type="button">Edit</button>
+                            </div>` : ''}
+                        </div>
+                        <div class="profile-widgets-canvas" id="profileWidgetsCanvas" data-self="${isSelf?'1':'0'}">
+                            <!-- widgets rendered by ArcadeProfileWidgets after innerHTML mount -->
+                        </div>
+                    </div>` : ''}
+
                     ${showcaseGames.length ? `<div class="profile-section">
                         <h3 class="profile-section-title">Showcase</h3>
                         <div class="profile-game-grid profile-game-grid-lg">
@@ -247,6 +261,15 @@
         const friendSlot = document.getElementById('profileFriendBtnSlot');
         if (friendSlot && window.ArcadeFriends?.renderFriendButton) {
             try { window.ArcadeFriends.renderFriendButton(friendSlot, profile.uid); } catch {}
+        }
+
+        // Mount the profile widgets canvas. The canvas is interactive
+        // (drag/resize/delete) for the owner and read-only for visitors.
+        const widgetsCanvas = document.getElementById('profileWidgetsCanvas');
+        if (widgetsCanvas && window.ArcadeProfileWidgets) {
+            try {
+                window.ArcadeProfileWidgets.mount(widgetsCanvas, profile, isSelf);
+            } catch (e) { console.warn('widgets mount failed', e); }
         }
 
         document.getElementById('closeProfileModal').addEventListener('click', closeModal);
