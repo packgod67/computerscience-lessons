@@ -8016,9 +8016,23 @@
   },
   {
     "id": "clfolderdungeon",
-    "title": "Clfolderdungeon",
-    "category": "Other",
-    "path": "games/clfolderdungeon.html"
+    "title": "Folder Dungeon",
+    "category": "Adventure",
+    "path": "games/clfolderdungeon.html",
+    "description": "Turn-based dungeon-crawler roguelike literally set inside a Windows folder. Six floors, relics, ASCII-meets-pixel-art combat — short, weird, and very replayable.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1hZ2UvMjIzNTc4MS8xMzIzODU1Ny5wbmc=/347x500/fbmSwQ.png",
+    "tags": [
+      "roguelike",
+      "turn-based",
+      "dungeon-crawler",
+      "rpg",
+      "indie",
+      "unity",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T14:00:00.000Z"
   },
   {
     "id": "clfootballbros",
@@ -31301,5 +31315,203 @@
       "browser-native"
     ],
     "addedAt": "2026-04-27T13:00:00.000Z"
+  },
+  {
+    "id": "clalagsg",
+    "title": "Almost Like A Grand Strategy Game",
+    "category": "Strategy",
+    "path": "games/clalagsg.html",
+    "description": "Real-time strategy where you eliminate enemy factions by expanding territory and constructing buildings for bonuses. Map-painting with surprising tactical depth.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1nLzEwNTk5NTUyLnBuZw==/original/TUC7fk.png",
+    "tags": [
+      "strategy",
+      "rts",
+      "real-time-strategy",
+      "war",
+      "conquest",
+      "territory",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T14:00:00.000Z"
+  },
+  {
+    "id": "clnwoac",
+    "title": "NWO: Anarchy Collapsed",
+    "category": "Strategy",
+    "path": "games/clnwoac.html",
+    "description": "Grand strategy + idle progression hybrid. Unite all 195 countries through military conquest or diplomatic influence before the enemy arrives. Procgen scenarios, flag pixel-art.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1nLzIwMjU3MjI1LnBuZw==/original/P2qWJo.png",
+    "tags": [
+      "grand-strategy",
+      "geopolitical",
+      "idle",
+      "incremental",
+      "conquest",
+      "diplomacy",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T14:00:00.000Z"
+  },
+  {
+    "id": "clinnoveryourhead",
+    "title": "Inn Over Your Head",
+    "category": "Simulation",
+    "path": "games/clinnoveryourhead.html",
+    "description": "Tavern management meets dungeon-builder. Serve adventurers in your inn upstairs, design lethal trap-floors below to harvest their souls. Each guest is a paying customer AND a sacrifice.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1hZ2UvNDMwMDE0OS8yNjMxMjk5NC5wbmc=/347x500/dZ6KIP.png",
+    "tags": [
+      "management",
+      "dungeon-builder",
+      "tavern",
+      "tycoon",
+      "simulation",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T14:00:00.000Z"
+  },
+  {
+    "id": "clpathofachra",
+    "title": "Path of Achra (Demo)",
+    "category": "Adventure",
+    "path": "games/clpathofachra.html",
+    "description": "Turn-based roguelike emphasizing wild build-craft and stat-stacking. Pick a hero, fight through dangerous lands toward the mysterious Obelisk, become an absurd combo of skills and items.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1nLzExNjg2NTcwLnBuZw==/original/me8BkL.png",
+    "tags": [
+      "roguelike",
+      "turn-based",
+      "build-craft",
+      "dungeon-crawler",
+      "demo",
+      "permadeath",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T14:00:00.000Z"
+  },
+  {
+    "id": "cloutliersincrementum",
+    "title": "Outliers: Incrementum",
+    "category": "Action",
+    "path": "games/cloutliersincrementum.html",
+    "description": "Incremental action-RPG: mouse-swipe to defeat monsters while protecting a companion. Dungeon rooms, skill-tree progression, slowly-unfolding meta systems. Easy to start, hard to put down.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1hZ2UvNDM3MzM3NS8yNjUwNTA5OS5qcGc=/347x500/PVK9yQ.jpg",
+    "tags": [
+      "incremental",
+      "action-rpg",
+      "idle",
+      "rpg",
+      "swipe",
+      "skill-tree",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native",
+      "mobile"
+    ],
+    "addedAt": "2026-04-27T14:00:00.000Z"
+  },
+  {
+    "id": "cltristram",
+    "title": "Tristram",
+    "category": "Adventure",
+    "path": "games/cltristram.html",
+    "description": "Pixel-art Diablo-flavored dungeon-crawler / party-management. Assemble heroes, send them into the catacombs beneath Tristram Cathedral, recover treasure, rebuild the city.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1nLzE1ODEwMjE1LmpwZw==/original/Du9%2BPq.jpg",
+    "tags": [
+      "dungeon-crawler",
+      "party-management",
+      "diablo-like",
+      "pixel-art",
+      "rpg",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T14:00:00.000Z"
+  },
+  {
+    "id": "clroguefable3",
+    "title": "Rogue Fable III",
+    "category": "Adventure",
+    "path": "games/clroguefable3.html",
+    "description": "Traditional turn-based roguelike with classic dungeon-crawl flavor. Deep character builds, ASCII-meets-pixel art, runs in under an hour. The cult favorite predecessor to Rogue Fable IV.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1nLzE2NjI0NjEucG5n/347x500/ZziUuS.png",
+    "tags": [
+      "roguelike",
+      "traditional-roguelike",
+      "turn-based",
+      "dungeon-crawler",
+      "permadeath",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T14:00:00.000Z"
+  },
+  {
+    "id": "clroguefable4",
+    "title": "Rogue Fable IV",
+    "category": "Adventure",
+    "path": "games/clroguefable4.html",
+    "description": "Tactical traditional roguelike: seek the legendary Goblet of Yendor across procgen dungeons. Runs complete in under an hour. Deep build system, brutal permadeath, smart enemy AI.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1hZ2UvMjE4Mjk5OC8xNDIzNjM4NS5wbmc=/347x500/yew7Td.png",
+    "tags": [
+      "roguelike",
+      "traditional-roguelike",
+      "turn-based",
+      "dungeon-crawler",
+      "run-based",
+      "permadeath",
+      "tactical",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T14:00:00.000Z"
+  },
+  {
+    "id": "cldogman95",
+    "title": "Dogman 95",
+    "category": "Adventure",
+    "path": "games/cldogman95.html",
+    "description": "Three-minute first-person dungeon-crawler where you play an armored dogman who fights enemies and solves puzzles primarily by barking. Retro late-90s shareware aesthetic, comedic.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1nLzE1MTY3MjUyLnBuZw==/original/n2ljjI.png",
+    "tags": [
+      "fps",
+      "dungeon-crawler",
+      "comedy",
+      "short",
+      "retro",
+      "90s",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native",
+      "added-controls"
+    ],
+    "addedAt": "2026-04-27T14:00:00.000Z"
   }
 ]
