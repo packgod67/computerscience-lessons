@@ -34,8 +34,9 @@
         viewMode: 'grid',                 // grid | list | detailed
         cardStyle: 'standard',            // standard | minimal | detailed | trading-card
         // Typography
-        fontFamily: 'system',             // system | mono | pixel | serif | dyslexic
+        fontFamily: 'system',             // system|mono|pixel|serif|rounded|handwritten|futuristic|elegant
         fontScale: 1.0,                   // 0.85, 1.0, 1.15, 1.3 (×base)
+        dyslexicMode: false,              // separate toggle that overlays a wider font + spacing
         // Motion / transparency
         reducedMotion: false,             // disables animations
         reducedTransparency: false,       // disables backdrop-filter / glass
@@ -111,8 +112,23 @@
         body.classList.add('cards-' + cs);
 
         // Font family
-        body.classList.remove('font-system', 'font-mono', 'font-pixel', 'font-serif', 'font-dyslexic');
+        body.classList.remove(
+            'font-system','font-mono','font-pixel','font-serif',
+            'font-rounded','font-handwritten','font-futuristic','font-elegant',
+            'font-dyslexic' /* legacy class — clean up old saves */
+        );
+        // Coerce deprecated 'dyslexic' value (from older saves) into
+        // the new system: switch to 'system' font + auto-enable
+        // dyslexicMode toggle. Keeps users who were on the old option
+        // from getting "stuck" on dyslexic font with no way out.
+        if (SETTINGS.fontFamily === 'dyslexic') {
+            SETTINGS.fontFamily = 'system';
+            SETTINGS.dyslexicMode = true;
+        }
         body.classList.add('font-' + SETTINGS.fontFamily);
+
+        // Dyslexia mode is independent of font family
+        body.classList.toggle('dyslexic-mode', !!SETTINGS.dyslexicMode);
 
         // Font scale (CSS var)
         root.style.setProperty('--font-scale', String(SETTINGS.fontScale || 1));
@@ -281,6 +297,7 @@
             { id: 'aurora',       label: 'Aurora \u{1F30C}' },
             { id: 'amber',        label: 'Amber Terminal \u{1F7E0}' },
             { id: 'galaxy',       label: 'Galaxy \u{2728}' },
+            { id: 'blackhole',    label: 'Black Hole \u{1F573}\u{FE0F}' },
             { id: 'holographic',  label: 'Holographic \u{1F308}' },
         ];
         const currentTheme = window.ArcadeThemes?.getCurrentTheme?.() || 'midnight';
@@ -303,11 +320,14 @@
                 <div class="arcade-settings-row">
                     <label>Family</label>
                     <select id="setFontFamily">
-                        <option value="system">System</option>
+                        <option value="system">System (default)</option>
                         <option value="mono">Monospace</option>
-                        <option value="pixel">Pixel</option>
+                        <option value="pixel">Pixel (Press Start 2P)</option>
                         <option value="serif">Serif</option>
-                        <option value="dyslexic">Dyslexia-friendly</option>
+                        <option value="rounded">Rounded (Comic)</option>
+                        <option value="handwritten">Handwritten (Caveat)</option>
+                        <option value="futuristic">Futuristic (Orbitron)</option>
+                        <option value="elegant">Elegant (Cinzel)</option>
                     </select>
                 </div>
                 <div class="arcade-settings-row">
@@ -319,6 +339,11 @@
                         <option value="1.3">Extra large</option>
                     </select>
                 </div>
+                <label class="arcade-settings-checkbox">
+                    <input type="checkbox" id="setDyslexicMode">
+                    Dyslexia-friendly mode
+                    <span class="arcade-settings-help" style="margin:0 0 0 6px;">— overrides font with Atkinson Hyperlegible + wider spacing</span>
+                </label>
             </section>
 
             <section class="arcade-settings-section">
@@ -367,6 +392,12 @@
         const sn = pane.querySelector('#setUiSounds');
         sn.checked = !!SETTINGS.uiSounds;
         sn.addEventListener('change', () => set({ uiSounds: sn.checked }));
+
+        const dy = pane.querySelector('#setDyslexicMode');
+        if (dy) {
+            dy.checked = !!SETTINGS.dyslexicMode;
+            dy.addEventListener('change', () => set({ dyslexicMode: dy.checked }));
+        }
     }
 
     function swatchFor(themeId) {
@@ -393,6 +424,7 @@
             aurora: 'linear-gradient(135deg,#22d3ee,#a855f7,#22c55e)',
             amber: 'linear-gradient(135deg,#1a0e00,#ffb000)',
             galaxy: 'radial-gradient(circle at 30% 30%,#fff 1%,transparent 2%),radial-gradient(circle at 70% 70%,#fff 1%,transparent 2%),linear-gradient(135deg,#03001e,#1a0080)',
+            blackhole: 'radial-gradient(circle at 50% 50%,#000 28%,#ffb060 32%,#ff8030 40%,#a040c0 70%,#000 100%)',
             holographic: 'linear-gradient(135deg,#ff00ff,#00ffff,#ffff00,#ff00ff)',
         };
         return map[themeId] || map.midnight;

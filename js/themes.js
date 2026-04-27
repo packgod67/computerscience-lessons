@@ -183,6 +183,14 @@
             text: ['#f8f8ff', '#c4c4d4'],
             accent: '#ff00ff', accent2: '#00ffff',
         }),
+
+        // Black Hole: rotating accretion disk SVG drawn at viewport
+        // center. Halo + photon ring + spinning disk in style.css.
+        blackhole: buildTheme('Black Hole', {
+            bg: ['#03000a', '#06001a', '#0a0020', '#150028', '#28104a'],
+            text: ['#ffe6c0', '#a89a8a'],
+            accent: '#ffb060', accent2: '#a040c0',
+        }),
     };
 
     const STORAGE_KEY = 'arcade-theme';
