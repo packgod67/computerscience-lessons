@@ -7,7 +7,7 @@
 // - Never touch cross-origin requests (CDNs like libretro, jsdelivr handle
 //   their own caching via HTTP headers)
 
-const CACHE_NAME = 'arcade-shell-v83';
+const CACHE_NAME = 'arcade-shell-v84';
 const SHELL_ASSETS = [
     './',
     './index.html',

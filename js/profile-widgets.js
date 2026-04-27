@@ -1,10 +1,18 @@
-// Profile widgets — drag-to-place image canvas on user profiles.
+// Profile widgets — drag-to-place image AND text canvas on profiles.
 //
 // MODEL
 //   profile.widgets = [{
 //     id:   short string id,
-//     type: 'image',                        // future: 'text', 'gif', 'sticker'
+//     type: 'image' | 'text',
+//
+//     // For type:'image':
 //     src:  data:URL or http URL,
+//
+//     // For type:'text':
+//     text:  '<= 200 chars',
+//     color: '#fff',                        // CSS color
+//     bg:    'none' | 'subtle' | 'solid',   // background style
+//
 //     // Position + size are stored as PERCENT of the canvas, not pixels,
 //     // so widgets stay where you put them across screen sizes.
 //     x: 0..100, y: 0..100,                 // top-left corner
@@ -59,9 +67,11 @@
         if (isSelf) {
             const addBtn = document.getElementById('profileWidgetAddImage');
             const addUrlBtn = document.getElementById('profileWidgetAddUrl');
+            const addTextBtn = document.getElementById('profileWidgetAddText');
             const editBtn = document.getElementById('profileWidgetEditToggle');
             if (addBtn) addBtn.onclick = () => promptAddImage(canvas);
             if (addUrlBtn) addUrlBtn.onclick = () => promptAddImageUrl(canvas);
+            if (addTextBtn) addTextBtn.onclick = () => promptAddText(canvas);
             if (editBtn) editBtn.onclick = () => {
                 canvas._editing = !canvas._editing;
                 editBtn.textContent = canvas._editing ? 'Done editing' : 'Edit';
@@ -105,6 +115,30 @@
             img.alt = '';
             img.draggable = false;
             el.appendChild(img);
+        } else if (w.type === 'text') {
+            // Text widget: a span centered inside the absolute box. Color
+            // + background style come from the widget's own fields. Font
+            // size auto-fits via the box height (h% of canvas) so users
+            // can resize via the corner handle and the text scales.
+            el.classList.add('profile-widget-text');
+            el.classList.add('profile-widget-text-bg-' + (w.bg || 'none'));
+            const span = document.createElement('span');
+            span.textContent = w.text || '';
+            span.style.color = w.color || '#ffffff';
+            el.appendChild(span);
+
+            // In edit mode, double-click opens a prompt to change the
+            // text. Single click is reserved for drag (handled below).
+            if (canvas._editing) {
+                el.addEventListener('dblclick', (ev) => {
+                    ev.stopPropagation();
+                    const next = prompt('Edit text (max 200 chars):', w.text || '');
+                    if (next === null) return;
+                    w.text = String(next).slice(0, 200);
+                    span.textContent = w.text;
+                    canvas._save(canvas._widgets);
+                });
+            }
         }
 
         if (canvas._editing) {
@@ -224,6 +258,87 @@
         addWidget(canvas, { type: 'image', src: url.trim() });
     }
 
+    // Text widget — single-prompt UX for now: type the text, hit OK.
+    // Color / background style are pickable from a tiny inline modal
+    // (kept simple — too many prompts in a row gets annoying).
+    function promptAddText(canvas) {
+        if (canvas._widgets.length >= MAX_WIDGETS) {
+            alert('Max ' + MAX_WIDGETS + ' widgets per profile. Delete one first.');
+            return;
+        }
+        showTextModal(canvas, null);
+    }
+
+    function showTextModal(canvas, existing) {
+        // Tear down any prior instance
+        const prior = document.getElementById('arcadeTextWidgetModal');
+        if (prior) prior.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'arcadeTextWidgetModal';
+        overlay.className = 'modal-overlay arcade-textwidget-overlay';
+        overlay.innerHTML = `
+            <div class="arcade-textwidget-modal">
+                <button class="modal-close arcade-textwidget-close" type="button" aria-label="Close">&times;</button>
+                <h3>${existing ? 'Edit text' : 'Add text widget'}</h3>
+                <label class="arcade-textwidget-row">
+                    <span>Text</span>
+                    <textarea id="twText" maxlength="200" rows="3" placeholder="Anything you want to display"></textarea>
+                </label>
+                <label class="arcade-textwidget-row">
+                    <span>Color</span>
+                    <input type="color" id="twColor" value="#ffffff">
+                </label>
+                <label class="arcade-textwidget-row">
+                    <span>Background</span>
+                    <select id="twBg">
+                        <option value="none">None (transparent)</option>
+                        <option value="subtle">Subtle (semi-transparent)</option>
+                        <option value="solid">Solid (matches color)</option>
+                    </select>
+                </label>
+                <div class="arcade-textwidget-actions">
+                    <button class="auth-submit-secondary" id="twCancel" type="button">Cancel</button>
+                    <button class="auth-submit" id="twSave" type="button">${existing ? 'Save' : 'Add'}</button>
+                </div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        const txtEl = overlay.querySelector('#twText');
+        const colEl = overlay.querySelector('#twColor');
+        const bgEl = overlay.querySelector('#twBg');
+        if (existing) {
+            txtEl.value = existing.text || '';
+            colEl.value = existing.color || '#ffffff';
+            bgEl.value = existing.bg || 'none';
+        }
+        setTimeout(() => txtEl.focus(), 50);
+
+        const close = () => overlay.remove();
+        overlay.addEventListener('click', (e) => { if (e.target === overlay) close(); });
+        overlay.querySelector('.arcade-textwidget-close').addEventListener('click', close);
+        overlay.querySelector('#twCancel').addEventListener('click', close);
+        overlay.querySelector('#twSave').addEventListener('click', () => {
+            const text = (txtEl.value || '').slice(0, 200);
+            if (!text.trim()) { close(); return; }
+            const color = colEl.value || '#ffffff';
+            const bg = bgEl.value || 'none';
+            if (existing) {
+                existing.text = text;
+                existing.color = color;
+                existing.bg = bg;
+                canvas._save(canvas._widgets);
+                renderAll(canvas);
+            } else {
+                // New widget — start a bit larger than image default since
+                // text needs room to breathe.
+                addWidget(canvas, { type: 'text', text, color, bg, w: 35, h: 12 });
+            }
+            close();
+        });
+    }
+
     function openFilePicker(canvas) {
         const input = document.createElement('input');
         input.type = 'file';
@@ -309,18 +424,34 @@
                 if (!window.ArcadeAuth?.updateProfile) return;
                 try {
                     // Sanitize before saving — coerce types, drop unknown
-                    // fields, hard-cap counts and field sizes.
-                    const sanitized = widgets.slice(0, MAX_WIDGETS).map(w => ({
-                        id: String(w.id || uid()).slice(0, 16),
-                        type: w.type === 'image' ? 'image' : 'image',
-                        src: String(w.src || '').slice(0, 600000), // ~600 KB cap on data: URLs
-                        x: clamp(Number(w.x) || 0, 0, 100),
-                        y: clamp(Number(w.y) || 0, 0, 100),
-                        w: clamp(Number(w.w) || 30, 5, 100),
-                        h: clamp(Number(w.h) || 30, 5, 100),
-                        rot: clamp(Number(w.rot) || 0, -360, 360),
-                        z: clamp(Number(w.z) || 1, 0, 9999),
-                    }));
+                    // fields, hard-cap counts and field sizes. Text +
+                    // image widgets share the position/size/rotation
+                    // schema; the type field gates which subset of
+                    // content fields are kept.
+                    const sanitized = widgets.slice(0, MAX_WIDGETS).map(w => {
+                        const isText = w.type === 'text';
+                        const base = {
+                            id: String(w.id || uid()).slice(0, 16),
+                            type: isText ? 'text' : 'image',
+                            x: clamp(Number(w.x) || 0, 0, 100),
+                            y: clamp(Number(w.y) || 0, 0, 100),
+                            w: clamp(Number(w.w) || 30, 5, 100),
+                            h: clamp(Number(w.h) || 30, 5, 100),
+                            rot: clamp(Number(w.rot) || 0, -360, 360),
+                            z: clamp(Number(w.z) || 1, 0, 9999),
+                        };
+                        if (isText) {
+                            base.text = String(w.text || '').slice(0, 200);
+                            // Validate color is a hex string; fall back
+                            // to white if the user passed garbage.
+                            const c = String(w.color || '#ffffff');
+                            base.color = /^#[0-9a-f]{3,8}$/i.test(c) ? c : '#ffffff';
+                            base.bg = ['none', 'subtle', 'solid'].includes(w.bg) ? w.bg : 'none';
+                        } else {
+                            base.src = String(w.src || '').slice(0, 600000); // ~600 KB cap on data: URLs
+                        }
+                        return base;
+                    });
                     await window.ArcadeAuth.updateProfile({ widgets: sanitized });
                 } catch (e) {
                     console.warn('Failed to save widgets:', e);

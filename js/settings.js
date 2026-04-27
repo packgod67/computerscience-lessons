@@ -424,7 +424,7 @@
             aurora: 'linear-gradient(135deg,#22d3ee,#a855f7,#22c55e)',
             amber: 'linear-gradient(135deg,#1a0e00,#ffb000)',
             galaxy: 'radial-gradient(circle at 30% 30%,#fff 1%,transparent 2%),radial-gradient(circle at 70% 70%,#fff 1%,transparent 2%),linear-gradient(135deg,#03001e,#1a0080)',
-            blackhole: 'radial-gradient(circle at 50% 50%,#000 28%,#ffb060 32%,#ff8030 40%,#a040c0 70%,#000 100%)',
+            blackhole: 'radial-gradient(circle at 50% 50%,#000 28%,#cce8ff 32%,#88ddff 40%,#5530a0 70%,#000 100%)',
             holographic: 'linear-gradient(135deg,#ff00ff,#00ffff,#ffff00,#ff00ff)',
         };
         return map[themeId] || map.midnight;

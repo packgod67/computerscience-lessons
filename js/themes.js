@@ -184,12 +184,13 @@
             accent: '#ff00ff', accent2: '#00ffff',
         }),
 
-        // Black Hole: rotating accretion disk SVG drawn at viewport
-        // center. Halo + photon ring + spinning disk in style.css.
+        // Black Hole: rotating accretion disk SVG with cold cyan/violet
+        // palette + light streaks + per-star twinkle. CSS in style.css
+        // under html[data-theme="blackhole"].
         blackhole: buildTheme('Black Hole', {
-            bg: ['#03000a', '#06001a', '#0a0020', '#150028', '#28104a'],
-            text: ['#ffe6c0', '#a89a8a'],
-            accent: '#ffb060', accent2: '#a040c0',
+            bg: ['#000000', '#020008', '#050010', '#0a0020', '#1a0830'],
+            text: ['#e8efff', '#9090b8'],
+            accent: '#88ddff', accent2: '#b080ff',
         }),
     };
 
