@@ -122,6 +122,67 @@
             text: ['#ffffff', '#ffffff'],
             accent: '#ffff00', accent2: '#ffffff',
         }),
+
+        // ─── Effect-driven themes ───────────────────────────────────
+        // Each pairs a color palette with a CSS-only visual effect
+        // (animated bg, chromatic aberration, scanlines, etc.) that
+        // lives in style.css under html[data-theme="<id>"].
+
+        // Glitch: chromatic aberration on titles + occasional jitter
+        glitch: buildTheme('Glitch', {
+            bg: ['#0a0010', '#15001f', '#1a0a25', '#26102e', '#3a1a44'],
+            text: ['#f0e6ff', '#a98abf'],
+            accent: '#ff006e', accent2: '#00f0ff',
+        }),
+
+        // Matrix: falling green code rain background, monospace
+        matrix: buildTheme('Matrix', {
+            bg: ['#000000', '#000a00', '#001005', '#001a0a', '#003315'],
+            text: ['#00ff41', '#008f11'],
+            accent: '#00ff41', accent2: '#39ff14',
+        }),
+
+        // Vaporwave: 80s perspective grid floor + sunset gradient
+        vaporwave: buildTheme('Vaporwave', {
+            bg: ['#1e0040', '#2c0066', '#3b008f', '#4a00b8', '#6300e8'],
+            text: ['#ffd6f1', '#a878c4'],
+            accent: '#ff77e9', accent2: '#66e2ff',
+        }),
+
+        // Cyberpunk: hot pink + electric cyan with neon glow on borders
+        cyberpunk: buildTheme('Cyberpunk', {
+            bg: ['#0a0014', '#14001f', '#1a0526', '#250a3a', '#3a0e5a'],
+            text: ['#fcee0a', '#d4d4d4'],
+            accent: '#ff2a6d', accent2: '#05d9e8',
+        }),
+
+        // Aurora: animated shifting green/purple gradient in the bg
+        aurora: buildTheme('Aurora', {
+            bg: ['#0a1628', '#0f1f3a', '#152a4a', '#1f3866', '#2a4a85'],
+            text: ['#e8f4ff', '#9ab8d4'],
+            accent: '#22d3ee', accent2: '#a855f7',
+        }),
+
+        // Amber Terminal: warm CRT alternative
+        amber: buildTheme('Amber Terminal', {
+            bg: ['#1a0e00', '#221200', '#2a1700', '#3a2000', '#5a3500'],
+            text: ['#ffb000', '#cc8800'],
+            accent: '#ffb000', accent2: '#ff8800',
+        }),
+
+        // Galaxy: twinkling star background, deep space purple
+        galaxy: buildTheme('Galaxy', {
+            bg: ['#03001e', '#080029', '#0c0040', '#11005c', '#1a0080'],
+            text: ['#ffffff', '#a4a4cf'],
+            accent: '#ec4899', accent2: '#06b6d4',
+        }),
+
+        // Holographic: iridescent hue-rotating background
+        holographic: buildTheme('Holographic', {
+            bg: ['#1a1a2e', '#22213d', '#2a294d', '#3a3b66', '#5b5d8b'],
+            text: ['#f8f8ff', '#c4c4d4'],
+            accent: '#ff00ff', accent2: '#00ffff',
+        }),
     };
 
     const STORAGE_KEY = 'arcade-theme';

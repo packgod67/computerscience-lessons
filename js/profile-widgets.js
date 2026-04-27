@@ -58,8 +58,10 @@
 
         if (isSelf) {
             const addBtn = document.getElementById('profileWidgetAddImage');
+            const addUrlBtn = document.getElementById('profileWidgetAddUrl');
             const editBtn = document.getElementById('profileWidgetEditToggle');
             if (addBtn) addBtn.onclick = () => promptAddImage(canvas);
+            if (addUrlBtn) addUrlBtn.onclick = () => promptAddImageUrl(canvas);
             if (editBtn) editBtn.onclick = () => {
                 canvas._editing = !canvas._editing;
                 editBtn.textContent = canvas._editing ? 'Done editing' : 'Edit';
@@ -201,19 +203,25 @@
     function clamp(v, min, max) { return Math.max(min, Math.min(max, v)); }
 
     // ─── Image upload + compression ──────────────────────────────────
+    // "+ Image" goes straight to the OS file picker. Most users want
+    // their own photos / memes / stickers, not a URL paste. The "+ URL"
+    // button (separate, in the toolbar) handles the URL-paste path for
+    // animated GIFs from giphy etc.
     function promptAddImage(canvas) {
         if (canvas._widgets.length >= MAX_WIDGETS) {
             alert('Max ' + MAX_WIDGETS + ' widgets per profile. Delete one first.');
             return;
         }
-        // Two paths: file picker OR paste-URL prompt. Default to file
-        // because most users will want personal images.
-        const choice = prompt('Image: paste a URL, or type "upload" to pick a file');
-        if (choice === null) return;
-        if (choice.trim().toLowerCase() === 'upload' || choice.trim() === '') {
-            return openFilePicker(canvas);
+        openFilePicker(canvas);
+    }
+    function promptAddImageUrl(canvas) {
+        if (canvas._widgets.length >= MAX_WIDGETS) {
+            alert('Max ' + MAX_WIDGETS + ' widgets per profile. Delete one first.');
+            return;
         }
-        addWidget(canvas, { type: 'image', src: choice.trim() });
+        const url = prompt('Paste an image URL (jpg, png, gif, webp):', '');
+        if (!url || !url.trim()) return;
+        addWidget(canvas, { type: 'image', src: url.trim() });
     }
 
     function openFilePicker(canvas) {

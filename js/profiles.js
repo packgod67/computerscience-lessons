@@ -198,6 +198,7 @@
                             <h3 class="profile-section-title">Widgets</h3>
                             ${isSelf ? `<div class="profile-widgets-actions">
                                 <button class="profile-widget-btn" id="profileWidgetAddImage" type="button">+ Image</button>
+                                <button class="profile-widget-btn profile-widget-btn-secondary" id="profileWidgetAddUrl" type="button" title="Paste an image URL instead">+ URL</button>
                                 <button class="profile-widget-btn profile-widget-btn-secondary" id="profileWidgetEditToggle" type="button">Edit</button>
                             </div>` : ''}
                         </div>

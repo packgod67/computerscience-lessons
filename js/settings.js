@@ -258,6 +258,7 @@
     // ─── Pane: Appearance ───────────────────────────────────────────
     function paintAppearance(pane) {
         const presets = [
+            // Standard color palettes
             { id: 'midnight', label: 'Midnight (default)' },
             { id: 'ocean', label: 'Ocean' },
             { id: 'crimson', label: 'Crimson' },
@@ -269,9 +270,18 @@
             { id: 'nord', label: 'Nord' },
             { id: 'monokai', label: 'Monokai' },
             { id: 'light', label: 'Light' },
-            { id: 'crt', label: 'Retro CRT' },
             { id: 'pastel', label: 'Pastel' },
             { id: 'highcontrast', label: 'High Contrast' },
+            // Effect-driven
+            { id: 'crt',          label: 'Retro CRT \u{1F4FA}' },
+            { id: 'glitch',       label: 'Glitch \u{26A1}' },
+            { id: 'matrix',       label: 'Matrix \u{1F7E2}' },
+            { id: 'vaporwave',    label: 'Vaporwave \u{1F30A}' },
+            { id: 'cyberpunk',    label: 'Cyberpunk \u{1F4A1}' },
+            { id: 'aurora',       label: 'Aurora \u{1F30C}' },
+            { id: 'amber',        label: 'Amber Terminal \u{1F7E0}' },
+            { id: 'galaxy',       label: 'Galaxy \u{2728}' },
+            { id: 'holographic',  label: 'Holographic \u{1F308}' },
         ];
         const currentTheme = window.ArcadeThemes?.getCurrentTheme?.() || 'midnight';
 
@@ -375,6 +385,15 @@
             crt: 'linear-gradient(135deg,#001100,#00ff66)',
             pastel: 'linear-gradient(135deg,#fbcfe8,#a78bfa)',
             highcontrast: 'linear-gradient(135deg,#000,#ffff00)',
+            // Effect themes — swatches hint at their visual signature
+            glitch: 'linear-gradient(135deg,#ff006e 0%,#ff006e 33%,#00f0ff 67%,#00f0ff 100%)',
+            matrix: 'linear-gradient(180deg,#000000,#00ff41)',
+            vaporwave: 'linear-gradient(135deg,#ff77e9,#66e2ff)',
+            cyberpunk: 'linear-gradient(135deg,#ff2a6d,#fcee0a 50%,#05d9e8)',
+            aurora: 'linear-gradient(135deg,#22d3ee,#a855f7,#22c55e)',
+            amber: 'linear-gradient(135deg,#1a0e00,#ffb000)',
+            galaxy: 'radial-gradient(circle at 30% 30%,#fff 1%,transparent 2%),radial-gradient(circle at 70% 70%,#fff 1%,transparent 2%),linear-gradient(135deg,#03001e,#1a0080)',
+            holographic: 'linear-gradient(135deg,#ff00ff,#00ffff,#ffff00,#ff00ff)',
         };
         return map[themeId] || map.midnight;
     }
