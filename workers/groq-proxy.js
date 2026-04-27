@@ -131,6 +131,181 @@ function isHostAllowed(host) {
     return false;
 }
 
+const TOUCH_OVERLAY_SCRIPT = `(function () {
+    if (window.__arcadeTouchOverlayInstalled) return;
+    window.__arcadeTouchOverlayInstalled = true;
+    function isTouchDevice() {
+        if (window.matchMedia && window.matchMedia('(hover: none) and (pointer: coarse)').matches) return true;
+        if ('ontouchstart' in window && (navigator.maxTouchPoints || 0) > 0) return true;
+        return false;
+    }
+    if (!isTouchDevice()) return;
+    var KEYS = {
+        Up:    { code: 'ArrowUp',    key: 'ArrowUp',    keyCode: 38 },
+        Down:  { code: 'ArrowDown',  key: 'ArrowDown',  keyCode: 40 },
+        Left:  { code: 'ArrowLeft',  key: 'ArrowLeft',  keyCode: 37 },
+        Right: { code: 'ArrowRight', key: 'ArrowRight', keyCode: 39 },
+        A:     { code: 'KeyZ',       key: 'z',          keyCode: 90 },
+        B:     { code: 'KeyX',       key: 'x',          keyCode: 88 },
+        Start: { code: 'Enter',      key: 'Enter',      keyCode: 13 },
+        Space: { code: 'Space',      key: ' ',          keyCode: 32 },
+    };
+    function fireKey(type, info) {
+        try {
+            var ev = new KeyboardEvent(type, {
+                code: info.code,
+                key: info.key,
+                keyCode: info.keyCode,
+                which: info.keyCode,
+                bubbles: true,
+                cancelable: true,
+                composed: true,
+            });
+            document.dispatchEvent(ev);
+            window.dispatchEvent(ev);
+            var canvas = document.querySelector('canvas');
+            if (canvas) canvas.dispatchEvent(ev);
+        } catch (e) {}
+    }
+    function styleEl(el, css) {
+        for (var k in css) el.style[k] = css[k];
+    }
+    var overlay = document.createElement('div');
+    overlay.id = '__arcadeTouchOverlay';
+    styleEl(overlay, {
+        position: 'fixed',
+        left: '0', right: '0', bottom: '0',
+        zIndex: '999999',
+        pointerEvents: 'none',
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'flex-end',
+        padding: '12px 16px',
+        paddingBottom: 'calc(12px + env(safe-area-inset-bottom, 0px))',
+        paddingLeft: 'calc(16px + env(safe-area-inset-left, 0px))',
+        paddingRight: 'calc(16px + env(safe-area-inset-right, 0px))',
+        userSelect: 'none',
+        WebkitUserSelect: 'none',
+        touchAction: 'none',
+        font: '14px/1 system-ui, sans-serif',
+    });
+    function makeBtn(label, key, opts) {
+        opts = opts || {};
+        var b = document.createElement('button');
+        b.textContent = label;
+        b.setAttribute('aria-label', opts.ariaLabel || label);
+        styleEl(b, Object.assign({
+            width: '52px',
+            height: '52px',
+            borderRadius: '50%',
+            background: 'rgba(255,255,255,0.18)',
+            color: 'white',
+            border: '2px solid rgba(255,255,255,0.4)',
+            fontSize: '18px',
+            fontWeight: '700',
+            pointerEvents: 'auto',
+            cursor: 'pointer',
+            backdropFilter: 'blur(6px)',
+            WebkitBackdropFilter: 'blur(6px)',
+            textShadow: '0 1px 2px rgba(0,0,0,0.6)',
+            boxShadow: '0 2px 6px rgba(0,0,0,0.3)',
+            touchAction: 'none',
+        }, opts.style || {}));
+        function press(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            b.style.background = 'rgba(255,255,255,0.45)';
+            fireKey('keydown', key);
+        }
+        function release(e) {
+            e.preventDefault();
+            e.stopPropagation();
+            b.style.background = 'rgba(255,255,255,0.18)';
+            fireKey('keyup', key);
+        }
+        b.addEventListener('touchstart', press, { passive: false });
+        b.addEventListener('touchend', release, { passive: false });
+        b.addEventListener('touchcancel', release, { passive: false });
+        b.addEventListener('mousedown', press);
+        b.addEventListener('mouseup', release);
+        b.addEventListener('mouseleave', release);
+        return b;
+    }
+    var dpad = document.createElement('div');
+    styleEl(dpad, {
+        position: 'relative',
+        width: '160px',
+        height: '160px',
+        pointerEvents: 'none',
+    });
+    function placeDpadBtn(btn, x, y) {
+        styleEl(btn, { position: 'absolute', left: x, top: y });
+        dpad.appendChild(btn);
+    }
+    placeDpadBtn(makeBtn('▲', KEYS.Up,    { ariaLabel: 'Up' }),    '54px', '0');
+    placeDpadBtn(makeBtn('▼', KEYS.Down,  { ariaLabel: 'Down' }),  '54px', '108px');
+    placeDpadBtn(makeBtn('◀', KEYS.Left,  { ariaLabel: 'Left' }),  '0',    '54px');
+    placeDpadBtn(makeBtn('▶', KEYS.Right, { ariaLabel: 'Right' }), '108px', '54px');
+    var actions = document.createElement('div');
+    styleEl(actions, {
+        position: 'relative',
+        width: '160px',
+        height: '160px',
+        pointerEvents: 'none',
+    });
+    function placeActionBtn(btn, x, y, color) {
+        styleEl(btn, {
+            position: 'absolute',
+            left: x, top: y,
+            background: color,
+        });
+        actions.appendChild(btn);
+    }
+    placeActionBtn(makeBtn('B', KEYS.B,     { style: { width: '60px', height: '60px' } }), '0',     '50px', 'rgba(239, 68, 68, 0.4)');
+    placeActionBtn(makeBtn('A', KEYS.A,     { style: { width: '60px', height: '60px' } }), '100px', '50px', 'rgba(34, 197, 94, 0.4)');
+    placeActionBtn(makeBtn('Start', KEYS.Start, { style: { width: '70px', height: '32px', fontSize: '12px', borderRadius: '16px' } }), '45px', '0', 'rgba(124, 58, 237, 0.4)');
+    overlay.appendChild(dpad);
+    overlay.appendChild(actions);
+    var hidden = false;
+    var toggle = document.createElement('button');
+    toggle.textContent = '⊟';
+    toggle.setAttribute('aria-label', 'Hide controls');
+    styleEl(toggle, {
+        position: 'fixed',
+        top: 'calc(8px + env(safe-area-inset-top, 0px))',
+        right: '8px',
+        width: '32px',
+        height: '32px',
+        borderRadius: '50%',
+        background: 'rgba(0,0,0,0.5)',
+        color: 'white',
+        border: '1px solid rgba(255,255,255,0.3)',
+        zIndex: '999999',
+        fontSize: '16px',
+        cursor: 'pointer',
+        pointerEvents: 'auto',
+    });
+    toggle.addEventListener('click', function () {
+        hidden = !hidden;
+        overlay.style.display = hidden ? 'none' : 'flex';
+        toggle.textContent = hidden ? '⊞' : '⊟';
+        toggle.setAttribute('aria-label', hidden ? 'Show controls' : 'Hide controls');
+    });
+    function mount() {
+        if (!document.body) {
+            setTimeout(mount, 50);
+            return;
+        }
+        document.body.appendChild(overlay);
+        document.body.appendChild(toggle);
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', mount);
+    } else {
+        mount();
+    }
+})();`;
+
 export default {
     async fetch(request, env) {
         if (request.method === 'OPTIONS') {
@@ -239,6 +414,19 @@ export default {
                     body = body.replace(/<\/head>/i, `${baseTag}</head>`);
                 } else {
                     body = `<head>${baseTag}</head>` + body;
+                }
+
+                // Inject the touch-control overlay before </body> so
+                // mobile users get on-screen D-pad + A/B/Start buttons
+                // for keyboard-required games. Source of the script
+                // body lives at js/touch-overlay.js — the source-of-
+                // truth gets copy-pasted in here. Update both when
+                // editing.
+                const touchOverlayTag = `<script>${TOUCH_OVERLAY_SCRIPT}</script>`;
+                if (/<\/body>/i.test(body)) {
+                    body = body.replace(/<\/body>/i, `${touchOverlayTag}</body>`);
+                } else {
+                    body = body + touchOverlayTag;
                 }
 
                 // Drop content-length since we rewrote the body.

@@ -9025,7 +9025,9 @@
       "permadeath",
       "procgen",
       "run-based",
-      "meta-progression"
+      "meta-progression",
+      "added-controls",
+      "mobile"
     ],
     "addedAt": "2026-04-26T09:25:08.818Z"
   },
@@ -9884,7 +9886,9 @@
       "simulation",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzgxNTM4MjgucG5n/original/e8ejD4.png",
     "addedAt": "2026-04-26T16:00:00.000Z"
@@ -22173,7 +22177,9 @@
       "action",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzU4ODM5NjMucG5n/original/75wxYs.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
@@ -22208,7 +22214,9 @@
       "gamepad",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzExNDMzMzU2LnBuZw==/original/IvErVH.png",
     "addedAt": "2026-04-26T15:30:00.000Z"
@@ -25400,7 +25408,9 @@
       "dead-cells-like",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzM2OTk5NzQucG5n/original/trGcjv.png",
     "addedAt": "2026-04-26T12:00:00.000Z"
@@ -28053,7 +28063,9 @@
       "dice",
       "run-based",
       "meta-progression",
-      "permadeath"
+      "permadeath",
+      "added-controls",
+      "mobile"
     ],
     "addedAt": "2026-04-26T09:33:05.154Z"
   },
@@ -28077,7 +28089,9 @@
       "permadeath",
       "procgen",
       "run-based",
-      "pixel-art"
+      "pixel-art",
+      "added-controls",
+      "mobile"
     ],
     "addedAt": "2026-04-26T09:33:05.154Z"
   },
@@ -28100,7 +28114,9 @@
       "permadeath",
       "run-based",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzkxMjM1MDkuZ2lm/original/hiR3Iv.gif",
     "addedAt": "2026-04-26T11:28:44.661Z"
@@ -28126,7 +28142,9 @@
       "permadeath",
       "run-based",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0Njk4MDE1LnBuZw==/original/xqRqpq.png",
     "addedAt": "2026-04-26T11:28:44.661Z"
@@ -28176,7 +28194,9 @@
       "deck-building",
       "city-builder",
       "run-based",
-      "meta-progression"
+      "meta-progression",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzE4MDAxNTk0LnBuZw==/original/%2FbKLSq.png",
     "addedAt": "2026-04-26T11:28:44.661Z"
@@ -28202,7 +28222,9 @@
       "bullet-hell",
       "permadeath",
       "run-based",
-      "meta-progression"
+      "meta-progression",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzExNzcwNzA1LnBuZw==/original/X6x03Z.png",
     "addedAt": "2026-04-26T11:28:44.661Z"
@@ -28252,7 +28274,9 @@
       "ludum-dare",
       "run-based",
       "permadeath",
-      "meta-progression"
+      "meta-progression",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzg1ODk3MDQuZ2lm/original/TuMDTk.gif",
     "addedAt": "2026-04-26T11:28:44.661Z"
@@ -28278,7 +28302,9 @@
       "permadeath",
       "procgen",
       "run-based",
-      "gameboy"
+      "gameboy",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzY2MTU2NzQucG5n/original/9jO6bK.png",
     "addedAt": "2026-04-26T11:28:44.661Z"
@@ -28302,7 +28328,9 @@
       "itch",
       "roguelite",
       "monster-tamer-roguelite",
-      "meta-progression"
+      "meta-progression",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI4OTAyNzc4LnBuZw==/original/oGZIir.png",
     "addedAt": "2026-04-26T11:28:44.661Z"
@@ -28327,7 +28355,9 @@
       "arena-roguelite",
       "permadeath",
       "run-based",
-      "meta-progression"
+      "meta-progression",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MjAzMDI5LnBuZw==/original/Slut%2Bv.png",
     "addedAt": "2026-04-26T11:28:44.661Z"
@@ -28498,7 +28528,9 @@
       "arcade",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzEzNTUzMDk5LnBuZw==/original/v0fPTz.png",
     "addedAt": "2026-04-26T11:50:19.370Z"
@@ -28542,7 +28574,9 @@
       "art-game",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzM2OTc5NjAucG5n/original/T7wHUZ.png",
     "addedAt": "2026-04-26T11:50:19.370Z"
@@ -28563,7 +28597,9 @@
       "short",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzE0OTExNTYwLnBuZw==/original/Bmn14q.png",
     "addedAt": "2026-04-26T11:50:19.370Z"
@@ -28585,7 +28621,9 @@
       "party",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0MTc0OTkucG5n/original/EAdlKu.png",
     "addedAt": "2026-04-26T11:50:19.370Z"
@@ -28648,7 +28686,9 @@
       "short",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzE3MTczNzEuZ2lm/original/eXymdf.gif",
     "addedAt": "2026-04-26T12:00:00.000Z"
@@ -28670,7 +28710,8 @@
       "browser-native",
       "html5",
       "itch",
-      "mobile"
+      "mobile",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzEzODg4OTc4LnBuZw==/original/yosMR4.png",
     "addedAt": "2026-04-26T12:00:00.000Z"
@@ -28692,7 +28733,8 @@
       "browser-native",
       "html5",
       "itch",
-      "mobile"
+      "mobile",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0NzYwNTgucG5n/original/IcZXmj.png",
     "addedAt": "2026-04-26T12:00:00.000Z"
@@ -28800,7 +28842,8 @@
       "browser-native",
       "html5",
       "itch",
-      "mobile"
+      "mobile",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzEyOTMzNDY5LnBuZw==/original/vRux6S.png",
     "addedAt": "2026-04-26T12:30:00.000Z"
@@ -28910,7 +28953,8 @@
       "browser-native",
       "html5",
       "itch",
-      "mobile"
+      "mobile",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzczNDA4MzMucG5n/original/IfkMsu.png",
     "addedAt": "2026-04-26T12:30:00.000Z"
@@ -28994,7 +29038,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MzM4NzA5LmpwZw==/original/qQV3I7.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
@@ -29034,7 +29079,9 @@
       "unity",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI5OTIwODMucG5n/original/TsyEW7.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
@@ -29055,7 +29102,9 @@
       "meme",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzEyNjUxNTkwLnBuZw==/original/1wL53%2F.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
@@ -29076,7 +29125,9 @@
       "platformer",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI4MTU4OTkucG5n/original/89h7D1.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
@@ -29117,7 +29168,9 @@
       "arcade",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzIwNDcwMjgucG5n/original/8o3kDa.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
@@ -29285,7 +29338,9 @@
       "surreal",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0ODEzNTY3LnBuZw==/original/YoY4fJ.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
@@ -29480,7 +29535,9 @@
       "short",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NjIzMDY1LnBuZw==/original/phfADT.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
@@ -29641,7 +29698,9 @@
       "shitpost",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NjYyNjE5LmdpZg==/original/xI55Hr.gif",
     "addedAt": "2026-04-26T13:30:00.000Z"
@@ -29665,7 +29724,8 @@
       "browser-native",
       "html5",
       "itch",
-      "mobile"
+      "mobile",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2ODc0MTAxLnBuZw==/original/%2By2Lhi.png",
     "addedAt": "2026-04-26T13:30:00.000Z"
@@ -29911,7 +29971,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI1MjYzNTY4LnBuZw==/original/bxEUjn.png",
     "addedAt": "2026-04-26T14:00:00.000Z"
@@ -29935,7 +29996,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NjQzNjg2LnBuZw==/original/MyK4WM.png",
     "addedAt": "2026-04-26T14:00:00.000Z"
@@ -30004,7 +30066,9 @@
       "godot",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NTYxOTk5LnBuZw==/original/SwRRD%2F.png",
     "addedAt": "2026-04-26T14:00:00.000Z"
@@ -30192,7 +30256,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzMzNDkxOTEucG5n/original/J%2F3ESX.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
@@ -30299,7 +30364,8 @@
       "browser-native",
       "html5",
       "itch",
-      "mobile"
+      "mobile",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzIzMDgyNzM3LnBuZw==/original/ytb1g4.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
@@ -30321,7 +30387,8 @@
       "browser-native",
       "html5",
       "itch",
-      "mobile"
+      "mobile",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2ODI3NDg1LnBuZw==/original/fGoJIE.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
@@ -30364,7 +30431,8 @@
       "browser-native",
       "html5",
       "itch",
-      "mobile"
+      "mobile",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzQxOTIxOTAucG5n/original/zy5BoD.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
@@ -30387,7 +30455,8 @@
       "browser-native",
       "html5",
       "itch",
-      "mobile"
+      "mobile",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI1NDEwOTIxLnBuZw==/original/UoagZr.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
@@ -30410,7 +30479,9 @@
       "fantasy",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1hZ2UvMjk1MjkwLzE0NDQ1OTcucG5n/original/PSzY%2BZ.png",
     "addedAt": "2026-04-26T14:45:00.000Z"
@@ -30436,7 +30507,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2OTExMzg5LnBuZw==/original/Ozu8aM.png",
     "addedAt": "2026-04-26T14:45:00.000Z"
@@ -30458,7 +30530,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzEwNTg5NjczLnBuZw==/original/W2%2F7E%2F.png",
     "addedAt": "2026-04-26T15:00:00.000Z"
@@ -30480,7 +30553,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1hZ2UvMTQ4NDI0LzY4MTc1NC5naWY=/original/rGN%2Fw5.gif",
     "addedAt": "2026-04-26T15:00:00.000Z"
@@ -30504,7 +30578,8 @@
       "browser-native",
       "html5",
       "itch",
-      "mobile"
+      "mobile",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MTk2NjUwLnBuZw==/original/8INXax.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
@@ -30528,7 +30603,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NzI0MzAyLnBuZw==/original/pf58tg.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
@@ -30575,7 +30651,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NzkzNjI4LnBuZw==/original/1PyQGO.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
@@ -30623,7 +30700,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1hZ2UvMjQxODEwLzExNTMzMTgucG5n/original/UtG3OL.png",
     "addedAt": "2026-04-26T15:15:00.000Z"
@@ -30648,7 +30726,9 @@
       "godot",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2ODYxNTUwLnBuZw==/original/R3Jh%2BP.png",
     "addedAt": "2026-04-26T15:30:00.000Z"
@@ -30695,7 +30775,9 @@
       "platformer",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MTMyNDA3LnBuZw==/original/LNkl3H.png",
     "addedAt": "2026-04-26T15:45:00.000Z"
@@ -31100,7 +31182,9 @@
       "tactics",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2NDU5Nzg5LnBuZw==/original/yBIuJk.png",
     "addedAt": "2026-04-26T17:00:00.000Z"
@@ -31121,7 +31205,8 @@
       "mobile",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "added-controls"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MTU2NzM2LnBuZw==/original/WhDMoR.png",
     "addedAt": "2026-04-26T17:00:00.000Z"
