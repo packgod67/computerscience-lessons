@@ -34,6 +34,29 @@
     let requestsLoaded = false;
     let friendsLoaded = false;
 
+    // Honor user-customized tab order + visibility (settings.js).
+    // Reorders the .tab-btn children of #tabBar to match `tabOrder` and
+    // hides ones in `tabHidden`. Re-runs on every settings change.
+    function applyTabSettings() {
+        const settings = window.ArcadeSettings?.get?.();
+        if (!settings) return;
+        const order = settings.tabOrder || [];
+        const hidden = new Set(settings.tabHidden || []);
+        const allBtns = Array.from(tabBar.querySelectorAll('.tab-btn'));
+        // Sort by index in user's order; unknown ids go to the end in their
+        // original DOM order.
+        const idxOf = (id) => {
+            const i = order.indexOf(id);
+            return i === -1 ? 1e6 : i;
+        };
+        allBtns.sort((a, b) => idxOf(a.dataset.tab) - idxOf(b.dataset.tab));
+        for (const btn of allBtns) {
+            tabBar.appendChild(btn);
+            btn.dataset.tabHidden = hidden.has(btn.dataset.tab) ? '1' : '0';
+        }
+    }
+    window.addEventListener('arcade:settings-changed', applyTabSettings);
+
     // Add admin-only tabs after auth is ready
     ArcadeAuth.waitForAuth().then(() => {
         if (ArcadeAuth.isAdmin()) {
@@ -50,7 +73,12 @@
             cheatsBtn.title = 'Cheat code manager (admin only)';
             tabBar.appendChild(cheatsBtn);
         }
+        // Apply user-customized order/visibility AFTER admin tabs are added
+        // (so admins can reorder/hide Bans + Cheats too if they want).
+        applyTabSettings();
     });
+    // Apply once on boot for non-admin users (admin path covers admins).
+    applyTabSettings();
 
     tabBar.addEventListener('click', (e) => {
         const btn = e.target.closest('.tab-btn');

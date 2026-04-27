@@ -78,6 +78,18 @@
             renderPage();
             buildAdminTagButton(); // role might've just resolved
         });
+
+        // User-customization changes (settings.js) — re-render whenever
+        // pinned/hidden games or sort-related toggles flip. Cheap because
+        // we already debounce the writes upstream.
+        window.addEventListener('arcade:settings-changed', (ev) => {
+            applyHomeSectionVisibility(ev?.detail?.settings);
+            currentPage = 0;
+            gameGrid.innerHTML = '';
+            applyFilters();
+            renderPage();
+        });
+        applyHomeSectionVisibility();
         // Auth state can flip after init (login/logout) — re-evaluate the
         // admin button whenever it does.
         if (window.ArcadeAuth?.onAuthChange) {
@@ -743,12 +755,24 @@
             }
         }
 
+        // Apply user customization: hide games on the per-user hide list,
+        // then float pinned games to the very top regardless of other sort
+        // criteria. Settings stored in window.ArcadeSettings (settings.js).
+        const settings = window.ArcadeSettings?.get?.();
+        if (settings) {
+            const hidden = new Set(settings.hiddenGames || []);
+            if (hidden.size) filtered = filtered.filter(g => !hidden.has(g.id));
+        }
+
         // Surface recently-added games at the top of the default view.
         // Only when the user hasn't typed a query and isn't filtering by
         // a specific category (otherwise it'd hide expected results).
+        // Honors the homeSections.new toggle — if the user disabled the
+        // "NEW games at top" home section, skip the recency sort.
         // Stable sort: within "new" and "not new" groups, original order
         // is preserved so Pokemon Unbound stays where it always was, etc.
-        if (!query && !tagQueries && activeCategory === 'all') {
+        const showNewAtTop = settings?.homeSections?.new !== false;
+        if (showNewAtTop && !query && !tagQueries && activeCategory === 'all') {
             filtered.sort((a, b) => {
                 const aNew = a.addedAt ? 1 : 0;
                 const bNew = b.addedAt ? 1 : 0;
@@ -756,6 +780,21 @@
                 // Among new: sort by date descending (newest first)
                 if (aNew) return (b.addedAt || '').localeCompare(a.addedAt || '');
                 return 0;   // stable: keep original order for older games
+            });
+        }
+
+        // Pinned games float to the absolute top, in the same order they
+        // appear in the user's pinnedGames array. Done AFTER the new-at-top
+        // sort so pinned beat NEW.
+        if (settings?.pinnedGames?.length) {
+            const pinIdx = {};
+            settings.pinnedGames.forEach((id, i) => pinIdx[id] = i);
+            filtered.sort((a, b) => {
+                const aP = pinIdx[a.id], bP = pinIdx[b.id];
+                if (aP === undefined && bP === undefined) return 0;
+                if (aP === undefined) return 1;
+                if (bP === undefined) return -1;
+                return aP - bP;
             });
         }
 
@@ -909,7 +948,15 @@
                        <span class="ps2-preload-bar"><span class="ps2-preload-bar-fill"></span></span>
                    </button>`
                 : '';
-            html += `<a class="game-card" href="play.html?game=${encodeURIComponent(g.id)}">${thumb}${newBadge}${favBtn}${infoBtn}${ps2PreloadBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
+            // data-game-id powers the right-click pin/hide menu (settings.js)
+            // data-card-desc is consumed by detailed/list view modes via CSS
+            // ::after content (saves us another DOM node)
+            const isPinned = window.ArcadeSettings?.isPinned?.(g.id);
+            const pinClass = isPinned ? ' is-pinned' : '';
+            const descAttr = g.description
+                ? ` data-card-desc="${esc((g.description || '').slice(0, 220))}"`
+                : '';
+            html += `<a class="game-card${pinClass}" href="play.html?game=${encodeURIComponent(g.id)}" data-game-id="${esc(g.id)}"${descAttr}>${thumb}${newBadge}${favBtn}${infoBtn}${ps2PreloadBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
         }
 
         gameGrid.insertAdjacentHTML('beforeend', html);
@@ -1507,6 +1554,12 @@
         const strip = document.getElementById('continueStrip');
         if (!section || !strip) return;
 
+        // User explicitly hid this section in Settings → Layout
+        if (section.dataset.userHidden === '1') {
+            section.hidden = true;
+            return;
+        }
+
         if (!ArcadeAuth.isLoggedIn()) {
             section.hidden = true;
             return;
@@ -1547,6 +1600,24 @@
         }).join('');
 
         section.hidden = false;
+    }
+
+    // Honors the homeSections.continuePlaying / categories toggles from
+    // js/settings.js — hides those sections without breaking layout.
+    function applyHomeSectionVisibility(settings) {
+        settings = settings || window.ArcadeSettings?.get?.();
+        if (!settings) return;
+        const sections = settings.homeSections || {};
+        const continueEl = document.getElementById('continuePlaying');
+        const catsEl = document.getElementById('categories');
+        const catDropdown = document.getElementById('catDropdownBtn');
+        if (continueEl) continueEl.dataset.userHidden = sections.continuePlaying === false ? '1' : '0';
+        // categories: toggle display directly (no children to preserve)
+        if (catsEl) catsEl.style.display = sections.categories === false ? 'none' : '';
+        if (catDropdown) catDropdown.style.display = sections.categories === false ? 'none' : '';
+        // The "NEW games at top" + "Random Picks" toggles are handled in
+        // applyFilters() / by the random button respectively — nothing to
+        // do here.
     }
 
     function setupContinuePlaying() {

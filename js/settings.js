@@ -1,0 +1,660 @@
+// Arcade-wide user customization.
+//
+// Sits ON TOP of themes.js (which still owns the theme-preset + wallpaper +
+// accent stack). Settings here are the layout / typography / behavior
+// knobs that don't belong in the theme system.
+//
+// Persistence:
+//   - All settings live in localStorage under `arcade-settings` (one
+//     JSON blob).
+//   - When the user is signed in, the same blob is also mirrored to
+//     `users/{uid}.settings` so it follows them across devices.
+//   - On boot we hydrate from localStorage immediately (zero flicker),
+//     then quietly merge in any newer Firestore-side blob.
+//
+// Applied via:
+//   - CSS classes on <body>: `density-*`, `view-*`, `cards-*`, `font-*`,
+//     `no-transparency`, `theme-no-motion`.
+//   - A user-supplied <style id="arcade-user-css"> tag injected into
+//     <head> for the custom-CSS escape hatch.
+//
+// Modules listen for `arcade:settings-changed` to re-render. App.js
+// uses this to honor pinned/hidden games on the home grid; tabs.js
+// uses it to honor tab order + visibility.
+
+(function () {
+    const KEY = 'arcade-settings';
+    const SCHEMA_VERSION = 1;
+
+    // ─── Defaults ────────────────────────────────────────────────────
+    const DEFAULTS = {
+        v: SCHEMA_VERSION,
+        // Layout & density
+        density: 'comfortable',           // compact | comfortable | spacious
+        viewMode: 'grid',                 // grid | list | detailed
+        cardStyle: 'standard',            // standard | minimal | detailed | trading-card
+        // Typography
+        fontFamily: 'system',             // system | mono | pixel | serif | dyslexic
+        fontScale: 1.0,                   // 0.85, 1.0, 1.15, 1.3 (×base)
+        // Motion / transparency
+        reducedMotion: false,             // disables animations
+        reducedTransparency: false,       // disables backdrop-filter / glass
+        // UI feedback
+        uiSounds: false,                  // tiny click sound on button presses
+        // Tab order + visibility
+        tabOrder: ['games','users','gallery','chat','messages','friends','saves','requests'],
+        tabHidden: [],                    // ids in tabOrder that are hidden
+        // Home grid sections (id -> visible)
+        homeSections: {
+            continuePlaying: true,
+            categories: true,
+            new: true,
+            random: true,
+        },
+        // Catalog personalization
+        pinnedGames: [],                  // gameIds always at top
+        hiddenGames: [],                  // gameIds never shown
+        // Power-user
+        customCss: '',                    // <= 16 KiB
+    };
+
+    // ─── Storage ─────────────────────────────────────────────────────
+    function load() {
+        let s = {};
+        try {
+            const raw = localStorage.getItem(KEY);
+            if (raw) s = JSON.parse(raw);
+        } catch {}
+        return Object.assign({}, DEFAULTS, s, {
+            // Re-merge nested objects (so newly-added defaults appear
+            // even on existing saves)
+            homeSections: Object.assign({}, DEFAULTS.homeSections, s.homeSections || {}),
+        });
+    }
+    function save(s) {
+        try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {}
+        // Mirror to Firestore (best-effort, debounced).
+        debouncedRemoteSync(s);
+    }
+    let _remoteTimer = null;
+    function debouncedRemoteSync(s) {
+        clearTimeout(_remoteTimer);
+        _remoteTimer = setTimeout(async () => {
+            try {
+                const db = window.ArcadeAuth?.getDb?.();
+                const uid = window.ArcadeAuth?.getUser?.()?.uid;
+                if (!db || !uid) return;
+                await db.collection('users').doc(uid).set({ settings: s }, { merge: true });
+            } catch {}
+        }, 1200);
+    }
+
+    let SETTINGS = load();
+
+    // ─── Apply ──────────────────────────────────────────────────────
+    function apply() {
+        const body = document.body;
+        const root = document.documentElement;
+        if (!body || !root) return;
+
+        // Density
+        body.classList.remove('density-compact', 'density-comfortable', 'density-spacious');
+        body.classList.add('density-' + SETTINGS.density);
+
+        // View mode
+        body.classList.remove('view-grid', 'view-list', 'view-detailed');
+        body.classList.add('view-' + SETTINGS.viewMode);
+
+        // Card style
+        body.classList.remove('cards-standard', 'cards-minimal', 'cards-detailed', 'cards-trading');
+        const cs = SETTINGS.cardStyle === 'trading-card' ? 'trading' : SETTINGS.cardStyle;
+        body.classList.add('cards-' + cs);
+
+        // Font family
+        body.classList.remove('font-system', 'font-mono', 'font-pixel', 'font-serif', 'font-dyslexic');
+        body.classList.add('font-' + SETTINGS.fontFamily);
+
+        // Font scale (CSS var)
+        root.style.setProperty('--font-scale', String(SETTINGS.fontScale || 1));
+
+        // Motion
+        body.classList.toggle('theme-no-motion', !!SETTINGS.reducedMotion);
+
+        // Transparency
+        body.classList.toggle('no-transparency', !!SETTINGS.reducedTransparency);
+
+        // UI sounds (handled at click time)
+        body.dataset.uiSounds = SETTINGS.uiSounds ? '1' : '0';
+
+        // Custom CSS injection
+        let styleEl = document.getElementById('arcade-user-css');
+        if (!styleEl) {
+            styleEl = document.createElement('style');
+            styleEl.id = 'arcade-user-css';
+            document.head.appendChild(styleEl);
+        }
+        // Cap to 16 KiB so a runaway paste doesn't tank the page.
+        styleEl.textContent = (SETTINGS.customCss || '').slice(0, 16384);
+
+        // Notify other modules
+        try {
+            window.dispatchEvent(new CustomEvent('arcade:settings-changed', {
+                detail: { settings: getSnapshot() }
+            }));
+        } catch {}
+    }
+
+    function getSnapshot() {
+        // Clone so callers can't accidentally mutate our state.
+        return JSON.parse(JSON.stringify(SETTINGS));
+    }
+
+    function set(patch) {
+        SETTINGS = Object.assign({}, SETTINGS, patch);
+        save(SETTINGS);
+        apply();
+    }
+
+    // ─── Pin / hide helpers ─────────────────────────────────────────
+    function togglePin(gameId) {
+        if (!gameId) return;
+        const pinned = SETTINGS.pinnedGames.slice();
+        const i = pinned.indexOf(gameId);
+        if (i >= 0) pinned.splice(i, 1);
+        else pinned.unshift(gameId);
+        // Trim to 30 — beyond that the home grid is no longer "pinned"
+        if (pinned.length > 30) pinned.length = 30;
+        set({ pinnedGames: pinned });
+    }
+    function isPinned(gameId) {
+        return SETTINGS.pinnedGames.includes(gameId);
+    }
+    function toggleHide(gameId) {
+        if (!gameId) return;
+        const hidden = SETTINGS.hiddenGames.slice();
+        const i = hidden.indexOf(gameId);
+        if (i >= 0) hidden.splice(i, 1);
+        else hidden.push(gameId);
+        set({ hiddenGames: hidden });
+    }
+    function isHidden(gameId) {
+        return SETTINGS.hiddenGames.includes(gameId);
+    }
+
+    // ─── UI sound (tiny synthesized click) ──────────────────────────
+    let _audioCtx = null;
+    function clickSound() {
+        if (!SETTINGS.uiSounds) return;
+        try {
+            if (!_audioCtx) _audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+            const ctx = _audioCtx;
+            const osc = ctx.createOscillator();
+            const gain = ctx.createGain();
+            osc.type = 'square';
+            osc.frequency.setValueAtTime(880, ctx.currentTime);
+            osc.frequency.exponentialRampToValueAtTime(220, ctx.currentTime + 0.06);
+            gain.gain.setValueAtTime(0.04, ctx.currentTime);
+            gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.07);
+            osc.connect(gain).connect(ctx.destination);
+            osc.start();
+            osc.stop(ctx.currentTime + 0.08);
+        } catch {}
+    }
+    // Delegated click sound on common interactive elements
+    document.addEventListener('click', (e) => {
+        if (!SETTINGS.uiSounds) return;
+        const t = e.target.closest?.('button, .tab-btn, .cat-btn, .game-card, a.continue-card, .auth-submit');
+        if (t) clickSound();
+    }, true);
+
+    // ─── Settings modal ─────────────────────────────────────────────
+    function openSettingsModal() {
+        const existing = document.getElementById('arcadeSettingsModal');
+        if (existing) existing.remove();
+
+        const overlay = document.createElement('div');
+        overlay.id = 'arcadeSettingsModal';
+        overlay.className = 'modal-overlay arcade-settings-overlay';
+
+        overlay.innerHTML = `
+            <div class="arcade-settings-modal">
+                <button class="modal-close arcade-settings-close" id="arcadeSettingsCloseBtn">&times;</button>
+                <h2 class="arcade-settings-title">Settings</h2>
+                <div class="arcade-settings-tabs" role="tablist">
+                    <button class="arcade-settings-tab is-active" data-pane="appearance">Appearance</button>
+                    <button class="arcade-settings-tab" data-pane="layout">Layout</button>
+                    <button class="arcade-settings-tab" data-pane="catalog">Catalog</button>
+                    <button class="arcade-settings-tab" data-pane="advanced">Advanced</button>
+                </div>
+                <div class="arcade-settings-pane" id="arcadeSettingsPane"></div>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) overlay.remove();
+        });
+        document.getElementById('arcadeSettingsCloseBtn').addEventListener('click', () => overlay.remove());
+
+        const paneEl = document.getElementById('arcadeSettingsPane');
+        let activeTab = 'appearance';
+        function paint() {
+            if (activeTab === 'appearance') paintAppearance(paneEl);
+            else if (activeTab === 'layout') paintLayout(paneEl);
+            else if (activeTab === 'catalog') paintCatalog(paneEl);
+            else paintAdvanced(paneEl);
+        }
+        overlay.querySelectorAll('.arcade-settings-tab').forEach(btn => {
+            btn.addEventListener('click', () => {
+                overlay.querySelectorAll('.arcade-settings-tab').forEach(b => b.classList.remove('is-active'));
+                btn.classList.add('is-active');
+                activeTab = btn.dataset.pane;
+                paint();
+            });
+        });
+        paint();
+    }
+
+    // ─── Pane: Appearance ───────────────────────────────────────────
+    function paintAppearance(pane) {
+        const presets = [
+            { id: 'midnight', label: 'Midnight (default)' },
+            { id: 'ocean', label: 'Ocean' },
+            { id: 'forest', label: 'Forest' },
+            { id: 'sunset', label: 'Sunset' },
+            { id: 'oled', label: 'OLED Black' },
+            { id: 'light', label: 'Light' },
+            { id: 'crt', label: 'Retro CRT' },
+            { id: 'pastel', label: 'Pastel' },
+            { id: 'highcontrast', label: 'High Contrast' },
+            { id: 'synthwave', label: 'Synthwave' },
+        ];
+        const currentTheme = window.ArcadeThemes?.getCurrentTheme?.() || 'midnight';
+
+        pane.innerHTML = `
+            <section class="arcade-settings-section">
+                <h3>Theme</h3>
+                <div class="arcade-settings-themes">
+                    ${presets.map(p => `
+                        <button class="arcade-settings-theme${currentTheme === p.id ? ' is-active' : ''}" data-theme="${p.id}">
+                            <span class="arcade-settings-theme-swatch" data-swatch="${p.id}"></span>
+                            <span>${p.label}</span>
+                        </button>
+                    `).join('')}
+                </div>
+            </section>
+
+            <section class="arcade-settings-section">
+                <h3>Font</h3>
+                <div class="arcade-settings-row">
+                    <label>Family</label>
+                    <select id="setFontFamily">
+                        <option value="system">System</option>
+                        <option value="mono">Monospace</option>
+                        <option value="pixel">Pixel</option>
+                        <option value="serif">Serif</option>
+                        <option value="dyslexic">Dyslexia-friendly</option>
+                    </select>
+                </div>
+                <div class="arcade-settings-row">
+                    <label>Size</label>
+                    <select id="setFontScale">
+                        <option value="0.85">Small</option>
+                        <option value="1">Default</option>
+                        <option value="1.15">Large</option>
+                        <option value="1.3">Extra large</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="arcade-settings-section">
+                <h3>Motion &amp; transparency</h3>
+                <label class="arcade-settings-checkbox">
+                    <input type="checkbox" id="setReducedMotion"> Reduce animations
+                </label>
+                <label class="arcade-settings-checkbox">
+                    <input type="checkbox" id="setReducedTransparency"> Reduce transparency / glass effects
+                </label>
+                <label class="arcade-settings-checkbox">
+                    <input type="checkbox" id="setUiSounds"> UI click sounds
+                </label>
+            </section>
+        `;
+
+        // Theme picker
+        pane.querySelectorAll('.arcade-settings-theme').forEach(btn => {
+            btn.addEventListener('click', () => {
+                window.ArcadeThemes?.applyTheme?.(btn.dataset.theme);
+                pane.querySelectorAll('.arcade-settings-theme').forEach(b => b.classList.remove('is-active'));
+                btn.classList.add('is-active');
+            });
+        });
+        pane.querySelectorAll('[data-swatch]').forEach(el => {
+            el.style.background = swatchFor(el.dataset.swatch);
+        });
+
+        // Selects
+        const ff = pane.querySelector('#setFontFamily');
+        ff.value = SETTINGS.fontFamily;
+        ff.addEventListener('change', () => set({ fontFamily: ff.value }));
+
+        const fs = pane.querySelector('#setFontScale');
+        fs.value = String(SETTINGS.fontScale);
+        fs.addEventListener('change', () => set({ fontScale: parseFloat(fs.value) }));
+
+        const rm = pane.querySelector('#setReducedMotion');
+        rm.checked = !!SETTINGS.reducedMotion;
+        rm.addEventListener('change', () => set({ reducedMotion: rm.checked }));
+
+        const rt = pane.querySelector('#setReducedTransparency');
+        rt.checked = !!SETTINGS.reducedTransparency;
+        rt.addEventListener('change', () => set({ reducedTransparency: rt.checked }));
+
+        const sn = pane.querySelector('#setUiSounds');
+        sn.checked = !!SETTINGS.uiSounds;
+        sn.addEventListener('change', () => set({ uiSounds: sn.checked }));
+    }
+
+    function swatchFor(themeId) {
+        const map = {
+            midnight: 'linear-gradient(135deg,#7c3aed,#a855f7)',
+            ocean: 'linear-gradient(135deg,#0ea5e9,#06b6d4)',
+            forest: 'linear-gradient(135deg,#22c55e,#84cc16)',
+            sunset: 'linear-gradient(135deg,#f59e0b,#ef4444)',
+            oled: 'linear-gradient(135deg,#0a0a0a,#262626)',
+            light: 'linear-gradient(135deg,#f4f4f5,#e4e4e7)',
+            crt: 'linear-gradient(135deg,#001100,#00ff66)',
+            pastel: 'linear-gradient(135deg,#fbcfe8,#bae6fd)',
+            highcontrast: 'linear-gradient(135deg,#000,#fff)',
+            synthwave: 'linear-gradient(135deg,#ff00ff,#00ffff)',
+        };
+        return map[themeId] || map.midnight;
+    }
+
+    // ─── Pane: Layout ───────────────────────────────────────────────
+    function paintLayout(pane) {
+        pane.innerHTML = `
+            <section class="arcade-settings-section">
+                <h3>Density</h3>
+                <div class="arcade-settings-radios">
+                    ${['compact','comfortable','spacious'].map(d => `
+                        <label class="arcade-settings-radio">
+                            <input type="radio" name="density" value="${d}" ${SETTINGS.density===d?'checked':''}>
+                            <span>${d.charAt(0).toUpperCase() + d.slice(1)}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </section>
+
+            <section class="arcade-settings-section">
+                <h3>View mode</h3>
+                <div class="arcade-settings-radios">
+                    ${[['grid','Grid'],['list','List'],['detailed','Detailed list']].map(([v,l]) => `
+                        <label class="arcade-settings-radio">
+                            <input type="radio" name="viewMode" value="${v}" ${SETTINGS.viewMode===v?'checked':''}>
+                            <span>${l}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </section>
+
+            <section class="arcade-settings-section">
+                <h3>Card style</h3>
+                <div class="arcade-settings-radios">
+                    ${[['standard','Standard'],['minimal','Thumbnail-only'],['detailed','Show description'],['trading-card','Trading card']].map(([v,l]) => `
+                        <label class="arcade-settings-radio">
+                            <input type="radio" name="cardStyle" value="${v}" ${SETTINGS.cardStyle===v?'checked':''}>
+                            <span>${l}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            </section>
+
+            <section class="arcade-settings-section">
+                <h3>Tab bar</h3>
+                <p class="arcade-settings-help">Drag to reorder. Uncheck to hide.</p>
+                <ul class="arcade-settings-taborder" id="setTabOrder">
+                    ${SETTINGS.tabOrder.map(id => `
+                        <li class="arcade-settings-tabitem" draggable="true" data-id="${id}">
+                            <span class="arcade-settings-grip">⋮⋮</span>
+                            <input type="checkbox" ${SETTINGS.tabHidden.includes(id)?'':'checked'} data-toggle="${id}">
+                            <span class="arcade-settings-tab-label">${id.charAt(0).toUpperCase() + id.slice(1)}</span>
+                        </li>
+                    `).join('')}
+                </ul>
+            </section>
+
+            <section class="arcade-settings-section">
+                <h3>Home page sections</h3>
+                ${[['continuePlaying','Continue Playing strip'],['categories','Category bar'],['new','NEW games at top'],['random','Random Picks']].map(([k,l]) => `
+                    <label class="arcade-settings-checkbox">
+                        <input type="checkbox" data-section="${k}" ${SETTINGS.homeSections[k]?'checked':''}>
+                        ${l}
+                    </label>
+                `).join('')}
+            </section>
+        `;
+
+        // Density
+        pane.querySelectorAll('input[name=density]').forEach(r => {
+            r.addEventListener('change', () => { if (r.checked) set({ density: r.value }); });
+        });
+        pane.querySelectorAll('input[name=viewMode]').forEach(r => {
+            r.addEventListener('change', () => { if (r.checked) set({ viewMode: r.value }); });
+        });
+        pane.querySelectorAll('input[name=cardStyle]').forEach(r => {
+            r.addEventListener('change', () => { if (r.checked) set({ cardStyle: r.value }); });
+        });
+
+        // Tab order: drag-and-drop + visibility
+        const tabUl = pane.querySelector('#setTabOrder');
+        let dragId = null;
+        tabUl.querySelectorAll('.arcade-settings-tabitem').forEach(li => {
+            li.addEventListener('dragstart', () => { dragId = li.dataset.id; li.classList.add('is-dragging'); });
+            li.addEventListener('dragend', () => { dragId = null; li.classList.remove('is-dragging'); });
+            li.addEventListener('dragover', (e) => { e.preventDefault(); li.classList.add('drag-over'); });
+            li.addEventListener('dragleave', () => li.classList.remove('drag-over'));
+            li.addEventListener('drop', (e) => {
+                e.preventDefault();
+                li.classList.remove('drag-over');
+                if (!dragId || dragId === li.dataset.id) return;
+                const order = Array.from(tabUl.querySelectorAll('.arcade-settings-tabitem')).map(x => x.dataset.id);
+                const fromIdx = order.indexOf(dragId);
+                const toIdx = order.indexOf(li.dataset.id);
+                order.splice(toIdx, 0, order.splice(fromIdx, 1)[0]);
+                set({ tabOrder: order });
+                paintLayout(pane); // re-render
+            });
+        });
+        tabUl.querySelectorAll('input[type=checkbox][data-toggle]').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const id = cb.dataset.toggle;
+                let hidden = SETTINGS.tabHidden.slice();
+                if (cb.checked) hidden = hidden.filter(x => x !== id);
+                else if (!hidden.includes(id)) hidden.push(id);
+                set({ tabHidden: hidden });
+            });
+        });
+
+        // Home sections
+        pane.querySelectorAll('input[type=checkbox][data-section]').forEach(cb => {
+            cb.addEventListener('change', () => {
+                const k = cb.dataset.section;
+                set({ homeSections: Object.assign({}, SETTINGS.homeSections, { [k]: cb.checked }) });
+            });
+        });
+    }
+
+    // ─── Pane: Catalog ──────────────────────────────────────────────
+    function paintCatalog(pane) {
+        const games = (window.ArcadeApp?.getGames?.() || []);
+        const byId = {};
+        for (const g of games) byId[g.id] = g;
+
+        const pinned = (SETTINGS.pinnedGames || []).map(id => byId[id]).filter(Boolean);
+        const hidden = (SETTINGS.hiddenGames || []).map(id => byId[id]).filter(Boolean);
+
+        function renderRow(g, kind) {
+            const thumb = g.thumbnail
+                ? `<img class="arcade-settings-row-thumb" src="${g.thumbnail}" alt="">`
+                : `<div class="arcade-settings-row-thumb arcade-settings-row-thumb-placeholder">${(g.title||'?').charAt(0).toUpperCase()}</div>`;
+            return `
+                <li class="arcade-settings-row-item" data-id="${g.id}">
+                    ${thumb}
+                    <span class="arcade-settings-row-title">${g.title||g.id}</span>
+                    <button class="arcade-settings-row-remove" data-${kind}="${g.id}" title="Remove from ${kind}">&times;</button>
+                </li>
+            `;
+        }
+
+        pane.innerHTML = `
+            <section class="arcade-settings-section">
+                <h3>Pinned games (${pinned.length})</h3>
+                <p class="arcade-settings-help">Always at the top of the home grid. Right-click any game card → Pin.</p>
+                ${pinned.length ? `<ul class="arcade-settings-list">${pinned.map(g => renderRow(g, 'unpin')).join('')}</ul>`
+                                : `<p class="arcade-settings-empty">No pinned games yet.</p>`}
+            </section>
+
+            <section class="arcade-settings-section">
+                <h3>Hidden games (${hidden.length})</h3>
+                <p class="arcade-settings-help">Filtered out of the home grid. Right-click any card → Hide.</p>
+                ${hidden.length ? `<ul class="arcade-settings-list">${hidden.map(g => renderRow(g, 'unhide')).join('')}</ul>`
+                                : `<p class="arcade-settings-empty">No hidden games.</p>`}
+            </section>
+        `;
+
+        pane.querySelectorAll('[data-unpin]').forEach(btn => {
+            btn.addEventListener('click', () => { togglePin(btn.dataset.unpin); paintCatalog(pane); });
+        });
+        pane.querySelectorAll('[data-unhide]').forEach(btn => {
+            btn.addEventListener('click', () => { toggleHide(btn.dataset.unhide); paintCatalog(pane); });
+        });
+    }
+
+    // ─── Pane: Advanced ─────────────────────────────────────────────
+    function paintAdvanced(pane) {
+        pane.innerHTML = `
+            <section class="arcade-settings-section">
+                <h3>Custom CSS</h3>
+                <p class="arcade-settings-help">
+                    Power-user override. Anything you write here gets applied
+                    site-wide for your account. Capped at 16 KiB.
+                    Only paste CSS you trust — bad rules can hide buttons or
+                    break layouts. Clear the box to restore the default look.
+                </p>
+                <textarea id="setCustomCss" class="arcade-settings-textarea" rows="12"
+                          placeholder="/* Try: body { letter-spacing: 0.02em; } */">${(SETTINGS.customCss||'').replace(/</g,'&lt;')}</textarea>
+                <div class="arcade-settings-row">
+                    <button class="auth-submit" id="setCssApply">Apply</button>
+                    <button class="auth-submit-secondary" id="setCssClear">Clear</button>
+                    <span class="arcade-settings-help" id="setCssLen"></span>
+                </div>
+            </section>
+
+            <section class="arcade-settings-section">
+                <h3>Reset</h3>
+                <button class="auth-submit-secondary" id="setResetAll">Reset all settings to defaults</button>
+            </section>
+        `;
+        const ta = pane.querySelector('#setCustomCss');
+        const len = pane.querySelector('#setCssLen');
+        function updLen() { len.textContent = `${ta.value.length} / 16384 chars`; }
+        updLen();
+        ta.addEventListener('input', updLen);
+        pane.querySelector('#setCssApply').addEventListener('click', () => {
+            set({ customCss: ta.value.slice(0, 16384) });
+        });
+        pane.querySelector('#setCssClear').addEventListener('click', () => {
+            ta.value = '';
+            set({ customCss: '' });
+            updLen();
+        });
+        pane.querySelector('#setResetAll').addEventListener('click', () => {
+            if (!confirm('Reset every setting to its default? Wallpaper + theme are not affected.')) return;
+            SETTINGS = JSON.parse(JSON.stringify(DEFAULTS));
+            save(SETTINGS);
+            apply();
+            paintAdvanced(pane);
+        });
+    }
+
+    // ─── Right-click context menu on game cards ─────────────────────
+    // Wired globally — anywhere a `.game-card[data-game-id]` appears,
+    // right-click pops a tiny pin/hide menu.
+    document.addEventListener('contextmenu', (e) => {
+        const card = e.target.closest?.('.game-card[data-game-id]');
+        if (!card) return;
+        e.preventDefault();
+        const gameId = card.dataset.gameId;
+        showCardMenu(e.pageX, e.pageY, gameId);
+    });
+    function showCardMenu(x, y, gameId) {
+        const existing = document.getElementById('arcadeCardMenu');
+        if (existing) existing.remove();
+        const menu = document.createElement('div');
+        menu.id = 'arcadeCardMenu';
+        menu.className = 'arcade-card-menu';
+        const isP = isPinned(gameId);
+        const isH = isHidden(gameId);
+        menu.innerHTML = `
+            <button data-act="pin">${isP ? 'Unpin' : 'Pin to top'}</button>
+            <button data-act="hide">${isH ? 'Unhide' : 'Hide game'}</button>
+        `;
+        menu.style.left = x + 'px';
+        menu.style.top = y + 'px';
+        document.body.appendChild(menu);
+        const rect = menu.getBoundingClientRect();
+        if (rect.right > window.innerWidth - 6) menu.style.left = (window.innerWidth - rect.width - 6) + 'px';
+        if (rect.bottom > window.innerHeight - 6) menu.style.top = (window.innerHeight - rect.height - 6) + 'px';
+
+        const dismiss = () => { menu.remove(); document.removeEventListener('click', dismiss); };
+        setTimeout(() => document.addEventListener('click', dismiss), 0);
+        menu.querySelector('[data-act=pin]').addEventListener('click', (e) => {
+            e.stopPropagation(); togglePin(gameId); dismiss();
+        });
+        menu.querySelector('[data-act=hide]').addEventListener('click', (e) => {
+            e.stopPropagation(); toggleHide(gameId); dismiss();
+        });
+    }
+
+    // ─── Boot ────────────────────────────────────────────────────────
+    function init() {
+        apply();
+
+        // Re-merge from Firestore when auth resolves (cross-device sync)
+        const tryRemoteHydrate = async () => {
+            try {
+                const db = window.ArcadeAuth?.getDb?.();
+                const uid = window.ArcadeAuth?.getUser?.()?.uid;
+                if (!db || !uid) return;
+                const snap = await db.collection('users').doc(uid).get();
+                const remote = snap.exists ? (snap.data() || {}).settings : null;
+                if (remote && typeof remote === 'object') {
+                    SETTINGS = Object.assign({}, DEFAULTS, remote, {
+                        homeSections: Object.assign({}, DEFAULTS.homeSections, remote.homeSections || {}),
+                    });
+                    save(SETTINGS);
+                    apply();
+                }
+            } catch {}
+        };
+        if (window.ArcadeAuth?.waitForAuth) {
+            window.ArcadeAuth.waitForAuth().then(tryRemoteHydrate);
+        } else {
+            setTimeout(tryRemoteHydrate, 1500);
+        }
+    }
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', init);
+    } else {
+        init();
+    }
+
+    window.ArcadeSettings = {
+        get: getSnapshot,
+        set,
+        openSettingsModal,
+        togglePin, isPinned,
+        toggleHide, isHidden,
+    };
+})();
