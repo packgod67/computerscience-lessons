@@ -31492,6 +31492,29 @@
     "addedAt": "2026-04-27T14:00:00.000Z"
   },
   {
+    "id": "clmsflightsimgameboy",
+    "title": "Microsoft Flight Simulator for GameBoy",
+    "category": "Simulation",
+    "path": "games/clmsflightsimgameboy.html",
+    "description": "Parody flight sim that asks the question: what if Microsoft had shipped Flight Simulator on the original Game Boy? Pixel-art horizon, 4-shade greyscale dithering, and authentically jank avionics — comedic indie demake.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1nLzE0NjcyMTg1LnBuZw==/original/UHZMtI.png",
+    "tags": [
+      "flight",
+      "simulation",
+      "parody",
+      "gameboy-demake",
+      "retro",
+      "comedy",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native",
+      "added-controls"
+    ],
+    "addedAt": "2026-04-27T15:00:00.000Z"
+  },
+  {
     "id": "cldogman95",
     "title": "Dogman 95",
     "category": "Adventure",
