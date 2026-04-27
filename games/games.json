@@ -20301,13 +20301,23 @@
   },
   {
     "id": "clslope",
-    "title": "Clslope",
-    "category": "Other",
+    "title": "Slope",
+    "category": "Action",
     "path": "games/clslope.html",
+    "description": "Endless 3D neon-slope ball runner from Rob Kay (Guitar Hero). Roll down a procedurally tilting course at increasing speed — left/right arrows only, perma-death on the first wrong move.",
     "popular": true,
+    "thumbnail": "https://slopegame.com/wp-content/uploads/2016/08/play-slope-2.jpg",
     "tags": [
+      "endless-runner",
+      "arcade",
+      "skill",
+      "speedrun",
+      "unity",
+      "html5",
+      "browser-native",
       "popular"
-    ]
+    ],
+    "addedAt": "2026-04-27T13:00:00.000Z"
   },
   {
     "id": "clslope2player",
@@ -31210,5 +31220,86 @@
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MTU2NzM2LnBuZw==/original/WhDMoR.png",
     "addedAt": "2026-04-26T17:00:00.000Z"
+  },
+  {
+    "id": "cltreeshateyou",
+    "title": "Trees Hate You (Demo)",
+    "category": "Adventure",
+    "path": "games/cltreeshateyou.html",
+    "description": "Comedic survival-horror demo: walk home from a picnic through a forest where every tree wants to prank, trap, or kill you. Trapped puzzles + slapstick deaths.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1hZ2UvMzY0NDQ2OS8yNDUzMjExNy5wbmc=/347x500/7Ga1WY.png",
+    "tags": [
+      "comedy",
+      "horror",
+      "puzzle",
+      "demo",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native",
+      "added-controls"
+    ],
+    "addedAt": "2026-04-27T13:00:00.000Z"
+  },
+  {
+    "id": "cldeadshotio",
+    "title": "DeadShot.io",
+    "category": "Shooter",
+    "path": "games/cldeadshotio.html",
+    "description": "Fast-paced browser FPS with FFA, Team Deathmatch, and Hardpoint modes. Quake-feel gunplay, instant matchmaking, deep weapon arsenal — no download.",
+    "popular": false,
+    "thumbnail": "https://deadshot.io/promo/thumbnail.png",
+    "tags": [
+      ".io",
+      "fps",
+      "shooter",
+      "multiplayer",
+      "competitive",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T13:00:00.000Z"
+  },
+  {
+    "id": "clbuildroyale",
+    "title": "Build Royale",
+    "category": "Shooter",
+    "path": "games/clbuildroyale.html",
+    "description": "2D top-down battle royale with Fortnite-style building. 50 players, three modes (Solo/Duos/Squads), gather wood/stone/metal and ramp-rush opponents.",
+    "popular": false,
+    "thumbnail": "https://buildroyale.io/buildart/thumbnail.png",
+    "tags": [
+      ".io",
+      "battle-royale",
+      "2d",
+      "shooter",
+      "multiplayer",
+      "building",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T13:00:00.000Z"
+  },
+  {
+    "id": "clsurvivio",
+    "title": "Surviv.io",
+    "category": "Shooter",
+    "path": "games/clsurvivio.html",
+    "description": "Classic 2D top-down battle royale. Open-source community revival (survev.io) of the original surviv.io — same loot grid, smoke grenades, and circle-shrinking endgame.",
+    "popular": false,
+    "thumbnail": "https://upload.wikimedia.org/wikipedia/en/4/4b/Surviv.io_logo.png",
+    "tags": [
+      ".io",
+      "battle-royale",
+      "2d",
+      "shooter",
+      "multiplayer",
+      "looter",
+      "open-source",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T13:00:00.000Z"
   }
 ]
