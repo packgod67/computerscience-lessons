@@ -633,11 +633,31 @@
             recent = recent.filter(e => e && e.gameId !== gameId);
             recent.unshift({ gameId, at: Date.now() });
             if (recent.length > 12) recent = recent.slice(0, 12);
-            const updates = { recentPlays: recent };
+
+            // Cumulative play counter — used for the profile's
+            // "Top games" ranking. Stored as a flat map keyed by
+            // gameId; we'd ideally use Firestore FieldValue.increment
+            // on a nested key, but the dotted-path syntax requires
+            // splitting and is brittle for unsanitized gameIds, so we
+            // do read-modify-write here. recentPlays is already RMW so
+            // the cost overlap is zero.
+            const playCounts = (data.playCounts && typeof data.playCounts === 'object') ? { ...data.playCounts } : {};
+            playCounts[gameId] = (playCounts[gameId] || 0) + 1;
+
+            const updates = { recentPlays: recent, playCounts };
             if (!data.joinedAt) {
                 updates.joinedAt = firebase.firestore.FieldValue.serverTimestamp();
             }
             await ref.set(updates, { merge: true });
+
+            // Notify the rest of the app — achievements module checks
+            // for milestones every time a play is recorded, friends
+            // activity feed picks up the new entry, etc.
+            try {
+                window.dispatchEvent(new CustomEvent('arcade:play-tracked', {
+                    detail: { gameId, count: playCounts[gameId], at: Date.now() }
+                }));
+            } catch {}
         } catch (e) {
             console.error('trackPlay failed:', e);
         }

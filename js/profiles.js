@@ -137,6 +137,23 @@
         const recentGames = recent.map(e => e && gamesIndex[e.gameId]).filter(Boolean);
         const favGames = favs.map(id => gamesIndex[id]).filter(Boolean).slice(0, 8);
 
+        // Top 5 games by play count. playCounts is `{[gameId]: number}` —
+        // see auth.js trackPlay(). Falls back to gracefully-empty when
+        // the field doesn't exist yet (e.g. accounts created before this
+        // shipped).
+        const playCounts = (profile.playCounts && typeof profile.playCounts === 'object')
+            ? profile.playCounts : {};
+        const topByPlays = Object.entries(playCounts)
+            .map(([id, count]) => ({ id, count, game: gamesIndex[id] }))
+            .filter(x => x.game)
+            .sort((a, b) => b.count - a.count)
+            .slice(0, 5);
+
+        // Achievements unlocked by this user. Definitions live in
+        // js/achievements.js — we render badges inline here.
+        const unlocked = Array.isArray(profile.achievements) ? profile.achievements : [];
+        const achievementDefs = (window.ArcadeAchievements?.byIds?.(unlocked)) || [];
+
         const nameStyle = nameColor ? `style="color:${escape(nameColor)}"` : '';
 
         const badgesHTML = (adminBadge || customBadges)
@@ -182,6 +199,40 @@
                         </div>
                     </div>` : ''}
 
+                    ${topByPlays.length ? `<div class="profile-section">
+                        <h3 class="profile-section-title">Top games</h3>
+                        <div class="profile-top-games">
+                            ${topByPlays.map((entry, i) => {
+                                const g = entry.game;
+                                const thumb = g.thumbnail
+                                    ? `<img class="profile-top-thumb" src="${escape(g.thumbnail)}" alt="">`
+                                    : `<div class="profile-top-thumb profile-top-thumb-placeholder">${escape((g.title || '?').charAt(0).toUpperCase())}</div>`;
+                                return `<a class="profile-top-card" href="play.html?game=${encodeURIComponent(g.id)}" title="${escape(g.title)} — ${entry.count} play${entry.count===1?'':'s'}">
+                                    <span class="profile-top-rank">#${i + 1}</span>
+                                    ${thumb}
+                                    <span class="profile-top-title">${escape(g.title || g.id)}</span>
+                                    <span class="profile-top-count">${entry.count} play${entry.count===1?'':'s'}</span>
+                                </a>`;
+                            }).join('')}
+                        </div>
+                    </div>` : ''}
+
+                    ${achievementDefs.length ? `<div class="profile-section">
+                        <h3 class="profile-section-title">Achievements (${achievementDefs.length})</h3>
+                        <div class="profile-achievements">
+                            ${achievementDefs.map(a => `
+                                <div class="profile-ach" title="${escape(a.title)} — ${escape(a.desc)}">
+                                    <span class="profile-ach-icon">${a.icon || '\u{1F3C6}'}</span>
+                                    <span class="profile-ach-name">${escape(a.title)}</span>
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>` : ''}
+
+                    ${(!isSelf && ArcadeAuth.isLoggedIn() && window.ArcadeFriends) ? `<div class="profile-section">
+                        <div id="profileFriendBtnSlot" data-target-uid="${escape(profile.uid)}"></div>
+                    </div>` : ''}
+
                     ${favGames.length ? `<div class="profile-section">
                         <h3 class="profile-section-title">Favorites${favs.length > 8 ? ` (${favs.length})` : ''}</h3>
                         <div class="profile-game-grid">
@@ -190,6 +241,13 @@
                     </div>` : ''}
                 </div>
             </div>`;
+
+        // Render the friend request/accept/remove button into its slot
+        // if friends.js is loaded and we're viewing someone else's profile.
+        const friendSlot = document.getElementById('profileFriendBtnSlot');
+        if (friendSlot && window.ArcadeFriends?.renderFriendButton) {
+            try { window.ArcadeFriends.renderFriendButton(friendSlot, profile.uid); } catch {}
+        }
 
         document.getElementById('closeProfileModal').addEventListener('click', closeModal);
         if (isSelf) {

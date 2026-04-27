@@ -1,0 +1,64 @@
+# Auto-deploy the Cloudflare Worker (workers/groq-proxy.js) on every
+# push to main that touches `workers/**` or `js/touch-overlay.js`.
+#
+# Why touch-overlay too: scripts/embed-touch-overlay.mjs inlines that
+# file into the worker as TOUCH_OVERLAY_SCRIPT. Whenever the source-of-
+# truth touch overlay changes, we re-embed and redeploy together so the
+# worker is never out of sync with the local file.
+#
+# REQUIRED SECRETS (Settings → Secrets and variables → Actions → New repo secret):
+#   CLOUDFLARE_API_TOKEN  — token with "Workers Scripts:Edit" permission
+#                           (create at https://dash.cloudflare.com/profile/api-tokens)
+#   CLOUDFLARE_ACCOUNT_ID — find at the bottom-right of the dashboard
+#
+# Worker name: arcad-groq (matches the *.workers.dev subdomain)
+
+name: Deploy Cloudflare Worker
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'workers/**'
+      - 'js/touch-overlay.js'
+      - 'scripts/embed-touch-overlay.mjs'
+      - '.github/workflows/deploy-worker.yml'
+  # Manual trigger button in the Actions tab — useful when re-deploying
+  # the worker after a manual edit upstream (e.g. you changed config in
+  # the Cloudflare dashboard and want to overwrite back to repo state).
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # Re-run the embed step before deploy so the worker picks up any
+      # touch-overlay.js changes in this commit. Idempotent — if no
+      # changes, it just re-writes the same string constant.
+      - name: Re-embed touch overlay
+        run: node scripts/embed-touch-overlay.mjs
+
+      # Use Wrangler in service-worker mode (our worker uses the modern
+      # `export default { fetch }` syntax, which Wrangler auto-detects).
+      # We don't have a wrangler.toml in the repo, so build one inline
+      # so the deploy step has something to read.
+      - name: Generate wrangler.toml
+        run: |
+          cat > wrangler.toml <<EOF
+          name = "arcad-groq"
+          main = "workers/groq-proxy.js"
+          compatibility_date = "2024-04-01"
+          EOF
+
+      - name: Deploy worker
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: deploy

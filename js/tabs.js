@@ -9,6 +9,7 @@
     const requestsView = document.getElementById('requestsView');
     const banView = document.getElementById('banView');
     const cheatsView = document.getElementById('cheatsView');
+    const friendsView = document.getElementById('friendsView');
 
     const views = {
         games: gamesView,
@@ -16,6 +17,7 @@
         gallery: galleryView,
         chat: chatView,
         messages: messagesView,
+        friends: friendsView,
         saves: savesView,
         requests: requestsView,
         ban: banView,
@@ -30,6 +32,7 @@
     let messagesLoaded = false;
     let savesLoaded = false;
     let requestsLoaded = false;
+    let friendsLoaded = false;
 
     // Add admin-only tabs after auth is ready
     ArcadeAuth.waitForAuth().then(() => {
@@ -100,6 +103,11 @@
         if (tab === 'requests' && !requestsLoaded && window.ArcadeRequests) {
             ArcadeRequests.renderRequestsView();
             requestsLoaded = true;
+        }
+        if (tab === 'friends' && window.ArcadeFriends) {
+            // Always re-render — feed is time-sensitive
+            ArcadeFriends.renderFriendsView();
+            friendsLoaded = true;
         }
     });
 })();

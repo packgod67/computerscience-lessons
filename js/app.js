@@ -53,6 +53,19 @@
         applyFilters();
         renderPage();
 
+        // Universal link handler — `?game=<id>` opens that game's info
+        // modal as if the user had tapped its card. Wired up after the
+        // first paint so the catalog is loaded. Pairs with the Share
+        // button below which generates these URLs.
+        try {
+            const sp = new URLSearchParams(location.search);
+            const linkedId = sp.get('game');
+            if (linkedId) {
+                const g = games.find(x => x.id === linkedId);
+                if (g) showGameInfo(g);
+            }
+        } catch {}
+
         // When admin-managed tags / applications change, re-run filtering
         // so newly-applied custom tags surface immediately for everyone.
         // Also re-renders the tag pills in the categories strip.
@@ -667,7 +680,21 @@
             if (g.title.toLowerCase().includes(query)) {
                 substringMatches.push(g);
             } else {
-                fuzzyCandidates.push(g);
+                // Wider net: surface games whose tags or description
+                // contain the query as substring, BEFORE falling back to
+                // fuzzy. Caught cases:
+                //   "platformer" → tag match for tagged-but-not-named games
+                //   "drift" → matches Need-for-Speed-style description prose
+                //   "boss rush" → matches genre tags + descriptions
+                const tags = effectiveTags(g);
+                const desc = (g.description || '').toLowerCase();
+                if (tags.some(t => t.toLowerCase().includes(query))) {
+                    substringMatches.push(g);
+                } else if (desc.includes(query)) {
+                    substringMatches.push(g);
+                } else {
+                    fuzzyCandidates.push(g);
+                }
             }
         }
 
@@ -676,12 +703,38 @@
         // Second pass: fuzzy fallback ONLY when substring matches are scarce
         // and the query is long enough to be meaningful. Catches typos like
         // "ponemon unbound" or "strret fighter" without flooding normal
-        // queries with noise.
+        // queries with noise. We score against title (primary), tags
+        // (secondary, +1 distance penalty), and description (tertiary, +2
+        // penalty) — typos in titles still rank above tag-fuzzy matches.
         if (query && query.length >= 3 && substringMatches.length < 20) {
             const scored = [];
             for (const g of fuzzyCandidates) {
-                const s = fuzzyScore(g.title, query);
-                if (s !== Infinity) scored.push([s, g]);
+                const titleScore = fuzzyScore(g.title, query);
+                if (titleScore !== Infinity) {
+                    scored.push([titleScore, g]);
+                    continue;
+                }
+                // Try fuzzy match against tags (cheap — most are short).
+                const tags = effectiveTags(g);
+                let tagBest = Infinity;
+                for (const t of tags) {
+                    const s = fuzzyScore(t, query);
+                    if (s < tagBest) tagBest = s;
+                }
+                if (tagBest !== Infinity) {
+                    scored.push([tagBest + 1, g]);
+                    continue;
+                }
+                // Last: fuzzy each word in the description.
+                const descWords = (g.description || '').toLowerCase().split(/\s+/);
+                let descBest = Infinity;
+                for (const w of descWords) {
+                    if (w.length < 4) continue;
+                    const s = fuzzyScore(w, query);
+                    if (s < descBest) descBest = s;
+                    if (descBest === 0) break;
+                }
+                if (descBest !== Infinity) scored.push([descBest + 2, g]);
             }
             // Sort by lowest distance, take up to 20 fuzzy matches
             scored.sort((a, b) => a[0] - b[0]);
@@ -1262,6 +1315,8 @@
                 <a class="game-info-play" href="play.html?game=${encodeURIComponent(g.id)}">Play Now</a>
                 ${offlineBtn}
                 ${coopBtn}
+                <button class="game-info-share-btn" id="gameInfoShareBtn" title="Share a deep link to this game">&#128279; Share</button>
+                <div class="game-info-comments-mount" id="gameInfoComments" data-game-id="${esc(g.id)}"></div>
                 ${recsHtml}
             </div>`;
 
@@ -1360,6 +1415,47 @@
                     offlineButton.disabled = false;
                 }
             });
+        }
+
+        // Share button — produces a deep link `?game=<id>` and either
+        // opens the native share sheet (mobile) or copies to clipboard
+        // (desktop). The receiving end auto-opens this same modal via
+        // the universal-link handler in init().
+        const shareBtn = overlay.querySelector('#gameInfoShareBtn');
+        if (shareBtn) {
+            shareBtn.addEventListener('click', async () => {
+                const base = location.origin + location.pathname.replace(/[^/]*$/, '');
+                const url = base + '?game=' + encodeURIComponent(g.id);
+                const shareData = { title: g.title, text: g.title + ' — Arcade', url };
+                if (navigator.share) {
+                    try { await navigator.share(shareData); } catch {}
+                } else if (navigator.clipboard) {
+                    try {
+                        await navigator.clipboard.writeText(url);
+                        const orig = shareBtn.innerHTML;
+                        shareBtn.innerHTML = '&#10003; Link copied';
+                        setTimeout(() => { shareBtn.innerHTML = orig; }, 1500);
+                    } catch {
+                        prompt('Copy this URL:', url);
+                    }
+                } else {
+                    prompt('Copy this URL:', url);
+                }
+            });
+        }
+
+        // Mount the comments thread (if the comments module is loaded).
+        // Lazy — loadScript on first open avoids cold-page parse cost
+        // for users who never open a game info modal.
+        const commentsMount = overlay.querySelector('#gameInfoComments');
+        if (commentsMount && window.ArcadeAuth?.isLoggedIn?.()) {
+            (async function () {
+                if (!window.ArcadeComments && window.ArcadeLazyLoad) {
+                    try { await ArcadeLazyLoad.loadScript('js/comments.js'); }
+                    catch { return; }
+                }
+                window.ArcadeComments?.mount?.(commentsMount, g);
+            })();
         }
 
         // Rec card click → open the recommended game's info modal in place
@@ -1606,4 +1702,14 @@
 
     buildPartNav();
     init();
+
+    // Expose a tiny public API so other modules (universal links,
+    // friends activity feed, achievements, comments) can open a
+    // game info modal or look up a game by id without re-fetching
+    // games.json.
+    window.ArcadeApp = {
+        showGameInfo: (g) => showGameInfo(g),
+        getGameById,
+        getGames: () => games,
+    };
 })();
