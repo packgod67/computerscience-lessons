@@ -20297,9 +20297,25 @@
   },
   {
     "id": "clslipways",
-    "title": "Clslipways",
-    "category": "Other",
-    "path": "games/clslipways.html"
+    "title": "Slipways Classic",
+    "category": "Strategy",
+    "path": "games/clslipways.html",
+    "description": "PICO-8 demake of Slipways: build trade routes between planets, balance supply chains, score points before time runs out. Tight 3-minute strategy puzzles in pixel art.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1hZ2UvMjM2ODQ1LzExMjY3MjUuZ2lm/original/PmfS0j.gif",
+    "tags": [
+      "strategy",
+      "puzzle",
+      "trade-routes",
+      "supply-chain",
+      "pico-8",
+      "demake",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T16:00:00.000Z"
   },
   {
     "id": "clslitherio",
@@ -31514,6 +31530,137 @@
       "added-controls"
     ],
     "addedAt": "2026-04-27T15:00:00.000Z"
+  },
+  {
+    "id": "clstickbit",
+    "title": "STICKBIT (Demo)",
+    "category": "Shooter",
+    "path": "games/clstickbit.html",
+    "description": "Shooter / tower-defense roguelite hybrid with explosive feedback. Stick-figure aesthetic, escalating waves, build runs around weapon synergies. Newgrounds HTML5 demo.",
+    "popular": false,
+    "thumbnail": "https://picon.ngfiles.com/1029000/flash_1029190_card_fallback.jpg",
+    "tags": [
+      "shooter",
+      "tower-defense",
+      "roguelite",
+      "run-based",
+      "demo",
+      "newgrounds",
+      "indie",
+      "html5",
+      "browser-native",
+      "added-controls"
+    ],
+    "addedAt": "2026-04-27T16:00:00.000Z"
+  },
+  {
+    "id": "clkillbunny",
+    "title": "Kill Bunny",
+    "category": "Action",
+    "path": "games/clkillbunny.html",
+    "description": "Isometric hack-and-slash with rage-game elements: punishing combat, slap-stick deaths, satisfying impact. Newgrounds HTML5 indie release.",
+    "popular": false,
+    "thumbnail": "https://picon.ngfiles.com/1026000/flash_1026292_card_fallback.jpg",
+    "tags": [
+      "action",
+      "hack-and-slash",
+      "isometric",
+      "rage",
+      "indie",
+      "newgrounds",
+      "html5",
+      "browser-native",
+      "added-controls"
+    ],
+    "addedAt": "2026-04-27T16:00:00.000Z"
+  },
+  {
+    "id": "clsixseventhegame",
+    "title": "Six Seven the Game",
+    "category": "Other",
+    "path": "games/clsixseventhegame.html",
+    "description": "Newgrounds Flash game tagged 'better than Friday Night Funkin' by its creator. Rhythm-style chaos that runs in Ruffle on the arcade.",
+    "popular": false,
+    "thumbnail": "https://picon.ngfiles.com/1029000/flash_1029037_card_fallback.jpg",
+    "tags": [
+      "rhythm",
+      "music",
+      "meme",
+      "flash",
+      "ruffle",
+      "newgrounds",
+      "as3",
+      "indie",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T16:00:00.000Z"
+  },
+  {
+    "id": "clfishguysgameshow",
+    "title": "Fishguy's Game Show",
+    "category": "Horror",
+    "path": "games/clfishguysgameshow.html",
+    "description": "FNaF-flavored item-management horror about strategy and resource control. Newgrounds Flash, Ruffle-emulated in-browser.",
+    "popular": false,
+    "thumbnail": "https://picon.ngfiles.com/1028000/flash_1028822_card_fallback.jpg",
+    "tags": [
+      "horror",
+      "fnaf-like",
+      "strategy",
+      "item-management",
+      "flash",
+      "ruffle",
+      "newgrounds",
+      "as3",
+      "indie",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T16:00:00.000Z"
+  },
+  {
+    "id": "cldeepspaceobservatory",
+    "title": "Deep Space Observatory",
+    "category": "Simulation",
+    "path": "games/cldeepspaceobservatory.html",
+    "description": "Atmospheric incremental/idle game about deep-space exploration. Discover stellar phenomena, expand your observatory's reach, watch numbers grow at the speed of light.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1nLzI2ODgzMTI2LnBuZw==/original/TgdMJK.png",
+    "tags": [
+      "incremental",
+      "idle",
+      "space",
+      "exploration",
+      "simulation",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native",
+      "added-controls"
+    ],
+    "addedAt": "2026-04-27T16:00:00.000Z"
+  },
+  {
+    "id": "clastroprospector",
+    "title": "Astro Prospector",
+    "category": "Action",
+    "path": "games/clastroprospector.html",
+    "description": "Asteroid-mining bullet-heaven: chip rocks, dodge debris, upgrade your prospector ship between runs. Punchy controls, fast loops, leaderboard.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1nLzIwMzY0OTUzLnBuZw==/original/IAfYuw.png",
+    "tags": [
+      "bullet-heaven",
+      "action",
+      "mining",
+      "space",
+      "run-based",
+      "auto-attacker",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native",
+      "added-controls"
+    ],
+    "addedAt": "2026-04-27T16:00:00.000Z"
   },
   {
     "id": "cldogman95",
