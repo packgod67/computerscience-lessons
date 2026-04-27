@@ -534,7 +534,16 @@
             bulkBtn.type = 'button';
             bulkBtn.title = 'Bulk-add games via LLM research';
             bulkBtn.innerHTML = '&#128190; Bulk Add';
-            bulkBtn.addEventListener('click', () => {
+            bulkBtn.addEventListener('click', async () => {
+                // Mobile lazy-loads admin scripts on first click. Desktop
+                // pre-loads them in index.html, so loadScript just resolves
+                // the cached promise immediately.
+                if (window.ArcadeLazyLoad && !window.ArcadeBulkAdd) {
+                    bulkBtn.disabled = true;
+                    try { await window.ArcadeLazyLoad.loadScript('js/bulkadd.js'); }
+                    catch (e) { alert('Failed to load Bulk Add: ' + e.message); bulkBtn.disabled = false; return; }
+                    bulkBtn.disabled = false;
+                }
                 window.ArcadeBulkAdd?.showBulkAddModal?.();
             });
             countEl.parentNode.insertBefore(bulkBtn, countEl);
@@ -550,7 +559,13 @@
             editBtn.type = 'button';
             editBtn.title = 'Edit existing catalog entries';
             editBtn.innerHTML = '&#9998; Edit Catalog';
-            editBtn.addEventListener('click', () => {
+            editBtn.addEventListener('click', async () => {
+                if (window.ArcadeLazyLoad && !window.ArcadeCatalogAdmin) {
+                    editBtn.disabled = true;
+                    try { await window.ArcadeLazyLoad.loadScript('js/catalogadmin.js'); }
+                    catch (e) { alert('Failed to load Catalog Admin: ' + e.message); editBtn.disabled = false; return; }
+                    editBtn.disabled = false;
+                }
                 window.ArcadeCatalogAdmin?.showCatalogAdminModal?.();
             });
             countEl.parentNode.insertBefore(editBtn, countEl);

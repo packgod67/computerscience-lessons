@@ -139,12 +139,32 @@
     <script src="js/chatbot.js"></script>
     <script src="js/messages.js"></script>
     <script src="js/admintags.js"></script>
-    <script src="js/bulkadd.js"></script>
-    <script src="js/catalogadmin.js"></script>
+    <script src="js/lazyload.js"></script>
     <script src="js/offlinepack.js"></script>
     <script src="js/coop.js"></script>
     <script src="js/install.js"></script>
     <script src="js/app.js"></script>
+
+    <!-- MOBILE-ONLY lazy-load for admin tooling. Bulk-add + catalog
+         admin are only useful to admins (~5% of mobile users); loading
+         them eagerly burns parse time most users don't benefit from.
+         Desktop keeps eager loading for snappy click→modal UX. -->
+    <script>
+    (function () {
+        var isMobile = window.matchMedia('(max-width: 768px)').matches;
+        var adminOnly = ['js/bulkadd.js', 'js/catalogadmin.js'];
+        if (!isMobile) {
+            for (var i = 0; i < adminOnly.length; i++) {
+                var s = document.createElement('script');
+                s.src = adminOnly[i];
+                s.async = false;
+                document.head.appendChild(s);
+            }
+        }
+        // Mobile: app.js admin button handlers call
+        // window.ArcadeLazyLoad.loadScript('js/bulkadd.js') on click.
+    })();
+    </script>
     <script src="js/users.js"></script>
     <script src="js/gallery.js"></script>
     <script src="js/emojis.js"></script>

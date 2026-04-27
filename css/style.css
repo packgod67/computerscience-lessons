@@ -7867,19 +7867,43 @@ body.theme-transitioning * {
 .game-card {
     content-visibility: auto;
     contain-intrinsic-size: 240px 200px;
-    will-change: transform;
 }
-
-/* Modal overlay animations need GPU acceleration */
-.modal-overlay,
-.game-info-overlay {
-    will-change: opacity;
-}
-
-/* Recommendation cards animate on hover */
 .game-info-rec {
     content-visibility: auto;
     contain-intrinsic-size: 110px 130px;
+}
+/* DESKTOP ONLY: promote cards to GPU layers on hover for smooth
+   transform animations. On mobile there's no hover and weak GPUs
+   can't afford the layer-promotion overhead, so we skip will-change
+   entirely on mobile (gated below). */
+@media (hover: hover) and (pointer: fine) {
+    .game-card:hover { will-change: transform; }
+    .game-info-rec:hover { will-change: transform; }
+}
+
+/* MOBILE-ONLY perf shortcuts:
+   1. Disable backdrop-filter — GPU-blur is expensive on weak Android
+      GPUs and many browsers fall back to software rendering. Replace
+      with darker semi-transparent backgrounds so modal text stays
+      legible.
+   2. Disable will-change implicitly (no @media (hover:hover) match
+      means the hover-only rules above never fire on mobile).
+   3. Reduce-motion check provides an extra opt-out for users who
+      explicitly want it disabled regardless of device. */
+@media (max-width: 768px), (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        -webkit-backdrop-filter: none !important;
+        backdrop-filter: none !important;
+    }
+    .modal-overlay { background: rgba(0, 0, 0, 0.85); }
+    .ios-install-banner-inner { background: rgba(20, 20, 30, 0.98); }
+}
+/* Belt + suspenders: extra OS-level reduced-motion handling */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
 }
 
 /* =========================================================================
