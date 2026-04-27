@@ -75,8 +75,17 @@
             // Can't determine size, load normally
         }
 
-        // Large games — offer new tab (better performance) or iframe
-        if (sizeMB > LARGE_SIZE_MB && !forceLoad) {
+        // Large games — offer new tab (better performance) or iframe.
+        // The size check only works for self-hosted wrapper files, which
+        // are tiny (a few hundred bytes) for iframed games — the actual
+        // game payload lives at a remote URL we can't sniff. So we ALSO
+        // honor an explicit `heavy: true` flag in games.json for known
+        // big WebGL/Unity/Godot builds that hang Chrome's main thread
+        // during WASM compile and trigger "Page Unresponsive". The flag
+        // is what the user sees as a "this game's heavy, open in new
+        // tab for best results" prompt instead of the unresponsive
+        // dialog.
+        if (!forceLoad && (sizeMB > LARGE_SIZE_MB || game.heavy === true)) {
             showLargeGamePrompt(game, sizeMB, gameId);
             return;
         }
@@ -87,7 +96,11 @@
     function showLargeGamePrompt(game, sizeMB, gameId) {
         gameLoading.style.display = 'none';
         gameError.style.display = 'flex';
-        errorDetail.textContent = `This game is ${sizeMB.toFixed(0)}MB. Large games run better in a new tab.`;
+        if (game.heavy === true && sizeMB <= LARGE_SIZE_MB) {
+            errorDetail.textContent = 'This game uses a heavy WebGL build that can hang the iframe during load. Opening it in a new tab gives it its own renderer process and avoids the "Page Unresponsive" prompt.';
+        } else {
+            errorDetail.textContent = `This game is ${sizeMB.toFixed(0)}MB. Large games run better in a new tab.`;
+        }
 
         const actions = gameError.querySelector('.error-actions');
         actions.innerHTML = '';

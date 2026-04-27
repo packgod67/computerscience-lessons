@@ -30468,6 +30468,7 @@
     "path": "games/cloverengineered.html",
     "description": "Block-based vehicle builder — assemble engines, blocks and wheels, then drive your contraption around to test it.",
     "popular": false,
+    "heavy": true,
     "rom": null,
     "tags": [
       "vehicle-builder",
