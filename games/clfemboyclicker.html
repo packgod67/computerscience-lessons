@@ -9,6 +9,10 @@
 </style>
 </head>
 <body>
-<iframe src="https://html.itch.zone/html/16262646/FemboyClicker%20V0.2/index.html" allow="autoplay; gamepad *; fullscreen"></iframe>
+<!-- Worker proxy bypasses itch hotlink protection: itch normally redirects
+     iframes from foreign origins to itch.io/embed-hotlink/<id>. The proxy
+     fetches the HTML server-side, strips static.itch.io/htmlgame.js (the
+     hotlink-check script), and rewrites relative URLs back through itself. -->
+<iframe src="https://arcad-groq.gatabanumai.workers.dev/itch/16262646/FemboyClicker%20V0.2/index.html" allow="autoplay; gamepad *; fullscreen"></iframe>
 </body>
 </html>

@@ -20,3 +20,14 @@
   Cross-Origin-Embedder-Policy: require-corp
   Content-Type: application/wasm
   Cache-Control: public, max-age=31536000, immutable
+
+# Pin the PWA manifest to the spec-correct MIME type. Without this, some
+# hosts fall back to application/json or octet-stream, which on Android
+# routes the file to the system intent chooser — Google Wallet registers
+# for generic JSON content and ends up listed as "Open with…", confusing
+# users into thinking the install is broken. Chrome's PWA detection also
+# sometimes silently fails to fire beforeinstallprompt when the MIME is
+# wrong.
+/manifest.webmanifest
+  Content-Type: application/manifest+json
+  Cache-Control: public, max-age=3600

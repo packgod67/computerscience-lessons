@@ -316,9 +316,18 @@
             const title = document.getElementById('requestTitle').value.trim().slice(0, 200);
             const details = document.getElementById('requestDetails').value.trim().slice(0, 2000);
             const kind = document.getElementById('requestKind').value;
-            if (!title) { alert('Title required'); return; }
+            if (!title) { showError('Title is required.'); return; }
             const user = ArcadeAuth.getUser();
-            if (!user) return;
+            if (!user) { showError('You must be logged in to submit a request.'); return; }
+
+            // authorName must be a real string for Firestore — undefined would
+            // trigger a client-side schema error before the network call.
+            const authorName = ArcadeAuth.getUsername() || (user.email || 'unknown').split('@')[0];
+
+            const saveBtn = document.getElementById('requestSaveBtn');
+            saveBtn.disabled = true;
+            saveBtn.textContent = existing ? 'Saving…' : 'Submitting…';
+
             try {
                 if (existing) {
                     await getDb().collection('requests').doc(existing.id).update({
@@ -330,14 +339,70 @@
                         status: 'open',
                         statusNote: '',
                         authorUid: user.uid,
-                        authorName: ArcadeAuth.getUsername(),
+                        authorName,
                         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                         upvotes: [user.uid],  // author auto-upvotes their own request
                     });
                 }
                 close();
-            } catch (e) { alert('Submit failed: ' + e.message); }
+            } catch (e) {
+                saveBtn.disabled = false;
+                saveBtn.textContent = existing ? 'Save' : 'Submit';
+                handleWriteError(e, !!existing);
+            }
         });
+
+        // Inline error banner inside the modal (replaces alert() — alerts get
+        // suppressed in some PWA standalone modes, and don't surface enough
+        // info to debug Firestore rule failures).
+        function showError(msg, opts) {
+            opts = opts || {};
+            let bar = document.getElementById('requestErrorBar');
+            if (!bar) {
+                bar = document.createElement('div');
+                bar.id = 'requestErrorBar';
+                bar.style.cssText = 'background:rgba(239,68,68,0.15);border:1px solid rgba(239,68,68,0.5);color:#fecaca;padding:10px 12px;border-radius:8px;margin:0 0 12px;font-size:13px;line-height:1.4;white-space:pre-wrap;word-break:break-word;';
+                const actionsEl = overlay.querySelector('.request-modal-actions');
+                if (actionsEl) actionsEl.parentNode.insertBefore(bar, actionsEl);
+            }
+            bar.textContent = msg;
+            if (opts.html) bar.innerHTML = msg;
+        }
+
+        function handleWriteError(e, isUpdate) {
+            const code = e && e.code ? e.code : '';
+            const msg = e && e.message ? e.message : String(e);
+            if (code === 'permission-denied' || /permission/i.test(msg)) {
+                // Most common cause: Firestore rule for /requests/{id} hasn't
+                // been deployed (or was deployed without create permission for
+                // regular users). Surface the exact rule to paste into Firebase
+                // Console → Firestore → Rules.
+                const rule = [
+                    'match /requests/{id} {',
+                    '  allow read: if request.auth != null;',
+                    '  allow create: if request.auth != null',
+                    '    && request.resource.data.authorUid == request.auth.uid',
+                    "    && request.resource.data.status == 'open';",
+                    '  allow update: if request.auth != null && (',
+                    '    (resource.data.authorUid == request.auth.uid)',
+                    '    || (request.auth.uid in request.resource.data.upvotes)',
+                    '    || (request.auth.uid in resource.data.upvotes)',
+                    "    || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin'",
+                    '  );',
+                    '  allow delete: if request.auth != null',
+                    '    && (resource.data.authorUid == request.auth.uid',
+                    "      || get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');",
+                    '}',
+                ].join('\n');
+                showError(
+                    'Permission denied (' + (code || 'no code') + ').\n\n' +
+                    'Your Firestore rules for /requests are missing or too strict. Paste this into Firebase Console → Firestore Database → Rules:\n\n' +
+                    rule
+                );
+                return;
+            }
+            showError((isUpdate ? 'Update' : 'Submit') + ' failed: ' + msg + (code ? ' [' + code + ']' : ''));
+        }
     }
 
     window.ArcadeRequests = {

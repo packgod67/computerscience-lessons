@@ -179,6 +179,14 @@ Deno.serve(async (req: Request) => {
         }
     }
 
+    // Pin the PWA manifest MIME so Android Chrome treats it as installable
+    // metadata instead of routing it through the OS intent chooser (which
+    // surfaces Google Wallet as a "save passes" handler for generic JSON
+    // content and breaks the install flow).
+    if (url.pathname === "/manifest.webmanifest") {
+        headers.set("Content-Type", "application/manifest+json");
+    }
+
     return new Response(response.body, {
         status: response.status,
         statusText: response.statusText,
