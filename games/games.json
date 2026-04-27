@@ -597,7 +597,8 @@
     "path": "games/clairlinetycoonidle.html",
     "thumbnail": "assets/thumbnails/clairlinetycoonidle.jpg",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -864,7 +865,8 @@
     "path": "games/clantarttycoon.html",
     "thumbnail": "assets/thumbnails/clantarttycoon.jpg",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -1861,7 +1863,8 @@
     "tags": [
       "life-sim",
       "popular",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -1873,7 +1876,8 @@
     "tags": [
       "life-sim",
       "popular",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -2055,7 +2059,8 @@
     "tags": [
       "popular",
       "strategy",
-      "tower-defense"
+      "tower-defense",
+      "mobile"
     ]
   },
   {
@@ -2105,7 +2110,8 @@
       "escape",
       "popular",
       "strategy",
-      "tower-defense"
+      "tower-defense",
+      "mobile"
     ]
   },
   {
@@ -2117,7 +2123,8 @@
     "tags": [
       "popular",
       "strategy",
-      "tower-defense"
+      "tower-defense",
+      "mobile"
     ]
   },
   {
@@ -2129,7 +2136,8 @@
     "tags": [
       "popular",
       "strategy",
-      "tower-defense"
+      "tower-defense",
+      "mobile"
     ]
   },
   {
@@ -2141,7 +2149,8 @@
     "tags": [
       "popular",
       "strategy",
-      "tower-defense"
+      "tower-defense",
+      "mobile"
     ]
   },
   {
@@ -2153,7 +2162,8 @@
     "tags": [
       "popular",
       "strategy",
-      "tower-defense"
+      "tower-defense",
+      "mobile"
     ]
   },
   {
@@ -2165,7 +2175,8 @@
     "tags": [
       "popular",
       "strategy",
-      "tower-defense"
+      "tower-defense",
+      "mobile"
     ]
   },
   {
@@ -2175,7 +2186,8 @@
     "path": "games/clbloonsTD6scratch.html",
     "tags": [
       "strategy",
-      "tower-defense"
+      "tower-defense",
+      "mobile"
     ]
   },
   {
@@ -2235,7 +2247,8 @@
     "category": "Simulation",
     "path": "games/clbobasimulator.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -2504,7 +2517,8 @@
     "path": "games/clBTD1.html",
     "tags": [
       "strategy",
-      "tower-defense"
+      "tower-defense",
+      "mobile"
     ]
   },
   {
@@ -2818,7 +2832,8 @@
     "path": "games/clcapybaraclicker.html",
     "thumbnail": "assets/thumbnails/clcapybaraclicker.jpg",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -3624,7 +3639,8 @@
     "tags": [
       "clicker",
       "idle",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -3638,7 +3654,8 @@
       "clicker",
       "idle",
       "popular",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -3651,7 +3668,8 @@
       "clicker",
       "idle",
       "popular",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -3665,7 +3683,8 @@
       "clicker",
       "idle",
       "popular",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -4068,7 +4087,8 @@
     "category": "Simulation",
     "path": "games/clcsgoclicker.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -4193,7 +4213,8 @@
     "category": "Simulation",
     "path": "games/cldandysworldclicker.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -5841,7 +5862,8 @@
     "popular": true,
     "tags": [
       "popular",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -8514,7 +8536,8 @@
     "category": "Simulation",
     "path": "games/clgrandactionsimulator-ny.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -8936,7 +8959,8 @@
     "tags": [
       "hacking",
       "simulation",
-      "typing"
+      "typing",
+      "mobile"
     ]
   },
   {
@@ -9042,7 +9066,8 @@
     "category": "Simulation",
     "path": "games/clhardwaretycoon.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -9520,7 +9545,8 @@
     "popular": true,
     "tags": [
       "popular",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -9529,7 +9555,8 @@
     "category": "Simulation",
     "path": "games/clidledice.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -9547,7 +9574,8 @@
     "category": "Simulation",
     "path": "games/clidleidlegamedev.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -9556,7 +9584,8 @@
     "category": "Simulation",
     "path": "games/clidleminertycoon.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -9565,7 +9594,8 @@
     "category": "Simulation",
     "path": "games/clidleminorzamnshes12.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -9577,7 +9607,8 @@
     "tags": [
       "clicker",
       "idle",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -10477,7 +10508,8 @@
     "category": "Simulation",
     "path": "games/cllearntoflyidle.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -10486,7 +10518,8 @@
     "category": "Simulation",
     "path": "games/cllearntoflyidlehack.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -11185,7 +11218,8 @@
     "path": "games/clmagetoweridle.html",
     "tags": [
       "fantasy",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -13905,7 +13939,8 @@
     "category": "Simulation",
     "path": "games/clomeganuggetclicker.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -14333,7 +14368,8 @@
     "popular": true,
     "tags": [
       "popular",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -14580,7 +14616,8 @@
       "clicker",
       "idle",
       "simulation",
-      "tycoon"
+      "tycoon",
+      "mobile"
     ]
   },
   {
@@ -17829,7 +17866,8 @@
     "path": "games/clportaldefendersTD.html",
     "tags": [
       "strategy",
-      "tower-defense"
+      "tower-defense",
+      "mobile"
     ]
   },
   {
@@ -17925,7 +17963,8 @@
     "category": "Simulation",
     "path": "games/clprocessortycoon.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -18533,7 +18572,8 @@
     "category": "Simulation",
     "path": "games/clrevolutionidle.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -18869,7 +18909,8 @@
     "category": "Simulation",
     "path": "games/clroomclicker.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -19002,7 +19043,8 @@
     "path": "games/clsandgame.html",
     "description": "Falling-sand particle playground. Draw sand, water, fire, and watch chaos unfold.",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -20266,7 +20308,8 @@
     "category": "Simulation",
     "path": "games/clsodasimulator.html",
     "tags": [
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -20327,7 +20370,8 @@
     "category": "Other",
     "path": "games/clsolitaire.html",
     "tags": [
-      "card-game"
+      "card-game",
+      "mobile"
     ]
   },
   {
@@ -21182,7 +21226,8 @@
     "tags": [
       "sci-fi",
       "simulation",
-      "space"
+      "space",
+      "mobile"
     ]
   },
   {
@@ -24114,7 +24159,8 @@
     "popular": true,
     "tags": [
       "popular",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -25481,7 +25527,8 @@
     "popular": true,
     "tags": [
       "popular",
-      "simulation"
+      "simulation",
+      "mobile"
     ]
   },
   {
@@ -27381,7 +27428,8 @@
       "permadeath",
       "run-based",
       "meta-progression",
-      "pixel-art"
+      "pixel-art",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzE2Mjc3NjU5LnBuZw==/original/iMrhNk.png",
     "addedAt": "2026-04-26T11:28:44.661Z"
@@ -27897,7 +27945,8 @@
       "short",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzEzODg4OTc4LnBuZw==/original/yosMR4.png",
     "addedAt": "2026-04-26T12:00:00.000Z"
@@ -27918,7 +27967,8 @@
       "arcade",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0NzYwNTgucG5n/original/IcZXmj.png",
     "addedAt": "2026-04-26T12:00:00.000Z"
@@ -28003,7 +28053,8 @@
       "meta-progression",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzE5NDg3OTk2LnBuZw==/original/axbMzw.png",
     "addedAt": "2026-04-26T12:30:00.000Z"
@@ -28024,7 +28075,8 @@
       "horror-comedy",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzEyOTMzNDY5LnBuZw==/original/vRux6S.png",
     "addedAt": "2026-04-26T12:30:00.000Z"
@@ -28045,7 +28097,8 @@
       "indie",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0NTczNzc4LnBuZw==/original/r8vU7J.png",
     "addedAt": "2026-04-26T12:30:00.000Z"
@@ -28108,7 +28161,8 @@
       "sequel",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzEyOTMzNzczLnBuZw==/original/x2XsqJ.png",
     "addedAt": "2026-04-26T12:30:00.000Z"
@@ -28131,7 +28185,8 @@
       "text-based",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzczNDA4MzMucG5n/original/IfkMsu.png",
     "addedAt": "2026-04-26T12:30:00.000Z"
@@ -28547,7 +28602,8 @@
       "parody",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzEzNDY5NzExLnBuZw==/original/27rwIV.png",
     "addedAt": "2026-04-26T13:10:00.000Z"
@@ -28568,7 +28624,8 @@
       "casual",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzk0NDgyNTcuanBn/original/UD4zC%2B.jpg",
     "addedAt": "2026-04-26T13:10:00.000Z"
@@ -28882,7 +28939,8 @@
       "joke-game",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2ODc0MTAxLnBuZw==/original/%2By2Lhi.png",
     "addedAt": "2026-04-26T13:30:00.000Z"
@@ -28950,7 +29008,8 @@
       "shitpost",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI0ODA5NTQyLnBuZw==/original/ZAP5y9.png",
     "addedAt": "2026-04-26T13:30:00.000Z"
@@ -29313,7 +29372,8 @@
       "comedy",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzg0NjA5NTcucG5n/original/JQtG8n.png",
     "addedAt": "2026-04-26T14:15:00.000Z"
@@ -29512,7 +29572,8 @@
       "simulation",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzIzMDgyNzM3LnBuZw==/original/ytb1g4.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
@@ -29533,7 +29594,8 @@
       "circuits",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2ODI3NDg1LnBuZw==/original/fGoJIE.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
@@ -29575,7 +29637,8 @@
       "exploration",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzQxOTIxOTAucG5n/original/zy5BoD.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
@@ -29597,7 +29660,8 @@
       "simulation",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI1NDEwOTIxLnBuZw==/original/UoagZr.png",
     "addedAt": "2026-04-26T14:30:00.000Z"
@@ -29713,7 +29777,8 @@
       "strategy",
       "browser-native",
       "html5",
-      "itch"
+      "itch",
+      "mobile"
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2MTk2NjUwLnBuZw==/original/8INXax.png",
     "addedAt": "2026-04-26T15:15:00.000Z"

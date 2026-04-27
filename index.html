@@ -25,6 +25,22 @@
     <link rel="apple-touch-icon" href="assets/logo.png">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/logo.png">
     <link rel="stylesheet" href="css/style.css">
+
+    <!-- Resource hints — open connections to the hosts the arcade uses
+         most so the actual fetches start sooner. preconnect opens a
+         TCP+TLS handshake immediately; dns-prefetch only resolves DNS
+         (cheaper, fallback for older browsers). -->
+    <link rel="preconnect" href="https://www.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+    <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
+    <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
+    <link rel="dns-prefetch" href="https://html-classic.itch.zone">
+    <link rel="dns-prefetch" href="https://arcad-groq.gatabanumai.workers.dev">
+
+    <!-- Preload the catalog — biggest single asset on first paint, gets
+         requested by app.js right after script eval. Telling the browser
+         early shaves ~100-300ms off Time-to-Interactive. -->
+    <link rel="preload" href="games/games.json" as="fetch" crossorigin>
 </head>
 <body>
     <header class="header">

@@ -7850,6 +7850,39 @@ body.theme-transitioning * {
 .patchnote-image:hover { opacity: 0.95; }
 
 /* =========================================================================
+   PERFORMANCE — render hints for the GPU + offscreen-skipping
+   =========================================================================
+   - content-visibility: auto on game cards lets the browser SKIP layout
+     and paint for cards that aren't in the viewport. With ~3000 cards
+     in the catalog, this is a massive win on initial render and scroll
+     performance — Chrome and Firefox both honor it. The contain-intrinsic-
+     size hint stops the scrollbar from jumping when offscreen cards
+     "appear" (without it the browser doesn't know how tall offscreen
+     cards are until they render).
+   - will-change tells the GPU to promote elements that animate on hover
+     to their own composite layer ahead of time, avoiding paint jank on
+     the first hover. Cheap to apply, low memory cost on a few elements.
+   ========================================================================= */
+
+.game-card {
+    content-visibility: auto;
+    contain-intrinsic-size: 240px 200px;
+    will-change: transform;
+}
+
+/* Modal overlay animations need GPU acceleration */
+.modal-overlay,
+.game-info-overlay {
+    will-change: opacity;
+}
+
+/* Recommendation cards animate on hover */
+.game-info-rec {
+    content-visibility: auto;
+    contain-intrinsic-size: 110px 130px;
+}
+
+/* =========================================================================
    MOBILE PASS — installable-PWA polish + touch UX improvements
    =========================================================================
    Goals:
