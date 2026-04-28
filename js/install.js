@@ -175,10 +175,33 @@
             card.appendChild(f);
         }
 
+        // Two-button row: "More install options" links to install.html
+        // (full guide, including the APK / sideload path), "Got it"
+        // dismisses the modal.
+        const btnRow = document.createElement('div');
+        Object.assign(btnRow.style, { display: 'flex', gap: '8px' });
+
+        const moreLink = document.createElement('a');
+        moreLink.textContent = 'More options';
+        moreLink.href = 'install.html';
+        Object.assign(moreLink.style, {
+            flex: '1',
+            padding: '12px 16px',
+            borderRadius: '8px',
+            background: 'rgba(255,255,255,0.06)',
+            color: 'var(--text-primary, #fff)',
+            border: '1px solid rgba(255,255,255,0.15)',
+            fontWeight: '600',
+            fontSize: '14px',
+            cursor: 'pointer',
+            textDecoration: 'none',
+            textAlign: 'center',
+        });
+
         const closeBtn = document.createElement('button');
         closeBtn.textContent = 'Got it';
         Object.assign(closeBtn.style, {
-            width: '100%',
+            flex: '1',
             padding: '12px 16px',
             borderRadius: '8px',
             background: 'var(--accent, #7c3aed)',
@@ -189,7 +212,10 @@
             cursor: 'pointer',
         });
         closeBtn.addEventListener('click', () => overlay.remove());
-        card.appendChild(closeBtn);
+
+        btnRow.appendChild(moreLink);
+        btnRow.appendChild(closeBtn);
+        card.appendChild(btnRow);
 
         overlay.appendChild(card);
         overlay.addEventListener('click', (e) => {
@@ -282,10 +308,54 @@
         });
     }
 
+    // ─── First-visit install nag (mobile only) ───────────────────────
+    // Big, hard-to-miss banner at the bottom of the screen the first
+    // time a mobile user visits. Says "get the app" with a tap-to-
+    // install CTA. Dismissible (stored in localStorage).
+    const NAG_DISMISSED_KEY = 'arcade-install-nag-dismissed';
+    const NAG_VIEWS_KEY = 'arcade-install-nag-views';
+    function maybeShowMobileNag() {
+        if (isStandalone()) return;
+        if (localStorage.getItem(NAG_DISMISSED_KEY)) return;
+        if (!window.matchMedia('(max-width: 900px)').matches) return; // mobile-ish only
+
+        // Wait until the user has spent a few seconds on the page before
+        // showing the nag — feels less spammy than firing on first paint.
+        const views = parseInt(localStorage.getItem(NAG_VIEWS_KEY) || '0', 10) + 1;
+        try { localStorage.setItem(NAG_VIEWS_KEY, String(views)); } catch {}
+
+        setTimeout(() => {
+            if (document.getElementById('arcadeInstallNag')) return;
+            const nag = document.createElement('div');
+            nag.id = 'arcadeInstallNag';
+            nag.className = 'arcade-install-nag';
+            nag.innerHTML = `
+                <img src="assets/icon-192.png" alt="" class="arcade-install-nag-icon">
+                <div class="arcade-install-nag-text">
+                    <strong>Install Arcade as an app</strong>
+                    <span>Fullscreen, home-screen icon, works offline. Tap to install.</span>
+                </div>
+                <button class="arcade-install-nag-cta" type="button">Install</button>
+                <button class="arcade-install-nag-close" type="button" aria-label="Dismiss">&times;</button>
+            `;
+            document.body.appendChild(nag);
+            nag.querySelector('.arcade-install-nag-cta').addEventListener('click', () => {
+                handleInstallClick();
+            });
+            nag.querySelector('.arcade-install-nag-close').addEventListener('click', () => {
+                try { localStorage.setItem(NAG_DISMISSED_KEY, '1'); } catch {}
+                nag.remove();
+            });
+            // Auto-dismiss after 25s if untouched (user may have left it open)
+            setTimeout(() => { if (nag.isConnected) nag.remove(); }, 25000);
+        }, views === 1 ? 4000 : 1500); // first visit longer pause; later visits snappier
+    }
+
     // ─── Boot ─────────────────────────────────────────────────────────
     function boot() {
         showInstallButton();
         showIosHint();
+        maybeShowMobileNag();
     }
     if (document.readyState === 'loading') {
         document.addEventListener('DOMContentLoaded', boot);

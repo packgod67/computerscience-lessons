@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Install Arcade as an App</title>
+    <meta name="theme-color" content="#7c3aed">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="Arcade">
+    <link rel="manifest" href="manifest.webmanifest">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/icon-192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body.install-page {
+            background: linear-gradient(180deg, #0a0a0f 0%, #181830 100%);
+            color: #e8e8f0;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            padding: 0;
+        }
+        .install-wrap {
+            max-width: 720px;
+            margin: 0 auto;
+            padding: 32px 20px 80px;
+        }
+        .install-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #a8b0c8; text-decoration: none;
+            font-size: 0.9rem; padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            margin-bottom: 20px;
+        }
+        .install-back:hover { background: rgba(255,255,255,0.07); }
+        .install-hero {
+            text-align: center;
+            padding: 24px 16px 36px;
+        }
+        .install-hero img {
+            width: 96px; height: 96px;
+            border-radius: 22px;
+            box-shadow: 0 12px 40px rgba(124, 58, 237, 0.4);
+            margin-bottom: 20px;
+        }
+        .install-hero h1 {
+            margin: 0 0 8px;
+            font-size: 2rem; font-weight: 800;
+            background: linear-gradient(135deg, #7c3aed, #a855f7, #06b6d4);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .install-hero p {
+            margin: 0;
+            color: #a8b0c8;
+            font-size: 1rem;
+            max-width: 480px;
+            margin: 0 auto;
+            line-height: 1.5;
+        }
+
+        .install-cta {
+            display: inline-flex; align-items: center; gap: 8px;
+            background: linear-gradient(135deg, #7c3aed, #a855f7);
+            color: #fff;
+            padding: 14px 28px;
+            border-radius: 999px;
+            font-size: 1.05rem; font-weight: 700;
+            text-decoration: none;
+            border: none; cursor: pointer;
+            box-shadow: 0 8px 24px rgba(124, 58, 237, 0.5);
+            transition: transform 0.15s, box-shadow 0.15s;
+            margin: 16px 0;
+        }
+        .install-cta:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 12px 32px rgba(124, 58, 237, 0.6);
+        }
+        .install-cta:disabled { opacity: 0.5; cursor: not-allowed; }
+
+        .install-sections {
+            display: grid; gap: 16px;
+            margin-top: 20px;
+        }
+        .install-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 16px;
+            padding: 22px 20px;
+        }
+        .install-card h2 {
+            margin: 0 0 12px;
+            font-size: 1.15rem; font-weight: 700;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .install-card-emoji {
+            font-size: 1.4rem;
+            background: rgba(124, 58, 237, 0.18);
+            border: 1px solid rgba(124, 58, 237, 0.4);
+            border-radius: 8px;
+            padding: 4px 8px;
+        }
+        .install-card ol, .install-card ul {
+            margin: 0; padding-left: 22px;
+            color: #c8cee0; line-height: 1.55;
+        }
+        .install-card li { margin: 4px 0; }
+        .install-card .muted { color: #888fa8; font-size: 0.88rem; margin-top: 8px; }
+        .install-card a {
+            color: #a855f7;
+            text-decoration: underline;
+        }
+        .install-status {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 999px;
+            font-size: 0.78rem; font-weight: 600;
+            background: rgba(34, 197, 94, 0.18);
+            border: 1px solid rgba(34, 197, 94, 0.4);
+            color: #86efac;
+            margin-left: auto;
+        }
+        .install-card-row {
+            display: flex; align-items: center; gap: 8px;
+            flex-wrap: wrap;
+        }
+        .install-features {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 10px; margin-top: 16px;
+        }
+        .install-feat {
+            background: rgba(124, 58, 237, 0.08);
+            border: 1px solid rgba(124, 58, 237, 0.18);
+            border-radius: 10px;
+            padding: 12px 14px;
+            font-size: 0.88rem;
+        }
+        .install-feat strong { display: block; margin-bottom: 2px; color: #fff; }
+    </style>
+</head>
+<body class="install-page">
+    <div class="install-wrap">
+        <a class="install-back" href="index.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="m15 18-6-6 6-6"/>
+            </svg>
+            Back to Arcade
+        </a>
+
+        <div class="install-hero">
+            <img src="assets/icon-192.png" alt="Arcade icon">
+            <h1>Get Arcade as an App</h1>
+            <p>Same arcade, but as a real installed app — fullscreen, no browser bar, home-screen icon, works offline for saved games.</p>
+            <button class="install-cta" id="bigInstallBtn" type="button">📥 Install on this device</button>
+            <div id="installStatus" style="color:#888fa8;font-size:0.85rem;"></div>
+        </div>
+
+        <div class="install-features">
+            <div class="install-feat"><strong>🚀 Fullscreen</strong>No browser chrome — game cards take the whole viewport.</div>
+            <div class="install-feat"><strong>🏠 Home-screen icon</strong>Tap the Arcade icon, you're in. Like any native app.</div>
+            <div class="install-feat"><strong>📡 Offline-friendly</strong>Saved games work without a connection.</div>
+            <div class="install-feat"><strong>🔔 Push-ready</strong>Future feature: notifications when friends are playing.</div>
+        </div>
+
+        <div class="install-sections">
+            <div class="install-card" data-platform="android">
+                <h2><span class="install-card-emoji">🤖</span> Android (Chrome / Edge / Brave)</h2>
+                <ol>
+                    <li>Tap the big <strong>Install</strong> button above. Chrome's native install dialog pops up.</li>
+                    <li>Confirm. The Arcade icon appears on your home screen + app drawer.</li>
+                    <li>Launch from there — no address bar, looks/behaves like a native app.</li>
+                </ol>
+                <p class="muted">Don't see the install button? Chrome unlocks installation after ~30 seconds of engagement. Browse a few games and try again — or use ⋮ → <strong>Install app</strong> from Chrome's menu directly.</p>
+            </div>
+
+            <div class="install-card" data-platform="apk">
+                <h2><span class="install-card-emoji">📦</span> Android — Real APK file</h2>
+                <p>Want an actual <code>.apk</code> file you can sideload (no Chrome required, fully sandboxed)?</p>
+                <ol>
+                    <li>Open <a href="https://www.pwabuilder.com/" target="_blank" rel="noopener">PWA Builder</a></li>
+                    <li>Paste your Arcade URL (e.g. <code>https://computerscience-lessons.onrender.com</code>)</li>
+                    <li>Click <strong>Package for Android</strong> → download the signed APK</li>
+                    <li>On your phone: enable <strong>Install from unknown sources</strong> in Settings, tap the APK → install.</li>
+                </ol>
+                <p class="muted">PWA Builder is a free Microsoft tool. The output is a real signed APK that wraps the live Arcade in a Trusted Web Activity — fully native install path with no Chrome dependency.</p>
+            </div>
+
+            <div class="install-card" data-platform="ios">
+                <h2><span class="install-card-emoji">🍎</span> iPhone / iPad (Safari)</h2>
+                <ol>
+                    <li>Open this site in <strong>Safari</strong> (not Chrome — Apple only allows Safari to install web apps).</li>
+                    <li>Tap the <strong>Share</strong> button (square with up arrow at the bottom).</li>
+                    <li>Scroll down and tap <strong>Add to Home Screen</strong>.</li>
+                    <li>Tap <strong>Add</strong> in the top-right.</li>
+                </ol>
+                <p class="muted">After install, Arcade opens fullscreen from your home screen with no Safari UI — looks like a native iOS app.</p>
+            </div>
+
+            <div class="install-card" data-platform="desktop">
+                <h2><span class="install-card-emoji">💻</span> Desktop (Chrome / Edge / Brave)</h2>
+                <ol>
+                    <li>Look for the small <strong>install icon</strong> in your URL bar (right side, looks like a monitor with a down-arrow).</li>
+                    <li>Click it → <strong>Install</strong>.</li>
+                    <li>Arcade gets its own dock/taskbar icon and launches in a standalone window.</li>
+                </ol>
+                <p class="muted">Or use the menu: ⋮ → <strong>Install Arcade…</strong> on Chrome/Edge.</p>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/install.js"></script>
+    <script>
+    // Wire the big hero button to the install flow. install.js does the
+    // heavy lifting — we just call its public API.
+    (function () {
+        const btn = document.getElementById('bigInstallBtn');
+        const status = document.getElementById('installStatus');
+        if (!btn) return;
+
+        function refresh() {
+            const Ai = window.ArcadeInstall;
+            if (!Ai) return;
+            if (Ai.isStandalone()) {
+                btn.disabled = true;
+                btn.textContent = '✓ Already installed';
+                status.textContent = 'You\'re running Arcade as an app right now.';
+                return;
+            }
+            if (Ai.isIosSafari()) {
+                btn.textContent = '📥 Show iOS install steps';
+                status.textContent = '';
+                return;
+            }
+            btn.textContent = '📥 Install on this device';
+        }
+
+        btn.addEventListener('click', () => {
+            // Reuse install.js's modal/native-prompt logic by triggering
+            // its install instructions modal directly. If a deferredPrompt
+            // is captured, install.js will fire it when the modal closes.
+            window.ArcadeInstall?.showInstallInstructionsModal?.();
+        });
+
+        // Wait for ArcadeInstall to be loaded
+        if (window.ArcadeInstall) refresh();
+        else setTimeout(refresh, 200);
+        window.addEventListener('beforeinstallprompt', refresh);
+        window.addEventListener('appinstalled', refresh);
+    })();
+    </script>
+</body>
+</html>

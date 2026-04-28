@@ -37,6 +37,22 @@
     }
   ],
   "categories": ["games", "entertainment"],
+  "screenshots": [
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "Arcade home — 2,900+ games"
+    },
+    {
+      "src": "assets/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "form_factor": "narrow",
+      "label": "Arcade on mobile"
+    }
+  ],
   "lang": "en",
   "dir": "ltr",
   "shortcuts": [
