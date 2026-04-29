@@ -9,6 +9,12 @@
 </style>
 </head>
 <body>
-<iframe src="../play/flash/?title=Pico%27s%20School&swf=https%3A%2F%2Fuploads.ungrounded.net%2F59000%2F59593_alien_booya.swf" allow="autoplay; gamepad *; fullscreen"></iframe>
+<!-- Earlier wrapper iframed uploads.ungrounded.net/59000/59593_alien_booya.swf
+     which is actually ALIEN HOMINID (NG portal 59593), not Pico's School.
+     Pico's School portal is 310349 but the slug-hash on uploads.ungrounded.net
+     isn't publicly enumerable (NG Guard 403s the portal page). archive.org
+     hosts the SWF at flash_picosschool/flash_picosschool.swf — already an
+     allow-listed host on our /rom proxy per CLAUDE.md. -->
+<iframe src="../play/flash/?title=Pico%27s%20School&swf=https%3A%2F%2Farchive.org%2Fdownload%2Fflash_picosschool%2Fflash_picosschool.swf" allow="autoplay; gamepad *; fullscreen"></iframe>
 </body>
 </html>
