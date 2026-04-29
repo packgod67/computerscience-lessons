@@ -663,9 +663,12 @@
             });
             const addEl = document.getElementById('artworkAddBtn');
             if (addEl) addEl.addEventListener('click', async () => {
-                // Reuse the wallpaper compression budget — large but
-                // not so large it blows past the user doc.
-                const data = await promptImageUpload(1024, 768, 0.6, 400 * 1024);
+                // Wider budget than wallpaper — featured artwork shows
+                // full-size on the profile so we keep more pixels (up
+                // to 2000px on the long edge) and a higher quality
+                // setting. Animated GIFs/WebPs preserve animation
+                // through promptImageUpload's isAnimated branch.
+                const data = await promptImageUpload(2000, 2000, 0.78, 600 * 1024);
                 if (data) {
                     localArtwork.push({ url: data, caption: '' });
                     renderArtworkGrid();
