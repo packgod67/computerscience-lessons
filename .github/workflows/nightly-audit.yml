@@ -1,0 +1,79 @@
+# Nightly run of audit-itch.mjs to catch newly-broken games.
+# Posts a comment on a tracking issue (creates one if missing) so we
+# get a notification when itch URLs start 404'ing.
+#
+# The audit script exits 0 even when it finds problems — the failures
+# are reported in stdout. We capture stdout and check if it contains
+# "ISSUES" or similar markers; if so, we update the tracking issue.
+
+name: Nightly catalog audit
+
+on:
+  schedule:
+    # 08:00 UTC daily = 03:00 EST / 00:00 PST. Off-peak for Render and
+    # itch's CDN so we don't compete with real traffic.
+    - cron: '0 8 * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Run itch audit
+        id: itch_audit
+        continue-on-error: true
+        run: |
+          {
+            echo "## Itch wrapper audit"
+            echo ""
+            echo '```'
+            timeout 1500 node audit-itch.mjs 2>&1 || true
+            echo '```'
+          } > itch-audit.md
+          # Detect if any issues surfaced. The script prints rows like
+          # "[FAIL]" or "[BLOCKED]" for problem games.
+          if grep -qE '\[(FAIL|BLOCKED|REDIRECT|404)\]' itch-audit.md; then
+            echo "has_issues=1" >> "$GITHUB_OUTPUT"
+          else
+            echo "has_issues=0" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Update tracking issue
+        if: steps.itch_audit.outputs.has_issues == '1'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          # Find or create the tracker issue.
+          TRACKER=$(gh issue list --label nightly-audit --state open --json number --jq '.[0].number')
+          if [ -z "$TRACKER" ]; then
+            TRACKER=$(gh issue create \
+              --title "Nightly catalog audit results" \
+              --label nightly-audit \
+              --body "Auto-updated daily by .github/workflows/nightly-audit.yml" \
+              --json number --jq '.number')
+          fi
+
+          # Append today's audit as a comment on the tracker.
+          {
+            echo "### $(date -u +'%Y-%m-%d') audit"
+            echo ""
+            cat itch-audit.md
+          } | gh issue comment "$TRACKER" --body-file -
+
+      - name: Upload audit log
+        uses: actions/upload-artifact@v4
+        with:
+          name: audit-${{ github.run_number }}
+          path: itch-audit.md
+          retention-days: 30

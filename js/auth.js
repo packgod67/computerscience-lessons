@@ -615,7 +615,7 @@
         // Whitelist to prevent clients overwriting protected fields
         // (role, banned, approved are blocked by the Firestore rule
         // anyway — this whitelist is belt-and-suspenders).
-        const allowed = ['avatar', 'bio', 'wallpaper', 'accent', 'showcase', 'widgets'];
+        const allowed = ['avatar', 'bio', 'wallpaper', 'accent', 'showcase', 'widgets', 'usernameColor', 'profileBgm'];
         const safe = {};
         for (const k of allowed) {
             if (fields[k] !== undefined) safe[k] = fields[k];

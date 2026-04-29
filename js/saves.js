@@ -144,6 +144,10 @@
                         <button type="button" class="saves-game-clear" id="savesGameClear" style="display:none;" title="Clear selection">&times;</button>
                         <div class="saves-game-dropdown" id="savesGameDropdown" hidden></div>
                     </div>
+                    <label class="saves-thumb-row">
+                        <span class="saves-thumb-label">Thumbnail (optional):</span>
+                        <input type="file" id="savesThumb" accept="image/png,image/jpeg,image/webp">
+                    </label>
                     <button type="submit" class="saves-upload-btn">Upload</button>
                 </form>
                 <div class="saves-upload-progress" id="savesProgress" style="display:none;"></div>
@@ -199,8 +203,15 @@
         const gameLabel = s.gameTitle
             ? `<span class="save-game">${esc(s.gameTitle)}</span>`
             : (s.gameId ? `<span class="save-game">${esc(s.gameId)}</span>` : '');
+        // Thumbnail: render the user-uploaded screenshot if present.
+        // Helps recognize saves at a glance vs. a wall of "Save 1 / Save 2"
+        // labels.
+        const thumbHtml = s.thumbnail
+            ? `<img class="save-thumb" src="${esc(s.thumbnail)}" alt="" loading="lazy">`
+            : '<div class="save-thumb save-thumb-placeholder">\u{1F4BE}</div>';
         return `
             <div class="save-row">
+                ${thumbHtml}
                 <div class="save-info">
                     <div class="save-label">${esc(s.label || 'Unlabeled')}</div>
                     <div class="save-meta">
@@ -354,6 +365,17 @@
                 if (hit) gameTitle = hit.title || '';
             }
 
+            // Optional thumbnail — captured to a small data URL so users
+            // can recognize their saves at a glance. Compressed to
+            // 320×180 max @ JPEG q=0.7 to keep doc size sane.
+            let thumbnail = '';
+            const thumbInput = document.getElementById('savesThumb');
+            if (thumbInput && thumbInput.files && thumbInput.files[0]) {
+                try {
+                    thumbnail = await compressThumb(thumbInput.files[0], 320, 180, 0.7);
+                } catch {}
+            }
+
             await getDb().collection('user_saves').add({
                 uid: ArcadeAuth.getUser().uid,
                 label,
@@ -363,6 +385,7 @@
                 mime: file.type || 'application/octet-stream',
                 size: file.size,
                 dataUrl,
+                thumbnail,
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
             });
 
@@ -390,6 +413,34 @@
             r.onload = () => resolve(r.result);
             r.onerror = () => reject(new Error('Failed to read file'));
             r.readAsDataURL(file);
+        });
+    }
+
+    // Compress an image file to a data URL fitting within maxW×maxH.
+    // Used for save-state thumbnails — small (320×180) JPEGs typically
+    // come out under 20 KB so they don't blow up the user_saves doc.
+    function compressThumb(file, maxW, maxH, quality) {
+        return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => {
+                const img = new Image();
+                img.onload = () => {
+                    let w = img.width, h = img.height;
+                    if (w > maxW || h > maxH) {
+                        const scale = Math.min(maxW / w, maxH / h);
+                        w = Math.round(w * scale);
+                        h = Math.round(h * scale);
+                    }
+                    const c = document.createElement('canvas');
+                    c.width = w; c.height = h;
+                    c.getContext('2d').drawImage(img, 0, 0, w, h);
+                    resolve(c.toDataURL('image/jpeg', quality));
+                };
+                img.onerror = () => reject(new Error('decode failed'));
+                img.src = reader.result;
+            };
+            reader.onerror = () => reject(new Error('read failed'));
+            reader.readAsDataURL(file);
         });
     }
 

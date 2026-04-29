@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arcade — Status</title>
+    <meta name="theme-color" content="#7c3aed">
+    <link rel="icon" href="assets/icon-192.png">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body.status-page {
+            background: #0a0a0f;
+            color: #e8e8f0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 40px 20px;
+            min-height: 100vh;
+        }
+        .status-wrap { max-width: 720px; margin: 0 auto; }
+        .status-back {
+            display: inline-flex; align-items: center; gap: 6px;
+            color: #a8b0c8; text-decoration: none;
+            font-size: 0.9rem; padding: 8px 12px;
+            border-radius: 999px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+        }
+        h1 {
+            font-size: 1.8rem; font-weight: 800; margin: 24px 0 8px;
+            background: linear-gradient(135deg, #7c3aed, #06b6d4);
+            -webkit-background-clip: text; background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        h2 { margin: 28px 0 12px; font-size: 1.05rem; opacity: 0.85; }
+        .status-row {
+            display: grid;
+            grid-template-columns: 200px 90px 1fr;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 14px;
+            background: rgba(255,255,255,0.04);
+            border-radius: 8px;
+            margin-bottom: 6px;
+            font-size: 0.92rem;
+        }
+        .status-row code {
+            color: #a8b0c8; font-size: 0.78rem;
+            white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+        }
+        .status-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 10px; border-radius: 999px;
+            font-weight: 700; font-size: 0.78rem;
+        }
+        .status-pill.up      { background: rgba(34,197,94,0.18);  color: #86efac; }
+        .status-pill.down    { background: rgba(239,68,68,0.18);  color: #fecaca; }
+        .status-pill.checking { background: rgba(168,168,168,0.15); color: #d4d4d8; }
+        .status-pill .dot {
+            width: 7px; height: 7px; border-radius: 50%; background: currentColor;
+        }
+        .status-meta {
+            color: #888fa8; font-size: 0.78rem; text-align: right;
+        }
+        .status-summary {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 18px 20px;
+            margin: 20px 0 28px;
+        }
+        .status-summary-row {
+            display: flex; align-items: center; gap: 12px;
+            font-size: 1.05rem; font-weight: 700;
+        }
+        .status-summary-meta {
+            display: flex; gap: 16px;
+            font-size: 0.85rem;
+            color: #a8b0c8;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        @media (max-width: 480px) {
+            .status-row { grid-template-columns: 1fr; gap: 4px; padding: 12px; }
+            .status-row code { white-space: normal; }
+        }
+    </style>
+</head>
+<body class="status-page">
+    <div class="status-wrap">
+        <a class="status-back" href="index.html">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5">
+                <path d="m15 18-6-6 6-6"/>
+            </svg>
+            Back to Arcade
+        </a>
+
+        <h1>Arcade Status</h1>
+        <p style="color:#a8b0c8;">Live up/down for every host this arcade deploys to + the Cloudflare worker proxy. Refreshes every 60 seconds.</p>
+
+        <div class="status-summary">
+            <div class="status-summary-row" id="summaryHeadline">Checking…</div>
+            <div class="status-summary-meta">
+                <span id="lastChecked">—</span>
+                <span id="averageLatency">—</span>
+            </div>
+        </div>
+
+        <h2>Hosts</h2>
+        <div id="hostList"></div>
+
+        <h2>Worker proxy</h2>
+        <div id="workerList"></div>
+
+        <h2>Firestore</h2>
+        <div id="firestoreList"></div>
+    </div>
+
+    <script>
+    // List of hosts the arcade deploys to. Pings each one's index.html
+    // (or a known-cheap path) with no-cors fetch and measures the round
+    // trip. no-cors fetches always resolve, so we can only distinguish
+    // "got something back" from "network error / timeout".
+    const HOSTS = [
+        { name: 'Render',           url: 'https://computerscience-lessons.onrender.com/sw.js' },
+        { name: 'Vercel',           url: 'https://computer-sciencelessons.vercel.app/sw.js' },
+        { name: 'Cloudflare Pages', url: 'https://computerscience-lessons.pages.dev/sw.js' },
+        { name: 'Netlify',          url: 'https://computer-sciencelessons.netlify.app/sw.js' },
+        { name: 'GitHub Pages',     url: 'https://packgod67.github.io/computerscience-lessons/sw.js' },
+        { name: 'Wasmer Edge',      url: 'https://computerscience-lessons.wasmer.app/sw.js' },
+    ];
+    const WORKER = { name: 'Cloudflare Worker proxy', url: 'https://arcad-groq.gatabanumai.workers.dev/itch/2235781/index.html' };
+    const FIRESTORE = { name: 'Firestore (Google)', url: 'https://firestore.googleapis.com/' };
+
+    async function pingOne(target) {
+        const t0 = performance.now();
+        try {
+            // Race the fetch against a 7-second timeout — anything slower
+            // is effectively down for the user.
+            const ctrl = new AbortController();
+            const to = setTimeout(() => ctrl.abort(), 7000);
+            await fetch(target.url, { mode: 'no-cors', cache: 'no-store', signal: ctrl.signal });
+            clearTimeout(to);
+            return { up: true, ms: Math.round(performance.now() - t0) };
+        } catch {
+            return { up: false, ms: Math.round(performance.now() - t0) };
+        }
+    }
+
+    function rowHtml(target, result) {
+        const status = result === 'pending' ? 'checking' : (result.up ? 'up' : 'down');
+        const label = result === 'pending' ? 'Checking…' : (result.up ? 'Up' : 'Down');
+        const meta = result === 'pending' ? '' : `${result.ms} ms`;
+        return `
+            <div class="status-row">
+                <span><strong>${target.name}</strong></span>
+                <span class="status-pill ${status}"><span class="dot"></span>${label}</span>
+                <span class="status-meta">${meta}<br><code>${target.url.replace(/^https?:\/\//, '')}</code></span>
+            </div>
+        `;
+    }
+
+    function paint(targets, container, results) {
+        container.innerHTML = targets.map((t, i) => rowHtml(t, results[i] || 'pending')).join('');
+    }
+
+    function updateSummary(allResults) {
+        const flat = allResults.flat().filter(r => r !== 'pending');
+        const total = flat.length;
+        const up = flat.filter(r => r.up).length;
+        const headline = document.getElementById('summaryHeadline');
+        if (up === total && total > 0) {
+            headline.innerHTML = '<span class="status-pill up"><span class="dot"></span>All systems operational</span>';
+        } else if (up === 0 && total > 0) {
+            headline.innerHTML = '<span class="status-pill down"><span class="dot"></span>Major outage</span>';
+        } else {
+            headline.innerHTML = '<span class="status-pill checking"><span class="dot"></span>Partial outage — ' + up + '/' + total + ' up</span>';
+        }
+        document.getElementById('lastChecked').textContent = 'Checked ' + new Date().toLocaleTimeString();
+        const upLatencies = flat.filter(r => r.up).map(r => r.ms);
+        if (upLatencies.length) {
+            const avg = Math.round(upLatencies.reduce((a, b) => a + b, 0) / upLatencies.length);
+            document.getElementById('averageLatency').textContent = 'Avg latency ' + avg + ' ms';
+        }
+    }
+
+    async function runOnce() {
+        // Initial paint (all pending)
+        paint(HOSTS, document.getElementById('hostList'), HOSTS.map(() => 'pending'));
+        paint([WORKER], document.getElementById('workerList'), ['pending']);
+        paint([FIRESTORE], document.getElementById('firestoreList'), ['pending']);
+
+        // Ping in parallel
+        const hostResults = await Promise.all(HOSTS.map(pingOne));
+        const workerResult = await pingOne(WORKER);
+        const fsResult = await pingOne(FIRESTORE);
+
+        paint(HOSTS, document.getElementById('hostList'), hostResults);
+        paint([WORKER], document.getElementById('workerList'), [workerResult]);
+        paint([FIRESTORE], document.getElementById('firestoreList'), [fsResult]);
+        updateSummary([hostResults, [workerResult], [fsResult]]);
+    }
+
+    runOnce();
+    setInterval(runOnce, 60_000);
+    </script>
+</body>
+</html>

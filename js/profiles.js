@@ -113,7 +113,11 @@
         const isSelf = currentUid === profile.uid;
         const isAdmin = ArcadeAuth.isAdmin();
 
-        const nameColor = topRoleColor(profile.roleIds);
+        // Color priority: admin/role color (if assigned) > user-picked
+        // usernameColor > none. Role colors win to keep mod/admin badges
+        // visually distinct.
+        const roleColor = topRoleColor(profile.roleIds);
+        const nameColor = roleColor || profile.usernameColor || null;
         const accent = profile.accent || nameColor || '';
         const accentStyle = accent ? `style="--profile-accent:${escape(accent)}"` : '';
 
@@ -160,9 +164,25 @@
             ? `<span class="profile-badges">${adminBadge}${customBadges}</span>`
             : '';
 
+        // BGM audio: if the profile has a BGM URL set, mount an <audio>
+        // element + a mute toggle. Default volume is intentionally low
+        // (0.25) so it's not jarring when opening a profile. Stored
+        // mute state in localStorage so users who hate BGM globally
+        // stay muted across sessions.
+        const bgmMuted = localStorage.getItem('arcade-profile-bgm-muted') === '1';
+        const bgmHtml = profile.profileBgm ? `
+            <audio id="profileBgmAudio" loop autoplay ${bgmMuted ? 'muted' : ''} style="display:none;">
+                <source src="${escape(profile.profileBgm)}">
+            </audio>
+            <button class="profile-bgm-toggle" id="profileBgmToggle" type="button" title="Toggle profile background music">
+                ${bgmMuted ? '\u{1F507}' : '\u{1F50A}'}
+            </button>
+        ` : '';
+
         overlay.innerHTML = `
             <div class="profile-modal" ${accentStyle}>
                 <button class="modal-close profile-close" id="closeProfileModal">&times;</button>
+                ${bgmHtml}
                 <div class="profile-header" ${wallpaperStyle}>
                     <div class="profile-header-overlay"></div>
                 </div>
@@ -257,6 +277,21 @@
                     </div>` : ''}
                 </div>
             </div>`;
+
+        // BGM toggle wiring
+        const bgmAudio = document.getElementById('profileBgmAudio');
+        const bgmToggle = document.getElementById('profileBgmToggle');
+        if (bgmAudio && bgmToggle) {
+            // Set volume to be unobtrusive
+            bgmAudio.volume = 0.25;
+            bgmToggle.addEventListener('click', () => {
+                bgmAudio.muted = !bgmAudio.muted;
+                bgmToggle.textContent = bgmAudio.muted ? '\u{1F507}' : '\u{1F50A}';
+                try { localStorage.setItem('arcade-profile-bgm-muted', bgmAudio.muted ? '1' : '0'); } catch {}
+                if (!bgmAudio.muted) bgmAudio.play().catch(() => {});
+            });
+            // Stop audio when modal closes (handled by closeModal removing the overlay)
+        }
 
         // Render the friend request/accept/remove button into its slot
         // if friends.js is loaded and we're viewing someone else's profile.
@@ -363,6 +398,21 @@
                     </div>
 
                     <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="usernameColorInput">Username color</label>
+                        <div class="profile-edit-accent-area">
+                            <input type="color" id="usernameColorInput" value="${escape(profile.usernameColor || '#7c3aed')}" class="profile-edit-accent-input">
+                            <button class="profile-edit-action" id="clearUsernameColorBtn">Default</button>
+                        </div>
+                        <span class="profile-edit-hint">Role badges still override your username color.</span>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="bgmInput">Profile background music</label>
+                        <input type="url" id="bgmInput" class="profile-edit-bio" placeholder="https://… direct mp3 / ogg / m4a URL (leave blank for none)" value="${escape(profile.profileBgm || '')}" style="min-height:auto;height:38px;padding:6px 10px;">
+                        <span class="profile-edit-hint">Plays softly when others view your profile. Visitors can mute.</span>
+                    </div>
+
+                    <div class="profile-edit-row">
                         <label class="profile-edit-label">Showcase <span class="profile-edit-hint">(up to 5, picked from your favorites)</span></label>
                         <div class="profile-edit-showcase-grid" id="showcaseGrid"></div>
                         ${favGames.length === 0 ? '<div class="profile-bio-empty">Favorite some games first to pick them for your showcase.</div>' : ''}
@@ -453,6 +503,15 @@
             localAccent = '';
             document.getElementById('accentInput').value = '#7c3aed';
         });
+        let localUsernameColor = profile.usernameColor || '';
+        document.getElementById('usernameColorInput')?.addEventListener('input', (e) => {
+            localUsernameColor = e.target.value;
+        });
+        document.getElementById('clearUsernameColorBtn')?.addEventListener('click', () => {
+            localUsernameColor = '';
+            const inp = document.getElementById('usernameColorInput');
+            if (inp) inp.value = '#7c3aed';
+        });
 
         document.getElementById('closeProfileEdit').addEventListener('click', closeModal);
         document.getElementById('cancelEditBtn').addEventListener('click', () => {
@@ -465,7 +524,10 @@
             try {
                 const accentRaw = document.getElementById('accentInput').value;
                 const accent = localAccent === '' ? '' : accentRaw;
+                const bgmUrl = (document.getElementById('bgmInput')?.value || '').trim();
                 await ArcadeAuth.updateProfile({
+                    usernameColor: localUsernameColor,
+                    profileBgm: bgmUrl,
                     avatar: localAvatar,
                     wallpaper: localWallpaper,
                     bio: bioInput.value.trim().slice(0, 500),
@@ -483,19 +545,45 @@
         });
     }
 
-    // Prompt for image upload, resize, return base64 data URL within sizeLimit bytes (approx)
+    // Prompt for image upload, resize, return base64 data URL within sizeLimit bytes (approx).
+    //
+    // Special-cases ANIMATED formats (GIF, WebP, APNG): drawing them onto
+    // a canvas freezes the animation to the first frame. To preserve
+    // motion, we keep the original file as-is when it's an animated type
+    // — but then we have no compression budget, so the size cap is
+    // enforced by rejecting files over `sizeLimit`. Static images get
+    // the existing canvas resize + JPEG re-encode.
     function promptImageUpload(maxW, maxH, quality, sizeLimit) {
         return new Promise((resolve) => {
             const input = document.createElement('input');
             input.type = 'file';
-            input.accept = 'image/*';
+            // Accept GIF/WebP/APNG explicitly so the OS file picker
+            // surfaces them; image/* would too but being explicit is
+            // friendlier on some Android pickers.
+            input.accept = 'image/png,image/jpeg,image/webp,image/gif,image/apng,image/*';
             input.addEventListener('change', async () => {
                 const file = input.files[0];
                 if (!file) { resolve(null); return; }
+                const isAnimated = /^image\/(gif|webp|apng)$/i.test(file.type);
                 try {
+                    if (isAnimated) {
+                        // Reject if larger than ~1.5x sizeLimit raw —
+                        // even a 1MB animated avatar would bloat the user
+                        // doc significantly. 1.5x because base64 is ~1.37x
+                        // larger than raw bytes.
+                        if (file.size > sizeLimit * 1.5) {
+                            alert('Animated image is too large (' + Math.round(file.size / 1024) + ' KB). Please use a smaller GIF/WebP or a static PNG/JPG.');
+                            resolve(null);
+                            return;
+                        }
+                        const reader = new FileReader();
+                        reader.onload = () => resolve(String(reader.result));
+                        reader.onerror = () => { alert('Failed to read image'); resolve(null); };
+                        reader.readAsDataURL(file);
+                        return;
+                    }
                     let q = quality;
                     let out = await resizeImage(file, maxW, maxH, q);
-                    // If too big, keep shrinking quality
                     while (out.length > sizeLimit * 1.37 && q > 0.2) {
                         q -= 0.1;
                         out = await resizeImage(file, maxW, maxH, q);

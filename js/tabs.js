@@ -10,6 +10,7 @@
     const banView = document.getElementById('banView');
     const cheatsView = document.getElementById('cheatsView');
     const friendsView = document.getElementById('friendsView');
+    const cataloghealthView = document.getElementById('cataloghealthView');
 
     const views = {
         games: gamesView,
@@ -22,6 +23,7 @@
         requests: requestsView,
         ban: banView,
         cheats: cheatsView,
+        cataloghealth: cataloghealthView,
     };
     let activeTab = 'games';
     let usersLoaded = false;
@@ -72,6 +74,13 @@
             cheatsBtn.innerHTML = '&#128299; Cheats'; // 🔫
             cheatsBtn.title = 'Cheat code manager (admin only)';
             tabBar.appendChild(cheatsBtn);
+
+            const chBtn = document.createElement('button');
+            chBtn.className = 'tab-btn tab-btn-cataloghealth';
+            chBtn.dataset.tab = 'cataloghealth';
+            chBtn.innerHTML = '&#129514; Health'; // 🧪
+            chBtn.title = 'Catalog health dashboard (admin only)';
+            tabBar.appendChild(chBtn);
         }
         // Apply user-customized order/visibility AFTER admin tabs are added
         // (so admins can reorder/hide Bans + Cheats too if they want).
@@ -136,6 +145,9 @@
             // Always re-render — feed is time-sensitive
             ArcadeFriends.renderFriendsView();
             friendsLoaded = true;
+        }
+        if (tab === 'cataloghealth' && window.ArcadeCatalogHealth) {
+            ArcadeCatalogHealth.renderCatalogHealthView();
         }
     });
 })();
