@@ -8,32 +8,52 @@
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" href="assets/logo.png">
     <link rel="icon" href="assets/logo.png">
-    <!-- Cross-origin isolation bootstrap: the arcade's main service worker
-         (sw.js) injects COOP same-origin + COEP credentialless headers
-         into every navigation response on this origin. But on FIRST visit
-         the SW isn't yet controlling the page, so the initial document
-         load lacks the headers. If COI isn't active by the time the SW
-         takes over, force a one-time reload — second load comes through
-         the SW and IS cross-origin-isolated. The sessionStorage guard
-         prevents an infinite reload loop on browsers that don't support
-         service workers. -->
+    <!-- Cross-origin isolation bootstrap. The arcade SW (sw.js) injects
+         COOP same-origin + COEP require-corp into every play.html and
+         /games/*.html response so the page is cross-origin-isolated —
+         required for Godot 4 / Unity / any engine using SharedArrayBuffer.
+         But on FIRST visit, the SW isn't yet controlling the page, so the
+         initial document loads WITHOUT those headers. We need to:
+           1. Register the SW.
+           2. Wait until it's controlling.
+           3. Reload — the second load goes through the SW and is COI.
+         If we let the iframe (gameFrame) start loading the game before
+         the reload fires, the in-progress load gets killed by the reload
+         and Chrome shows a sad-face blocked frame. So we hide the page
+         during the SW dance, and only the second load (with COI) is ever
+         shown to the user.
+         The sessionStorage guard prevents an infinite reload loop. -->
     <script>
     (function () {
         if (window.crossOriginIsolated) return;
         if (!('serviceWorker' in navigator)) return;
         if (sessionStorage.getItem('arcade-coi-reloaded') === '1') return;
+        // Hide everything until COI is confirmed on the next load. This
+        // also keeps the iframe from racing the reload — without
+        // visibility:hidden, the gameFrame would start loading the game,
+        // get half-rendered, then get killed when location.reload() fires.
+        var hideStyle = document.createElement('style');
+        hideStyle.textContent = 'html { visibility: hidden !important; }';
+        document.documentElement.appendChild(hideStyle);
+        function reloadOnce() {
+            sessionStorage.setItem('arcade-coi-reloaded', '1');
+            location.reload();
+        }
         navigator.serviceWorker.register('sw.js').then(function () {
-            return navigator.serviceWorker.ready;
-        }).then(function () {
-            // Wait one tick for the SW to actually start controlling
-            // the page, then reload if we're still not isolated.
-            setTimeout(function () {
-                if (!window.crossOriginIsolated && navigator.serviceWorker.controller) {
-                    sessionStorage.setItem('arcade-coi-reloaded', '1');
-                    location.reload();
-                }
-            }, 100);
-        }).catch(function () { /* ignore */ });
+            // If a SW is already controlling, reload immediately — page
+            // just didn't go through it. (Browser launch / fresh tab.)
+            if (navigator.serviceWorker.controller) {
+                reloadOnce();
+                return;
+            }
+            // Otherwise listen for the new SW to take control.
+            navigator.serviceWorker.addEventListener('controllerchange', reloadOnce, { once: true });
+        }).catch(function () {
+            // SW registration failed — give up and show the page anyway.
+            // The game will fail with the Godot COI error but at least
+            // the rest of the player UI is visible.
+            hideStyle.remove();
+        });
     })();
     </script>
     <!-- Google Fonts for user-selected font families (must match index.html) -->
