@@ -9,6 +9,10 @@
 </style>
 </head>
 <body>
-<iframe src="https://arcad-groq.gatabanumai.workers.dev/itch/17308285/index.html" allow="autoplay; gamepad *; fullscreen"></iframe>
+<!-- Godot 4 game — needs cross-origin-isolated permission delegated
+     by the parent so the iframe's COOP/COEP can take effect and
+     SharedArrayBuffer is available. The worker proxy sets matching
+     COOP/COEP/CORP headers on the response. -->
+<iframe src="https://arcad-groq.gatabanumai.workers.dev/itch/17308285/index.html" allow="cross-origin-isolated; autoplay; gamepad *; fullscreen"></iframe>
 </body>
 </html>

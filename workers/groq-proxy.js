@@ -626,6 +626,16 @@ export default {
             respHeaders.set('Access-Control-Allow-Origin', '*');
             respHeaders.set('Access-Control-Expose-Headers', 'Content-Length, Content-Range, Accept-Ranges');
             respHeaders.set('Cross-Origin-Resource-Policy', 'cross-origin');
+            // Enable cross-origin isolation in the iframe so Godot 4 /
+            // any other engine that needs SharedArrayBuffer (Web Workers
+            // with WASM threads) actually starts up. credentialless is
+            // the permissive flavor — sub-resources don't need explicit
+            // CORP to load (they're stripped of credentials instead).
+            // We can be aggressive here because every sub-resource for
+            // itch games is proxied through this same worker, which sets
+            // CORP cross-origin above.
+            respHeaders.set('Cross-Origin-Opener-Policy', 'same-origin');
+            respHeaders.set('Cross-Origin-Embedder-Policy', 'credentialless');
             if (!respHeaders.get('cache-control')) {
                 respHeaders.set('Cache-Control', 'public, max-age=3600');
             }
