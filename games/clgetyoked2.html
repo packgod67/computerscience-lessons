@@ -9,6 +9,11 @@
 </style>
 </head>
 <body>
-<iframe src="https://html-classic.itch.zone/html/15707106/Web/index.html" allow="autoplay; gamepad *; fullscreen"></iframe>
+<!-- Route through the worker /itch/ proxy. Direct iframe to itch
+     triggers the static.itch.io/htmlgame.js hotlink check which
+     redirects the iframe to chrome-error://chromewebdata/ when the
+     parent origin isn't itch.io. The worker strips that script and
+     also sets COOP/COEP/CORP for cross-origin isolation. -->
+<iframe src="https://arcad-groq.gatabanumai.workers.dev/itch/15707106/Web/index.html" allow="cross-origin-isolated; autoplay; gamepad *; fullscreen"></iframe>
 </body>
 </html>
