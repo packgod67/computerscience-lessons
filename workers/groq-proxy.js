@@ -635,7 +635,7 @@ export default {
             // itch games is proxied through this same worker, which sets
             // CORP cross-origin above.
             respHeaders.set('Cross-Origin-Opener-Policy', 'same-origin');
-            respHeaders.set('Cross-Origin-Embedder-Policy', 'credentialless');
+            respHeaders.set('Cross-Origin-Embedder-Policy', 'require-corp');
             if (!respHeaders.get('cache-control')) {
                 respHeaders.set('Cache-Control', 'public, max-age=3600');
             }

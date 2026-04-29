@@ -7,7 +7,7 @@
 // - Never touch cross-origin requests (CDNs like libretro, jsdelivr handle
 //   their own caching via HTTP headers)
 
-const CACHE_NAME = 'arcade-shell-v91';
+const CACHE_NAME = 'arcade-shell-v92';
 const SHELL_ASSETS = [
     './',
     './index.html',
@@ -150,15 +150,22 @@ self.addEventListener('fetch', (event) => {
 
     // HTML navigations: network-first so users get fresh UI, fall back offline.
     //
-    // We ALSO rewrite the response to inject Cross-Origin-Opener-Policy and
-    // Cross-Origin-Embedder-Policy headers. Render / GitHub Pages / etc.
-    // don't let us configure response headers on .html files at the host
-    // level, but the SW can do it on the way out. This makes play.html (and
-    // every game wrapper at /games/*.html) cross-origin-isolated, which is
-    // a hard requirement for Godot 4 / Unity / any engine using
-    // SharedArrayBuffer. credentialless is the permissive flavor —
-    // sub-resources don't need explicit CORP. Pairs with the Cloudflare
-    // worker's matching headers on /itch/ responses.
+    // For play.html and /games/*.html ONLY, also inject COOP same-origin +
+    // COEP require-corp so the page is cross-origin-isolated — required
+    // for Godot 4 / Unity / any engine needing SharedArrayBuffer. The host
+    // (Render etc.) doesn't let us configure these headers on .html files,
+    // so the SW does it on the way out.
+    //
+    // Scoped to play.html + game wrappers ONLY (not index.html or other
+    // pages) because COEP require-corp would break any cross-origin sub-
+    // resource without CORP — Kirky avatar from Firebase Storage, third-
+    // party ad scripts, profile pics, etc. The play page only needs
+    // resources from same-origin + the Cloudflare worker (which sends CORP),
+    // so it's safe there. Pairs with matching headers the worker sends on
+    // /itch/ responses.
+    const needsCoi = url.pathname === '/play.html'
+                  || url.pathname.endsWith('/play.html')
+                  || /\/games\/[^/]+\.html$/.test(url.pathname);
     if (req.mode === 'navigate' || req.destination === 'document') {
         event.respondWith((async () => {
             let resp;
@@ -172,11 +179,15 @@ self.addEventListener('fetch', (event) => {
                 resp = await caches.match(req) || await caches.match('./index.html');
                 if (!resp) return new Response('offline', { status: 503 });
             }
+            if (!needsCoi) return resp;
             // Clone the response so we can rewrite headers without consuming
-            // the body.
+            // the body. require-corp is stricter than credentialless but
+            // more reliably interpreted by Chrome — sub-resources MUST have
+            // CORP set, which our worker does for itch responses, and same-
+            // origin assets pass automatically.
             const headers = new Headers(resp.headers);
             headers.set('Cross-Origin-Opener-Policy', 'same-origin');
-            headers.set('Cross-Origin-Embedder-Policy', 'credentialless');
+            headers.set('Cross-Origin-Embedder-Policy', 'require-corp');
             return new Response(resp.body, {
                 status: resp.status,
                 statusText: resp.statusText,
