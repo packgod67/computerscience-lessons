@@ -80,6 +80,16 @@
             box-shadow: 0 12px 32px rgba(124, 58, 237, 0.6);
         }
         .install-cta:disabled { opacity: 0.5; cursor: not-allowed; }
+        .install-cta-row {
+            display: flex; flex-wrap: wrap; gap: 10px;
+            justify-content: center; align-items: center;
+            margin: 16px 0;
+        }
+        .install-cta-apk {
+            background: linear-gradient(135deg, #34d399, #10b981);
+            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.5);
+        }
+        .install-cta-apk:hover { box-shadow: 0 12px 32px rgba(16, 185, 129, 0.6); }
 
         .install-sections {
             display: grid; gap: 16px;
@@ -154,7 +164,10 @@
             <img src="assets/icon-192.png" alt="Arcade icon">
             <h1>Get Arcade as an App</h1>
             <p>Same arcade, but as a real installed app — fullscreen, no browser bar, home-screen icon, works offline for saved games.</p>
-            <button class="install-cta" id="bigInstallBtn" type="button">📥 Install on this device</button>
+            <div class="install-cta-row">
+                <button class="install-cta" id="bigInstallBtn" type="button">📥 Install on this device</button>
+                <a class="install-cta install-cta-apk" id="bigDownloadApk" href="https://github.com/packgod67/computerscience-lessons/releases/latest/download/arcade.apk" target="_blank" rel="noopener">🤖 Download Android APK</a>
+            </div>
             <div id="installStatus" style="color:#888fa8;font-size:0.85rem;"></div>
         </div>
 
@@ -178,14 +191,14 @@
 
             <div class="install-card" data-platform="apk">
                 <h2><span class="install-card-emoji">📦</span> Android — Real APK file</h2>
-                <p>Want an actual <code>.apk</code> file you can sideload (no Chrome required, fully sandboxed)?</p>
+                <p>The green <strong>Download Android APK</strong> button above grabs a freshly-built signed <code>.apk</code> from our latest GitHub release — built automatically by a CI workflow that wraps the live arcade as a Trusted Web Activity.</p>
                 <ol>
-                    <li>Open <a href="https://www.pwabuilder.com/" target="_blank" rel="noopener">PWA Builder</a></li>
-                    <li>Paste your Arcade URL (e.g. <code>https://computerscience-lessons.onrender.com</code>)</li>
-                    <li>Click <strong>Package for Android</strong> → download the signed APK</li>
-                    <li>On your phone: enable <strong>Install from unknown sources</strong> in Settings, tap the APK → install.</li>
+                    <li>Tap <strong>Download Android APK</strong> above on your phone.</li>
+                    <li>If Android asks: enable <strong>Install unknown apps</strong> for your browser (Settings → Apps → Special access → Install unknown apps).</li>
+                    <li>Tap the downloaded APK → <strong>Install</strong>.</li>
+                    <li>Open from your home screen — fullscreen Arcade, no browser chrome.</li>
                 </ol>
-                <p class="muted">PWA Builder is a free Microsoft tool. The output is a real signed APK that wraps the live Arcade in a Trusted Web Activity — fully native install path with no Chrome dependency.</p>
+                <p class="muted">Each build uses a fresh signing key, so to update you'll need to uninstall the old version first. If the download link 404s, the workflow hasn't finished its first run — try again in 5–10 minutes, or fall back to <a href="https://www.pwabuilder.com/" target="_blank" rel="noopener">PWA Builder</a> with our URL pre-filled.</p>
             </div>
 
             <div class="install-card" data-platform="ios">

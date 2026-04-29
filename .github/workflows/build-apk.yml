@@ -1,0 +1,168 @@
+# Build a signed Android APK from the live PWA and publish it to a
+# GitHub Release. The APK download button on /install.html links to
+# the resulting `apk-latest` release asset, so users can sideload the
+# arcade as a real Trusted Web Activity (TWA) without going through
+# Chrome's PWA-install flow.
+#
+# Built with Bubblewrap (https://github.com/GoogleChromeLabs/bubblewrap),
+# Google's official CLI for wrapping PWAs as TWA APKs. The action:
+#   1. Sets up Java + Node + Android SDK (Bubblewrap auto-downloads SDK).
+#   2. Generates a fresh signing keystore (signature changes each build —
+#      acceptable for personal sideloading; users uninstall + reinstall
+#      to update). For a production app store release, store the
+#      keystore in a GitHub secret instead.
+#   3. Writes a non-interactive twa-manifest.json with all the package
+#      metadata (icons, theme, scope) baked in from the live manifest.
+#   4. Runs `bubblewrap build` to produce app-release-signed.apk.
+#   5. Force-updates the `apk-latest` release with the new APK.
+#
+# install.html links to:
+#   https://github.com/<owner>/<repo>/releases/latest/download/arcade.apk
+# which always resolves to the most-recent build.
+
+name: Build Android APK
+
+on:
+  # Re-build whenever anything that affects the wrapped app changes.
+  push:
+    branches: [main]
+    paths:
+      - 'manifest.webmanifest'
+      - 'index.html'
+      - 'assets/icon-512.png'
+      - 'assets/icon-maskable-512.png'
+      - 'assets/apple-touch-icon.png'
+      - '.github/workflows/build-apk.yml'
+  # Manual trigger via the Actions tab — useful for one-off rebuilds.
+  workflow_dispatch:
+
+permissions:
+  contents: write   # needed to create/update the apk-latest release
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install Bubblewrap CLI
+        run: npm install -g @bubblewrap/cli@latest
+
+      # Bubblewrap stores SDK config in ~/.bubblewrap. Pre-creating it
+      # so the SDK auto-install runs without prompting.
+      - name: Pre-configure Bubblewrap
+        run: |
+          mkdir -p ~/.bubblewrap
+          cat > ~/.bubblewrap/config.json <<EOF
+          {
+            "jdkPath": "${JAVA_HOME}",
+            "androidSdkPath": "${HOME}/.bubblewrap/android_sdk"
+          }
+          EOF
+
+      - name: Generate signing keystore
+        run: |
+          mkdir -p apk-build
+          cd apk-build
+          keytool -genkeypair \
+            -dname "cn=Arcade, o=Arcade, c=US" \
+            -alias android \
+            -keypass arcadekey \
+            -keystore android.keystore \
+            -storepass arcadekey \
+            -storetype PKCS12 \
+            -validity 10000 \
+            -keyalg RSA \
+            -keysize 2048
+
+      - name: Write twa-manifest.json
+        run: |
+          cat > apk-build/twa-manifest.json <<'EOF'
+          {
+            "packageId": "com.packgod67.arcade",
+            "host": "computerscience-lessons.onrender.com",
+            "name": "Arcade",
+            "launcherName": "Arcade",
+            "display": "standalone",
+            "themeColor": "#7c3aed",
+            "themeColorDark": "#0a0a0f",
+            "navigationColor": "#0a0a0f",
+            "navigationColorDark": "#0a0a0f",
+            "navigationDividerColor": "#0a0a0f",
+            "navigationDividerColorDark": "#0a0a0f",
+            "backgroundColor": "#0a0a0f",
+            "enableNotifications": false,
+            "startUrl": "/",
+            "iconUrl": "https://computerscience-lessons.onrender.com/assets/icon-512.png",
+            "maskableIconUrl": "https://computerscience-lessons.onrender.com/assets/icon-maskable-512.png",
+            "monochromeIconUrl": "https://computerscience-lessons.onrender.com/assets/icon-512.png",
+            "appVersion": "1.0.${{ github.run_number }}",
+            "appVersionCode": ${{ github.run_number }},
+            "shortcuts": [],
+            "signingKey": {
+              "path": "./android.keystore",
+              "alias": "android"
+            },
+            "fingerprint": null,
+            "generatorApp": "github-action",
+            "isChromeOSOnly": false,
+            "isMetaQuest": false,
+            "fullScopeUrl": "https://computerscience-lessons.onrender.com/",
+            "minSdkVersion": 21,
+            "orientation": "default",
+            "fallbackType": "customtabs",
+            "features": {},
+            "alphaDependencies": {
+              "enabled": false
+            },
+            "enableSiteSettingsShortcut": true,
+            "splashScreenFadeOutDuration": 300,
+            "additionalTrustedOrigins": [
+              "computer-sciencelessons.vercel.app",
+              "computerscience-lessons.pages.dev",
+              "computer-sciencelessons.netlify.app"
+            ]
+          }
+          EOF
+
+      - name: Build APK
+        env:
+          BUBBLEWRAP_KEYSTORE_PASSWORD: arcadekey
+          BUBBLEWRAP_KEY_PASSWORD: arcadekey
+        run: |
+          cd apk-build
+          # Pipe a few empty newlines through stdin in case Bubblewrap
+          # prompts for anything unexpected. SDK install can take 3-5 min.
+          yes "" | bubblewrap build --skipPwaValidation || true
+          # Verify the APK exists
+          ls -lh app-release-signed.apk
+          cp app-release-signed.apk ../arcade.apk
+
+      - name: Publish to apk-latest release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: apk-latest
+          name: Latest Arcade APK
+          body: |
+            Auto-built signed Android APK of the live arcade.
+
+            **Sideload instructions:**
+            1. On Android, Settings → Apps → Special app access → Install unknown apps → enable for your browser.
+            2. Tap the APK below to install.
+            3. Launch from your home screen — the Arcade opens fullscreen, no Chrome chrome.
+
+            Built from commit ${{ github.sha }}.
+            Each build uses a fresh signing key, so to update you'll need to uninstall the old version first.
+          files: arcade.apk
+          prerelease: false
+          make_latest: 'true'
