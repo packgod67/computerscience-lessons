@@ -75,4 +75,69 @@
             source: 'promise',
         });
     });
+
+    // ─── Iframe error capture (game wrappers) ───────────────────────
+    // Errors thrown inside a same-origin iframe don't bubble to the
+    // parent's `error` event. Without this hook, every game crash
+    // (including the maeExportApis_ TypeError that affected 551
+    // wrappers) was invisible — admin "Errors" tab kept reporting zero.
+    //
+    // Strategy: every time the gameFrame `load`s a new wrapper, we
+    // attach error + unhandledrejection listeners on its contentWindow.
+    // We also listen for ANY iframe added to the DOM (some wrappers
+    // create their own nested iframes — e.g. the /play/ PS2 host) so
+    // crashes one level deeper still get captured. Cross-origin frames
+    // throw on contentWindow access; we silently skip those (the
+    // browser's own error reporting still applies).
+    function hookIframe(iframe) {
+        if (!iframe || iframe.dataset.telemetryHooked === '1') return;
+        iframe.dataset.telemetryHooked = '1';
+        const attach = () => {
+            let win;
+            try { win = iframe.contentWindow; } catch { return; }
+            if (!win) return;
+            try {
+                win.addEventListener('error', (ev) => {
+                    if (!ev.message && !ev.error) return;
+                    record({
+                        message: '[iframe] ' + ev.message,
+                        source: ev.filename || iframe.src,
+                        lineno: ev.lineno,
+                        colno: ev.colno,
+                        stack: ev.error?.stack,
+                    });
+                });
+                win.addEventListener('unhandledrejection', (ev) => {
+                    const r = ev.reason;
+                    record({
+                        message: '[iframe-promise] ' + ((r && (r.message || String(r))) || 'unhandledrejection'),
+                        source: iframe.src,
+                        stack: r?.stack,
+                    });
+                });
+            } catch {
+                // Cross-origin — can't hook. Browser still logs to console.
+            }
+        };
+        // Attach immediately (in case the frame already loaded) and on
+        // every subsequent navigation within the iframe.
+        attach();
+        iframe.addEventListener('load', attach);
+    }
+    // Hook any iframe currently in the DOM
+    document.querySelectorAll('iframe').forEach(hookIframe);
+    // ...and any added later (gameFrame is in HTML at boot, but games
+    // sometimes nest more frames via their own scripts).
+    const mo = new MutationObserver((records) => {
+        for (const r of records) {
+            for (const node of r.addedNodes) {
+                if (node.nodeType !== 1) continue;
+                if (node.tagName === 'IFRAME') hookIframe(node);
+                else if (node.querySelectorAll) {
+                    node.querySelectorAll('iframe').forEach(hookIframe);
+                }
+            }
+        }
+    });
+    mo.observe(document.documentElement, { childList: true, subtree: true });
 })();

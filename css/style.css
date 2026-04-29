@@ -9539,6 +9539,60 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
     transform: rotate(45deg);
 }
 
+/* Personal header quote (between settings gear + install button) */
+.header-quote {
+    display: inline-flex;
+    align-items: center;
+    max-width: 280px;
+    margin-right: 10px;
+    padding: 4px 12px;
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-style: italic;
+    color: var(--text-secondary);
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    cursor: text;
+    line-height: 1.2;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: background 0.15s, border-color 0.15s, color 0.15s;
+}
+.header-quote:hover,
+.header-quote:focus-visible {
+    background: rgba(124, 58, 237, 0.15);
+    border-color: color-mix(in srgb, var(--accent, #7c3aed) 60%, transparent);
+    color: var(--text-primary);
+    outline: none;
+}
+.header-quote.is-empty {
+    color: rgba(255, 255, 255, 0.35);
+    font-style: normal;
+    font-size: 0.78rem;
+}
+.header-quote .emoji-inline { height: 1.1em; width: auto; vertical-align: middle; }
+.header-quote-input {
+    background: transparent;
+    border: none;
+    outline: none;
+    color: var(--text-primary);
+    font-style: italic;
+    font-size: 0.85rem;
+    width: 240px;
+    padding: 0;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .header-quote { max-width: 160px; font-size: 0.78rem; padding: 3px 9px; }
+    .header-quote-input { width: 130px; font-size: 0.78rem; }
+}
+@media (max-width: 480px) {
+    /* On very narrow screens drop the quote rather than crowd the bar */
+    .header-quote { display: none; }
+}
+
 /* Right-click context menu on game cards */
 .arcade-card-menu {
     position: absolute;
@@ -9750,3 +9804,506 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
     display: flex; justify-content: flex-end; gap: 8px;
     margin-top: 14px;
 }
+
+/* ===================================================================
+   PROFILE CUSTOMIZATION V2
+   Steam-inspired visual flair: avatar frames, layouts, bg effects,
+   decorative borders, featured artwork, status/tagline chips, privacy.
+   =================================================================== */
+
+/* ── Tagline + status chip under the username ───────────────────── */
+.profile-tagline {
+    grid-column: 2 / -1;
+    color: var(--text-secondary);
+    font-style: italic;
+    font-size: 0.95rem;
+    margin-top: -2px;
+    margin-bottom: 2px;
+    line-height: 1.2;
+}
+.profile-status-chip {
+    grid-column: 2 / -1;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    margin-top: 4px;
+    margin-bottom: 4px;
+    background: linear-gradient(135deg, color-mix(in srgb, var(--profile-accent, #7c3aed) 35%, transparent), color-mix(in srgb, var(--profile-accent, #7c3aed) 12%, transparent));
+    color: var(--text-primary);
+    border: 1px solid color-mix(in srgb, var(--profile-accent, #7c3aed) 50%, transparent);
+    border-radius: 999px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    width: fit-content;
+    max-width: 100%;
+}
+.profile-status-chip .emoji-inline { height: 1.2em; width: auto; vertical-align: middle; }
+
+/* ── Avatar frame system ─────────────────────────────────────────
+   The .profile-avatar-frame wraps the actual avatar img. Each
+   .profile-frame-<id> applies a different decorative ring. The
+   wrapping element is sized to fully contain the avatar so frames
+   that animate (rainbow, snake, neon) don't reflow neighbors. */
+.profile-avatar-frame {
+    display: inline-block;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    overflow: visible;
+}
+.profile-avatar-frame > img,
+.profile-avatar-frame > .profile-avatar-placeholder {
+    width: 100%;
+    height: 100%;
+    border-radius: inherit;
+    object-fit: cover;
+    display: block;
+    position: relative;
+    z-index: 1;
+}
+
+.profile-frame-glow::before {
+    content: ''; position: absolute; inset: -8px;
+    border-radius: inherit;
+    background: radial-gradient(circle, color-mix(in srgb, var(--profile-accent, #7c3aed) 60%, transparent), transparent 70%);
+    filter: blur(10px);
+    z-index: 0;
+}
+
+@keyframes profile-rainbow-spin {
+    to { transform: rotate(360deg); }
+}
+.profile-frame-rainbow::before {
+    content: ''; position: absolute; inset: -5px;
+    border-radius: inherit;
+    background: conic-gradient(#ff0080, #ff8c00, #ffd000, #00d4ff, #7c3aed, #ff00aa, #ff0080);
+    z-index: 0;
+    animation: profile-rainbow-spin 4s linear infinite;
+}
+.profile-frame-rainbow::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: inherit;
+    box-shadow: 0 0 0 5px var(--bg-secondary, #181820);
+    z-index: 0;
+    pointer-events: none;
+}
+
+.profile-frame-gold::before {
+    content: ''; position: absolute; inset: -4px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, #fff5b8, #d4a017 40%, #ffe98a 50%, #b88817 60%, #fff5b8);
+    box-shadow: 0 0 14px rgba(255, 200, 50, 0.5), inset 0 0 6px rgba(255, 220, 100, 0.6);
+    z-index: 0;
+}
+
+@keyframes profile-neon-pulse {
+    0%, 100% { box-shadow: 0 0 0 4px #ff2e9a, 0 0 18px #ff2e9a, inset 0 0 12px #01f9ff; }
+    50%      { box-shadow: 0 0 0 4px #01f9ff, 0 0 28px #01f9ff, inset 0 0 18px #ff2e9a; }
+}
+.profile-frame-neon {
+    border-radius: inherit;
+    animation: profile-neon-pulse 2.4s ease-in-out infinite;
+}
+
+@keyframes profile-glitch-shift {
+    0%, 100% { clip-path: inset(0 0 0 0); transform: translateX(0); }
+    20% { clip-path: inset(20% 0 60% 0); transform: translateX(2px); }
+    40% { clip-path: inset(50% 0 30% 0); transform: translateX(-2px); }
+    60% { clip-path: inset(75% 0 5% 0);  transform: translateX(2px); }
+    80% { clip-path: inset(10% 0 80% 0); transform: translateX(-1px); }
+}
+.profile-frame-glitch::before,
+.profile-frame-glitch::after {
+    content: ''; position: absolute; inset: 0;
+    border-radius: inherit;
+    background-image: inherit;
+    pointer-events: none;
+}
+.profile-frame-glitch::before {
+    box-shadow: -3px 0 0 #ff00aa;
+    mix-blend-mode: screen;
+    animation: profile-glitch-shift 2s steps(8) infinite;
+    z-index: 2;
+    opacity: 0.7;
+}
+.profile-frame-glitch::after {
+    box-shadow: 3px 0 0 #00d4ff;
+    mix-blend-mode: screen;
+    animation: profile-glitch-shift 2s steps(8) infinite reverse;
+    z-index: 2;
+    opacity: 0.7;
+}
+
+@keyframes profile-snake-march {
+    to { stroke-dashoffset: -200; }
+}
+.profile-frame-snake::before {
+    content: ''; position: absolute; inset: -4px;
+    border-radius: inherit;
+    background:
+        linear-gradient(90deg, var(--profile-accent, #7c3aed) 50%, transparent 50%) repeat-x,
+        linear-gradient(90deg, var(--profile-accent, #7c3aed) 50%, transparent 50%) repeat-x bottom,
+        linear-gradient(0deg,  var(--profile-accent, #7c3aed) 50%, transparent 50%) repeat-y,
+        linear-gradient(0deg,  var(--profile-accent, #7c3aed) 50%, transparent 50%) repeat-y right;
+    background-size: 16px 4px, 16px 4px, 4px 16px, 4px 16px;
+    animation: profile-rainbow-spin 8s linear infinite;
+    z-index: 0;
+}
+
+/* ── Decorative profile-modal background effects ───────────────── */
+.profile-bg-effect {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    border-radius: inherit;
+    overflow: hidden;
+}
+
+.profile-bg-vignette {
+    background: radial-gradient(ellipse at center, transparent 30%, rgba(0,0,0,0.55) 80%, rgba(0,0,0,0.85) 100%);
+}
+
+.profile-bg-stars {
+    background:
+        radial-gradient(2px 2px at 20% 30%, #fff8, transparent),
+        radial-gradient(1.5px 1.5px at 70% 50%, #fff7, transparent),
+        radial-gradient(1px 1px at 40% 80%, #fff6, transparent),
+        radial-gradient(2px 2px at 90% 20%, #fff7, transparent),
+        radial-gradient(1px 1px at 10% 70%, #fff5, transparent),
+        radial-gradient(1.5px 1.5px at 55% 15%, #fff6, transparent),
+        radial-gradient(1px 1px at 30% 60%, #fff6, transparent);
+}
+
+@keyframes profile-swirl-rotate {
+    to { transform: rotate(360deg) scale(1.1); }
+}
+.profile-bg-swirl::before {
+    content: ''; position: absolute; inset: -25%;
+    background:
+        conic-gradient(from 0deg,
+            transparent 0%,
+            color-mix(in srgb, var(--profile-accent, #7c3aed) 25%, transparent) 25%,
+            transparent 50%,
+            color-mix(in srgb, var(--profile-accent, #7c3aed) 18%, transparent) 75%,
+            transparent 100%);
+    animation: profile-swirl-rotate 60s linear infinite;
+    filter: blur(20px);
+    opacity: 0.55;
+}
+
+.profile-bg-scanlines {
+    background-image: repeating-linear-gradient(
+        0deg,
+        rgba(0, 0, 0, 0.18) 0px,
+        rgba(0, 0, 0, 0.18) 1px,
+        transparent 1px,
+        transparent 3px);
+    mix-blend-mode: multiply;
+}
+
+@keyframes profile-dust-drift {
+    0%   { transform: translate(0, 0); }
+    50%  { transform: translate(20px, -30px); }
+    100% { transform: translate(0, 0); }
+}
+.profile-bg-dust::before,
+.profile-bg-dust::after {
+    content: ''; position: absolute; inset: -20%;
+    background:
+        radial-gradient(2px 2px at 10% 20%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 30% 70%, rgba(255,255,255,0.25), transparent),
+        radial-gradient(3px 3px at 80% 40%, rgba(255,255,255,0.2), transparent),
+        radial-gradient(2px 2px at 60% 90%, rgba(255,255,255,0.3), transparent),
+        radial-gradient(2px 2px at 50% 30%, rgba(255,255,255,0.22), transparent);
+    animation: profile-dust-drift 14s ease-in-out infinite;
+}
+.profile-bg-dust::after {
+    animation-duration: 22s;
+    animation-direction: reverse;
+    opacity: 0.6;
+}
+
+/* ── Decorative outer borders ──────────────────────────────────── */
+.profile-border-ornate {
+    box-shadow:
+        0 0 0 2px var(--profile-accent, #7c3aed),
+        0 0 0 4px #181820,
+        0 0 0 6px color-mix(in srgb, var(--profile-accent, #7c3aed) 70%, white),
+        0 0 0 8px #181820,
+        0 0 0 10px color-mix(in srgb, var(--profile-accent, #7c3aed) 40%, transparent),
+        0 30px 60px rgba(0, 0, 0, 0.6);
+}
+
+.profile-border-tape::before {
+    content: '';
+    position: absolute; top: -16px; left: 50%; transform: translateX(-50%) rotate(-3deg);
+    width: 120px; height: 32px;
+    background: rgba(255, 240, 180, 0.85);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+    z-index: 5;
+    pointer-events: none;
+}
+.profile-border-tape::after {
+    content: '';
+    position: absolute; bottom: -10px; right: 30px;
+    width: 90px; height: 26px;
+    background: rgba(180, 220, 255, 0.7);
+    box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+    transform: rotate(4deg);
+    z-index: 5;
+    pointer-events: none;
+}
+
+.profile-border-circuit {
+    box-shadow:
+        0 0 0 1px var(--profile-accent, #7c3aed),
+        0 0 0 6px #0a0a12,
+        0 0 0 7px var(--profile-accent, #7c3aed),
+        0 0 30px color-mix(in srgb, var(--profile-accent, #7c3aed) 60%, transparent),
+        0 30px 60px rgba(0,0,0,0.6);
+    background-image:
+        linear-gradient(90deg, color-mix(in srgb, var(--profile-accent, #7c3aed) 20%, transparent) 1px, transparent 1px),
+        linear-gradient(0deg,  color-mix(in srgb, var(--profile-accent, #7c3aed) 20%, transparent) 1px, transparent 1px);
+    background-size: 40px 40px;
+    background-blend-mode: overlay;
+}
+
+.profile-border-ribbon::before {
+    content: '★ FEATURED ★';
+    position: absolute;
+    top: 12px; left: -36px;
+    background: linear-gradient(135deg, #ff2e9a, #7c3aed);
+    color: #fff;
+    padding: 4px 36px;
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 1px;
+    transform: rotate(-30deg);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    z-index: 5;
+}
+
+/* ── Featured Artwork Showcase ─────────────────────────────────── */
+.profile-artwork-section { margin-top: 12px; }
+.profile-artwork-grid {
+    display: grid;
+    gap: 10px;
+}
+.profile-artwork-grid-1 { grid-template-columns: 1fr; }
+.profile-artwork-grid-2 { grid-template-columns: 1fr 1fr; }
+.profile-artwork-grid-3 { grid-template-columns: 2fr 1fr; grid-template-rows: 1fr 1fr; }
+.profile-artwork-grid-3 .profile-artwork-card:nth-child(1) { grid-row: span 2; }
+.profile-artwork-grid-4 { grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; }
+
+.profile-artwork-card {
+    position: relative;
+    margin: 0;
+    overflow: hidden;
+    border-radius: 10px;
+    background: #000;
+    aspect-ratio: 16 / 10;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+    cursor: zoom-in;
+    transition: transform 200ms ease;
+}
+.profile-artwork-card:hover { transform: scale(1.02); }
+.profile-artwork-card img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.profile-artwork-card figcaption {
+    position: absolute;
+    inset: auto 0 0 0;
+    padding: 8px 12px;
+    background: linear-gradient(transparent, rgba(0,0,0,0.85));
+    color: #fff;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+/* ── Layout variants ───────────────────────────────────────────── */
+.profile-modal.profile-layout-compact .profile-header { height: 130px; }
+.profile-modal.profile-layout-compact .profile-avatar { width: 96px; height: 96px; margin-top: -48px; }
+.profile-modal.profile-layout-compact .profile-section { padding: 10px 16px; }
+.profile-modal.profile-layout-compact .profile-bio { font-size: 0.92rem; }
+
+/* Magazine layout: artwork floats wide before everything else,
+   showcase becomes a side rail. Best with 2+ artwork pieces. */
+.profile-modal.profile-layout-magazine .profile-header { height: 240px; }
+.profile-modal.profile-layout-magazine .profile-artwork-section {
+    margin-top: 0;
+    margin-bottom: 20px;
+}
+.profile-modal.profile-layout-magazine .profile-artwork-card {
+    aspect-ratio: 21 / 9;
+}
+.profile-modal.profile-layout-magazine .profile-name {
+    font-size: 1.7rem;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.6);
+}
+
+/* ── Edit form: preset pickers + artwork grid + privacy toggles ── */
+.profile-edit-pill-row {
+    display: flex; flex-wrap: wrap; gap: 6px;
+    margin-top: 4px;
+}
+.profile-edit-pill {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    color: var(--text-secondary);
+    padding: 6px 14px;
+    border-radius: 999px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    font-weight: 600;
+    transition: all 120ms;
+}
+.profile-edit-pill:hover {
+    background: rgba(255, 255, 255, 0.08);
+    color: var(--text-primary);
+}
+.profile-edit-pill.picked {
+    background: var(--profile-accent, #7c3aed);
+    border-color: var(--profile-accent, #7c3aed);
+    color: #fff;
+}
+
+.profile-edit-preset-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    gap: 10px;
+    margin-top: 6px;
+}
+.profile-edit-preset {
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px solid transparent;
+    border-radius: 10px;
+    padding: 12px 6px 8px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    transition: all 120ms;
+}
+.profile-edit-preset:hover { background: rgba(255, 255, 255, 0.08); }
+.profile-edit-preset.picked {
+    border-color: var(--profile-accent, #7c3aed);
+    background: color-mix(in srgb, var(--profile-accent, #7c3aed) 18%, transparent);
+}
+.profile-edit-preset-swatch {
+    width: 50px; height: 50px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #444, #222);
+    flex-shrink: 0;
+    position: relative;
+    overflow: visible;
+}
+.profile-edit-preset-mock {
+    display: block;
+    width: 100%; height: 100%;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #555, #333);
+    z-index: 1;
+    position: relative;
+}
+.profile-edit-preset-label {
+    font-size: 0.78rem;
+    font-weight: 600;
+    color: var(--text-secondary);
+}
+.profile-edit-preset.picked .profile-edit-preset-label {
+    color: var(--text-primary);
+}
+
+.profile-edit-artwork-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 10px;
+    margin-top: 6px;
+}
+.profile-edit-artwork-tile {
+    position: relative;
+    aspect-ratio: 16 / 10;
+    border-radius: 8px;
+    overflow: hidden;
+    background: #000;
+}
+.profile-edit-artwork-tile img {
+    width: 100%; height: 100%;
+    object-fit: cover;
+    display: block;
+}
+.profile-edit-artwork-caption {
+    position: absolute;
+    left: 6px; right: 32px; bottom: 6px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 6px;
+    padding: 4px 8px;
+    font-size: 0.8rem;
+}
+.profile-edit-artwork-del {
+    position: absolute;
+    top: 6px; right: 6px;
+    background: rgba(0, 0, 0, 0.7);
+    color: #fff;
+    border: none;
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1rem;
+    line-height: 1;
+}
+.profile-edit-artwork-del:hover { background: #ef4444; }
+.profile-edit-artwork-add {
+    aspect-ratio: 16 / 10;
+    background: rgba(255, 255, 255, 0.04);
+    border: 2px dashed rgba(255, 255, 255, 0.2);
+    color: var(--text-secondary);
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: all 120ms;
+}
+.profile-edit-artwork-add:hover {
+    border-color: var(--profile-accent, #7c3aed);
+    color: var(--text-primary);
+    background: color-mix(in srgb, var(--profile-accent, #7c3aed) 10%, transparent);
+}
+
+.profile-edit-privacy-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 6px;
+    margin-top: 6px;
+}
+.profile-edit-privacy-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 10px;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 6px;
+    cursor: pointer;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+.profile-edit-privacy-toggle:hover { color: var(--text-primary); }
+.profile-edit-privacy-toggle input[type="checkbox"] {
+    accent-color: var(--profile-accent, #7c3aed);
+}
+
+/* Mobile tweaks */
+@media (max-width: 720px) {
+    .profile-edit-preset-grid { grid-template-columns: repeat(auto-fill, minmax(80px, 1fr)); }
+    .profile-artwork-grid-3, .profile-artwork-grid-4 { grid-template-columns: 1fr; grid-template-rows: none; }
+    .profile-artwork-grid-3 .profile-artwork-card:nth-child(1) { grid-row: auto; }
+    .profile-modal.profile-layout-magazine .profile-header { height: 160px; }
+}
+

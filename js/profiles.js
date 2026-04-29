@@ -119,15 +119,29 @@
         const roleColor = topRoleColor(profile.roleIds);
         const nameColor = roleColor || profile.usernameColor || null;
         const accent = profile.accent || nameColor || '';
+
+        // Profile-customization v2 fields. All optional; when absent the
+        // profile renders the same as before. Each one drives a CSS class
+        // or data-attribute on the modal root so styling is centralized.
+        const tagline   = profile.tagline   || '';
+        const status    = profile.status    || '';
+        const frame     = profile.avatarFrame || 'none';     // none|glow|rainbow|gold|neon|glitch|snake
+        const layout    = profile.layoutStyle || 'default';  // default|compact|magazine
+        const bgEffect  = profile.bgEffect  || 'none';       // none|vignette|stars|swirl|scanlines|dust
+        const borderStyle = profile.borderStyle || 'none';   // none|ornate|tape|circuit|ribbon
+        const privacy   = profile.privacy || {};
+        const artwork   = Array.isArray(profile.artwork) ? profile.artwork.slice(0, 4) : []; // up to 4 large showcase images
+
         const accentStyle = accent ? `style="--profile-accent:${escape(accent)}"` : '';
 
         const wallpaperStyle = profile.wallpaper
             ? `style="background-image:url(${escape(profile.wallpaper)})"`
             : '';
 
-        const avatarHTML = profile.avatar
+        const avatarInner = profile.avatar
             ? `<img class="profile-avatar-img" src="${escape(profile.avatar)}" alt="">`
             : `<div class="profile-avatar-placeholder">${escape((profile.username || '?').charAt(0).toUpperCase())}</div>`;
+        const avatarHTML = `<span class="profile-avatar-frame profile-frame-${escape(frame)}">${avatarInner}</span>`;
 
         const adminBadge = profile.role === 'admin'
             ? '<span class="role-badge role-badge-admin">ADMIN</span>' : '';
@@ -179,16 +193,57 @@
             </button>
         ` : '';
 
+        // Status chip — runs through the emoji renderer so :wave: etc. work
+        const statusHtml = status
+            ? `<div class="profile-status-chip">${
+                window.ArcadeEmojis ? ArcadeEmojis.replaceEmojis(escape(status)) : escape(status)
+            }</div>`
+            : '';
+        const taglineHtml = tagline
+            ? `<div class="profile-tagline">${escape(tagline)}</div>`
+            : '';
+
+        // Decorative background effect overlay layer — purely visual,
+        // sits between the wallpaper and the body content. Each variant
+        // corresponds to a CSS pattern in style.css.
+        const bgEffectHtml = bgEffect && bgEffect !== 'none'
+            ? `<div class="profile-bg-effect profile-bg-${escape(bgEffect)}" aria-hidden="true"></div>`
+            : '';
+
+        // Decorative outer border (frame around the whole modal). Empty
+        // for the default look; otherwise a CSS class drives ornate
+        // corners / circuit traces / etc.
+        const borderClass = borderStyle && borderStyle !== 'none' ? ` profile-border-${escape(borderStyle)}` : '';
+        const layoutClass = ` profile-layout-${escape(layout)}`;
+
+        // Artwork showcase (up to 4 large featured images, like Steam's
+        // Artwork Showcase). Each artwork is { url, caption }.
+        const artworkHtml = (!privacy.hideArtwork && artwork.length)
+            ? `<div class="profile-section profile-artwork-section">
+                <h3 class="profile-section-title">Featured artwork</h3>
+                <div class="profile-artwork-grid profile-artwork-grid-${Math.min(artwork.length, 4)}">
+                    ${artwork.map(a => `
+                        <figure class="profile-artwork-card">
+                            <img src="${escape(a.url || '')}" alt="${escape(a.caption || '')}">
+                            ${a.caption ? `<figcaption>${escape(a.caption)}</figcaption>` : ''}
+                        </figure>
+                    `).join('')}
+                </div>
+            </div>` : '';
+
         overlay.innerHTML = `
-            <div class="profile-modal" ${accentStyle}>
+            <div class="profile-modal${borderClass}${layoutClass}" data-frame="${escape(frame)}" data-bg-effect="${escape(bgEffect)}" ${accentStyle}>
                 <button class="modal-close profile-close" id="closeProfileModal">&times;</button>
                 ${bgmHtml}
+                ${bgEffectHtml}
                 <div class="profile-header" ${wallpaperStyle}>
                     <div class="profile-header-overlay"></div>
                 </div>
                 <div class="profile-identity">
                     <div class="profile-avatar">${avatarHTML}</div>
                     <div class="profile-name" ${nameStyle}><span>${escape(profile.username || 'unknown')}</span>${badgesHTML}</div>
+                    ${taglineHtml}
+                    ${statusHtml}
                     <div class="profile-meta">
                         <span>Joined ${formatJoinDate(profile.joinedAt)}</span>
                         <span>·</span>
@@ -206,6 +261,8 @@
                         Currently playing
                         <a class="profile-playing-link" href="play.html?game=${encodeURIComponent(profile.currentGame)}">${escape(gamesIndex[profile.currentGame].title)}</a>
                     </div>` : ''}
+
+                    ${artworkHtml}
 
                     ${profile.bio ? `<div class="profile-section">
                         <h3 class="profile-section-title">About</h3>
@@ -228,14 +285,14 @@
                         </div>
                     </div>` : ''}
 
-                    ${showcaseGames.length ? `<div class="profile-section">
+                    ${(!privacy.hideShowcase && showcaseGames.length) ? `<div class="profile-section">
                         <h3 class="profile-section-title">Showcase</h3>
                         <div class="profile-game-grid profile-game-grid-lg">
                             ${showcaseGames.map(gameCardHTML).join('')}
                         </div>
                     </div>` : ''}
 
-                    ${topByPlays.length ? `<div class="profile-section">
+                    ${(!privacy.hidePlayCounts && topByPlays.length) ? `<div class="profile-section">
                         <h3 class="profile-section-title">Top games</h3>
                         <div class="profile-top-games">
                             ${topByPlays.map((entry, i) => {
@@ -253,7 +310,7 @@
                         </div>
                     </div>` : ''}
 
-                    ${achievementDefs.length ? `<div class="profile-section">
+                    ${(!privacy.hideAchievements && achievementDefs.length) ? `<div class="profile-section">
                         <h3 class="profile-section-title">Achievements (${achievementDefs.length})</h3>
                         <div class="profile-achievements">
                             ${achievementDefs.map(a => `
@@ -269,7 +326,7 @@
                         <div id="profileFriendBtnSlot" data-target-uid="${escape(profile.uid)}"></div>
                     </div>` : ''}
 
-                    ${favGames.length ? `<div class="profile-section">
+                    ${(!privacy.hideFavorites && favGames.length) ? `<div class="profile-section">
                         <h3 class="profile-section-title">Favorites${favs.length > 8 ? ` (${favs.length})` : ''}</h3>
                         <div class="profile-game-grid">
                             ${favGames.map(gameCardHTML).join('')}
@@ -353,6 +410,46 @@
         let localWallpaper = profile.wallpaper || '';
         let localShowcase = Array.isArray(profile.showcase) ? profile.showcase.slice() : [];
         let localAccent = profile.accent || '';
+        // Profile customization v2 locals
+        let localFrame    = profile.avatarFrame || 'none';
+        let localLayout   = profile.layoutStyle || 'default';
+        let localBgEffect = profile.bgEffect || 'none';
+        let localBorder   = profile.borderStyle || 'none';
+        let localArtwork  = Array.isArray(profile.artwork) ? profile.artwork.slice(0, 4) : [];
+        let localPrivacy  = Object.assign({
+            hideShowcase: false, hideArtwork: false, hidePlayCounts: false,
+            hideAchievements: false, hideFavorites: false,
+        }, profile.privacy || {});
+
+        const FRAMES = [
+            { id: 'none',    label: 'None' },
+            { id: 'glow',    label: 'Glow' },
+            { id: 'rainbow', label: 'Rainbow' },
+            { id: 'gold',    label: 'Gold' },
+            { id: 'neon',    label: 'Neon Pulse' },
+            { id: 'glitch',  label: 'Glitch' },
+            { id: 'snake',   label: 'Snake' },
+        ];
+        const LAYOUTS = [
+            { id: 'default',  label: 'Default' },
+            { id: 'compact',  label: 'Compact' },
+            { id: 'magazine', label: 'Magazine' },
+        ];
+        const BG_EFFECTS = [
+            { id: 'none',      label: 'None' },
+            { id: 'vignette',  label: 'Vignette' },
+            { id: 'stars',     label: 'Stars' },
+            { id: 'swirl',     label: 'Swirl' },
+            { id: 'scanlines', label: 'Scanlines' },
+            { id: 'dust',      label: 'Floating dust' },
+        ];
+        const BORDERS = [
+            { id: 'none',    label: 'None' },
+            { id: 'ornate',  label: 'Ornate' },
+            { id: 'tape',    label: 'Tape' },
+            { id: 'circuit', label: 'Circuit' },
+            { id: 'ribbon',  label: 'Ribbon' },
+        ];
 
         overlay.innerHTML = `
             <div class="profile-modal profile-modal-edit">
@@ -410,6 +507,68 @@
                         <label class="profile-edit-label" for="bgmInput">Profile background music</label>
                         <input type="url" id="bgmInput" class="profile-edit-bio" placeholder="https://… direct mp3 / ogg / m4a URL (leave blank for none)" value="${escape(profile.profileBgm || '')}" style="min-height:auto;height:38px;padding:6px 10px;">
                         <span class="profile-edit-hint">Plays softly when others view your profile. Visitors can mute.</span>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="taglineInput">Tagline <span class="profile-edit-hint">(short subtitle under your name)</span></label>
+                        <input type="text" id="taglineInput" class="profile-edit-bio" maxlength="60" placeholder="e.g. speedrunner / shitposter / vibing" value="${escape(profile.tagline || '')}" style="min-height:auto;height:38px;padding:6px 10px;">
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="statusInput">Status <span class="profile-edit-hint">(supports :emoji: codes)</span></label>
+                        <input type="text" id="statusInput" class="profile-edit-bio" maxlength="80" placeholder="e.g. :fire: grinding pokemon emerald" value="${escape(profile.status || '')}" style="min-height:auto;height:38px;padding:6px 10px;">
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Avatar frame</label>
+                        <div class="profile-edit-preset-grid" id="frameGrid">
+                            ${FRAMES.map(f => `
+                                <button type="button" class="profile-edit-preset profile-frame-preview-${f.id}${localFrame === f.id ? ' picked' : ''}" data-frame="${f.id}">
+                                    <span class="profile-edit-preset-swatch profile-avatar-frame profile-frame-${f.id}">
+                                        <span class="profile-edit-preset-mock"></span>
+                                    </span>
+                                    <span class="profile-edit-preset-label">${f.label}</span>
+                                </button>
+                            `).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Layout</label>
+                        <div class="profile-edit-pill-row" id="layoutRow">
+                            ${LAYOUTS.map(l => `<button type="button" class="profile-edit-pill${localLayout === l.id ? ' picked' : ''}" data-layout="${l.id}">${l.label}</button>`).join('')}
+                        </div>
+                        <span class="profile-edit-hint">Default = roomy, Compact = denser, Magazine = artwork-first feature layout.</span>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Background effect</label>
+                        <div class="profile-edit-pill-row" id="bgEffectRow">
+                            ${BG_EFFECTS.map(b => `<button type="button" class="profile-edit-pill${localBgEffect === b.id ? ' picked' : ''}" data-bg="${b.id}">${b.label}</button>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Border style</label>
+                        <div class="profile-edit-pill-row" id="borderRow">
+                            ${BORDERS.map(b => `<button type="button" class="profile-edit-pill${localBorder === b.id ? ' picked' : ''}" data-border="${b.id}">${b.label}</button>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Featured artwork <span class="profile-edit-hint">(up to 4, large gallery on your profile)</span></label>
+                        <div class="profile-edit-artwork-grid" id="artworkGrid"></div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Privacy</label>
+                        <div class="profile-edit-privacy-grid" id="privacyGrid">
+                            <label class="profile-edit-privacy-toggle"><input type="checkbox" data-priv="hideArtwork" ${localPrivacy.hideArtwork?'checked':''}> Hide artwork</label>
+                            <label class="profile-edit-privacy-toggle"><input type="checkbox" data-priv="hideShowcase" ${localPrivacy.hideShowcase?'checked':''}> Hide showcase</label>
+                            <label class="profile-edit-privacy-toggle"><input type="checkbox" data-priv="hidePlayCounts" ${localPrivacy.hidePlayCounts?'checked':''}> Hide top games</label>
+                            <label class="profile-edit-privacy-toggle"><input type="checkbox" data-priv="hideAchievements" ${localPrivacy.hideAchievements?'checked':''}> Hide achievements</label>
+                            <label class="profile-edit-privacy-toggle"><input type="checkbox" data-priv="hideFavorites" ${localPrivacy.hideFavorites?'checked':''}> Hide favorites</label>
+                        </div>
                     </div>
 
                     <div class="profile-edit-row">
@@ -473,9 +632,85 @@
             });
         }
 
+        // Render the artwork grid — clickable thumbnails, plus an
+        // "Add" tile up to the 4-item cap. Click an existing tile to
+        // remove or change its caption.
+        function renderArtworkGrid() {
+            const grid = document.getElementById('artworkGrid');
+            if (!grid) return;
+            const tiles = localArtwork.map((a, i) => `
+                <div class="profile-edit-artwork-tile">
+                    <img src="${escape(a.url || '')}" alt="">
+                    <input type="text" class="profile-edit-artwork-caption" data-i="${i}" placeholder="Caption (optional)" maxlength="60" value="${escape(a.caption || '')}">
+                    <button type="button" class="profile-edit-artwork-del" data-i="${i}" title="Remove">&times;</button>
+                </div>
+            `).join('');
+            const addBtn = localArtwork.length < 4
+                ? `<button type="button" class="profile-edit-artwork-add" id="artworkAddBtn">＋ Add artwork</button>`
+                : '';
+            grid.innerHTML = tiles + addBtn;
+            grid.querySelectorAll('.profile-edit-artwork-del').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    localArtwork.splice(Number(btn.dataset.i), 1);
+                    renderArtworkGrid();
+                });
+            });
+            grid.querySelectorAll('.profile-edit-artwork-caption').forEach(inp => {
+                inp.addEventListener('input', () => {
+                    const i = Number(inp.dataset.i);
+                    if (localArtwork[i]) localArtwork[i].caption = inp.value.slice(0, 60);
+                });
+            });
+            const addEl = document.getElementById('artworkAddBtn');
+            if (addEl) addEl.addEventListener('click', async () => {
+                // Reuse the wallpaper compression budget — large but
+                // not so large it blows past the user doc.
+                const data = await promptImageUpload(1024, 768, 0.6, 400 * 1024);
+                if (data) {
+                    localArtwork.push({ url: data, caption: '' });
+                    renderArtworkGrid();
+                }
+            });
+        }
+
         renderAvatar();
         renderWallpaper();
         renderShowcase();
+        renderArtworkGrid();
+
+        // ─── Preset pill / grid pickers ─────────────────────────────
+        function wirePillRow(rowId, attr, setter) {
+            const row = document.getElementById(rowId);
+            if (!row) return;
+            row.addEventListener('click', (e) => {
+                const btn = e.target.closest(`[data-${attr}]`);
+                if (!btn) return;
+                row.querySelectorAll('.profile-edit-pill').forEach(b => b.classList.remove('picked'));
+                btn.classList.add('picked');
+                setter(btn.dataset[attr]);
+            });
+        }
+        wirePillRow('layoutRow',   'layout', v => { localLayout   = v; });
+        wirePillRow('bgEffectRow', 'bg',     v => { localBgEffect = v; });
+        wirePillRow('borderRow',   'border', v => { localBorder   = v; });
+
+        const frameGridEl = document.getElementById('frameGrid');
+        if (frameGridEl) {
+            frameGridEl.addEventListener('click', (e) => {
+                const btn = e.target.closest('[data-frame]');
+                if (!btn) return;
+                frameGridEl.querySelectorAll('.profile-edit-preset').forEach(b => b.classList.remove('picked'));
+                btn.classList.add('picked');
+                localFrame = btn.dataset.frame;
+            });
+        }
+
+        // Privacy checkbox grid
+        document.getElementById('privacyGrid')?.addEventListener('change', (e) => {
+            const cb = e.target.closest('input[type="checkbox"][data-priv]');
+            if (!cb) return;
+            localPrivacy[cb.dataset.priv] = cb.checked;
+        });
 
         // Bio live count
         const bioInput = document.getElementById('bioInput');
@@ -525,6 +760,8 @@
                 const accentRaw = document.getElementById('accentInput').value;
                 const accent = localAccent === '' ? '' : accentRaw;
                 const bgmUrl = (document.getElementById('bgmInput')?.value || '').trim();
+                const taglineVal = (document.getElementById('taglineInput')?.value || '').trim().slice(0, 60);
+                const statusVal  = (document.getElementById('statusInput')?.value  || '').trim().slice(0, 80);
                 await ArcadeAuth.updateProfile({
                     usernameColor: localUsernameColor,
                     profileBgm: bgmUrl,
@@ -533,6 +770,14 @@
                     bio: bioInput.value.trim().slice(0, 500),
                     accent: accent,
                     showcase: localShowcase,
+                    tagline: taglineVal,
+                    status: statusVal,
+                    avatarFrame: localFrame,
+                    layoutStyle: localLayout,
+                    bgEffect: localBgEffect,
+                    borderStyle: localBorder,
+                    artwork: localArtwork,
+                    privacy: localPrivacy,
                 });
                 // Refetch so we see fresh data, then re-render
                 const fresh = await ArcadeAuth.getProfile(profile.uid);

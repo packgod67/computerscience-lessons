@@ -61,6 +61,11 @@
                     <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
                 </svg>
             </button>
+            <!-- Personal header quote — editable for the signed-in user.
+                 Click to edit, blur to save, syncs via profile.headerQuote.
+                 Renders as italic, accent-colored text between the settings
+                 gear and the install button. -->
+            <span class="header-quote" id="headerQuote" tabindex="0" role="button" aria-label="Edit your header quote"></span>
             <div class="auth-area" id="authArea"></div>
         </div>
     </header>
@@ -165,6 +170,7 @@
     <script src="js/offlinepack.js"></script>
     <script src="js/coop.js"></script>
     <script src="js/install.js"></script>
+    <script src="js/headerquote.js"></script>
     <script src="js/friends.js"></script>
     <script src="js/achievements.js"></script>
     <script src="js/settings.js"></script>
