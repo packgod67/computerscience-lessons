@@ -183,6 +183,20 @@
     // "Revert to default" just removes the override and re-runs apply,
     // which clears the injected style and the theme's own decorations
     // come back unchanged.
+    // Sniff whether a stored wallpaper string is a video (mp4/webm/mov).
+    // Both data URLs (`data:video/...`) and ordinary URLs (`*.mp4`,
+    // `*.webm`) are considered. Anything else (including GIF + APNG)
+    // falls through to the image path, which is what we want — animated
+    // GIFs animate just fine in CSS background-image, no video element
+    // needed.
+    function isVideoWallpaper(url) {
+        if (!url) return false;
+        const s = String(url);
+        if (/^data:video\//i.test(s)) return true;
+        if (/\.(mp4|webm|mov|m4v)(\?|#|$)/i.test(s)) return true;
+        return false;
+    }
+
     function applyThemeWallpaper() {
         let style = document.getElementById('arcade-theme-wallpaper');
         if (!style) {
@@ -193,12 +207,56 @@
         const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
         const wp = SETTINGS.themeWallpapers || {};
         const url = wp[themeId];
+
+        // Always tear down the video element first (it's wrong for image
+        // wallpapers, and tearing down on every apply() keeps state clean
+        // when the user switches between video and image wallpapers).
+        const oldVideo = document.getElementById('arcade-wallpaper-video');
+        if (oldVideo) oldVideo.remove();
+
         if (!url) {
             style.textContent = '';
             return;
         }
-        // Escape any double-quotes / parens in the URL so we can drop
-        // it into a CSS string literal safely.
+
+        if (isVideoWallpaper(url)) {
+            // Video wallpaper — render a <video> behind the body content.
+            // CSS `background: url(<mp4>)` would silently fail — only
+            // images work in CSS background-image.
+            const video = document.createElement('video');
+            video.id = 'arcade-wallpaper-video';
+            video.src = url;
+            video.autoplay = true;
+            video.loop = true;
+            video.muted = true;
+            video.playsInline = true;
+            video.setAttribute('aria-hidden', 'true');
+            document.body.prepend(video);
+            // Suppress decorative pseudo-elements on the active theme +
+            // give the body a transparent background so the video shows.
+            style.textContent = `
+                html[data-theme="${themeId}"] body {
+                    background: #000 !important;
+                }
+                html[data-theme="${themeId}"] body::before,
+                html[data-theme="${themeId}"] body::after {
+                    display: none !important;
+                }
+                #arcade-wallpaper-video {
+                    position: fixed;
+                    inset: 0;
+                    width: 100%; height: 100%;
+                    object-fit: cover;
+                    z-index: -1;
+                    pointer-events: none;
+                }
+            `;
+            return;
+        }
+
+        // Image / GIF / APNG wallpaper — CSS background-image animates
+        // GIF + APNG natively, so nothing special needed beyond the
+        // `cover` sizing keyword for auto-fit.
         const safeUrl = String(url).replace(/"/g, '\\"');
         // Use !important to beat any inline body backgrounds that
         // themes.js sets via setProperty (the bg radial-gradient
@@ -379,6 +437,12 @@
             <section class="arcade-settings-section">
                 <h3>Wallpaper for current theme</h3>
                 <p class="arcade-settings-help">Override the active theme's background with your own image, GIF, or video URL. Each theme has its own override slot — switching themes brings the matching wallpaper back. Stored on this device only (too big to sync).</p>
+                <div class="arcade-settings-wp-dropzone" id="setWpDropzone" tabindex="0">
+                    <div class="arcade-settings-wp-dropzone-hint">
+                        <span class="arcade-settings-wp-dropzone-icon">&#128247;</span>
+                        Drop an image / GIF / video here, paste from clipboard (Ctrl+V), or use the buttons below.
+                    </div>
+                </div>
                 <div class="arcade-settings-row arcade-settings-wp-row" id="setWpRow">
                     <button class="auth-submit" id="setWpUpload" type="button">Upload file…</button>
                     <button class="auth-submit-secondary" id="setWpUrl" type="button">Paste URL</button>
@@ -510,14 +574,53 @@
         }
     }
 
+    // Common path: take a File (from input/clipboard/drop), validate +
+    // read it into a data URL, persist as the active theme's wallpaper,
+    // refresh the settings UI. Returns true on success.
+    async function applyFileAsWallpaper(file, pane) {
+        if (!file) return false;
+        const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
+        // Reject non-image/non-video silently — drop events deliver any
+        // file type, including text and folders, and we don't want a
+        // .pdf becoming the wallpaper.
+        if (!/^(image|video)\//.test(file.type || '')) {
+            alert('That file isn\'t an image or video.');
+            return false;
+        }
+        // 8 MB hard cap — localStorage typically tops out at 5-10 MB
+        // per origin. Beyond that the next set() throws QuotaExceeded.
+        if (file.size > 8 * 1024 * 1024) {
+            alert('That file is ' + Math.round(file.size / 1024 / 1024) + ' MB. Local storage caps around 5–10 MB; please host the file externally and use the "Paste URL" button.');
+            return false;
+        }
+        try {
+            const dataUrl = await fileToDataUrl(file);
+            const wp = Object.assign({}, SETTINGS.themeWallpapers || {});
+            wp[themeId] = dataUrl;
+            try {
+                set({ themeWallpapers: wp });
+            } catch (e) {
+                // localStorage quota exceeded — settings.set saves
+                // synchronously, so we can catch and surface here.
+                alert('Couldn\'t save — local storage is full. Try a smaller file or use the URL option.');
+                return false;
+            }
+            refreshWallpaperUi(pane);
+            return true;
+        } catch (e) {
+            alert('Upload failed: ' + (e?.message || e));
+            return false;
+        }
+    }
+
     function wireWallpaperControls(pane) {
         const upload = pane.querySelector('#setWpUpload');
         const urlBtn = pane.querySelector('#setWpUrl');
         const clear = pane.querySelector('#setWpClear');
+        const dropzone = pane.querySelector('#setWpDropzone');
         if (!upload || !urlBtn || !clear) return;
 
         upload.addEventListener('click', () => {
-            const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
             const input = document.createElement('input');
             input.type = 'file';
             input.accept = 'image/*,video/*,.gif,.webm,.mp4';
@@ -527,27 +630,11 @@
                 const file = input.files?.[0];
                 input.remove();
                 if (!file) return;
-                // 8 MB hard cap — localStorage typically tops out at
-                // 5-10 MB per origin. Above that, ask the user to
-                // host externally and use the URL paste path instead.
-                if (file.size > 8 * 1024 * 1024) {
-                    alert('That file is ' + Math.round(file.size / 1024 / 1024) + ' MB. Local storage caps around 5–10 MB; please host the file externally and use the "Paste URL" button.');
-                    return;
-                }
                 upload.disabled = true;
                 upload.textContent = 'Reading…';
-                try {
-                    const dataUrl = await fileToDataUrl(file);
-                    const wp = Object.assign({}, SETTINGS.themeWallpapers || {});
-                    wp[themeId] = dataUrl;
-                    set({ themeWallpapers: wp });
-                    refreshWallpaperUi(pane);
-                } catch (e) {
-                    alert('Upload failed: ' + (e?.message || e));
-                } finally {
-                    upload.disabled = false;
-                    upload.textContent = 'Upload file…';
-                }
+                await applyFileAsWallpaper(file, pane);
+                upload.disabled = false;
+                upload.textContent = 'Upload file…';
             });
             input.click();
         });
@@ -569,6 +656,87 @@
             set({ themeWallpapers: wp });
             refreshWallpaperUi(pane);
         });
+
+        // ─── Drag-and-drop on the dropzone ──────────────────────────
+        if (dropzone) {
+            ['dragenter', 'dragover'].forEach(evt => {
+                dropzone.addEventListener(evt, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.add('is-dragover');
+                });
+            });
+            ['dragleave', 'drop'].forEach(evt => {
+                dropzone.addEventListener(evt, (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    dropzone.classList.remove('is-dragover');
+                });
+            });
+            dropzone.addEventListener('drop', async (e) => {
+                const dt = e.dataTransfer;
+                if (!dt) return;
+                // Files first (drag-from-OS), then URI list (drag from
+                // another browser tab which gives us a URL string).
+                const file = dt.files && dt.files[0];
+                if (file) {
+                    await applyFileAsWallpaper(file, pane);
+                    return;
+                }
+                const urlList = dt.getData('text/uri-list') || dt.getData('text/plain');
+                if (urlList) {
+                    const u = urlList.trim().split(/\s+/)[0];
+                    if (/^https?:\/\//i.test(u)) {
+                        const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
+                        const wp = Object.assign({}, SETTINGS.themeWallpapers || {});
+                        wp[themeId] = u;
+                        set({ themeWallpapers: wp });
+                        refreshWallpaperUi(pane);
+                    }
+                }
+            });
+
+            // ─── Clipboard paste (Ctrl+V on the dropzone or its
+            // container while it has focus) ─────────────────────────
+            // We listen on the dropzone (focusable via tabindex="0")
+            // AND on the modal container as a whole, so the user can
+            // paste anywhere in the settings panel without having to
+            // tab into the dropzone first.
+            const onPaste = async (e) => {
+                const items = e.clipboardData?.items;
+                if (!items) return;
+                for (const it of items) {
+                    if (it.kind === 'file') {
+                        const file = it.getAsFile();
+                        if (file) {
+                            e.preventDefault();
+                            await applyFileAsWallpaper(file, pane);
+                            return;
+                        }
+                    }
+                }
+                // No file in clipboard — try a URL string
+                const text = e.clipboardData.getData('text/plain');
+                if (text && /^https?:\/\//i.test(text.trim())) {
+                    const u = text.trim().split(/\s+/)[0];
+                    e.preventDefault();
+                    const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
+                    const wp = Object.assign({}, SETTINGS.themeWallpapers || {});
+                    wp[themeId] = u;
+                    set({ themeWallpapers: wp });
+                    refreshWallpaperUi(pane);
+                }
+            };
+            dropzone.addEventListener('paste', onPaste);
+            // Modal-wide paste — only fires when the settings modal is
+            // the active container (paste events bubble to document).
+            // Scoped via the pane node so we don't leak past close.
+            pane.addEventListener('paste', onPaste);
+
+            // Click the dropzone → triggers the file picker (so users
+            // who don't know about drag-and-drop still get a hint).
+            dropzone.addEventListener('click', () => upload.click());
+        }
 
         // Initial state
         refreshWallpaperUi(pane);

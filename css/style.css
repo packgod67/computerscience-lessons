@@ -8279,6 +8279,93 @@ button, a, input[type="button"], input[type="submit"], .tab-btn, .cat-btn {
     .ch-row-cat { grid-column: 1 / 2; }
 }
 
+/* Errors admin dashboard (reuses .ch-panel base) */
+.ea-header-actions { display: flex; gap: 8px; }
+.ea-danger { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
+.ea-danger:hover { background: rgba(239, 68, 68, 0.25); }
+.ea-cap { color: var(--text-secondary); font-size: 0.8rem; }
+.ea-filter-row { margin: 12px 0; }
+.ea-filter-row .auth-input { width: 100%; }
+.ea-list { display: flex; flex-direction: column; gap: 6px; }
+.ea-row {
+    background: rgba(255,255,255,0.04);
+    border-radius: 6px;
+    border: 1px solid rgba(255,255,255,0.06);
+}
+.ea-row[open] { background: rgba(255,255,255,0.06); }
+.ea-row-summary {
+    display: grid;
+    grid-template-columns: 50px 1fr 200px 90px;
+    align-items: center;
+    gap: 12px;
+    padding: 10px 12px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    list-style: none;
+}
+.ea-row-summary::-webkit-details-marker { display: none; }
+.ea-count {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    font-weight: 700;
+    text-align: center;
+    border-radius: 4px;
+    padding: 2px 6px;
+    font-size: 0.78rem;
+}
+.ea-msg { color: var(--text-primary); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-family: ui-monospace, monospace; }
+.ea-source { color: var(--text-secondary); font-size: 0.78rem; font-family: ui-monospace, monospace; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ea-time { color: var(--text-secondary); font-size: 0.78rem; text-align: right; }
+.ea-row-body { padding: 0 12px 12px; border-top: 1px solid rgba(255,255,255,0.06); }
+.ea-stack {
+    background: rgba(0,0,0,0.4);
+    color: #fca5a5;
+    padding: 10px 12px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    overflow-x: auto;
+    margin: 12px 0;
+    white-space: pre;
+    max-height: 200px;
+}
+.ea-meta {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 6px;
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 10px;
+}
+.ea-occ-list { display: flex; flex-direction: column; gap: 4px; }
+.ea-occ {
+    display: grid;
+    grid-template-columns: 1fr 180px 140px 32px;
+    align-items: center;
+    gap: 8px;
+    background: rgba(0,0,0,0.2);
+    padding: 4px 8px;
+    border-radius: 4px;
+    font-size: 0.75rem;
+}
+.ea-occ code { color: var(--accent); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.ea-occ-del {
+    background: transparent;
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    color: #fca5a5;
+    border-radius: 4px;
+    cursor: pointer;
+    line-height: 1;
+    width: 24px; height: 24px;
+}
+.ea-occ-del:hover { background: rgba(239, 68, 68, 0.2); }
+.ea-occ-more { color: var(--text-secondary); font-size: 0.78rem; padding: 4px 8px; }
+@media (max-width: 720px) {
+    .ea-row-summary { grid-template-columns: 50px 1fr 80px; }
+    .ea-source { display: none; }
+    .ea-occ { grid-template-columns: 1fr 32px; }
+    .ea-occ > span { display: none; }
+}
+
 /* Pull-to-refresh indicator (mobile home grid) */
 #arcade-ptr-indicator {
     position: fixed;
@@ -8397,6 +8484,37 @@ button, a, input[type="button"], input[type="submit"], .tab-btn, .cat-btn {
     font-size: 0.85rem;
     word-break: break-all;
 }
+.arcade-settings-wp-dropzone {
+    margin: 8px 0 12px;
+    padding: 22px 16px;
+    border: 2px dashed rgba(255,255,255,0.18);
+    border-radius: 10px;
+    background: rgba(255,255,255,0.02);
+    color: var(--text-secondary);
+    text-align: center;
+    cursor: pointer;
+    transition: border-color 120ms, background 120ms, transform 120ms;
+    outline: none;
+}
+.arcade-settings-wp-dropzone:hover,
+.arcade-settings-wp-dropzone:focus-visible {
+    border-color: var(--accent, #7c3aed);
+    background: rgba(124, 58, 237, 0.08);
+}
+.arcade-settings-wp-dropzone.is-dragover {
+    border-color: var(--accent, #7c3aed);
+    background: rgba(124, 58, 237, 0.18);
+    transform: scale(1.01);
+}
+.arcade-settings-wp-dropzone-hint {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    pointer-events: none;
+}
+.arcade-settings-wp-dropzone-icon { font-size: 1.6rem; }
 
 /* ===========================================================
    New components: share button, comments, top games, achievements,

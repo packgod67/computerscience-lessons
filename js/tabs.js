@@ -11,6 +11,7 @@
     const cheatsView = document.getElementById('cheatsView');
     const friendsView = document.getElementById('friendsView');
     const cataloghealthView = document.getElementById('cataloghealthView');
+    const errorsadminView = document.getElementById('errorsadminView');
 
     const views = {
         games: gamesView,
@@ -24,6 +25,7 @@
         ban: banView,
         cheats: cheatsView,
         cataloghealth: cataloghealthView,
+        errorsadmin: errorsadminView,
     };
     let activeTab = 'games';
     let usersLoaded = false;
@@ -81,6 +83,13 @@
             chBtn.innerHTML = '&#129514; Health'; // 🧪
             chBtn.title = 'Catalog health dashboard (admin only)';
             tabBar.appendChild(chBtn);
+
+            const errBtn = document.createElement('button');
+            errBtn.className = 'tab-btn tab-btn-errorsadmin';
+            errBtn.dataset.tab = 'errorsadmin';
+            errBtn.innerHTML = '&#128680; Errors'; // 🚨
+            errBtn.title = 'Client error log (admin only)';
+            tabBar.appendChild(errBtn);
         }
         // Apply user-customized order/visibility AFTER admin tabs are added
         // (so admins can reorder/hide Bans + Cheats too if they want).
@@ -148,6 +157,9 @@
         }
         if (tab === 'cataloghealth' && window.ArcadeCatalogHealth) {
             ArcadeCatalogHealth.renderCatalogHealthView();
+        }
+        if (tab === 'errorsadmin' && window.ArcadeErrorsAdmin) {
+            ArcadeErrorsAdmin.renderErrorsAdminView();
         }
     });
 })();
