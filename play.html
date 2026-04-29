@@ -8,15 +8,34 @@
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" href="assets/logo.png">
     <link rel="icon" href="assets/logo.png">
-    <!-- coi-serviceworker registers a SW that intercepts all responses
-         on this origin and adds Cross-Origin-Opener-Policy: same-origin
-         + Cross-Origin-Embedder-Policy: require-corp. That makes
-         play.html (and any wrapper iframed inside) cross-origin-isolated,
-         so Godot 4 / Unity / any engine that needs SharedArrayBuffer
-         will boot. The worker proxy already sends matching headers on
-         the inner iframe; this closes the upstream half of the chain.
-         See gzuidhof/coi-serviceworker on GitHub. -->
-    <script src="https://cdn.jsdelivr.net/gh/gzuidhof/coi-serviceworker@latest/coi-serviceworker.min.js"></script>
+    <!-- Cross-origin isolation bootstrap: the arcade's main service worker
+         (sw.js) injects COOP same-origin + COEP credentialless headers
+         into every navigation response on this origin. But on FIRST visit
+         the SW isn't yet controlling the page, so the initial document
+         load lacks the headers. If COI isn't active by the time the SW
+         takes over, force a one-time reload — second load comes through
+         the SW and IS cross-origin-isolated. The sessionStorage guard
+         prevents an infinite reload loop on browsers that don't support
+         service workers. -->
+    <script>
+    (function () {
+        if (window.crossOriginIsolated) return;
+        if (!('serviceWorker' in navigator)) return;
+        if (sessionStorage.getItem('arcade-coi-reloaded') === '1') return;
+        navigator.serviceWorker.register('sw.js').then(function () {
+            return navigator.serviceWorker.ready;
+        }).then(function () {
+            // Wait one tick for the SW to actually start controlling
+            // the page, then reload if we're still not isolated.
+            setTimeout(function () {
+                if (!window.crossOriginIsolated && navigator.serviceWorker.controller) {
+                    sessionStorage.setItem('arcade-coi-reloaded', '1');
+                    location.reload();
+                }
+            }, 100);
+        }).catch(function () { /* ignore */ });
+    })();
+    </script>
     <!-- Google Fonts for user-selected font families (must match index.html) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>

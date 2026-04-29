@@ -7,7 +7,7 @@
 // - Never touch cross-origin requests (CDNs like libretro, jsdelivr handle
 //   their own caching via HTTP headers)
 
-const CACHE_NAME = 'arcade-shell-v90';
+const CACHE_NAME = 'arcade-shell-v91';
 const SHELL_ASSETS = [
     './',
     './index.html',
@@ -148,17 +148,41 @@ self.addEventListener('fetch', (event) => {
         return;
     }
 
-    // HTML navigations: network-first so users get fresh UI, fall back offline
+    // HTML navigations: network-first so users get fresh UI, fall back offline.
+    //
+    // We ALSO rewrite the response to inject Cross-Origin-Opener-Policy and
+    // Cross-Origin-Embedder-Policy headers. Render / GitHub Pages / etc.
+    // don't let us configure response headers on .html files at the host
+    // level, but the SW can do it on the way out. This makes play.html (and
+    // every game wrapper at /games/*.html) cross-origin-isolated, which is
+    // a hard requirement for Godot 4 / Unity / any engine using
+    // SharedArrayBuffer. credentialless is the permissive flavor —
+    // sub-resources don't need explicit CORP. Pairs with the Cloudflare
+    // worker's matching headers on /itch/ responses.
     if (req.mode === 'navigate' || req.destination === 'document') {
-        event.respondWith(
-            fetch(req).then((resp) => {
+        event.respondWith((async () => {
+            let resp;
+            try {
+                resp = await fetch(req);
                 if (resp.ok) {
                     const copy = resp.clone();
                     caches.open(CACHE_NAME).then((c) => c.put(req, copy));
                 }
-                return resp;
-            }).catch(() => caches.match(req).then((r) => r || caches.match('./index.html')))
-        );
+            } catch {
+                resp = await caches.match(req) || await caches.match('./index.html');
+                if (!resp) return new Response('offline', { status: 503 });
+            }
+            // Clone the response so we can rewrite headers without consuming
+            // the body.
+            const headers = new Headers(resp.headers);
+            headers.set('Cross-Origin-Opener-Policy', 'same-origin');
+            headers.set('Cross-Origin-Embedder-Policy', 'credentialless');
+            return new Response(resp.body, {
+                status: resp.status,
+                statusText: resp.statusText,
+                headers,
+            });
+        })());
         return;
     }
 
