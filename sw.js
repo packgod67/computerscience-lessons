@@ -7,7 +7,7 @@
 // - Never touch cross-origin requests (CDNs like libretro, jsdelivr handle
 //   their own caching via HTTP headers)
 
-const CACHE_NAME = 'arcade-shell-v96';
+const CACHE_NAME = 'arcade-shell-v97';
 const SHELL_ASSETS = [
     './',
     './index.html',
@@ -43,6 +43,7 @@ const SHELL_ASSETS = [
     './js/pull-to-refresh.js',
     './js/telemetry.js',
     './js/cataloghealth.js',
+    './js/save-queue.js',
     './status.html',
     './sitemap.xml',
     './coop.html',
@@ -72,6 +73,22 @@ self.addEventListener('install', (event) => {
             );
         }).then(() => self.skipWaiting())
     );
+});
+
+// Background Sync: when a queued save needs to be flushed and the user
+// is offline, saves.js registers `arcade-save-sync`. Chrome / Edge fire
+// this event when connectivity returns even if the tab is closed. We
+// can't run the Firebase SDK in the SW directly, so instead we wake any
+// open client (page) and ask it to drain the queue. If no client is
+// open, the page will drain on its own next load via save-queue.js.
+self.addEventListener('sync', (event) => {
+    if (event.tag !== 'arcade-save-sync') return;
+    event.waitUntil((async () => {
+        const clients = await self.clients.matchAll({ includeUncontrolled: true, type: 'window' });
+        for (const client of clients) {
+            try { client.postMessage({ type: 'drain-save-queue' }); } catch {}
+        }
+    })());
 });
 
 self.addEventListener('activate', (event) => {

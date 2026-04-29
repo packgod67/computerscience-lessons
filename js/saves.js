@@ -376,7 +376,7 @@
                 } catch {}
             }
 
-            await getDb().collection('user_saves').add({
+            const payload = {
                 uid: ArcadeAuth.getUser().uid,
                 label,
                 gameId,
@@ -386,11 +386,44 @@
                 size: file.size,
                 dataUrl,
                 thumbnail,
-                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-            });
+            };
 
-            progressEl.textContent = 'Saved.';
-            setTimeout(() => { progressEl.style.display = 'none'; }, 1500);
+            // Try direct Firestore write. If we're offline OR the write
+            // fails (network blip, Firestore down), queue to IndexedDB
+            // so we don't lose the save. The queue drains on the next
+            // `online` event or page load.
+            const offline = (typeof navigator !== 'undefined') && navigator.onLine === false;
+            try {
+                if (offline) throw new Error('offline');
+                await getDb().collection('user_saves').add({
+                    ...payload,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                });
+                progressEl.textContent = 'Saved.';
+            } catch (writeErr) {
+                if (window.ArcadeSaveQueue) {
+                    try {
+                        await ArcadeSaveQueue.enqueue(payload);
+                        // Also tell the SW to schedule a background sync
+                        // so we get one more attempt if the tab closes
+                        // before the user comes back online.
+                        if ('serviceWorker' in navigator && 'SyncManager' in window) {
+                            try {
+                                const reg = await navigator.serviceWorker.ready;
+                                if (reg.sync) await reg.sync.register('arcade-save-sync');
+                            } catch {}
+                        }
+                        progressEl.textContent = offline
+                            ? 'Offline — queued. Will upload when connection returns.'
+                            : 'Upload failed — queued for retry.';
+                    } catch (qErr) {
+                        progressEl.textContent = 'Save failed: ' + writeErr.message;
+                    }
+                } else {
+                    progressEl.textContent = 'Save failed: ' + writeErr.message;
+                }
+            }
+            setTimeout(() => { progressEl.style.display = 'none'; }, 2500);
             fileInput.value = '';
             labelInput.value = '';
             // Reset the searchable picker — hidden id, visible search text,
@@ -471,4 +504,32 @@
     window.ArcadeSaves = {
         renderSavesView,
     };
+
+    // ─── Background save-sync wiring ────────────────────────────────
+    // Register an uploader function with the queue so the queue can
+    // replay pending saves through us. Then trigger a drain on page
+    // load (catches saves queued in a previous session) and on the
+    // next online event (handled inside save-queue.js).
+    if (window.ArcadeSaveQueue) {
+        ArcadeSaveQueue.registerUploader(async (payload) => {
+            const dbRef = getDb();
+            if (!dbRef) throw new Error('no db');
+            await dbRef.collection('user_saves').add({
+                ...payload,
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            });
+        });
+        // Drain on auth-ready so we don't try before the user is logged in.
+        const tryDrain = () => {
+            const uid = ArcadeAuth.getUser?.()?.uid;
+            if (!uid) return;
+            ArcadeSaveQueue.drain({ uid }).then((r) => {
+                if (r.uploaded > 0) {
+                    console.log(`[saves] drained ${r.uploaded} queued save${r.uploaded === 1 ? '' : 's'}`);
+                }
+            });
+        };
+        if (ArcadeAuth.waitForAuth) ArcadeAuth.waitForAuth().then(tryDrain);
+        else setTimeout(tryDrain, 1500);
+    }
 })();
