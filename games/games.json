@@ -9531,53 +9531,149 @@
   },
   {
     "id": "clhobo",
-    "title": "Clhobo",
-    "category": "Other",
-    "path": "games/clhobo.html"
+    "title": "Hobo",
+    "category": "Fighting",
+    "path": "games/clhobo.html",
+    "description": "The original 2009 SeethingSwarm beat-em-up. Play a homeless brawler punching, kicking, and headbutting his way through everyone he meets — including cops, gangs, and a particularly aggressive mailman.",
+    "tags": [
+      "beat-em-up",
+      "fighting",
+      "action",
+      "comedy",
+      "flash",
+      "ruffle",
+      "as3",
+      "classic",
+      "browser-native"
+    ]
   },
   {
     "id": "clhobo2",
-    "title": "Clhobo 2",
-    "category": "Other",
-    "path": "games/clhobo2.html"
+    "title": "Hobo 2: Prison Brawl",
+    "category": "Fighting",
+    "path": "games/clhobo2.html",
+    "description": "Hobo gets locked up. Brawl through cell blocks, the cafeteria, and the warden's office to bust out — same chunky combat moves as the original, harder enemies, more weapons.",
+    "tags": [
+      "beat-em-up",
+      "fighting",
+      "action",
+      "comedy",
+      "prison",
+      "flash",
+      "ruffle",
+      "as3",
+      "browser-native"
+    ]
   },
   {
     "id": "clhobo3",
-    "title": "Clhobo 3",
-    "category": "Other",
-    "path": "games/clhobo3.html"
+    "title": "Hobo 3: Wanted",
+    "category": "Fighting",
+    "path": "games/clhobo3.html",
+    "description": "Escaped, infamous, and very wanted. Fight through SWAT teams and special forces sent specifically to bring you in — boss fight on a helicopter included.",
+    "tags": [
+      "beat-em-up",
+      "fighting",
+      "action",
+      "comedy",
+      "flash",
+      "ruffle",
+      "as3",
+      "browser-native"
+    ]
   },
   {
     "id": "clhobo4",
-    "title": "Clhobo 4",
-    "category": "Other",
-    "path": "games/clhobo4.html"
+    "title": "Hobo 4: Total War",
+    "category": "Fighting",
+    "path": "games/clhobo4.html",
+    "description": "The army's involved now. Punch tanks, headbutt soldiers, and somehow survive an artillery strike. Series-peak ridiculousness.",
+    "tags": [
+      "beat-em-up",
+      "fighting",
+      "action",
+      "comedy",
+      "war",
+      "flash",
+      "ruffle",
+      "as3",
+      "browser-native"
+    ]
   },
   {
     "id": "clhobo5",
-    "title": "Clhobo 5",
-    "category": "Other",
-    "path": "games/clhobo5.html"
+    "title": "Hobo 5: Space Brawls",
+    "category": "Fighting",
+    "path": "games/clhobo5.html",
+    "description": "Aliens abduct the Hobo. He punches them. In space. Lasers, low gravity, and a final boss who is, predictably, fightable with bare fists.",
+    "tags": [
+      "beat-em-up",
+      "fighting",
+      "action",
+      "comedy",
+      "space",
+      "sci-fi",
+      "flash",
+      "ruffle",
+      "as3",
+      "browser-native"
+    ]
   },
   {
     "id": "clhobo6",
-    "title": "Clhobo 6",
-    "category": "Other",
-    "path": "games/clhobo6.html"
+    "title": "Hobo 6: Hell",
+    "category": "Fighting",
+    "path": "games/clhobo6.html",
+    "description": "Hobo dies. Hobo wakes up in Hell. Hobo brawls demons. Lava platforms, pitchfork-wielding minions, and a Satan boss fight.",
+    "tags": [
+      "beat-em-up",
+      "fighting",
+      "action",
+      "comedy",
+      "hell",
+      "supernatural",
+      "flash",
+      "ruffle",
+      "as3",
+      "browser-native"
+    ]
   },
   {
     "id": "clhobo7",
-    "title": "Clhobo 7",
-    "category": "Other",
-    "path": "games/clhobo7.html"
+    "title": "Hobo 7: Heaven",
+    "category": "Fighting",
+    "path": "games/clhobo7.html",
+    "description": "Series finale. Hobo goes up. Heaven turns out to also have things that need punching — angels, archangels, and the one guy at the gate. Closes the series with a final boss fight on a literal cloud.",
+    "tags": [
+      "beat-em-up",
+      "fighting",
+      "action",
+      "comedy",
+      "heaven",
+      "supernatural",
+      "flash",
+      "ruffle",
+      "as3",
+      "browser-native"
+    ]
   },
   {
     "id": "clhobovszombies",
-    "title": "Clhobovszombies",
-    "category": "Other",
+    "title": "Hobo vs Zombies",
+    "category": "Fighting",
     "path": "games/clhobovszombies.html",
+    "description": "Spinoff: zombies overrun the city, the Hobo is the last bare-knuckle option humanity has. Same combat system, but now everyone bleeds green.",
     "tags": [
-      "horror"
+      "beat-em-up",
+      "fighting",
+      "action",
+      "zombies",
+      "horror",
+      "comedy",
+      "flash",
+      "ruffle",
+      "as3",
+      "browser-native"
     ]
   },
   {
@@ -24187,9 +24283,27 @@
   },
   {
     "id": "clterra",
-    "title": "Clterra",
-    "category": "Other",
-    "path": "games/clterra.html"
+    "title": "Terra (Terraria Demake)",
+    "category": "Adventure",
+    "path": "games/clterra.html",
+    "description": "Tiny fanmade PICO-8 demake of Terraria. 256×128 tile map, multiple biomes, four bosses, mining + crafting, plus a slate of weapons and enemies — all in 32 KB of cart space.",
+    "popular": false,
+    "thumbnail": "https://img.itch.zone/aW1nLzEwODI0MDk4LnBuZw==/original/OoUacJ.png",
+    "tags": [
+      "terraria-like",
+      "demake",
+      "sandbox",
+      "mining",
+      "crafting",
+      "2d",
+      "pixel-art",
+      "pico-8",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native"
+    ],
+    "addedAt": "2026-04-27T18:00:00.000Z"
   },
   {
     "id": "clterraria",
