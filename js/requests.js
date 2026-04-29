@@ -40,6 +40,9 @@
     let items = [];
     let unsub = null;
     let activeFilter = 'open';  // open | done | rejected | all
+    // 'top'    = upvotes desc, newest as tiebreak (default)
+    // 'newest' = createdAt desc, no tiebreak fallback
+    let activeSort = localStorage.getItem('arcade-requests-sort') || 'top';
     let requestsActive = false;
 
     function getDb() {
@@ -92,17 +95,26 @@
         const isAdmin = ArcadeAuth.isAdmin();
         const uid = ArcadeAuth.getUser()?.uid;
 
-        // Filter + sort: pinned-status first (open on top), then upvotes desc,
-        // then newest first.
+        // Filter, then sort by user-selected mode (persisted to
+        // localStorage). 'top' = upvotes desc with newest as the
+        // tiebreak; 'newest' = pure recency.
         const filtered = items.filter(x => activeFilter === 'all' ? true : x.status === activeFilter);
-        filtered.sort((a, b) => {
-            const av = (a.upvotes || []).length;
-            const bv = (b.upvotes || []).length;
-            if (av !== bv) return bv - av;
-            const ta = a.createdAt?.toMillis?.() || 0;
-            const tb = b.createdAt?.toMillis?.() || 0;
-            return tb - ta;
-        });
+        if (activeSort === 'newest') {
+            filtered.sort((a, b) => {
+                const ta = a.createdAt?.toMillis?.() || 0;
+                const tb = b.createdAt?.toMillis?.() || 0;
+                return tb - ta;
+            });
+        } else {
+            filtered.sort((a, b) => {
+                const av = (a.upvotes || []).length;
+                const bv = (b.upvotes || []).length;
+                if (av !== bv) return bv - av;
+                const ta = a.createdAt?.toMillis?.() || 0;
+                const tb = b.createdAt?.toMillis?.() || 0;
+                return tb - ta;
+            });
+        }
 
         const listHtml = filtered.length
             ? filtered.map(r => renderCard(r, uid, isAdmin)).join('')
@@ -125,6 +137,10 @@
                             ${f[0].toUpperCase() + f.slice(1)}${f !== 'all' ? ` (${counts[f] || 0})` : ''}
                         </button>`
                     ).join('')}
+                    <span class="requests-sort-label">Sort:</span>
+                    ${[['top', 'Top'], ['newest', 'Newest']].map(([v, l]) =>
+                        `<button class="requests-sort${activeSort === v ? ' is-active' : ''}" data-sort="${v}">${l}</button>`
+                    ).join('')}
                 </div>
                 <div class="requests-list">${listHtml}</div>
             </div>
@@ -139,6 +155,13 @@
         container.querySelectorAll('.requests-filter').forEach(b => {
             b.addEventListener('click', () => {
                 activeFilter = b.dataset.filter;
+                build(container);
+            });
+        });
+        container.querySelectorAll('.requests-sort').forEach(b => {
+            b.addEventListener('click', () => {
+                activeSort = b.dataset.sort;
+                try { localStorage.setItem('arcade-requests-sort', activeSort); } catch {}
                 build(container);
             });
         });
