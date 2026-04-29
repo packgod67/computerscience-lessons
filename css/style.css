@@ -8189,6 +8189,22 @@ button, a, input[type="button"], input[type="submit"], .tab-btn, .cat-btn {
     }
 }
 
+/* Watch party — viewer list on host side */
+.coop-viewer-list {
+    margin: 12px 0 4px;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+    line-height: 1.4;
+    max-height: 100px;
+    overflow-y: auto;
+}
+.coop-viewer-list strong { color: var(--text-primary); }
+.coop-no-viewers { opacity: 0.65; }
+
 /* Save state thumbnails */
 .save-row { display: flex; align-items: center; gap: 12px; }
 .save-thumb {
