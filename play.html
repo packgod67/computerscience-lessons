@@ -8,6 +8,15 @@
     <link rel="manifest" href="manifest.webmanifest">
     <link rel="apple-touch-icon" href="assets/logo.png">
     <link rel="icon" href="assets/logo.png">
+    <!-- coi-serviceworker registers a SW that intercepts all responses
+         on this origin and adds Cross-Origin-Opener-Policy: same-origin
+         + Cross-Origin-Embedder-Policy: require-corp. That makes
+         play.html (and any wrapper iframed inside) cross-origin-isolated,
+         so Godot 4 / Unity / any engine that needs SharedArrayBuffer
+         will boot. The worker proxy already sends matching headers on
+         the inner iframe; this closes the upstream half of the chain.
+         See gzuidhof/coi-serviceworker on GitHub. -->
+    <script src="https://cdn.jsdelivr.net/gh/gzuidhof/coi-serviceworker@latest/coi-serviceworker.min.js"></script>
     <!-- Google Fonts for user-selected font families (must match index.html) -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
