@@ -11032,6 +11032,14 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
     margin-right: 4px;
     vertical-align: -0.4em;
 }
+.profile-quote-widget::after {
+    content: '”';
+    font-size: 2rem;
+    color: var(--profile-accent, #7c3aed);
+    line-height: 0.5;
+    margin-left: 4px;
+    vertical-align: -0.4em;
+}
 
 /* ── Music embed iframe ────────────────────────────────────────── */
 .profile-music-embed {
