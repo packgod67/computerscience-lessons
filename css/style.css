@@ -10758,7 +10758,10 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
 .profile-accessory-crown {
     top: -22px; left: 50%; transform: translateX(-50%) rotate(-8deg);
 }
-.profile-accessory-crown::before { content: '\u{1F451}'; }
+/* CSS doesn't accept the JS-style \u{1F451} escape — it must be the
+   literal char or the bare \1F451 hex escape. We use literals for
+   readability + because the source file is UTF-8. */
+.profile-accessory-crown::before { content: '👑'; }
 .profile-accessory-halo {
     top: -18px; left: 50%; transform: translateX(-50%);
     width: 80px; height: 16px;
@@ -10770,16 +10773,16 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
     top: -28px; left: 50%; transform: translateX(-50%) rotate(-12deg);
     font-size: 36px;
 }
-.profile-accessory-partyhat::before { content: '\u{1F389}'; }
+.profile-accessory-partyhat::before { content: '🎉'; }
 .profile-accessory-devilhorns {
     top: -16px; left: 50%; transform: translateX(-50%);
 }
-.profile-accessory-devilhorns::before { content: '\u{1F608}'; font-size: 28px; }
+.profile-accessory-devilhorns::before { content: '😈'; font-size: 28px; }
 .profile-accessory-headphones {
     top: -8px; left: 50%; transform: translateX(-50%);
     font-size: 36px;
 }
-.profile-accessory-headphones::before { content: '\u{1F3A7}'; }
+.profile-accessory-headphones::before { content: '🎧'; }
 
 /* ── Profile entry animations ──────────────────────────────────── */
 @keyframes profile-entry-fade { from { opacity: 0; } to { opacity: 1; } }
