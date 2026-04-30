@@ -623,6 +623,23 @@
             'bgEffect', 'borderStyle', 'artwork', 'privacy',
             // Personal header tagline (rendered between settings + install)
             'headerQuote',
+            // Profile customization v3 (everything fancy)
+            'usernameEffect',   // 'none'|'rainbow'|'fire'|'glitch'|'typewriter'|'sparkle'
+            'usernameGlow',     // color string
+            'avatarAura',       // 'none'|'hearts'|'sparks'|'fire'|'planets'|'butterflies'
+            'avatarAccessory',  // 'none'|'crown'|'halo'|'partyhat'|'devilhorns'|'headphones'
+            'entryAnimation',   // 'none'|'fade'|'slide'|'pixelate'|'glitch'|'zoom'|'shatter'
+            'profileFont',      // 'system'|'pixel'|'gothic'|'futuristic'|'handwritten'|'serif'|'mono'|'rounded'|'elegant'
+            'profileCursor',    // 'default'|'sword'|'paw'|'magic'|'pixel'|'crosshair'
+            'cursorTrail',      // 'none'|'sparkles'|'hearts'|'stars'|'fire'|'dots'
+            'titleText',        // string above username (e.g. "Level 99 Wizard")
+            'enterSound',       // url played on profile open
+            'intoTags',         // ["RPGs", "Roguelites", ...]
+            'quoteWidget',      // pinned quote string
+            'musicEmbed',       // spotify/youtube/soundcloud embed url
+            'reactions',        // { fire: 12, skull: 4, crown: 3, ... } - written by visitors via cross-user hatch
+            // Site-wide
+            'tabBackgrounds',   // { games: '#color', users: '...', ... } - per-tab subtle bg color
         ];
         const safe = {};
         for (const k of allowed) {

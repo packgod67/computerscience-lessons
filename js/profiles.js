@@ -132,6 +132,19 @@
         const privacy   = profile.privacy || {};
         const artwork   = Array.isArray(profile.artwork) ? profile.artwork.slice(0, 4) : []; // up to 4 large showcase images
 
+        // Profile-customization v3 fields
+        const usernameEffect  = profile.usernameEffect  || 'none';
+        const usernameGlow    = profile.usernameGlow    || '';
+        const avatarAura      = profile.avatarAura      || 'none';
+        const avatarAccessory = profile.avatarAccessory || 'none';
+        const entryAnimation  = profile.entryAnimation  || 'none';
+        const profileFont     = profile.profileFont     || 'system';
+        const profileCursor   = profile.profileCursor   || 'default';
+        const titleText       = profile.titleText       || '';
+        const intoTags        = Array.isArray(profile.intoTags) ? profile.intoTags : [];
+        const quoteWidget     = profile.quoteWidget     || '';
+        const musicEmbed      = profile.musicEmbed      || '';
+
         const accentStyle = accent ? `style="--profile-accent:${escape(accent)}"` : '';
 
         const wallpaperStyle = profile.wallpaper
@@ -231,8 +244,57 @@
                 </div>
             </div>` : '';
 
+        // Avatar aura wrapper (orbital particles) + accessory overlay
+        const auraClass = avatarAura !== 'none' ? ` profile-aura-${escape(avatarAura)}` : '';
+        const accessoryHtml = avatarAccessory !== 'none'
+            ? `<span class="profile-avatar-accessory profile-accessory-${escape(avatarAccessory)}" aria-hidden="true"></span>`
+            : '';
+
+        // Username effect class. usernameStyle (color) + usernameGlow
+        // (drop shadow) compose with the effect.
+        const nameEffectClass = usernameEffect !== 'none' ? ` profile-name-effect-${escape(usernameEffect)}` : '';
+        const glowStyle = usernameGlow
+            ? `text-shadow: 0 0 8px ${escape(usernameGlow)}, 0 0 18px ${escape(usernameGlow)};`
+            : '';
+        const combinedNameStyle = (nameColor || glowStyle)
+            ? `style="${nameColor ? `color:${escape(nameColor)};` : ''}${glowStyle}"`
+            : '';
+
+        // Title text rendered above the username
+        const titleHtml = titleText
+            ? `<div class="profile-title-text">${escape(titleText)}</div>` : '';
+
+        // "What I'm into" chip row
+        const intoTagsHtml = intoTags.length ? `
+            <div class="profile-section profile-into-section">
+                <h3 class="profile-section-title">What I'm into</h3>
+                <div class="profile-into-tags">
+                    ${intoTags.map(t => `<span class="profile-into-tag">${escape(t)}</span>`).join('')}
+                </div>
+            </div>` : '';
+
+        // Pinned quote widget
+        const quoteWidgetHtml = quoteWidget ? `
+            <div class="profile-section profile-quote-widget-section">
+                <blockquote class="profile-quote-widget">${escape(quoteWidget)}</blockquote>
+            </div>` : '';
+
+        // Music embed widget — accept Spotify, YouTube, SoundCloud iframe srcs.
+        // Other URLs we leave unrendered; user has to paste a URL the host
+        // permits in an iframe (Spotify embed URL, etc.).
+        const musicEmbedHtml = musicEmbed && /^https:\/\/(open\.spotify\.com\/embed|w\.soundcloud\.com\/player|www\.youtube\.com\/embed|youtube\.com\/embed)/.test(musicEmbed) ? `
+            <div class="profile-section profile-music-embed-section">
+                <h3 class="profile-section-title">Now spinning</h3>
+                <iframe class="profile-music-embed" src="${escape(musicEmbed)}" allow="autoplay; encrypted-media" loading="lazy"></iframe>
+            </div>` : '';
+
+        // Modal-level data attrs drive font + cursor presets via CSS.
+        const fontClass = profileFont !== 'system' ? ` profile-font-${escape(profileFont)}` : '';
+        const cursorClass = profileCursor !== 'default' ? ` profile-cursor-${escape(profileCursor)}` : '';
+        const entryClass = entryAnimation !== 'none' ? ` profile-entry-${escape(entryAnimation)}` : '';
+
         overlay.innerHTML = `
-            <div class="profile-modal${borderClass}${layoutClass}" data-frame="${escape(frame)}" data-bg-effect="${escape(bgEffect)}" ${accentStyle}>
+            <div class="profile-modal${borderClass}${layoutClass}${fontClass}${cursorClass}${entryClass}" data-frame="${escape(frame)}" data-bg-effect="${escape(bgEffect)}" ${accentStyle}>
                 <button class="modal-close profile-close" id="closeProfileModal">&times;</button>
                 ${bgmHtml}
                 ${bgEffectHtml}
@@ -240,8 +302,9 @@
                     <div class="profile-header-overlay"></div>
                 </div>
                 <div class="profile-identity">
-                    <div class="profile-avatar">${avatarHTML}</div>
-                    <div class="profile-name" ${nameStyle}><span>${escape(profile.username || 'unknown')}</span>${badgesHTML}</div>
+                    <div class="profile-avatar${auraClass}">${avatarHTML}${accessoryHtml}</div>
+                    ${titleHtml}
+                    <div class="profile-name${nameEffectClass}" ${combinedNameStyle}><span>${escape(profile.username || 'unknown')}</span>${badgesHTML}</div>
                     ${taglineHtml}
                     ${statusHtml}
                     <div class="profile-meta">
@@ -268,6 +331,22 @@
                         <h3 class="profile-section-title">About</h3>
                         <p class="profile-bio">${escape(profile.bio)}</p>
                     </div>` : (isSelf ? '<div class="profile-bio-empty">Add a bio in Edit profile →</div>' : '')}
+
+                    ${quoteWidgetHtml}
+                    ${intoTagsHtml}
+                    ${musicEmbedHtml}
+
+                    <div class="profile-section profile-reactions-section" id="profileReactionsSlot"></div>
+
+                    <div class="profile-section profile-heatmap-section">
+                        <h3 class="profile-section-title">Activity</h3>
+                        <div id="profileHeatmapSlot"></div>
+                    </div>
+
+                    ${(!privacy.hidePlayCounts) ? `<div class="profile-section">
+                        <h3 class="profile-section-title">Most played</h3>
+                        <div id="profileLeaderboardSlot"></div>
+                    </div>` : ''}
 
                     ${(Array.isArray(profile.widgets) && profile.widgets.length) || isSelf ? `
                     <div class="profile-section profile-widgets-section">
@@ -332,6 +411,16 @@
                             ${favGames.map(gameCardHTML).join('')}
                         </div>
                     </div>` : ''}
+
+                    <div class="profile-section">
+                        <h3 class="profile-section-title">Guestbook</h3>
+                        <div id="profileGuestbookSlot"></div>
+                    </div>
+
+                    ${isSelf ? `<div class="profile-section">
+                        <h3 class="profile-section-title">Recently visited by</h3>
+                        <div class="profile-visitors-row" id="profileVisitorsSlot"></div>
+                    </div>` : ''}
                 </div>
             </div>`;
 
@@ -366,7 +455,48 @@
             } catch (e) { console.warn('widgets mount failed', e); }
         }
 
-        document.getElementById('closeProfileModal').addEventListener('click', closeModal);
+        // ─── v3 module hooks (FX + social + heatmap + leaderboard) ──
+        const modalEl = overlay.querySelector('.profile-modal');
+        if (window.ArcadeProfileFx) {
+            try { ArcadeProfileFx.applyProfileFx(profile, modalEl); } catch {}
+        }
+        // Social: reactions, guestbook, visitor record + recent visitors list
+        if (window.ArcadeProfileSocial) {
+            try {
+                ArcadeProfileSocial.renderReactionsBar(
+                    document.getElementById('profileReactionsSlot'), profile);
+            } catch {}
+            try {
+                ArcadeProfileSocial.renderGuestbook(
+                    document.getElementById('profileGuestbookSlot'), profile);
+            } catch {}
+            // Record visit (other people's profiles only)
+            if (!isSelf) {
+                try { ArcadeProfileSocial.recordVisit(profile.uid); } catch {}
+            } else {
+                // Show recent visitors to the owner
+                ArcadeProfileSocial.loadRecentVisitors(profile.uid).then(v => {
+                    ArcadeProfileSocial.renderRecentVisitors(
+                        document.getElementById('profileVisitorsSlot'), v);
+                }).catch(() => {});
+            }
+        }
+        // Heatmap + leaderboard
+        if (window.ArcadePlayHeatmap) {
+            try {
+                ArcadePlayHeatmap.renderHeatmap(
+                    document.getElementById('profileHeatmapSlot'), profile);
+            } catch {}
+            try {
+                ArcadePlayHeatmap.renderLeaderboard(
+                    document.getElementById('profileLeaderboardSlot'), profile, gamesIndex);
+            } catch {}
+        }
+
+        document.getElementById('closeProfileModal').addEventListener('click', () => {
+            if (window.ArcadeProfileFx) ArcadeProfileFx.teardownProfileFx();
+            closeModal();
+        });
         if (isSelf) {
             document.getElementById('editProfileBtn').addEventListener('click', () => {
                 renderEditProfile(overlay, profile);
@@ -420,6 +550,16 @@
             hideShowcase: false, hideArtwork: false, hidePlayCounts: false,
             hideAchievements: false, hideFavorites: false,
         }, profile.privacy || {});
+        // v3 locals
+        let localUsernameEffect  = profile.usernameEffect  || 'none';
+        let localUsernameGlow    = profile.usernameGlow    || '';
+        let localAvatarAura      = profile.avatarAura      || 'none';
+        let localAvatarAccessory = profile.avatarAccessory || 'none';
+        let localEntryAnim       = profile.entryAnimation  || 'none';
+        let localProfileFont     = profile.profileFont     || 'system';
+        let localProfileCursor   = profile.profileCursor   || 'default';
+        let localCursorTrail     = profile.cursorTrail     || 'none';
+        let localIntoTags        = Array.isArray(profile.intoTags) ? profile.intoTags.slice() : [];
 
         const FRAMES = [
             { id: 'none',    label: 'None' },
@@ -449,6 +589,73 @@
             { id: 'tape',    label: 'Tape' },
             { id: 'circuit', label: 'Circuit' },
             { id: 'ribbon',  label: 'Ribbon' },
+        ];
+        const USERNAME_EFFECTS = [
+            { id: 'none',       label: 'None' },
+            { id: 'rainbow',    label: 'Rainbow' },
+            { id: 'fire',       label: 'Fire' },
+            { id: 'glitch',     label: 'Glitch' },
+            { id: 'typewriter', label: 'Typewriter' },
+            { id: 'sparkle',    label: 'Sparkle' },
+        ];
+        const AVATAR_AURAS = [
+            { id: 'none',         label: 'None' },
+            { id: 'hearts',       label: 'Hearts' },
+            { id: 'sparks',       label: 'Sparks' },
+            { id: 'fire',         label: 'Fire' },
+            { id: 'planets',      label: 'Planets' },
+            { id: 'butterflies',  label: 'Butterflies' },
+        ];
+        const ACCESSORIES = [
+            { id: 'none',        label: 'None' },
+            { id: 'crown',       label: 'Crown 👑' },
+            { id: 'halo',        label: 'Halo 👼' },
+            { id: 'partyhat',    label: 'Party 🎉' },
+            { id: 'devilhorns',  label: 'Devil 😈' },
+            { id: 'headphones',  label: 'Headphones 🎧' },
+        ];
+        const ENTRY_ANIMS = [
+            { id: 'none',     label: 'None' },
+            { id: 'fade',     label: 'Fade' },
+            { id: 'slide',    label: 'Slide' },
+            { id: 'pixelate', label: 'Pixelate' },
+            { id: 'glitch',   label: 'Glitch' },
+            { id: 'zoom',     label: 'Zoom' },
+            { id: 'shatter',  label: 'Shatter' },
+        ];
+        const FONTS = [
+            { id: 'system',       label: 'System' },
+            { id: 'pixel',        label: 'Pixel (Press Start 2P)' },
+            { id: 'gothic',       label: 'Gothic (Cinzel)' },
+            { id: 'futuristic',   label: 'Futuristic (Orbitron)' },
+            { id: 'handwritten',  label: 'Handwritten (Caveat)' },
+            { id: 'serif',        label: 'Serif' },
+            { id: 'mono',         label: 'Monospace' },
+            { id: 'rounded',      label: 'Rounded (Comic)' },
+            { id: 'elegant',      label: 'Elegant (Cinzel)' },
+        ];
+        const CURSORS = [
+            { id: 'default',    label: 'Default' },
+            { id: 'sword',      label: 'Sword ⚔️' },
+            { id: 'paw',        label: 'Paw 🐾' },
+            { id: 'magic',      label: 'Magic 🪄' },
+            { id: 'pixel',      label: 'Pixel arrow' },
+            { id: 'crosshair',  label: 'Crosshair ⊕' },
+        ];
+        const CURSOR_TRAILS = [
+            { id: 'none',     label: 'None' },
+            { id: 'sparkles', label: 'Sparkles ✨' },
+            { id: 'hearts',   label: 'Hearts ❤' },
+            { id: 'stars',    label: 'Stars ★' },
+            { id: 'fire',     label: 'Fire 🔥' },
+            { id: 'dots',     label: 'Dots' },
+        ];
+        const INTO_TAG_POOL = [
+            'RPGs', 'Roguelites', 'Speedrunning', 'Retro', 'Fighting',
+            'Pokemon', 'FPS', 'Indie', 'Horror', 'Co-op',
+            'Racing', 'Platformers', 'Puzzle', 'Strategy', 'Sandbox',
+            'Multiplayer', 'Card Games', 'Visual Novels', 'Souls-like',
+            'Bullet Hell', 'Metroidvania', 'Idle', 'Rhythm', 'Sports',
         ];
 
         overlay.innerHTML = `
@@ -558,6 +765,93 @@
                     <div class="profile-edit-row">
                         <label class="profile-edit-label">Featured artwork <span class="profile-edit-hint">(up to 4, large gallery on your profile)</span></label>
                         <div class="profile-edit-artwork-grid" id="artworkGrid"></div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="titleTextInput">Title <span class="profile-edit-hint">(small text above your name, e.g. "Level 99 Wizard")</span></label>
+                        <input type="text" id="titleTextInput" class="profile-edit-bio" maxlength="50" placeholder="e.g. Pokemon Master" value="${escape(profile.titleText || '')}" style="min-height:auto;height:38px;padding:6px 10px;">
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Username text effect</label>
+                        <div class="profile-edit-pill-row" id="usernameEffectRow">
+                            ${USERNAME_EFFECTS.map(u => `<button type="button" class="profile-edit-pill${localUsernameEffect === u.id ? ' picked' : ''}" data-ueffect="${u.id}">${u.label}</button>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="usernameGlowInput">Username glow color</label>
+                        <div class="profile-edit-accent-area">
+                            <input type="color" id="usernameGlowInput" value="${escape(profile.usernameGlow || '#7c3aed')}" class="profile-edit-accent-input">
+                            <button class="profile-edit-action" id="clearUsernameGlowBtn">No glow</button>
+                        </div>
+                        <span class="profile-edit-hint">Soft halo around your name. Leave blank for none.</span>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Avatar aura <span class="profile-edit-hint">(orbital particles)</span></label>
+                        <div class="profile-edit-pill-row" id="avatarAuraRow">
+                            ${AVATAR_AURAS.map(a => `<button type="button" class="profile-edit-pill${localAvatarAura === a.id ? ' picked' : ''}" data-aura="${a.id}">${a.label}</button>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Avatar accessory</label>
+                        <div class="profile-edit-pill-row" id="accessoryRow">
+                            ${ACCESSORIES.map(a => `<button type="button" class="profile-edit-pill${localAvatarAccessory === a.id ? ' picked' : ''}" data-accessory="${a.id}">${a.label}</button>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Entry animation</label>
+                        <div class="profile-edit-pill-row" id="entryAnimRow">
+                            ${ENTRY_ANIMS.map(e => `<button type="button" class="profile-edit-pill${localEntryAnim === e.id ? ' picked' : ''}" data-entry="${e.id}">${e.label}</button>`).join('')}
+                        </div>
+                        <span class="profile-edit-hint">How your profile modal appears.</span>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="profileFontSel">Profile font</label>
+                        <select id="profileFontSel" class="profile-edit-bio" style="min-height:auto;height:38px;">
+                            ${FONTS.map(f => `<option value="${f.id}" ${localProfileFont === f.id ? 'selected' : ''}>${f.label}</option>`).join('')}
+                        </select>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Cursor</label>
+                        <div class="profile-edit-pill-row" id="cursorPresetRow">
+                            ${CURSORS.map(c => `<button type="button" class="profile-edit-pill${localProfileCursor === c.id ? ' picked' : ''}" data-cursor="${c.id}">${c.label}</button>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Cursor trail</label>
+                        <div class="profile-edit-pill-row" id="cursorTrailRow">
+                            ${CURSOR_TRAILS.map(c => `<button type="button" class="profile-edit-pill${localCursorTrail === c.id ? ' picked' : ''}" data-trail="${c.id}">${c.label}</button>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="enterSoundInput">Profile enter sound URL</label>
+                        <input type="url" id="enterSoundInput" class="profile-edit-bio" maxlength="500" placeholder="https://… mp3 / ogg / wav (plays once when someone opens your profile)" value="${escape(profile.enterSound || '')}" style="min-height:auto;height:38px;padding:6px 10px;">
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="quoteWidgetInput">Pinned quote widget</label>
+                        <textarea id="quoteWidgetInput" class="profile-edit-bio" maxlength="240" placeholder="A favorite quote — shows pinned on your profile">${escape(profile.quoteWidget || '')}</textarea>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="musicEmbedInput">Music embed URL</label>
+                        <input type="url" id="musicEmbedInput" class="profile-edit-bio" maxlength="500" placeholder="https://open.spotify.com/embed/… or YouTube /embed/ or SoundCloud player URL" value="${escape(profile.musicEmbed || '')}" style="min-height:auto;height:38px;padding:6px 10px;">
+                        <span class="profile-edit-hint">Spotify embed, YouTube /embed/ or SoundCloud player URLs only.</span>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">What I'm into <span class="profile-edit-hint">(pick up to 6 tags)</span></label>
+                        <div class="profile-edit-pill-row" id="intoTagsRow">
+                            ${INTO_TAG_POOL.map(t => `<button type="button" class="profile-edit-pill${localIntoTags.includes(t) ? ' picked' : ''}" data-into="${escape(t)}">${escape(t)}</button>`).join('')}
+                        </div>
                     </div>
 
                     <div class="profile-edit-row">
@@ -696,6 +990,43 @@
         wirePillRow('layoutRow',   'layout', v => { localLayout   = v; });
         wirePillRow('bgEffectRow', 'bg',     v => { localBgEffect = v; });
         wirePillRow('borderRow',   'border', v => { localBorder   = v; });
+        // v3 pill rows
+        wirePillRow('usernameEffectRow', 'ueffect',   v => { localUsernameEffect  = v; });
+        wirePillRow('avatarAuraRow',     'aura',      v => { localAvatarAura      = v; });
+        wirePillRow('accessoryRow',      'accessory', v => { localAvatarAccessory = v; });
+        wirePillRow('entryAnimRow',      'entry',     v => { localEntryAnim       = v; });
+        wirePillRow('cursorPresetRow',   'cursor',    v => { localProfileCursor   = v; });
+        wirePillRow('cursorTrailRow',    'trail',     v => { localCursorTrail     = v; });
+
+        // Multi-select pill row for "What I'm into" (toggles in/out)
+        document.getElementById('intoTagsRow')?.addEventListener('click', (e) => {
+            const btn = e.target.closest('[data-into]');
+            if (!btn) return;
+            const tag = btn.dataset.into;
+            const i = localIntoTags.indexOf(tag);
+            if (i >= 0) {
+                localIntoTags.splice(i, 1);
+                btn.classList.remove('picked');
+            } else if (localIntoTags.length < 6) {
+                localIntoTags.push(tag);
+                btn.classList.add('picked');
+            }
+        });
+
+        // Username glow color picker
+        document.getElementById('usernameGlowInput')?.addEventListener('input', (e) => {
+            localUsernameGlow = e.target.value;
+        });
+        document.getElementById('clearUsernameGlowBtn')?.addEventListener('click', () => {
+            localUsernameGlow = '';
+            const inp = document.getElementById('usernameGlowInput');
+            if (inp) inp.value = '#7c3aed';
+        });
+
+        // Font select
+        document.getElementById('profileFontSel')?.addEventListener('change', (e) => {
+            localProfileFont = e.target.value;
+        });
 
         const frameGridEl = document.getElementById('frameGrid');
         if (frameGridEl) {
@@ -765,6 +1096,10 @@
                 const bgmUrl = (document.getElementById('bgmInput')?.value || '').trim();
                 const taglineVal = (document.getElementById('taglineInput')?.value || '').trim().slice(0, 60);
                 const statusVal  = (document.getElementById('statusInput')?.value  || '').trim().slice(0, 80);
+                const titleTextVal   = (document.getElementById('titleTextInput')?.value   || '').trim().slice(0, 50);
+                const enterSoundVal  = (document.getElementById('enterSoundInput')?.value  || '').trim().slice(0, 500);
+                const quoteWidgetVal = (document.getElementById('quoteWidgetInput')?.value || '').trim().slice(0, 240);
+                const musicEmbedVal  = (document.getElementById('musicEmbedInput')?.value  || '').trim().slice(0, 500);
                 await ArcadeAuth.updateProfile({
                     usernameColor: localUsernameColor,
                     profileBgm: bgmUrl,
@@ -781,6 +1116,20 @@
                     borderStyle: localBorder,
                     artwork: localArtwork,
                     privacy: localPrivacy,
+                    // v3 fields
+                    titleText:       titleTextVal,
+                    usernameEffect:  localUsernameEffect,
+                    usernameGlow:    localUsernameGlow,
+                    avatarAura:      localAvatarAura,
+                    avatarAccessory: localAvatarAccessory,
+                    entryAnimation:  localEntryAnim,
+                    profileFont:     localProfileFont,
+                    profileCursor:   localProfileCursor,
+                    cursorTrail:     localCursorTrail,
+                    enterSound:      enterSoundVal,
+                    quoteWidget:     quoteWidgetVal,
+                    musicEmbed:      musicEmbedVal,
+                    intoTags:        localIntoTags,
                 });
                 // Refetch so we see fresh data, then re-render
                 const fresh = await ArcadeAuth.getProfile(profile.uid);
@@ -874,6 +1223,10 @@
     function closeModal() {
         const existing = document.getElementById('profileModal');
         if (existing) existing.remove();
+        // Tear down v3 runtime FX (cursor trail, favicon swap, etc.)
+        if (window.ArcadeProfileFx) {
+            try { ArcadeProfileFx.teardownProfileFx(); } catch {}
+        }
     }
 
     // Escape HTML
