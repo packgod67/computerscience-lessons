@@ -11212,39 +11212,53 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
 @keyframes profile-pulse { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
 .profile-status-msg { color: var(--text-secondary); font-style: italic; }
 
-/* ── Profile pet (CSS-animated wanderer) ──────────────────────── */
-@keyframes profile-pet-walk {
-    0%   { left: 5%;  transform: translateY(0)    rotateY(0); }
-    24%  { left: 92%; transform: translateY(0)    rotateY(0); }
-    25%  { left: 92%; transform: translateY(0)    rotateY(180deg); }
-    49%  { left: 5%;  transform: translateY(0)    rotateY(180deg); }
-    50%  { left: 5%;  transform: translateY(0)    rotateY(0); }
-    74%  { left: 92%; transform: translateY(-4px) rotateY(0); }
-    75%  { left: 92%; transform: translateY(-4px) rotateY(180deg); }
-    99%  { left: 5%;  transform: translateY(0)    rotateY(180deg); }
-    100% { left: 5%;  transform: translateY(0)    rotateY(0); }
-}
-@keyframes profile-pet-bob {
-    0%, 100% { transform: translateY(0); }
-    50%      { transform: translateY(-3px); }
-}
+/* ── Profile pet ─────────────────────────────────────────────────
+   Driven by profile-pet-anim.js (RAF loop). The CSS just provides
+   the absolute-positioning slot, anchor (translate -50%/-50% so the
+   x/y written by JS refers to the pet's center), and idle animations
+   for the emoji-based pets. The cat uses a sprite sheet (background-
+   image + background-position controlled in JS, so no CSS animation
+   for it). */
 .profile-pet {
     position: absolute;
-    bottom: 12px; left: 5%;
+    left: 0; top: 0;
+    transform: translate(-50%, -50%);
     z-index: 6;
-    font-size: 28px;
     pointer-events: none;
-    animation: profile-pet-walk 24s linear infinite;
+    user-select: none;
+    line-height: 1;
+    transition: transform 0.05s linear; /* tiny smoothing */
     filter: drop-shadow(0 4px 6px rgba(0,0,0,0.4));
 }
-.profile-pet-slime { animation: profile-pet-walk 30s linear infinite, profile-pet-bob 0.6s ease-in-out infinite; }
-.profile-pet-ghost {
-    animation: profile-pet-walk 28s linear infinite, profile-pet-bob 1.2s ease-in-out infinite;
-    opacity: 0.85;
+/* Sprite-based pets render their pixel art crisply at 2× — feels closer
+   to the original "oneko" desktop pet than 1× does on a hi-DPI screen. */
+.profile-pet.profile-pet-sprite {
+    transform: translate(-50%, -50%) scale(2);
+    transform-origin: center;
 }
-.profile-pet-dragon { font-size: 32px; }
-.profile-pet-cat    { animation-duration: 22s; }
-.profile-pet-duck   { animation-duration: 26s; }
+/* Emoji-based idle animations — combined with the JS positioning, the
+   pet wanders in 2D AND has a continuous idle motion. Each idle is
+   tuned for the animal it represents. */
+@keyframes profile-pet-bounce {
+    0%, 100% { transform: translate(-50%, -50%) scaleY(1); }
+    50%      { transform: translate(-50%, -55%) scaleY(0.92); }
+}
+@keyframes profile-pet-waddle {
+    0%, 100% { transform: translate(-50%, -50%) rotate(-6deg); }
+    50%      { transform: translate(-50%, -50%) rotate( 6deg); }
+}
+@keyframes profile-pet-hover {
+    0%, 100% { transform: translate(-50%, -52%); }
+    50%      { transform: translate(-50%, -48%); }
+}
+@keyframes profile-pet-float {
+    0%, 100% { transform: translate(-50%, -50%); opacity: 0.85; }
+    50%      { transform: translate(-50%, -55%); opacity: 1;   }
+}
+.profile-pet-idle-bounce  { animation: profile-pet-bounce 0.6s ease-in-out infinite; }
+.profile-pet-idle-waddle  { animation: profile-pet-waddle 0.4s ease-in-out infinite; }
+.profile-pet-idle-hover   { animation: profile-pet-hover  1.4s ease-in-out infinite; }
+.profile-pet-idle-float   { animation: profile-pet-float  2.2s ease-in-out infinite; }
 
 /* ── Parallax wallpaper layers ────────────────────────────────── */
 .profile-parallax-layer {

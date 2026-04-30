@@ -112,24 +112,15 @@
     }
 
     // ─── Profile pet ─────────────────────────────────────────────
-    // CSS-animated wanderer. Each pet has a distinct emoji + walk path.
-    // The element auto-clean on profile close (it lives inside .profile-modal).
-    const PET_EMOJI = {
-        cat:    '🐱',
-        slime:  '🟢',
-        duck:   '🦆',
-        dragon: '🐲',
-        ghost:  '👻',
-    };
+    // Delegates to ArcadeProfilePet (profile-pet-anim.js) for the real
+    // sprite-based engine. Cat uses the public-domain oneko.js sprite;
+    // others use emoji with proper 2D wandering. Falling back here if
+    // the engine module isn't loaded for any reason.
     function mountPet(modalEl, petId) {
         if (!modalEl || !petId || petId === 'none') return;
-        const emoji = PET_EMOJI[petId];
-        if (!emoji) return;
-        const pet = document.createElement('div');
-        pet.className = `profile-pet profile-pet-${petId}`;
-        pet.textContent = emoji;
-        pet.setAttribute('aria-hidden', 'true');
-        modalEl.appendChild(pet);
+        if (window.ArcadeProfilePet) {
+            window.ArcadeProfilePet.mountPet(modalEl, petId);
+        }
     }
 
     // ─── Wallpaper parallax ──────────────────────────────────────

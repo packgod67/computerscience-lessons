@@ -751,7 +751,8 @@
         ];
         const PETS = [
             { id: 'none',   label: 'None' },
-            { id: 'cat',    label: 'Cat 🐱' },
+            { id: 'cat',    label: 'Cat (pixel sprite)' },
+            { id: 'dog',    label: 'Dog (pixel sprite)' },
             { id: 'slime',  label: 'Slime 🟢' },
             { id: 'duck',   label: 'Duck 🦆' },
             { id: 'dragon', label: 'Dragon 🐲' },
@@ -1465,6 +1466,10 @@
             try { ArcadeProfileExtras.restoreTheme(); } catch {}
             try { ArcadeProfileExtras.clearCustomCss(); } catch {}
             try { ArcadeProfileExtras.teardownParallax(modalEl); } catch {}
+        }
+        // Tear down sprite-based pet (cancels its RAF loop)
+        if (window.ArcadeProfilePet) {
+            try { ArcadeProfilePet.unmountPet(); } catch {}
         }
     }
 
