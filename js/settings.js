@@ -62,6 +62,8 @@
         // past Firestore's 1 MB doc limit). Stays in localStorage so it's
         // per-device.
         themeWallpapers: {},
+        // Per-tab subtle bg color — { games: '#hex', users: '#hex', ... }
+        tabBackgrounds: {},
     };
 
     // ─── Storage ─────────────────────────────────────────────────────
@@ -164,6 +166,8 @@
 
         // Per-theme wallpaper override
         applyThemeWallpaper();
+        // Per-tab background colors
+        applyTabBackgrounds();
 
         // Notify other modules
         try {
@@ -171,6 +175,30 @@
                 detail: { settings: getSnapshot() }
             }));
         } catch {}
+    }
+
+    // ─── Per-tab background colors ──────────────────────────────────
+    // Lets the user tint each top-level tab pane (Games, Users, Chat, etc.)
+    // with a subtle background color so they're visually distinct. The
+    // setting is kept tab-id keyed so when a tab is hidden via tabHidden
+    // its color isn't lost.
+    function applyTabBackgrounds() {
+        let style = document.getElementById('arcade-tab-bgs');
+        if (!style) {
+            style = document.createElement('style');
+            style.id = 'arcade-tab-bgs';
+            document.head.appendChild(style);
+        }
+        const map = SETTINGS.tabBackgrounds || {};
+        const ids = Object.keys(map).filter(k => map[k]);
+        if (!ids.length) { style.textContent = ''; return; }
+        style.textContent = ids.map(id => `
+            #${id}View {
+                background: linear-gradient(180deg, ${map[id]}11, transparent 240px), inherit;
+                border-radius: 12px;
+                padding: 8px 4px;
+            }
+        `).join('\n');
     }
 
     // ─── Per-theme wallpaper override ───────────────────────────────

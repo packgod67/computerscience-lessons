@@ -145,6 +145,15 @@
         const quoteWidget     = profile.quoteWidget     || '';
         const musicEmbed      = profile.musicEmbed      || '';
 
+        // v4 fields
+        const usernameFont    = profile.usernameFont    || '';
+        const profileTheme    = profile.profileTheme    || '';
+        const profilePet      = profile.profilePet      || 'none';
+        const profileMiniGame = profile.miniGame        || 'none';
+        const selectedTitle   = profile.selectedTitle   || '';
+        // Use selectedTitle from gallery if set, else fall back to titleText
+        const finalTitleText  = selectedTitle || titleText;
+
         const accentStyle = accent ? `style="--profile-accent:${escape(accent)}"` : '';
 
         const wallpaperStyle = profile.wallpaper
@@ -260,9 +269,12 @@
             ? `style="${nameColor ? `color:${escape(nameColor)};` : ''}${glowStyle}"`
             : '';
 
-        // Title text rendered above the username
-        const titleHtml = titleText
-            ? `<div class="profile-title-text">${escape(titleText)}</div>` : '';
+        // Title text rendered above the username — gallery selection wins
+        const titleHtml = finalTitleText
+            ? `<div class="profile-title-text">${escape(finalTitleText)}</div>` : '';
+
+        // Username font (independent of profile font)
+        const usernameFontClass = usernameFont ? ` profile-uname-font-${escape(usernameFont)}` : '';
 
         // "What I'm into" chip row
         const intoTagsHtml = intoTags.length ? `
@@ -304,7 +316,8 @@
                 <div class="profile-identity">
                     <div class="profile-avatar${auraClass}">${avatarHTML}${accessoryHtml}</div>
                     ${titleHtml}
-                    <div class="profile-name${nameEffectClass}" ${combinedNameStyle}><span>${escape(profile.username || 'unknown')}</span>${badgesHTML}</div>
+                    <div class="profile-name${nameEffectClass}${usernameFontClass}" ${combinedNameStyle}><span>${escape(profile.username || 'unknown')}</span>${badgesHTML}</div>
+                    <div id="profileOnlineStatusSlot"></div>
                     ${taglineHtml}
                     ${statusHtml}
                     <div class="profile-meta">
@@ -318,6 +331,15 @@
                     }
                 </div>
                 <div class="profile-body">
+                    <div class="profile-progress-row">
+                        <div id="profileLevelSlot"></div>
+                        <div id="profileStreakSlot"></div>
+                    </div>
+
+                    <div id="profileBadgesSlot"></div>
+
+                    <div id="profilePinnedAchSlot"></div>
+
                     ${profile.currentGame && gamesIndex[profile.currentGame] ? `
                     <div class="profile-playing-now">
                         <span class="profile-playing-dot"></span>
@@ -335,6 +357,19 @@
                     ${quoteWidgetHtml}
                     ${intoTagsHtml}
                     ${musicEmbedHtml}
+
+                    <div id="profilePinnedClipSlot"></div>
+
+                    ${profileMiniGame !== 'none' ? `
+                    <div class="profile-section">
+                        <h3 class="profile-section-title">Minigame: ${escape(profileMiniGame)}</h3>
+                        <div id="profileMinigameSlot"></div>
+                    </div>` : ''}
+
+                    <div class="profile-section">
+                        <h3 class="profile-section-title">Trading cards</h3>
+                        <div id="profileCardsSlot"></div>
+                    </div>
 
                     <div class="profile-section profile-reactions-section" id="profileReactionsSlot"></div>
 
@@ -460,6 +495,49 @@
         if (window.ArcadeProfileFx) {
             try { ArcadeProfileFx.applyProfileFx(profile, modalEl); } catch {}
         }
+
+        // ─── v4 module hooks (level/streak/theme override/pet/parallax/cards) ──
+        if (window.ArcadeProfileExtras) {
+            const X = window.ArcadeProfileExtras;
+            try { X.renderLevelBadge(document.getElementById('profileLevelSlot'), profile); } catch {}
+            try { X.renderStreak(document.getElementById('profileStreakSlot'), profile); } catch {}
+            // Online status: prepend rendered HTML into the slot
+            try {
+                const slot = document.getElementById('profileOnlineStatusSlot');
+                if (slot) slot.innerHTML = X.renderOnlineStatus(profile);
+            } catch {}
+            // Theme override (only when viewing someone else's profile, and they have one set)
+            if (!isSelf && profileTheme) {
+                try { X.applyThemeOverride(profileTheme); } catch {}
+            }
+            // Pet
+            try { X.mountPet(modalEl, profilePet); } catch {}
+            // Parallax
+            try { X.mountParallax(modalEl, profile.wallpaperBg, profile.wallpaperFg); } catch {}
+            // Custom CSS injection (sandboxed via @scope)
+            try { X.injectCustomCss(modalEl, profile); } catch {}
+            // Trading cards
+            try { X.renderCards(document.getElementById('profileCardsSlot'), profile, gamesIndex); } catch {}
+            // Pinned achievements
+            try { X.renderPinnedAchievements(document.getElementById('profilePinnedAchSlot'), profile); } catch {}
+            // Custom badges (admin-defined)
+            try { X.renderBadges(document.getElementById('profileBadgesSlot'), profile); } catch {}
+            // Pinned clip
+            try {
+                const slot = document.getElementById('profilePinnedClipSlot');
+                if (slot) slot.innerHTML = X.renderPinnedClip(profile);
+            } catch {}
+            // Multi-track BGM playlist
+            const tracks = Array.isArray(profile.profileBgmTracks) ? profile.profileBgmTracks.filter(Boolean) : [];
+            const audio = document.getElementById('profileBgmAudio');
+            if (audio && tracks.length > 1) {
+                try { X.setupBgmPlaylist(audio, tracks); } catch {}
+            }
+        }
+        // Minigame
+        if (window.ArcadeMinigame && profileMiniGame !== 'none') {
+            try { ArcadeMinigame.mount(document.getElementById('profileMinigameSlot'), profileMiniGame); } catch {}
+        }
         // Social: reactions, guestbook, visitor record + recent visitors list
         if (window.ArcadeProfileSocial) {
             try {
@@ -560,6 +638,20 @@
         let localProfileCursor   = profile.profileCursor   || 'default';
         let localCursorTrail     = profile.cursorTrail     || 'none';
         let localIntoTags        = Array.isArray(profile.intoTags) ? profile.intoTags.slice() : [];
+        // v4 locals
+        let localUsernameFont    = profile.usernameFont    || '';
+        let localProfileTheme    = profile.profileTheme    || '';
+        let localPet             = profile.profilePet      || 'none';
+        let localOnlineDot       = profile.onlineStatus?.dot || 'offline';
+        let localOnlineMsg       = profile.onlineStatus?.message || '';
+        let localProfileCss      = profile.profileCss      || '';
+        let localBgmTracks       = Array.isArray(profile.profileBgmTracks) ? profile.profileBgmTracks.slice() : [];
+        let localPinnedAch       = Array.isArray(profile.pinnedAchievements) ? profile.pinnedAchievements.slice() : [];
+        let localSelectedTitle   = profile.selectedTitle   || '';
+        let localMiniGame        = profile.miniGame        || 'none';
+        let localPinnedClip      = profile.pinnedClip      || '';
+        let localWallpaperBg     = profile.wallpaperBg     || '';
+        let localWallpaperFg     = profile.wallpaperFg     || '';
 
         const FRAMES = [
             { id: 'none',    label: 'None' },
@@ -657,6 +749,49 @@
             'Multiplayer', 'Card Games', 'Visual Novels', 'Souls-like',
             'Bullet Hell', 'Metroidvania', 'Idle', 'Rhythm', 'Sports',
         ];
+        const PETS = [
+            { id: 'none',   label: 'None' },
+            { id: 'cat',    label: 'Cat 🐱' },
+            { id: 'slime',  label: 'Slime 🟢' },
+            { id: 'duck',   label: 'Duck 🦆' },
+            { id: 'dragon', label: 'Dragon 🐲' },
+            { id: 'ghost',  label: 'Ghost 👻' },
+        ];
+        const ONLINE_DOTS = [
+            { id: 'offline', label: '⚫ Offline / hide' },
+            { id: 'green',   label: '🟢 Online' },
+            { id: 'yellow',  label: '🟡 Away' },
+            { id: 'red',     label: '🔴 Do not disturb' },
+        ];
+        const MINIGAMES = [
+            { id: 'none',   label: 'None' },
+            { id: 'snake',  label: 'Snake 🐍' },
+            { id: '2048',   label: '2048' },
+            { id: 'memory', label: 'Memory 🧠' },
+        ];
+        // Same theme list themes.js uses
+        const PROFILE_THEMES = [
+            { id: '',          label: 'Use visitor\'s theme' },
+            { id: 'midnight',  label: 'Midnight' },
+            { id: 'ocean',     label: 'Ocean' },
+            { id: 'crimson',   label: 'Crimson' },
+            { id: 'forest',    label: 'Forest' },
+            { id: 'sunset',    label: 'Sunset' },
+            { id: 'synthwave', label: 'Synthwave' },
+            { id: 'sakura',    label: 'Sakura' },
+            { id: 'oled',      label: 'OLED' },
+            { id: 'nord',      label: 'Nord' },
+            { id: 'monokai',   label: 'Monokai' },
+            { id: 'light',     label: 'Light' },
+            { id: 'crt',       label: 'CRT' },
+            { id: 'pastel',    label: 'Pastel' },
+            { id: 'highcontrast', label: 'High contrast' },
+        ];
+        const titlesEarned = Array.isArray(profile.titles) ? profile.titles.slice() : [];
+        // Always include any current titleText so it's selectable
+        if (profile.titleText && !titlesEarned.includes(profile.titleText)) {
+            titlesEarned.unshift(profile.titleText);
+        }
 
         overlay.innerHTML = `
             <div class="profile-modal profile-modal-edit">
@@ -855,6 +990,77 @@
                     </div>
 
                     <div class="profile-edit-row">
+                        <label class="profile-edit-label">Online status</label>
+                        <div class="profile-edit-pill-row" id="onlineDotRow">
+                            ${ONLINE_DOTS.map(d => `<button type="button" class="profile-edit-pill${localOnlineDot === d.id ? ' picked' : ''}" data-dot="${d.id}">${d.label}</button>`).join('')}
+                        </div>
+                        <input type="text" id="onlineStatusMsg" class="profile-edit-bio" maxlength="80" placeholder="Custom status message (e.g. 'AFK back at 5')" value="${escape(localOnlineMsg)}" style="min-height:auto;height:38px;padding:6px 10px;margin-top:6px;">
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Username font <span class="profile-edit-hint">(separate from page font)</span></label>
+                        <div class="profile-edit-pill-row" id="usernameFontRow">
+                            ${[{id:'',label:'Inherit'}].concat(FONTS).map(f => `<button type="button" class="profile-edit-pill${localUsernameFont === f.id ? ' picked' : ''}" data-uname-font="${f.id}">${f.label}</button>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="profileThemeSel">Force visitors to a theme</label>
+                        <select id="profileThemeSel" class="profile-edit-bio" style="min-height:auto;height:38px;">
+                            ${PROFILE_THEMES.map(t => `<option value="${t.id}" ${localProfileTheme === t.id ? 'selected' : ''}>${t.label}</option>`).join('')}
+                        </select>
+                        <span class="profile-edit-hint">Visitors temporarily see your chosen theme while on your profile.</span>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Profile pet</label>
+                        <div class="profile-edit-pill-row" id="petRow">
+                            ${PETS.map(p => `<button type="button" class="profile-edit-pill${localPet === p.id ? ' picked' : ''}" data-pet="${p.id}">${p.label}</button>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Minigame widget</label>
+                        <div class="profile-edit-pill-row" id="miniGameRow">
+                            ${MINIGAMES.map(m => `<button type="button" class="profile-edit-pill${localMiniGame === m.id ? ' picked' : ''}" data-minigame="${m.id}">${m.label}</button>`).join('')}
+                        </div>
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="pinnedClipInput">Pinned clip URL <span class="profile-edit-hint">(YouTube /embed/, Twitch player, Vimeo)</span></label>
+                        <input type="url" id="pinnedClipInput" class="profile-edit-bio" maxlength="500" placeholder="https://www.youtube.com/embed/…" value="${escape(localPinnedClip)}" style="min-height:auto;height:38px;padding:6px 10px;">
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="wallpaperBgInput">Wallpaper background layer URL <span class="profile-edit-hint">(parallax)</span></label>
+                        <input type="url" id="wallpaperBgInput" class="profile-edit-bio" maxlength="500" placeholder="https://… (deepest layer, moves slowest)" value="${escape(localWallpaperBg)}" style="min-height:auto;height:38px;padding:6px 10px;">
+                    </div>
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="wallpaperFgInput">Wallpaper foreground layer URL <span class="profile-edit-hint">(parallax)</span></label>
+                        <input type="url" id="wallpaperFgInput" class="profile-edit-bio" maxlength="500" placeholder="https://… (top layer, moves most)" value="${escape(localWallpaperFg)}" style="min-height:auto;height:38px;padding:6px 10px;">
+                    </div>
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">BGM playlist <span class="profile-edit-hint">(one URL per line, plays in order)</span></label>
+                        <textarea id="bgmTracksInput" class="profile-edit-bio" maxlength="2000" placeholder="https://...mp3&#10;https://...mp3" style="min-height:80px;">${escape(localBgmTracks.join('\n'))}</textarea>
+                    </div>
+
+                    ${titlesEarned.length ? `
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label">Choose displayed title</label>
+                        <div class="profile-edit-pill-row" id="selectedTitleRow">
+                            <button type="button" class="profile-edit-pill${!localSelectedTitle ? ' picked' : ''}" data-title="">None</button>
+                            ${titlesEarned.map(t => `<button type="button" class="profile-edit-pill${localSelectedTitle === t ? ' picked' : ''}" data-title="${escape(t)}">${escape(t)}</button>`).join('')}
+                        </div>
+                    </div>` : ''}
+
+                    <div class="profile-edit-row">
+                        <label class="profile-edit-label" for="profileCssInput">Custom profile CSS <span class="profile-edit-hint">(advanced — sandboxed via @scope, 4KB cap)</span></label>
+                        <textarea id="profileCssInput" class="profile-edit-bio" maxlength="4096" placeholder=".profile-name { animation: spin 1s linear infinite; }" style="min-height:120px;font-family:ui-monospace,monospace;">${escape(localProfileCss)}</textarea>
+                        <span class="profile-edit-hint">Only applies to this profile. Wrapped in @scope to prevent leakage.</span>
+                    </div>
+
+                    <div class="profile-edit-row">
                         <label class="profile-edit-label">Privacy</label>
                         <div class="profile-edit-privacy-grid" id="privacyGrid">
                             <label class="profile-edit-privacy-toggle"><input type="checkbox" data-priv="hideArtwork" ${localPrivacy.hideArtwork?'checked':''}> Hide artwork</label>
@@ -1028,6 +1234,19 @@
             localProfileFont = e.target.value;
         });
 
+        // v4 pill rows
+        wirePillRow('onlineDotRow',     'dot',         v => { localOnlineDot     = v; });
+        wirePillRow('petRow',           'pet',         v => { localPet           = v; });
+        wirePillRow('miniGameRow',      'minigame',    v => { localMiniGame      = v; });
+        wirePillRow('selectedTitleRow', 'title',       v => { localSelectedTitle = v; });
+        wirePillRow('usernameFontRow',  'uname-font',  v => { localUsernameFont  = v; });
+        document.getElementById('profileThemeSel')?.addEventListener('change', (e) => {
+            localProfileTheme = e.target.value;
+        });
+        document.getElementById('onlineStatusMsg')?.addEventListener('input', (e) => {
+            localOnlineMsg = e.target.value;
+        });
+
         const frameGridEl = document.getElementById('frameGrid');
         if (frameGridEl) {
             frameGridEl.addEventListener('click', (e) => {
@@ -1130,6 +1349,19 @@
                     quoteWidget:     quoteWidgetVal,
                     musicEmbed:      musicEmbedVal,
                     intoTags:        localIntoTags,
+                    // v4 fields
+                    usernameFont:    localUsernameFont,
+                    profileTheme:    localProfileTheme,
+                    profilePet:      localPet,
+                    onlineStatus:    { dot: localOnlineDot, message: localOnlineMsg.slice(0, 80) },
+                    profileCss:      (document.getElementById('profileCssInput')?.value || '').slice(0, 4096),
+                    profileBgmTracks: (document.getElementById('bgmTracksInput')?.value || '')
+                        .split('\n').map(s => s.trim()).filter(Boolean).slice(0, 20),
+                    selectedTitle:   localSelectedTitle,
+                    miniGame:        localMiniGame,
+                    pinnedClip:      (document.getElementById('pinnedClipInput')?.value  || '').trim().slice(0, 500),
+                    wallpaperBg:     (document.getElementById('wallpaperBgInput')?.value || '').trim().slice(0, 500),
+                    wallpaperFg:     (document.getElementById('wallpaperFgInput')?.value || '').trim().slice(0, 500),
                 });
                 // Refetch so we see fresh data, then re-render
                 const fresh = await ArcadeAuth.getProfile(profile.uid);
@@ -1222,10 +1454,17 @@
 
     function closeModal() {
         const existing = document.getElementById('profileModal');
+        const modalEl = existing?.querySelector('.profile-modal');
         if (existing) existing.remove();
         // Tear down v3 runtime FX (cursor trail, favicon swap, etc.)
         if (window.ArcadeProfileFx) {
             try { ArcadeProfileFx.teardownProfileFx(); } catch {}
+        }
+        // Tear down v4 features
+        if (window.ArcadeProfileExtras) {
+            try { ArcadeProfileExtras.restoreTheme(); } catch {}
+            try { ArcadeProfileExtras.clearCustomCss(); } catch {}
+            try { ArcadeProfileExtras.teardownParallax(modalEl); } catch {}
         }
     }
 

@@ -67,7 +67,31 @@
         // Backfill joinedAt for existing users who registered before the field existed.
         // Fire-and-forget so it doesn't block login.
         if (user) ensureJoinedAt();
+        // Track daily login streak (fire-and-forget). On consecutive days
+        // streak.count increments; on a same-day login it stays; on a gap
+        // it resets to 1.
+        if (user) updateLoginStreak();
     });
+
+    async function updateLoginStreak() {
+        if (!currentUser) return;
+        try {
+            const ref = db.collection('users').doc(currentUser.uid);
+            const doc = await ref.get();
+            const data = doc.exists ? doc.data() : {};
+            const today = new Date().toISOString().slice(0, 10);
+            const prev = data.loginStreak || { count: 0, lastDay: '' };
+            if (prev.lastDay === today) return; // already counted today
+            // Compute "yesterday" string in same UTC day basis
+            const y = new Date();
+            y.setUTCDate(y.getUTCDate() - 1);
+            const yest = y.toISOString().slice(0, 10);
+            const newCount = prev.lastDay === yest ? (prev.count || 0) + 1 : 1;
+            await ref.set({
+                loginStreak: { count: newCount, lastDay: today }
+            }, { merge: true });
+        } catch {}
+    }
 
     async function loadUserData() {
         if (!currentUser) return;
@@ -640,6 +664,23 @@
             'reactions',        // { fire: 12, skull: 4, crown: 3, ... } - written by visitors via cross-user hatch
             // Site-wide
             'tabBackgrounds',   // { games: '#color', users: '...', ... } - per-tab subtle bg color
+            // Profile customization v4
+            'usernameFont',     // separate font for the username only
+            'profileTheme',     // arcade theme id to override visitors with
+            'profilePet',       // 'none'|'cat'|'slime'|'duck'|'dragon'|'ghost'
+            'onlineStatus',     // { dot: 'green'|'yellow'|'red'|'offline', message: '...' }
+            'profileCss',       // sandboxed CSS injection (4KB cap)
+            'profileBgmTracks', // [url, url, ...] - array of BGM tracks
+            'wallpaperFg',      // foreground parallax layer URL
+            'wallpaperBg',      // background parallax layer URL
+            'pinnedAchievements', // up to 3 achievement ids displayed front-and-center
+            'selectedTitle',    // currently-displayed title string (chosen from `titles`)
+            'titles',           // [string] earned titles (server-only via cross-user write usually, but allowed here for client award)
+            'badgeIds',         // [string] custom badge ids granted by admin
+            'cards',            // [{gameId, rarity, droppedAt}] trading cards earned from plays
+            'loginStreak',      // { count, lastDay: 'YYYY-MM-DD' }
+            'miniGame',         // 'none'|'snake'|'2048'|'memory'
+            'pinnedClip',       // youtube/twitch embed url
         ];
         const safe = {};
         for (const k of allowed) {
