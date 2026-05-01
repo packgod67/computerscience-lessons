@@ -11496,6 +11496,222 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
     transform: scale(0.95);
 }
 
+/* ===================================================================
+   SITE-WIDE V5 — sidebar nav, animated logo, banner, footer,
+   Konami rainbow mode, confetti, accent extraction.
+   =================================================================== */
+
+/* ── Animated header logo on hover ─────────────────────────────── */
+@keyframes logo-wobble {
+    0%, 100% { transform: rotate(0deg); }
+    20% { transform: rotate(-8deg); }
+    50% { transform: rotate(8deg); }
+    80% { transform: rotate(-4deg); }
+}
+@keyframes logo-spin    { to { transform: rotate(360deg); } }
+@keyframes logo-pulse   { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@keyframes logo-bounce  { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-6px); } }
+@keyframes logo-glitch  {
+    0%, 100% { transform: translate(0, 0); filter: hue-rotate(0deg); }
+    20% { transform: translate(-2px, 2px); filter: hue-rotate(90deg); }
+    40% { transform: translate(2px, -1px); filter: hue-rotate(-90deg); }
+    60% { transform: translate(-1px, -2px); filter: hue-rotate(45deg); }
+    80% { transform: translate(2px, 1px); filter: hue-rotate(-45deg); }
+}
+.header-logo[data-anim="wobble"]:hover { animation: logo-wobble 0.6s ease-in-out; }
+.header-logo[data-anim="spin"]:hover   { animation: logo-spin   0.7s linear; }
+.header-logo[data-anim="pulse"]:hover  { animation: logo-pulse  0.8s ease-in-out infinite; }
+.header-logo[data-anim="bounce"]:hover { animation: logo-bounce 0.5s ease-in-out infinite; }
+.header-logo[data-anim="glitch"]:hover { animation: logo-glitch 0.3s steps(5) infinite; }
+
+/* ── Sidebar nav layout ────────────────────────────────────────── */
+/* When body[data-nav-layout="sidebar"] is set, the tab-bar repositions
+   to a vertical strip on the left edge and main content shifts right.
+   Topbar remains the default. */
+body[data-nav-layout="sidebar"] {
+    /* Reserve sidebar width as a CSS var so we can adjust everywhere */
+    --arcade-sidebar-w: 200px;
+}
+body[data-nav-layout="sidebar"] .main { padding-left: var(--arcade-sidebar-w); position: relative; }
+body[data-nav-layout="sidebar"] .tab-bar {
+    position: fixed;
+    left: 0; top: 64px; bottom: 0;
+    width: var(--arcade-sidebar-w);
+    flex-direction: column;
+    align-items: stretch;
+    padding: 12px 8px;
+    gap: 4px;
+    overflow-y: auto;
+    background: rgba(0, 0, 0, 0.25);
+    border-right: 1px solid rgba(255,255,255,0.06);
+    z-index: 50;
+}
+body[data-nav-layout="sidebar"] .tab-bar .tab-btn {
+    text-align: left;
+    width: 100%;
+    border-radius: 8px;
+    padding: 10px 14px;
+}
+body[data-nav-layout="sidebar"] .active-users-bar {
+    margin-left: var(--arcade-sidebar-w);
+}
+@media (max-width: 768px) {
+    /* Sidebar collapses back to topbar on phones — there's no room. */
+    body[data-nav-layout="sidebar"] { --arcade-sidebar-w: 0px; }
+    body[data-nav-layout="sidebar"] .main { padding-left: 0; }
+    body[data-nav-layout="sidebar"] .tab-bar {
+        position: static;
+        width: auto; height: auto;
+        flex-direction: row;
+        background: transparent;
+        border-right: none;
+        padding: 0;
+    }
+    body[data-nav-layout="sidebar"] .tab-bar .tab-btn { width: auto; }
+    body[data-nav-layout="sidebar"] .active-users-bar { margin-left: 0; }
+}
+
+/* ── Site banner (admin announcement, top of page) ─────────────── */
+.site-banner {
+    position: relative;
+    display: flex; align-items: center; justify-content: center;
+    gap: 12px;
+    padding: 10px 18px;
+    color: #fff;
+    font-weight: 600;
+    font-size: 0.92rem;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+    z-index: 200;
+}
+.site-banner-text {
+    flex: 1;
+    text-align: center;
+    word-wrap: break-word;
+}
+.site-banner-close {
+    background: rgba(255,255,255,0.15);
+    border: none;
+    color: #fff;
+    width: 28px; height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 1.2rem;
+    line-height: 1;
+    flex-shrink: 0;
+}
+.site-banner-close:hover { background: rgba(255,255,255,0.3); }
+
+/* ── Site footer (admin-set HTML) ──────────────────────────────── */
+.site-footer {
+    margin-top: 32px;
+    padding: 24px 16px;
+    background: rgba(0, 0, 0, 0.2);
+    border-top: 1px solid rgba(255,255,255,0.06);
+    color: var(--text-secondary);
+    text-align: center;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+.site-footer a {
+    color: var(--accent, #7c3aed);
+    text-decoration: none;
+}
+.site-footer a:hover { text-decoration: underline; }
+
+/* ── Branding admin modal ──────────────────────────────────────── */
+.modal-box-wide { max-width: 720px; }
+.branding-admin-body {
+    display: flex; flex-direction: column; gap: 14px;
+}
+.branding-admin-section {
+    margin: 16px 0 0;
+    padding-top: 14px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-primary);
+    font-size: 0.95rem;
+}
+.branding-admin-actions {
+    display: flex; justify-content: flex-end; gap: 8px;
+    margin-top: 14px;
+}
+
+/* ── Konami rainbow mode ───────────────────────────────────────── */
+@keyframes konami-rainbow-cycle {
+    0%   { --accent: #ff0080; --profile-accent: #ff0080; }
+    14%  { --accent: #ff8c00; --profile-accent: #ff8c00; }
+    28%  { --accent: #ffd000; --profile-accent: #ffd000; }
+    42%  { --accent: #4ade80; --profile-accent: #4ade80; }
+    57%  { --accent: #00d4ff; --profile-accent: #00d4ff; }
+    71%  { --accent: #7c3aed; --profile-accent: #7c3aed; }
+    85%  { --accent: #ff00aa; --profile-accent: #ff00aa; }
+    100% { --accent: #ff0080; --profile-accent: #ff0080; }
+}
+@property --accent {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #7c3aed;
+}
+@property --profile-accent {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #7c3aed;
+}
+html[data-konami="1"] {
+    animation: konami-rainbow-cycle 8s linear infinite;
+}
+/* Also tint the body background subtly so the effect is visible
+   even on themes that already set a static accent inline. */
+html[data-konami="1"] body::before {
+    content: '';
+    position: fixed; inset: 0;
+    pointer-events: none;
+    z-index: 0;
+    background: radial-gradient(ellipse at center, transparent 60%, color-mix(in srgb, var(--accent) 12%, transparent) 100%);
+}
+
+/* Konami toast */
+.konami-toast {
+    position: fixed;
+    top: 80px; left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(90deg, #ff0080, #ff8c00, #ffd000, #4ade80, #00d4ff, #7c3aed, #ff00aa);
+    background-size: 300% 100%;
+    animation: konami-rainbow-flow 3s linear infinite;
+    color: #fff;
+    padding: 14px 28px;
+    border-radius: 999px;
+    font-size: 1.1rem;
+    font-weight: 800;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    z-index: 99999;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+    transition: opacity 0.5s, transform 0.5s;
+}
+.konami-toast.konami-toast-fade { opacity: 0; transform: translate(-50%, -10px); }
+@keyframes konami-rainbow-flow {
+    0%, 100% { background-position: 0% 50%; }
+    50%      { background-position: 100% 50%; }
+}
+
+/* Konami confetti */
+.konami-confetti-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 99998;
+    overflow: hidden;
+}
+@keyframes konami-confetti-fall {
+    0%   { transform: translateY(-20vh) rotate(0deg); opacity: 1; }
+    100% { transform: translateY(110vh) rotate(720deg); opacity: 0.5; }
+}
+.konami-confetti {
+    position: absolute;
+    top: -20px;
+    border-radius: 2px;
+    animation: konami-confetti-fall linear forwards;
+}
+
 /* ── Username font presets ─────────────────────────────────────── */
 .profile-uname-font-pixel       > span { font-family: 'Press Start 2P', monospace; font-size: 0.95rem; }
 .profile-uname-font-gothic      > span { font-family: 'Cinzel', serif; }

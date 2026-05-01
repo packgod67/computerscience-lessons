@@ -64,6 +64,10 @@
         themeWallpapers: {},
         // Per-tab subtle bg color — { games: '#hex', users: '#hex', ... }
         tabBackgrounds: {},
+        // v5: site-wide nav layout + animated logo + smart accent
+        navLayout: 'topbar',          // 'topbar' | 'sidebar'
+        logoAnimation: 'none',         // 'none' | 'wobble' | 'spin' | 'pulse' | 'bounce' | 'glitch'
+        smartAccent: true,             // auto-derive accent from wallpaper
     };
 
     // ─── Storage ─────────────────────────────────────────────────────
@@ -168,6 +172,11 @@
         applyThemeWallpaper();
         // Per-tab background colors
         applyTabBackgrounds();
+        // Nav layout (topbar vs sidebar)
+        body.dataset.navLayout = SETTINGS.navLayout || 'topbar';
+        // Animated header logo on hover
+        const logo = document.querySelector('.header-logo');
+        if (logo) logo.dataset.anim = SETTINGS.logoAnimation || 'none';
 
         // Notify other modules
         try {
@@ -235,6 +244,21 @@
         const themeId = document.documentElement.getAttribute('data-theme') || 'midnight';
         const wp = SETTINGS.themeWallpapers || {};
         const url = wp[themeId];
+
+        // Smart accent extraction — when a wallpaper is set, derive the
+        // theme accent from its dominant color so the UI matches the
+        // image. Falls back silently when CORS-tainted or no vibrant
+        // color found. Cleared style attribute when wallpaper is removed.
+        if (url && window.ArcadeAccentExtract && SETTINGS.smartAccent !== false) {
+            ArcadeAccentExtract.fromUrl(url).then(c => {
+                if (!c) return;
+                document.documentElement.style.setProperty('--accent', c);
+                document.documentElement.style.setProperty('--profile-accent', c);
+            }).catch(() => {});
+        } else if (!url) {
+            document.documentElement.style.removeProperty('--accent');
+            document.documentElement.style.removeProperty('--profile-accent');
+        }
 
         // Always tear down the video element first (it's wrong for image
         // wallpapers, and tearing down on every apply() keeps state clean
@@ -990,10 +1014,62 @@
             </section>
 
             <section class="arcade-settings-section">
+                <h3>Site layout</h3>
+                <div class="arcade-settings-row">
+                    <label>Navigation</label>
+                    <select id="setNavLayout">
+                        <option value="topbar">Top bar (default)</option>
+                        <option value="sidebar">Side bar (left)</option>
+                    </select>
+                </div>
+                <div class="arcade-settings-row">
+                    <label>Logo hover animation</label>
+                    <select id="setLogoAnim">
+                        <option value="none">None</option>
+                        <option value="wobble">Wobble</option>
+                        <option value="spin">Spin</option>
+                        <option value="pulse">Pulse</option>
+                        <option value="bounce">Bounce</option>
+                        <option value="glitch">Glitch</option>
+                    </select>
+                </div>
+                <label class="arcade-settings-checkbox">
+                    <input type="checkbox" id="setSmartAccent">
+                    Smart accent — auto-derive theme accent color from your wallpaper
+                </label>
+            </section>
+
+            ${window.ArcadeAuth?.isAdmin?.() ? `
+            <section class="arcade-settings-section">
+                <h3>Admin tools</h3>
+                <div class="arcade-settings-row">
+                    <button class="auth-submit-secondary" id="setBrandingAdmin">Site branding…</button>
+                    <button class="auth-submit-secondary" id="setBadgesAdmin">Manage badges…</button>
+                </div>
+            </section>` : ''}
+
+            <section class="arcade-settings-section">
                 <h3>Reset</h3>
                 <button class="auth-submit-secondary" id="setResetAll">Reset all settings to defaults</button>
             </section>
         `;
+        // Site layout controls
+        const navSel = pane.querySelector('#setNavLayout');
+        if (navSel) { navSel.value = SETTINGS.navLayout || 'topbar';
+            navSel.addEventListener('change', () => set({ navLayout: navSel.value })); }
+        const logoSel = pane.querySelector('#setLogoAnim');
+        if (logoSel) { logoSel.value = SETTINGS.logoAnimation || 'none';
+            logoSel.addEventListener('change', () => set({ logoAnimation: logoSel.value })); }
+        const smartAcc = pane.querySelector('#setSmartAccent');
+        if (smartAcc) { smartAcc.checked = SETTINGS.smartAccent !== false;
+            smartAcc.addEventListener('change', () => set({ smartAccent: smartAcc.checked })); }
+        // Admin tool buttons
+        pane.querySelector('#setBrandingAdmin')?.addEventListener('click', () => {
+            window.ArcadeBrandingAdmin?.showBrandingAdminModal?.();
+        });
+        pane.querySelector('#setBadgesAdmin')?.addEventListener('click', () => {
+            window.ArcadeBadgesAdmin?.showBadgeAdminModal?.();
+        });
         const ta = pane.querySelector('#setCustomCss');
         const len = pane.querySelector('#setCssLen');
         function updLen() { len.textContent = `${ta.value.length} / 16384 chars`; }
