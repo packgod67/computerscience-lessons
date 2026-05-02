@@ -43679,5 +43679,27 @@
     ],
     "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Castlevania%20-%20Symphony%20of%20the%20Night%20(USA).png",
     "addedAt": "2026-05-02T11:32:00.852Z"
+  },
+  {
+    "id": "clCardlike",
+    "title": "Cardlike",
+    "category": "Strategy",
+    "path": "games/clCardlike.html",
+    "description": "Free HTML5 poker-roguelike deck-builder by electronicsunrise. 200+ unique cards, 170+ jokers, hand-building combo discovery, and target-score chasing. Heavily inspired by Balatro — the dev acknowledges this and recommends Balatro on Steam too.",
+    "tags": [
+      "cardlike",
+      "deck-builder",
+      "roguelike",
+      "poker",
+      "strategy",
+      "balatro-like",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native",
+      "free"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzI2OTc5ODQ1LnBuZw==/original/gtALDG.png",
+    "addedAt": "2026-05-02T11:49:22.574Z"
   }
 ]
