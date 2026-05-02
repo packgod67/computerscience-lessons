@@ -106,6 +106,29 @@
             return;
         }
 
+        // Sub-tab shell. Errors view is the default; "Broken games" is
+        // the secondary sub-tab that lists every catalog entry with
+        // broken=true so admins can re-source them.
+        container.innerHTML = `
+            <div class="ea-subtabs">
+                <button class="ea-subtab is-active" data-subtab="errors">\u{1F6A8} Client errors</button>
+                <button class="ea-subtab"           data-subtab="broken">\u{1F480} Broken games</button>
+            </div>
+            <div id="eaSubpane"></div>
+        `;
+        const subpane = container.querySelector('#eaSubpane');
+        const subtabs = container.querySelectorAll('.ea-subtab');
+        subtabs.forEach(btn => {
+            btn.addEventListener('click', () => {
+                subtabs.forEach(b => b.classList.toggle('is-active', b === btn));
+                if (btn.dataset.subtab === 'errors') renderErrorsPane(subpane);
+                else                                 renderBrokenPane(subpane);
+            });
+        });
+        renderErrorsPane(subpane); // default
+    }
+
+    async function renderErrorsPane(container) {
         container.innerHTML = '<div class="ch-empty">Loading errors…</div>';
         const errs = await loadErrors();
         const groups = groupErrors(errs);
@@ -183,7 +206,7 @@
         filterEl.addEventListener('input', paint);
         paint();
 
-        container.querySelector('#eaRefreshBtn').addEventListener('click', renderErrorsAdminView);
+        container.querySelector('#eaRefreshBtn').addEventListener('click', () => renderErrorsPane(container));
 
         container.querySelector('#eaExportBtn').addEventListener('click', () => {
             const out = {
@@ -220,7 +243,7 @@
             for (const e of errs) batch.delete(db.collection('errors').doc(e.id));
             try {
                 await batch.commit();
-                renderErrorsAdminView();
+                renderErrorsPane(container);
             } catch (err) {
                 alert('Purge failed: ' + err.message);
             }
@@ -240,6 +263,115 @@
                 alert('Delete failed: ' + err.message);
             }
         });
+    }
+
+    // ─── Broken-games sub-pane ─────────────────────────────────────
+    // Pulls the catalog from app state (already loaded), filters to
+    // entries with broken=true, and renders a searchable list with
+    // a "Rescue" hint per row (current source + suggested platform).
+    // Includes "Clear broken flag" + "Open wrapper" + "Copy id" actions.
+    function renderBrokenPane(container) {
+        container.innerHTML = '<div class="ch-empty">Loading broken games…</div>';
+        // The catalog is loaded by app.js. For non-admins it's pre-filtered
+        // (broken games removed); admins see the full list.
+        const games = window.ArcadeApp?.getGames?.() || [];
+        const broken = games.filter(g => g.broken);
+
+        // Group by category for at-a-glance triage
+        const byCat = {};
+        for (const g of broken) {
+            const c = g.category || 'Other';
+            (byCat[c] = byCat[c] || []).push(g);
+        }
+        const cats = Object.entries(byCat).sort((a, b) => b[1].length - a[1].length);
+
+        container.innerHTML = `
+            <div class="ch-panel">
+                <div class="ch-header">
+                    <h2>Broken games (${broken.length})</h2>
+                    <div class="ea-header-actions">
+                        <button class="ch-export" id="bgExportBtn" type="button">Export JSON</button>
+                    </div>
+                </div>
+                <div class="ch-summary">
+                    Catalog entries marked <code>broken: true</code> — wrappers point at deleted external repos
+                    (schoolstuff1337/supplies, kaklikOf13/resurviv, MopNop/jello). Hidden from non-admins.
+                    Re-source the ROM, update the wrapper, then clear the <code>broken</code> flag in
+                    <code>games.json</code>.
+                </div>
+                <div class="ea-filter-row">
+                    <input type="text" id="bgFilter" class="auth-input" placeholder="Filter by title, id, category, tag…">
+                </div>
+                <div class="ea-broken-cats">
+                    ${cats.map(([cat, list]) => `
+                        <div class="ea-broken-cat">
+                            <h3>${esc(cat)} <span class="ea-broken-cat-count">(${list.length})</span></h3>
+                            <div class="ea-broken-list">
+                                ${list.map(g => brokenRow(g)).join('')}
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>
+        `;
+
+        const filterEl = container.querySelector('#bgFilter');
+        filterEl?.addEventListener('input', () => {
+            const q = filterEl.value.toLowerCase().trim();
+            container.querySelectorAll('.ea-broken-row').forEach(row => {
+                const hay = (row.dataset.hay || '').toLowerCase();
+                row.style.display = !q || hay.includes(q) ? '' : 'none';
+            });
+        });
+
+        container.querySelector('#bgExportBtn')?.addEventListener('click', () => {
+            const out = {
+                exportedAt: new Date().toISOString(),
+                count: broken.length,
+                games: broken.map(g => ({
+                    id: g.id, title: g.title, category: g.category,
+                    path: g.path, rom: g.rom, tags: g.tags,
+                })),
+            };
+            const blob = new Blob([JSON.stringify(out, null, 2)], { type: 'application/json' });
+            const a = document.createElement('a');
+            a.href = URL.createObjectURL(blob);
+            a.download = `arcade-broken-games-${new Date().toISOString().slice(0, 10)}.json`;
+            a.click();
+            setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+        });
+
+        container.addEventListener('click', (e) => {
+            const copy = e.target.closest('.ea-broken-copy');
+            if (copy) {
+                navigator.clipboard?.writeText(copy.dataset.id);
+                const old = copy.textContent;
+                copy.textContent = 'Copied!';
+                setTimeout(() => { copy.textContent = old; }, 1200);
+            }
+        });
+    }
+
+    function brokenRow(g) {
+        const tags = (g.tags || []).slice(0, 5).join(', ');
+        const hay = `${g.id} ${g.title} ${g.category} ${(g.tags || []).join(' ')}`;
+        return `
+            <div class="ea-broken-row" data-hay="${esc(hay)}">
+                <div class="ea-broken-meat">
+                    <div class="ea-broken-title">${esc(g.title || g.id)}</div>
+                    <div class="ea-broken-meta">
+                        <code>${esc(g.id)}</code>
+                        ${g.rom ? `· <span class="ea-broken-rom">${esc(g.rom)}</span>` : ''}
+                        ${tags ? `· <span class="ea-broken-tags">${esc(tags)}</span>` : ''}
+                    </div>
+                </div>
+                <div class="ea-broken-actions">
+                    <a class="ea-broken-action" href="${esc(g.path)}" target="_blank" rel="noopener">Open wrapper</a>
+                    <a class="ea-broken-action" href="play.html?game=${encodeURIComponent(g.id)}" target="_blank" rel="noopener">Try in player</a>
+                    <button class="ea-broken-action ea-broken-copy" data-id="${esc(g.id)}" type="button">Copy id</button>
+                </div>
+            </div>
+        `;
     }
 
     // Trim "https://example.com/js/foo.js?v=1" → "foo.js"

@@ -8279,6 +8279,115 @@ button, a, input[type="button"], input[type="submit"], .tab-btn, .cat-btn {
 }
 
 /* Errors admin dashboard (reuses .ch-panel base) */
+/* Sub-tab strip: Errors / Broken games */
+.ea-subtabs {
+    display: flex;
+    gap: 6px;
+    padding: 12px 16px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+.ea-subtab {
+    background: transparent;
+    border: none;
+    color: var(--text-secondary);
+    padding: 10px 18px;
+    font-size: 0.92rem;
+    font-weight: 600;
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 120ms;
+    border-radius: 6px 6px 0 0;
+}
+.ea-subtab:hover {
+    color: var(--text-primary);
+    background: rgba(255, 255, 255, 0.04);
+}
+.ea-subtab.is-active {
+    color: var(--text-primary);
+    border-bottom-color: var(--accent, #7c3aed);
+    background: rgba(124, 58, 237, 0.08);
+}
+
+/* Broken-games sub-pane */
+.ea-broken-cats {
+    display: flex; flex-direction: column; gap: 18px;
+    margin-top: 8px;
+}
+.ea-broken-cat h3 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+    color: var(--text-primary);
+}
+.ea-broken-cat-count {
+    color: var(--text-secondary);
+    font-weight: 400;
+    font-size: 0.85rem;
+}
+.ea-broken-list {
+    display: flex; flex-direction: column; gap: 4px;
+}
+.ea-broken-row {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 12px;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.03);
+    padding: 10px 14px;
+    border-radius: 6px;
+    border: 1px solid rgba(255, 255, 255, 0.04);
+}
+.ea-broken-row:hover { background: rgba(255, 255, 255, 0.06); }
+.ea-broken-meat { display: flex; flex-direction: column; gap: 3px; min-width: 0; }
+.ea-broken-title {
+    font-weight: 700;
+    color: var(--text-primary);
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ea-broken-meta {
+    color: var(--text-secondary);
+    font-size: 0.78rem;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+}
+.ea-broken-meta code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1px 5px;
+    border-radius: 3px;
+    font-size: 0.74rem;
+}
+.ea-broken-rom {
+    background: color-mix(in srgb, var(--accent, #7c3aed) 25%, transparent);
+    padding: 1px 6px;
+    border-radius: 3px;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    font-size: 0.7rem;
+    font-weight: 700;
+}
+.ea-broken-actions {
+    display: flex; gap: 4px; flex-wrap: wrap;
+    flex-shrink: 0;
+}
+.ea-broken-action {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    cursor: pointer;
+    text-decoration: none;
+    white-space: nowrap;
+}
+.ea-broken-action:hover {
+    background: var(--accent, #7c3aed);
+    border-color: var(--accent, #7c3aed);
+    color: #fff;
+}
+@media (max-width: 720px) {
+    .ea-broken-row { grid-template-columns: 1fr; }
+    .ea-broken-actions { justify-content: flex-end; }
+}
+
 .ea-header-actions { display: flex; gap: 8px; }
 .ea-danger { background: rgba(239, 68, 68, 0.15); color: #fca5a5; }
 .ea-danger:hover { background: rgba(239, 68, 68, 0.25); }
