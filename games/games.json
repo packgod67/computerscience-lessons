@@ -43723,5 +43723,21 @@
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzE2Mzc4MzExLnBuZw==/original/rSrBuq.png",
     "addedAt": "2026-05-02T11:59:20.531Z"
+  },
+  {
+    "id": "sampleGame",
+    "title": "Sample Game",
+    "category": "Other",
+    "path": "games/sample-game/index.html",
+    "description": "A placeholder bouncing-ball page used to verify the multi-file game pipeline. Replace the folder contents with a real game when ready.",
+    "tags": [
+      "sample",
+      "placeholder",
+      "html5",
+      "browser-native",
+      "demo"
+    ],
+    "addedAt": "2026-05-02T12:59:26.742Z",
+    "thumbnail": "games/sample-game/cover.svg"
   }
 ]

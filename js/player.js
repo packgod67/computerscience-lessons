@@ -162,8 +162,15 @@
         });
 
         // Custom games store their HTML in Firestore (no file on disk).
-        // Use the srcdoc attribute to load it inline rather than src.
-        if (game.custom && game._html) {
+        // Three flavors:
+        //   - multi-file: iframe.src = Firebase Storage URL of the entry
+        //     HTML; relative paths inside resolve to other Storage files
+        //   - single-file: iframe.srcdoc = the inlined HTML string
+        //   - regular catalog game: iframe.src = the wrapper file path
+        if (game.custom && game._isMulti && game._entryUrl) {
+            gameFrame.removeAttribute('srcdoc');
+            gameFrame.src = game._entryUrl;
+        } else if (game.custom && game._html) {
             gameFrame.removeAttribute('src');
             gameFrame.srcdoc = game._html;
         } else {

@@ -35,6 +35,7 @@
                 const snap = await db.collection('customGames').get();
                 return snap.docs.map(d => {
                     const data = d.data();
+                    const isMulti = !!data.isMulti;
                     return {
                         id: d.id,
                         title: data.title || d.id,
@@ -43,14 +44,23 @@
                         tags: Array.isArray(data.tags) ? data.tags : [],
                         thumbnail: data.thumbnail || '',
                         addedAt: data.addedAt || null,
-                        // Marker so the rest of the app knows this is custom.
-                        // path stays null — player.js checks `custom` and uses
-                        // srcdoc with the html field instead of src=path.
                         custom: true,
-                        // We carry the raw html along on this object so the
-                        // player can srcdoc it without an extra Firestore call.
-                        // app.js strips this from any cached/serialized list.
+                        // Single-file games carry HTML inline (Firestore string).
+                        // Multi-file games carry the entry-point URL synthesized
+                        // from Storage — player.js iframes that URL directly.
                         _html: data.html || '',
+                        _isMulti: isMulti,
+                        _entry: data.entry || 'index.html',
+                        _storagePrefix: data.storagePrefix || `customGames/${d.id}/`,
+                        // For multi-file games, expose the entry URL so player
+                        // can set iframe.src to the Storage download URL.
+                        _entryUrl: isMulti
+                            ? `https://firebasestorage.googleapis.com/v0/b/${
+                                firebase.app().options.storageBucket
+                              }/o/${
+                                encodeURIComponent((data.storagePrefix || `customGames/${d.id}/`) + (data.entry || 'index.html'))
+                              }?alt=media`
+                            : '',
                     };
                 });
             } catch (e) {

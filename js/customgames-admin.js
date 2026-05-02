@@ -64,7 +64,8 @@
                     <button class="modal-close" id="cgClose">&times;</button>
                 </div>
                 <div class="cg-toolbar">
-                    <button class="auth-submit" id="cgNewBtn">+ Add custom game</button>
+                    <button class="auth-submit" id="cgNewBtn">+ Single HTML file</button>
+                    <button class="auth-submit" id="cgNewMultiBtn">+ Multi-file folder/zip</button>
                     <button class="auth-submit-secondary" id="cgRefreshBtn">Refresh</button>
                 </div>
                 <div id="cgPane"></div>
@@ -72,6 +73,7 @@
         `;
         overlay.querySelector('#cgClose').addEventListener('click', () => overlay.remove());
         overlay.querySelector('#cgNewBtn').addEventListener('click', () => renderEditView(overlay, null));
+        overlay.querySelector('#cgNewMultiBtn').addEventListener('click', () => renderMultiUploadView(overlay));
         overlay.querySelector('#cgRefreshBtn').addEventListener('click', () => {
             window.ArcadeCustomGames?.invalidate?.();
             renderListView(overlay);
@@ -325,6 +327,312 @@
                 btn.textContent = isEdit ? 'Save changes' : 'Create game';
             }
         });
+    }
+
+    // ─── Multi-file upload view ────────────────────────────────
+    // Lets admins drop a folder OR a .zip, uploads each file to
+    // Firebase Storage under customGames/<gameId>/, writes a
+    // manifest doc to Firestore, and the game is playable
+    // immediately via player.js.
+    function renderMultiUploadView(overlay) {
+        const pane = overlay.querySelector('#cgPane');
+        let pickedFiles = []; // [{ relpath, file }]
+
+        pane.innerHTML = `
+            <div class="cg-edit">
+                <div class="cg-edit-banner">Multi-file upload — drop a folder or .zip. Each file becomes a Firebase Storage object. Total cap: 100 MB / 500 files.</div>
+
+                <div class="cg-dropzone" id="cgMultiDrop" tabindex="0">
+                    <div class="cg-dropzone-hint">
+                        <span class="cg-dropzone-icon">&#128193;</span>
+                        Drop a folder or a <code>.zip</code> here, or click to pick a folder
+                        <span class="cg-dropzone-sub">Selected: <span id="cgMultiCount">none</span></span>
+                    </div>
+                </div>
+                <input type="file" id="cgFolderPick" webkitdirectory directory multiple style="display:none;">
+                <input type="file" id="cgZipPick" accept=".zip,application/zip" style="display:none;">
+                <div class="cg-multi-actions">
+                    <button class="auth-submit-secondary" id="cgPickFolderBtn">Pick folder</button>
+                    <button class="auth-submit-secondary" id="cgPickZipBtn">Pick .zip</button>
+                </div>
+
+                <div class="cg-file-list" id="cgFileList"></div>
+
+                <div class="profile-edit-row">
+                    <label class="profile-edit-label" for="cgEntrySelect">Entry HTML <span class="profile-edit-hint">(the file the iframe loads)</span></label>
+                    <select id="cgEntrySelect" class="profile-edit-bio" style="min-height:auto;height:38px;"></select>
+                </div>
+
+                <div class="profile-edit-row">
+                    <label class="profile-edit-label" for="cgMultiId">Game ID</label>
+                    <input type="text" id="cgMultiId" class="auth-input" maxlength="80" placeholder="my-cool-game">
+                </div>
+                <div class="profile-edit-row">
+                    <label class="profile-edit-label" for="cgMultiTitle">Title</label>
+                    <input type="text" id="cgMultiTitle" class="auth-input" maxlength="80" placeholder="My Cool Game">
+                </div>
+                <div class="profile-edit-row">
+                    <label class="profile-edit-label" for="cgMultiCat">Category</label>
+                    <select id="cgMultiCat" class="profile-edit-bio" style="min-height:auto;height:38px;">
+                        ${CATEGORIES.map(c => `<option value="${c}">${c}</option>`).join('')}
+                    </select>
+                </div>
+                <div class="profile-edit-row">
+                    <label class="profile-edit-label" for="cgMultiTags">Tags</label>
+                    <input type="text" id="cgMultiTags" class="auth-input" maxlength="500" placeholder="indie, html5, browser-native">
+                </div>
+                <div class="profile-edit-row">
+                    <label class="profile-edit-label" for="cgMultiThumb">Thumbnail URL <span class="profile-edit-hint">(optional)</span></label>
+                    <input type="url" id="cgMultiThumb" class="auth-input" maxlength="500" placeholder="https://… or auto-pick from cover.png if uploaded">
+                </div>
+                <div class="profile-edit-row">
+                    <label class="profile-edit-label" for="cgMultiDesc">Description</label>
+                    <textarea id="cgMultiDesc" class="profile-edit-bio" maxlength="500" placeholder="What's the game?"></textarea>
+                </div>
+
+                <div class="cg-progress" id="cgProgress" style="display:none;"></div>
+
+                <div class="cg-edit-actions">
+                    <button class="auth-submit-secondary" id="cgMultiCancel">Cancel</button>
+                    <button class="auth-submit" id="cgMultiSave">Upload + create game</button>
+                </div>
+            </div>
+        `;
+
+        const drop      = pane.querySelector('#cgMultiDrop');
+        const folderPk  = pane.querySelector('#cgFolderPick');
+        const zipPk     = pane.querySelector('#cgZipPick');
+        const countEl   = pane.querySelector('#cgMultiCount');
+        const listEl    = pane.querySelector('#cgFileList');
+        const entrySel  = pane.querySelector('#cgEntrySelect');
+        const idEl      = pane.querySelector('#cgMultiId');
+        const titleEl   = pane.querySelector('#cgMultiTitle');
+        const progress  = pane.querySelector('#cgProgress');
+
+        function refreshFileList() {
+            countEl.textContent = pickedFiles.length
+                ? `${pickedFiles.length} files (${formatBytes(pickedFiles.reduce((a, f) => a + f.file.size, 0))})`
+                : 'none';
+            listEl.innerHTML = pickedFiles.length
+                ? `<div class="cg-file-list-inner">${pickedFiles.slice(0, 30).map(f =>
+                    `<div class="cg-file-row"><code>${esc(f.relpath)}</code><span>${formatBytes(f.file.size)}</span></div>`
+                  ).join('')}${pickedFiles.length > 30 ? `<div class="cg-file-more">+${pickedFiles.length - 30} more files</div>` : ''}</div>`
+                : '';
+            // Populate entry-select with HTML files; auto-select index/main
+            entrySel.innerHTML = '';
+            const htmls = pickedFiles.filter(f => /\.html?$/i.test(f.relpath));
+            for (const f of htmls) {
+                const o = document.createElement('option');
+                o.value = f.relpath; o.textContent = f.relpath;
+                entrySel.appendChild(o);
+            }
+            const auto = htmls.find(f => /(^|\/)index\.html$/i.test(f.relpath))
+                      || htmls.find(f => /(^|\/)main\.html$/i.test(f.relpath))
+                      || htmls[0];
+            if (auto) entrySel.value = auto.relpath;
+        }
+
+        function ingestFiles(fileList, prefixToStrip) {
+            // Files come from <input webkitdirectory> with .webkitRelativePath
+            // populated, OR from a zip extraction with synthetic paths.
+            const files = [];
+            for (const f of fileList) {
+                let rel = f.webkitRelativePath || f.name;
+                if (prefixToStrip && rel.startsWith(prefixToStrip)) {
+                    rel = rel.slice(prefixToStrip.length);
+                }
+                // Drop the top-level folder prefix so paths inside the
+                // game are clean (e.g. "my-game/index.html" → "index.html")
+                if (rel.includes('/')) {
+                    const top = rel.split('/')[0];
+                    // Only strip if all files share that top-level dir
+                    rel = rel.startsWith(top + '/') ? rel.slice(top.length + 1) : rel;
+                }
+                if (!rel) continue;
+                // Skip junk
+                if (/(^|\/)(\.DS_Store|Thumbs\.db|\.git\/|node_modules\/)/.test(rel)) continue;
+                files.push({ relpath: rel, file: f });
+            }
+            pickedFiles = files;
+            refreshFileList();
+            // Auto-suggest id from the top-level folder if any
+            const sample = fileList[0]?.webkitRelativePath || '';
+            if (sample.includes('/') && !idEl.value) {
+                idEl.value = slugify(sample.split('/')[0]);
+                if (!titleEl.value) titleEl.value = sample.split('/')[0];
+            }
+        }
+
+        async function ingestZip(zipFile) {
+            // Lazy-load JSZip from CDN
+            if (!window.JSZip) {
+                await new Promise((resolve, reject) => {
+                    const s = document.createElement('script');
+                    s.src = 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+                    s.onload = resolve; s.onerror = reject;
+                    document.head.appendChild(s);
+                });
+            }
+            const zip = await window.JSZip.loadAsync(zipFile);
+            const files = [];
+            const entries = Object.values(zip.files).filter(e => !e.dir);
+            // Detect common top-level folder to strip
+            const tops = new Set(entries.map(e => e.name.split('/')[0]));
+            const stripTop = tops.size === 1 ? Array.from(tops)[0] + '/' : null;
+            for (const entry of entries) {
+                let rel = entry.name;
+                if (stripTop && rel.startsWith(stripTop)) rel = rel.slice(stripTop.length);
+                if (!rel) continue;
+                if (/(^|\/)(\.DS_Store|Thumbs\.db|\.git\/|node_modules\/)/.test(rel)) continue;
+                const blob = await entry.async('blob');
+                // Wrap as a File so the upload code path is uniform
+                const file = new File([blob], rel.split('/').pop(), { type: blob.type });
+                file.webkitRelativePath = rel; // for consistent display
+                files.push({ relpath: rel, file });
+            }
+            pickedFiles = files;
+            refreshFileList();
+            // Auto-id from zip filename
+            if (!idEl.value) {
+                const base = zipFile.name.replace(/\.zip$/i, '');
+                idEl.value = slugify(base);
+                if (!titleEl.value) titleEl.value = base;
+            }
+        }
+
+        // Drop-zone wiring
+        ['dragenter', 'dragover'].forEach(ev => drop.addEventListener(ev, e => {
+            e.preventDefault(); e.stopPropagation();
+            drop.classList.add('is-dragover');
+        }));
+        ['dragleave', 'drop'].forEach(ev => drop.addEventListener(ev, e => {
+            e.preventDefault(); e.stopPropagation();
+            drop.classList.remove('is-dragover');
+        }));
+        drop.addEventListener('drop', async e => {
+            const dt = e.dataTransfer;
+            // Single .zip dropped
+            if (dt.files && dt.files.length === 1 && /\.zip$/i.test(dt.files[0].name)) {
+                await ingestZip(dt.files[0]);
+                return;
+            }
+            // Folder via DataTransferItemList → use webkitGetAsEntry walk
+            if (dt.items && dt.items[0]?.webkitGetAsEntry) {
+                const all = [];
+                async function walk(entry, prefix) {
+                    if (entry.isFile) {
+                        await new Promise(r => entry.file(f => {
+                            f.webkitRelativePath = (prefix + entry.name);
+                            all.push(f); r();
+                        }));
+                    } else if (entry.isDirectory) {
+                        const reader = entry.createReader();
+                        const kids = await new Promise(r => reader.readEntries(r));
+                        for (const k of kids) await walk(k, prefix + entry.name + '/');
+                    }
+                }
+                for (const item of dt.items) {
+                    const entry = item.webkitGetAsEntry();
+                    if (entry) await walk(entry, '');
+                }
+                ingestFiles(all);
+                return;
+            }
+            // Plain file list — treat as flat
+            if (dt.files) ingestFiles(dt.files);
+        });
+        drop.addEventListener('click', () => folderPk.click());
+
+        pane.querySelector('#cgPickFolderBtn').addEventListener('click', () => folderPk.click());
+        pane.querySelector('#cgPickZipBtn').addEventListener('click', () => zipPk.click());
+        folderPk.addEventListener('change', () => ingestFiles(folderPk.files));
+        zipPk.addEventListener('change', () => {
+            if (zipPk.files[0]) ingestZip(zipPk.files[0]);
+        });
+
+        pane.querySelector('#cgMultiCancel').addEventListener('click', () => renderListView(overlay));
+        pane.querySelector('#cgMultiSave').addEventListener('click', async () => {
+            const id = slugify(idEl.value);
+            const title = titleEl.value.trim().slice(0, 80) || id;
+            if (!id || !pickedFiles.length || !entrySel.value) {
+                alert('Need: game id, files, and an entry HTML.');
+                return;
+            }
+            const totalBytes = pickedFiles.reduce((a, f) => a + f.file.size, 0);
+            if (totalBytes > 100 * 1024 * 1024) {
+                alert(`Total upload size is ${formatBytes(totalBytes)}. Cap is 100 MB.`);
+                return;
+            }
+
+            const btn = pane.querySelector('#cgMultiSave');
+            btn.disabled = true;
+            progress.style.display = 'block';
+            progress.innerHTML = `<div class="cg-progress-bar"><div class="cg-progress-fill" id="cgFill"></div></div><div class="cg-progress-text" id="cgText">Uploading 0 / ${pickedFiles.length}…</div>`;
+            const fill = pane.querySelector('#cgFill');
+            const text = pane.querySelector('#cgText');
+
+            try {
+                const storage = firebase.storage();
+                const prefix = `customGames/${id}/`;
+                let done = 0;
+                for (const f of pickedFiles) {
+                    const ref = storage.ref(prefix + f.relpath);
+                    await ref.put(f.file);
+                    done++;
+                    text.textContent = `Uploading ${done} / ${pickedFiles.length}: ${f.relpath}`;
+                    fill.style.width = (done / pickedFiles.length * 100) + '%';
+                }
+
+                // Auto-pick a thumbnail if cover.png/.jpg/.webp is present
+                let thumbnail = pane.querySelector('#cgMultiThumb').value.trim();
+                if (!thumbnail) {
+                    const cover = pickedFiles.find(f => /(^|\/)cover\.(png|jpg|jpeg|webp|gif)$/i.test(f.relpath));
+                    if (cover) {
+                        const bucket = firebase.app().options.storageBucket;
+                        thumbnail = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(prefix + cover.relpath)}?alt=media`;
+                    }
+                }
+
+                const tags = pane.querySelector('#cgMultiTags').value
+                    .split(',').map(s => s.trim()).filter(Boolean).slice(0, 20);
+                if (!tags.includes('html5')) tags.push('html5');
+                if (!tags.includes('browser-native')) tags.push('browser-native');
+
+                const me = getMe();
+                const myProfile = me ? await window.ArcadeAuth.getProfile(me.uid).catch(() => null) : null;
+
+                await getDb().collection('customGames').doc(id).set({
+                    title,
+                    description: pane.querySelector('#cgMultiDesc').value.trim().slice(0, 500),
+                    category: pane.querySelector('#cgMultiCat').value,
+                    tags,
+                    thumbnail,
+                    isMulti: true,
+                    entry: entrySel.value,
+                    storagePrefix: prefix,
+                    fileCount: pickedFiles.length,
+                    totalBytes,
+                    authorUid: me?.uid || null,
+                    authorName: myProfile?.username || null,
+                    createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                    addedAt: new Date().toISOString(),
+                });
+
+                window.ArcadeCustomGames?.invalidate?.();
+                text.textContent = `\u{2705} Done. Game playable now.`;
+                fill.style.width = '100%';
+                setTimeout(() => renderListView(overlay), 800);
+            } catch (e) {
+                text.textContent = '\u{274C} Upload failed: ' + e.message;
+                btn.disabled = false;
+            }
+        });
+    }
+
+    function formatBytes(n) {
+        if (n < 1024) return n + ' B';
+        if (n < 1024 * 1024) return (n / 1024).toFixed(1) + ' KB';
+        return (n / 1024 / 1024).toFixed(1) + ' MB';
     }
 
     window.ArcadeCustomGamesAdmin = { showCustomGamesModal };

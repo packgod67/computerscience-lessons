@@ -11031,6 +11031,63 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
     border-top: 1px solid rgba(255,255,255,0.06);
 }
 
+/* Multi-file upload pane */
+.cg-multi-actions { display: flex; gap: 8px; }
+.cg-file-list { max-height: 180px; overflow-y: auto; margin: 6px 0; }
+.cg-file-list-inner {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    padding: 8px;
+    font-family: ui-monospace, monospace;
+    font-size: 0.78rem;
+}
+.cg-file-row {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 2px 0;
+    color: var(--text-secondary);
+}
+.cg-file-row code {
+    color: var(--text-primary);
+    background: transparent;
+    padding: 0;
+    overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+    flex: 1;
+    min-width: 0;
+}
+.cg-file-more {
+    color: var(--text-secondary);
+    font-style: italic;
+    padding-top: 4px;
+    text-align: center;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    margin-top: 4px;
+}
+.cg-progress {
+    margin: 12px 0;
+    padding: 12px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 6px;
+}
+.cg-progress-bar {
+    height: 8px;
+    background: rgba(255, 255, 255, 0.08);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 6px;
+}
+.cg-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--accent, #7c3aed), color-mix(in srgb, var(--accent, #7c3aed) 60%, white));
+    width: 0%;
+    transition: width 0.2s ease;
+}
+.cg-progress-text {
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    font-family: ui-monospace, monospace;
+}
+
 /* ── Profile font presets ──────────────────────────────────────── */
 .profile-font-pixel       { font-family: 'Press Start 2P', monospace; }
 .profile-font-pixel .profile-name      { font-size: 1.05rem; }
