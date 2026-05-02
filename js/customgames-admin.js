@@ -65,15 +65,24 @@
                 </div>
                 <div class="cg-toolbar">
                     <button class="auth-submit" id="cgNewBtn">+ Single HTML file</button>
-                    <button class="auth-submit" id="cgNewMultiBtn">+ Multi-file folder/zip</button>
                     <button class="auth-submit-secondary" id="cgRefreshBtn">Refresh</button>
+                </div>
+                <div class="cg-toolbar-help">
+                    <strong>Multi-file games?</strong> Storage-based upload disabled — needs
+                    Firebase Blaze plan. For multi-file projects, host on GitHub Pages /
+                    jsdelivr / Netlify and use the single-HTML upload above with a wrapper
+                    that iframes your hosted URL. See <code>games/clCardlike.html</code>
+                    for an example wrapper.
                 </div>
                 <div id="cgPane"></div>
             </div>
         `;
         overlay.querySelector('#cgClose').addEventListener('click', () => overlay.remove());
         overlay.querySelector('#cgNewBtn').addEventListener('click', () => renderEditView(overlay, null));
-        overlay.querySelector('#cgNewMultiBtn').addEventListener('click', () => renderMultiUploadView(overlay));
+        // Multi-file upload disabled until Firebase Storage is provisioned —
+        // the button is no longer rendered, but the function below still
+        // exists so it can be re-enabled by reverting the toolbar HTML.
+        overlay.querySelector('#cgNewMultiBtn')?.addEventListener('click', () => renderMultiUploadView(overlay));
         overlay.querySelector('#cgRefreshBtn').addEventListener('click', () => {
             window.ArcadeCustomGames?.invalidate?.();
             renderListView(overlay);

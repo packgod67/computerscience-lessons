@@ -11031,6 +11031,24 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
     border-top: 1px solid rgba(255,255,255,0.06);
 }
 
+.cg-toolbar-help {
+    margin: 0 18px 12px;
+    padding: 10px 14px;
+    background: rgba(124, 58, 237, 0.08);
+    border: 1px solid rgba(124, 58, 237, 0.25);
+    border-radius: 6px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    line-height: 1.5;
+}
+.cg-toolbar-help strong { color: var(--text-primary); }
+.cg-toolbar-help code {
+    background: rgba(0, 0, 0, 0.3);
+    padding: 1px 6px;
+    border-radius: 3px;
+    font-size: 0.78rem;
+}
+
 /* Multi-file upload pane */
 .cg-multi-actions { display: flex; gap: 8px; }
 .cg-file-list { max-height: 180px; overflow-y: auto; margin: 6px 0; }
