@@ -1,80 +1,49 @@
 <!DOCTYPE html>
-
-
-<!-- Ultimate Game Stash file--> 
-<!-- For the regularly updating doc go to https://docs.google.com/document/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/ -->
-
-
 <html lang="en">
 <head>
   <meta charset="utf-8">
-  <meta http-equiv="x-ua-compatible" content="ie=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>really cool flash game</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>BTD 5</title>
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      background: black;
-      overflow: hidden;
-      height: 100%;
-      width: 100%;
-    }
-
-    #flash-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background: black;
-    }
-
-    ruffle-player {
-      width: 100%;
-      height: 100%;
-      background: black;
-      display: block;
+    html, body { margin: 0; padding: 0; height: 100%; width: 100%; background: #000; overflow: hidden; }
+    #ruffle-stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+    ruffle-player, #ruffle-stage > * { width: 100%; height: 100%; max-width: 100vw; max-height: 100vh; background: #000; }
+    #ruffle-fallback {
+      color: #fff; font-family: system-ui, sans-serif; text-align: center; padding: 20px;
     }
   </style>
-  <script src="https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle@0.2.0-nightly.2025.10.2/ruffle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle"></script>
 </head>
 <body>
-  <div id="flash-container"></div>
-
+  <div id="ruffle-stage">
+    <div id="ruffle-fallback">Loading Ruffle…</div>
+  </div>
   <script>
-    const container = document.getElementById("flash-container");
-
-    function resizeGame() {
-      const windowWidth = window.innerWidth;
-      const windowHeight = window.innerHeight;
-      const aspectRatio = 4 / 3;
-
-      let width = Math.floor(windowWidth);
-      let height = Math.floor(windowWidth / aspectRatio);
-
-      if (height > windowHeight) {
-        height = Math.floor(windowHeight);
-        width = Math.floor(height * aspectRatio);
-      }
-
-      container.style.width = `${width}px`;
-      container.style.height = `${height}px`;
-    }
-
-    window.addEventListener("resize", resizeGame);
-    window.addEventListener("DOMContentLoaded", () => {
-      resizeGame();
-
-      const ruffle = window.RufflePlayer?.newest() || window.RufflePlayer?.createPlayer();
-      if (ruffle && container) {
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.RufflePlayer.config = {
+      autoplay: 'on',
+      unmuteOverlay: 'visible',
+      letterbox: 'on',
+      logLevel: 'warn',
+    };
+    window.addEventListener('load', () => {
+      try {
+        const ruffle = window.RufflePlayer.newest();
+        if (!ruffle) {
+          document.getElementById('ruffle-fallback').textContent =
+            'Ruffle failed to load. Check your network or extension blockers.';
+          return;
+        }
         const player = ruffle.createPlayer();
-        player.style.width = "100%";
-        player.style.height = "100%";
-        player.style.background = "black";
-        container.appendChild(player);
-        player.load("https://cdn.jsdelivr.net/gh/bubbls/UGS-file-encryption@b6b363179429fc584fac223384f1b45cc419d1a7/WDzRSvadTXBNOR.swf");
-      } else {
-        container.textContent = "Ruffle failed to load."; 
+        const stage = document.getElementById('ruffle-stage');
+        stage.innerHTML = '';
+        stage.appendChild(player);
+        player.load("https://cdn.jsdelivr.net/gh/bubbls/UGS-file-encryption@b6b363179429fc584fac223384f1b45cc419d1a7/WDzRSvadTXBNOR.swf").catch(err => {
+          stage.innerHTML = '<div id="ruffle-fallback">Failed to load SWF: ' + err.message + '</div>';
+        });
+      } catch (err) {
+        document.getElementById('ruffle-fallback').textContent =
+          'Error: ' + (err.message || err);
       }
     });
   </script>

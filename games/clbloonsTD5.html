@@ -1,20 +1,51 @@
-<!-- Ultimate Game Stash file--> 
-<!-- For the regularly updating doc go to https://docs.google.com/document/d/1_FmH3BlSBQI7FGgAQL59-ZPe8eCxs35wel6JUyVaG8Q/ -->
-
-
+<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no" />
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/AndreajnRcm4/b398dl2h74v@9a23fbb2373d743a564873251cbb57736ebc1f73/style.css" type="text/css" />
-    
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Bloons Tower Defense 5</title>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; width: 100%; background: #000; overflow: hidden; }
+    #ruffle-stage { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+    ruffle-player, #ruffle-stage > * { width: 100%; height: 100%; max-width: 100vw; max-height: 100vh; background: #000; }
+    #ruffle-fallback {
+      color: #fff; font-family: system-ui, sans-serif; text-align: center; padding: 20px;
+    }
+  </style>
+  <script src="https://cdn.jsdelivr.net/npm/@ruffle-rs/ruffle"></script>
 </head>
 <body>
-<script src="https://cdn.jsdelivr.net/gh/u-cvlassrom-y/google@main/ruffle.js"></script>
-
-<object width="100%" height="100%">
-    <param name="movie" value="https://cdn.statically.io/gh/QiProject/flash-games/8a30ea68/Bloons-TD-5.swf">
-    <embed src="https://cdn.statically.io/gh/QiProject/flash-games/8a30ea68/Bloons-TD-5.swf" width="100%" height="100%">
+  <div id="ruffle-stage">
+    <div id="ruffle-fallback">Loading Ruffle…</div>
+  </div>
+  <script>
+    window.RufflePlayer = window.RufflePlayer || {};
+    window.RufflePlayer.config = {
+      autoplay: 'on',
+      unmuteOverlay: 'visible',
+      letterbox: 'on',
+      logLevel: 'warn',
+    };
+    window.addEventListener('load', () => {
+      try {
+        const ruffle = window.RufflePlayer.newest();
+        if (!ruffle) {
+          document.getElementById('ruffle-fallback').textContent =
+            'Ruffle failed to load. Check your network or extension blockers.';
+          return;
+        }
+        const player = ruffle.createPlayer();
+        const stage = document.getElementById('ruffle-stage');
+        stage.innerHTML = '';
+        stage.appendChild(player);
+        player.load("https://cdn.jsdelivr.net/gh/bubbls/UGS-file-encryption@b6b363179429fc584fac223384f1b45cc419d1a7/WDzRSvadTXBNOR.swf").catch(err => {
+          stage.innerHTML = '<div id="ruffle-fallback">Failed to load SWF: ' + err.message + '</div>';
+        });
+      } catch (err) {
+        document.getElementById('ruffle-fallback').textContent =
+          'Error: ' + (err.message || err);
+      }
+    });
+  </script>
 </body>
 </html>
