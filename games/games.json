@@ -23660,27 +23660,12 @@
       "monster-tamer",
       "pokemon",
       "rpg",
-      "turn-based"
-    ]
-  },
-  {
-    "id": "clPokeAmbrosia",
-    "title": "Pokemon Ambrosia",
-    "category": "Retro",
-    "path": "games/clPokeAmbrosia.html",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
-    "rom": "gba",
-    "tags": [
-      "gba",
-      "hack",
-      "jrpg",
-      "monster-tamer",
-      "pokemon",
-      "retro",
-      "rpg",
       "turn-based",
-      "mobile"
-    ]
+      "gbc",
+      "rom-hack"
+    ],
+    "rom": "gbc",
+    "thumbnail": "https://archive.org/services/img/pokemon-ambrosia"
   },
   {
     "id": "clpokebattlefact",
