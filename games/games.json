@@ -43701,5 +43701,27 @@
     ],
     "thumbnail": "https://img.itch.zone/aW1nLzI2OTc5ODQ1LnBuZw==/original/gtALDG.png",
     "addedAt": "2026-05-02T11:49:22.574Z"
+  },
+  {
+    "id": "clRistarRemaster",
+    "title": "Ristar Remaster",
+    "category": "Platformer",
+    "path": "games/clRistarRemaster.html",
+    "description": "Fan-made Unity remaster of Ristar (Sega Mega Drive, 1995) with enhanced graphics and refined gameplay. Free on itch.io by fermarlin — fan project, not affiliated with Sega.",
+    "tags": [
+      "ristar",
+      "platformer",
+      "sega",
+      "remaster",
+      "fan-made",
+      "unity",
+      "indie",
+      "itch",
+      "html5",
+      "browser-native",
+      "free"
+    ],
+    "thumbnail": "https://img.itch.zone/aW1nLzE2Mzc4MzExLnBuZw==/original/rSrBuq.png",
+    "addedAt": "2026-05-02T11:59:20.531Z"
   }
 ]
