@@ -347,11 +347,59 @@
         });
     }
 
+    // ─── Multi-file upload validation ──────────────────────────
+    // Caps + reject patterns enforced before we commit anything.
+    // The worker also checks the same things as a backstop, but
+    // catching them client-side lets the user see + fix issues
+    // without burning a round-trip on a bad upload.
+    const MAX_FILE_BYTES = 10 * 1024 * 1024;       // 10 MB per file
+    const MAX_TOTAL_BYTES = 100 * 1024 * 1024;     // 100 MB per game
+    const MAX_FILE_COUNT = 500;
+    const RESERVED_WINDOWS_NAMES = /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(\.|$)/i;
+
+    function validateFile(relpath, size) {
+        const out = { level: 'ok', issues: [] };
+        // Reserved Windows names break the file on Windows-served hosts
+        const base = relpath.split(/[\\/]/).pop() || '';
+        if (RESERVED_WINDOWS_NAMES.test(base)) {
+            out.level = 'block';
+            out.issues.push('reserved Windows name (con/prn/aux/nul/com#/lpt#)');
+        }
+        // Path traversal — reject outright
+        if (relpath.includes('..') || relpath.startsWith('/')) {
+            out.level = 'block';
+            out.issues.push('illegal path (.. or leading /)');
+        }
+        // Non-ASCII filenames — some build tools / Linux file servers
+        // mishandle them. Warn but don't block.
+        if (/[^\x20-\x7E]/.test(relpath)) {
+            if (out.level === 'ok') out.level = 'warn';
+            out.issues.push('non-ASCII characters in path');
+        }
+        // Hidden files (start with .) other than .gitignore — usually
+        // editor metadata that doesn't belong in a deploy
+        if (/(^|\/)\.[^/]+/.test(relpath) && !/(^|\/)\.gitignore$/.test(relpath)) {
+            if (out.level === 'ok') out.level = 'warn';
+            out.issues.push('hidden / dotfile (probably editor metadata)');
+        }
+        // Suspicious patterns — junk that shouldn't be in a game build
+        if (/(^|\/)(node_modules|\.git|\.vscode|\.idea|__pycache__|target|build|dist)\//.test(relpath)) {
+            if (out.level === 'ok') out.level = 'warn';
+            out.issues.push('looks like build artifact / dependency dir');
+        }
+        // Per-file size
+        if (size > MAX_FILE_BYTES) {
+            out.level = 'block';
+            out.issues.push(`file is ${(size / 1024 / 1024).toFixed(1)} MB (max ${MAX_FILE_BYTES / 1024 / 1024} MB)`);
+        }
+        return out;
+    }
+
     // ─── Multi-file upload view ────────────────────────────────
-    // Lets admins drop a folder OR a .zip, uploads each file to
-    // Firebase Storage under customGames/<gameId>/, writes a
-    // manifest doc to Firestore, and the game is playable
-    // immediately via player.js.
+    // Lets admins drop a folder OR a .zip, uploads each file via the
+    // Cloudflare worker (which commits to GitHub), writes a manifest
+    // doc to Firestore, and the game is playable immediately via
+    // player.js.
     function renderMultiUploadView(overlay) {
         const pane = overlay.querySelector('#cgPane');
         let pickedFiles = []; // [{ relpath, file }]
@@ -428,14 +476,48 @@
         const progress  = pane.querySelector('#cgProgress');
 
         function refreshFileList() {
-            countEl.textContent = pickedFiles.length
-                ? `${pickedFiles.length} files (${formatBytes(pickedFiles.reduce((a, f) => a + f.file.size, 0))})`
-                : 'none';
+            // Run validation against every file; tally blockers + warnings
+            const validations = pickedFiles.map(f => validateFile(f.relpath, f.file.size));
+            const blockers = validations.filter(v => v.level === 'block').length;
+            const warnings = validations.filter(v => v.level === 'warn').length;
+            const totalBytes = pickedFiles.reduce((a, f) => a + f.file.size, 0);
+            const overallTotalCap = totalBytes > MAX_TOTAL_BYTES;
+            const overallCountCap = pickedFiles.length > MAX_FILE_COUNT;
+
+            // Header summary with counts + caps
+            let summary;
+            if (!pickedFiles.length) {
+                summary = 'none';
+            } else {
+                const parts = [`${pickedFiles.length} files (${formatBytes(totalBytes)})`];
+                if (blockers) parts.push(`<span class="cg-validate-block">⛔ ${blockers} blocked</span>`);
+                if (warnings) parts.push(`<span class="cg-validate-warn">⚠ ${warnings} warnings</span>`);
+                if (overallTotalCap) parts.push(`<span class="cg-validate-block">⛔ over ${MAX_TOTAL_BYTES / 1024 / 1024} MB total</span>`);
+                if (overallCountCap) parts.push(`<span class="cg-validate-block">⛔ over ${MAX_FILE_COUNT} files</span>`);
+                summary = parts.join(' · ');
+            }
+            countEl.innerHTML = summary;
+
+            // File list with inline validation badges. Show blockers
+            // first so the user sees them even if there are 100 files.
+            const ordered = pickedFiles
+                .map((f, i) => ({ f, v: validations[i] }))
+                .sort((a, b) => {
+                    const order = { block: 0, warn: 1, ok: 2 };
+                    return order[a.v.level] - order[b.v.level];
+                });
+
             listEl.innerHTML = pickedFiles.length
-                ? `<div class="cg-file-list-inner">${pickedFiles.slice(0, 30).map(f =>
-                    `<div class="cg-file-row"><code>${esc(f.relpath)}</code><span>${formatBytes(f.file.size)}</span></div>`
-                  ).join('')}${pickedFiles.length > 30 ? `<div class="cg-file-more">+${pickedFiles.length - 30} more files</div>` : ''}</div>`
+                ? `<div class="cg-file-list-inner">${ordered.slice(0, 50).map(({ f, v }) => {
+                    const tag = v.level === 'block' ? '<span class="cg-validate-block">⛔</span>'
+                              : v.level === 'warn'  ? '<span class="cg-validate-warn">⚠</span>'
+                              : '<span class="cg-validate-ok">✓</span>';
+                    const reason = v.issues.length
+                        ? ` <span class="cg-validate-reason">(${esc(v.issues.join('; '))})</span>` : '';
+                    return `<div class="cg-file-row cg-file-${v.level}">${tag} <code>${esc(f.relpath)}</code><span>${formatBytes(f.file.size)}</span>${reason}</div>`;
+                }).join('')}${ordered.length > 50 ? `<div class="cg-file-more">+${ordered.length - 50} more files</div>` : ''}</div>`
                 : '';
+
             // Populate entry-select with HTML files; auto-select index/main
             entrySel.innerHTML = '';
             const htmls = pickedFiles.filter(f => /\.html?$/i.test(f.relpath));
@@ -448,6 +530,16 @@
                       || htmls.find(f => /(^|\/)main\.html$/i.test(f.relpath))
                       || htmls[0];
             if (auto) entrySel.value = auto.relpath;
+
+            // Disable upload if any blockers
+            const saveBtn = pane.querySelector('#cgMultiSave');
+            if (saveBtn) {
+                const blocked = blockers > 0 || overallTotalCap || overallCountCap;
+                saveBtn.disabled = blocked || pickedFiles.length === 0;
+                saveBtn.textContent = blocked
+                    ? 'Fix blockers first'
+                    : 'Upload + create game';
+            }
         }
 
         function ingestFiles(fileList, prefixToStrip) {
@@ -576,10 +668,30 @@
                 alert('Need: game id, files, and an entry HTML.');
                 return;
             }
-            const totalBytes = pickedFiles.reduce((a, f) => a + f.file.size, 0);
-            if (totalBytes > 100 * 1024 * 1024) {
-                alert(`Total upload size is ${formatBytes(totalBytes)}. Cap is 100 MB.`);
+            // Re-run validation as a final guard. If anything's blocked,
+            // the user shouldn't be able to reach this code path (button
+            // is disabled), but check anyway in case state is stale.
+            const validations = pickedFiles.map(f => validateFile(f.relpath, f.file.size));
+            const blocked = validations.filter(v => v.level === 'block');
+            if (blocked.length) {
+                alert(`${blocked.length} files are blocked. Remove or rename them first.`);
                 return;
+            }
+            const totalBytes = pickedFiles.reduce((a, f) => a + f.file.size, 0);
+            if (totalBytes > MAX_TOTAL_BYTES) {
+                alert(`Total upload size is ${formatBytes(totalBytes)}. Cap is ${MAX_TOTAL_BYTES / 1024 / 1024} MB.`);
+                return;
+            }
+            if (pickedFiles.length > MAX_FILE_COUNT) {
+                alert(`Too many files (${pickedFiles.length}). Cap is ${MAX_FILE_COUNT}.`);
+                return;
+            }
+            // Confirm if there are warnings — they can still upload but
+            // should know what they're shipping.
+            const warns = validations.filter(v => v.level === 'warn');
+            if (warns.length) {
+                const sample = warns.slice(0, 3).map((v, i) => `  - ${pickedFiles[i].relpath}: ${v.issues.join('; ')}`).join('\n');
+                if (!confirm(`${warns.length} files have warnings:\n\n${sample}${warns.length > 3 ? '\n  …' : ''}\n\nUpload anyway?`)) return;
             }
 
             const btn = pane.querySelector('#cgMultiSave');
@@ -703,9 +815,36 @@
                 });
 
                 window.ArcadeCustomGames?.invalidate?.();
-                text.textContent = `\u{2705} Pushed to GitHub (commit ${result.commitSha.slice(0,7)}). Game playable in ~1 min once deploy lands.`;
                 fill.style.width = '100%';
-                setTimeout(() => renderListView(overlay), 1500);
+                // Show a richer success state with a soft-rollback hint:
+                // if the deploy goes wrong (Render build fails, etc.),
+                // the user can hit this Delete button to remove the
+                // upload in one commit instead of digging through git.
+                progress.innerHTML = `
+                    <div class="cg-progress-success">
+                        \u{2705} Pushed to GitHub (commit ${result.commitSha.slice(0,7)}).
+                        Game should be playable in 30s–3min once each deploy host catches up.
+                    </div>
+                    <div class="cg-progress-rollback">
+                        If the game doesn't appear or any host fails to deploy, click here to
+                        roll back: <button class="cg-progress-rollback-btn" id="cgRollbackBtn">Delete upload (rollback)</button>
+                    </div>
+                `;
+                pane.querySelector('#cgRollbackBtn').addEventListener('click', async () => {
+                    if (!confirm(`Delete the upload of "${id}"? This commits a removal of the entire folder.`)) return;
+                    try {
+                        const me2 = getMe();
+                        const tk = me2 ? await me2.getIdToken() : null;
+                        if (!tk) throw new Error('not signed in');
+                        await fetch(`${WORKER}/uploads/${encodeURIComponent(id)}`, {
+                            method: 'DELETE',
+                            headers: { Authorization: `Bearer ${tk}` },
+                        });
+                        await getDb().collection('customGames').doc(id).delete().catch(() => {});
+                        window.ArcadeCustomGames?.invalidate?.();
+                        renderListView(overlay);
+                    } catch (e) { alert('Rollback failed: ' + e.message); }
+                });
             } catch (e) {
                 text.textContent = '\u{274C} Upload failed: ' + e.message;
                 btn.disabled = false;

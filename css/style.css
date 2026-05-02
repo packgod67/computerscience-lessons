@@ -11106,6 +11106,53 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
     font-family: ui-monospace, monospace;
 }
 
+/* Per-file validation badges */
+.cg-file-row.cg-file-block {
+    background: rgba(239, 68, 68, 0.12);
+    border-left: 3px solid #ef4444;
+    padding-left: 8px;
+}
+.cg-file-row.cg-file-warn {
+    background: rgba(251, 191, 36, 0.10);
+    border-left: 3px solid #fbbf24;
+    padding-left: 8px;
+}
+.cg-validate-block { color: #fca5a5; font-weight: 700; }
+.cg-validate-warn  { color: #fbbf24; font-weight: 700; }
+.cg-validate-ok    { color: #4ade80; opacity: 0.6; }
+.cg-validate-reason {
+    color: var(--text-secondary);
+    font-size: 0.72rem;
+    font-style: italic;
+}
+
+/* Success + rollback hint after a successful upload */
+.cg-progress-success {
+    color: #4ade80;
+    font-weight: 600;
+    margin-bottom: 10px;
+}
+.cg-progress-rollback {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    padding: 10px 12px;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 6px;
+    line-height: 1.5;
+}
+.cg-progress-rollback-btn {
+    background: rgba(239, 68, 68, 0.2);
+    color: #fca5a5;
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    padding: 4px 12px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.85rem;
+    margin-left: 4px;
+}
+.cg-progress-rollback-btn:hover { background: #ef4444; color: #fff; }
+
 /* ── Profile font presets ──────────────────────────────────────── */
 .profile-font-pixel       { font-family: 'Press Start 2P', monospace; }
 .profile-font-pixel .profile-name      { font-size: 1.05rem; }

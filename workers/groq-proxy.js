@@ -1271,6 +1271,12 @@ async function handleUploadBlob(request, env) {
 
     const contentB64 = String(body.contentB64 || '');
     if (!contentB64) return json({ error: 'no content' }, 400);
+    // Per-file size cap — base64 length × 0.75 ≈ raw bytes
+    const approxBytes = Math.floor(contentB64.length * 0.75);
+    const MAX_FILE_BYTES = 10 * 1024 * 1024;
+    if (approxBytes > MAX_FILE_BYTES) {
+        return json({ error: `file too large (${(approxBytes/1024/1024).toFixed(1)} MB, cap ${MAX_FILE_BYTES/1024/1024} MB)` }, 400);
+    }
 
     const headers = {
         Authorization: `token ${env.GITHUB_TOKEN}`,
@@ -1308,6 +1314,22 @@ async function handleUploadFinalize(request, env) {
     const blobs = body.blobs;
     if (!gameId || !baseSha || !baseTreeSha || !Array.isArray(blobs) || !blobs.length) {
         return json({ error: 'missing or invalid finalize payload' }, 400);
+    }
+    if (blobs.length > 500) {
+        return json({ error: 'too many files (cap 500)' }, 400);
+    }
+    // Validate each blob's path — reject path traversal + absolute paths.
+    // The client also runs validation but the worker is the trust boundary.
+    const RESERVED = /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(\.|$)/i;
+    for (const b of blobs) {
+        const p = String(b.path || '');
+        if (!p || p.includes('..') || p.startsWith('/')) {
+            return json({ error: `invalid path: ${p}` }, 400);
+        }
+        const base = p.split('/').pop() || '';
+        if (RESERVED.test(base)) {
+            return json({ error: `reserved windows name: ${p}` }, 400);
+        }
     }
 
     const headers = {
