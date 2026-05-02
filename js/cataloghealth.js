@@ -29,8 +29,11 @@
         const noCat          = games.filter(g => !g.category || g.category === 'Other');
         const noTags         = games.filter(g => !Array.isArray(g.tags) || g.tags.length < 3);
         const noAddedAt      = games.filter(g => !g.addedAt);
+        const broken         = games.filter(g => g.broken);
 
         const sections = [
+            { id: 'broken',    title: 'Broken (dead source)',               list: broken,
+              hint: 'Wrapper points at a deleted external repo (schoolstuff1337/supplies, etc). Hidden from the home grid for non-admins. Re-source the ROM and clear the broken flag.' },
             { id: 'stub',      title: 'Stub titles ("Cl…")',                list: stubTitle,
               hint: 'Title still has the auto-generated Cl<id> placeholder. Pick a real title.' },
             { id: 'thumb',     title: 'Missing thumbnails',                 list: noThumb,

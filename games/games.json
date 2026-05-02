@@ -6,12 +6,6 @@
     "path": "games/cl1.html"
   },
   {
-    "id": "cl100roomsofenemies",
-    "title": "100 Rooms Of Enemies",
-    "category": "Other",
-    "path": "games/cl100RoomsOfEnemies.html"
-  },
-  {
     "id": "cl100RoomsOfEnemies",
     "title": "100 Rooms of Enemies",
     "category": "Retro",
@@ -22,7 +16,8 @@
       "retro",
       "snes",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "cl10bullets",
@@ -31,7 +26,8 @@
     "path": "games/cl10bullets.html",
     "tags": [
       "shooter"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "cl10minutestildawn",
@@ -297,7 +293,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "cl8ballclassic",
@@ -329,7 +326,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "cl99balls",
@@ -1541,7 +1539,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clattackhole",
@@ -1695,24 +1694,15 @@
       "atmospheric",
       "flash",
       "ruffle",
-      "classic"
-    ],
-    "description": "B 3313unabandoneda 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "clb3313unabandonedA2",
-    "title": "B3313 Unabandoned A2",
-    "category": "Retro",
-    "path": "games/clb3313unabandonedA2.html",
-    "thumbnail": "assets/thumbnails/platforms/n64.png",
-    "rom": "n64",
-    "tags": [
-      "escape",
-      "horror",
+      "classic",
       "n64",
       "retro",
       "mobile"
-    ]
+    ],
+    "description": "B 3313unabandoneda 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "thumbnail": "assets/thumbnails/platforms/n64.png",
+    "rom": "n64",
+    "broken": true
   },
   {
     "id": "clb3313v102",
@@ -1725,7 +1715,8 @@
       "n64",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clbabeltower",
@@ -1946,7 +1937,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "Bad Ice Cream 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Bad Ice Cream 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clbadicecream3",
@@ -1960,7 +1952,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "Bad Ice Cream 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Bad Ice Cream 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clbadmondaysimulator",
@@ -2639,7 +2632,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Bejeweledtwistds — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Bejeweledtwistds — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clbejeweledtwistflash",
@@ -2653,7 +2647,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "about:blank — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "about:blank — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clben10alienforce",
@@ -3561,15 +3556,6 @@
     "description": "Blumgi Rocket — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clbmx2",
-    "title": "BMX 2",
-    "category": "Racing",
-    "path": "games/clBMX2.html",
-    "tags": [
-      "racing"
-    ]
-  },
-  {
     "id": "clBMX2",
     "title": "BMX 2",
     "category": "Retro",
@@ -3579,7 +3565,8 @@
     "tags": [
       "gba",
       "retro",
-      "mobile"
+      "mobile",
+      "racing"
     ]
   },
   {
@@ -3723,12 +3710,6 @@
     "description": "Bombermanworld — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clbonanza-bros",
-    "title": "Bonanza Bros",
-    "category": "Other",
-    "path": "games/clBonanza-Bros.html"
-  },
-  {
     "id": "clBonanza-Bros",
     "title": "Bonanza Bros.",
     "category": "Retro",
@@ -3791,7 +3772,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Botwds — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Botwds — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clbounceback",
@@ -4381,7 +4363,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "Cactusmccoy — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Cactusmccoy — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clcactusmccoy-1",
@@ -4411,7 +4394,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "Cactusmccoy 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Cactusmccoy 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clcactusmccoy2-1",
@@ -4954,16 +4938,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
-  },
-  {
-    "id": "clceliasstupidromhack",
-    "title": "Celias Stupid Romhack",
-    "category": "Other",
-    "path": "games/clCeliasStupidROMHack.html",
-    "tags": [
-      "hack"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clCeliasStupidROMHack",
@@ -4978,7 +4954,8 @@
       "hacking",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clcellardoor",
@@ -6145,7 +6122,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "CoverOrange PP3 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "CoverOrange PP3 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clcoverorangeplayerspack3-1",
@@ -6185,7 +6163,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Crash 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Crash 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clcrash3",
@@ -6198,7 +6177,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Crash 3 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Crash 3 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clcrashbandicoot",
@@ -6490,12 +6470,6 @@
     "description": "Crunchball 3000 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clcrystalcastles",
-    "title": "Crystal Castles",
-    "category": "Other",
-    "path": "games/clCrystalCastles.html"
-  },
-  {
     "id": "clCrystalCastles",
     "title": "Crystal Castles",
     "category": "Retro",
@@ -6506,7 +6480,8 @@
       "arcade",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clcs1-6",
@@ -7146,7 +7121,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "Decision — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Decision — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "cldecision2",
@@ -7173,7 +7149,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Decision 3 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Decision 3 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "cldecisionmedieval",
@@ -7613,16 +7590,8 @@
       "retro",
       "snes",
       "mobile"
-    ]
-  },
-  {
-    "id": "cldknescollection",
-    "title": "Dknescollection",
-    "category": "Retro",
-    "path": "games/clDKNESCollection.html",
-    "tags": [
-      "retro"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clDKNESCollection",
@@ -7637,7 +7606,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "cldoblox",
@@ -8104,7 +8074,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "cldoublewires",
@@ -8142,7 +8113,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "Douchebag Workout 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Douchebag Workout 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "cldownthemountain",
@@ -8170,16 +8142,6 @@
       "gba",
       "retro",
       "mobile"
-    ]
-  },
-  {
-    "id": "cldragonballzthelegacyofgoku",
-    "title": "Dragon Ball Zthe Legacyof Goku",
-    "category": "Fighting",
-    "path": "games/clDragonBallZTheLegacyofGoku.html",
-    "tags": [
-      "dragon-ball",
-      "fighting"
     ]
   },
   {
@@ -8611,7 +8573,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "cldud",
@@ -9363,7 +9326,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clelytraflight",
@@ -9670,7 +9634,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "Exit Path — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Exit Path — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clexoobservation",
@@ -9827,7 +9792,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Famidash 1-2-8 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Famidash 1-2-8 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clfamidash1.2.8",
@@ -9840,7 +9806,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clfamidashalbum1-2-8",
@@ -9854,7 +9821,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Famidashalbum 1-2-8 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Famidashalbum 1-2-8 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clfamidashAlbum1.2.8",
@@ -9867,7 +9835,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clfamidashbsides1-2-8",
@@ -9881,7 +9850,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Famidashbsides 1-2-8 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Famidashbsides 1-2-8 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clfamidashBSides1.2.8",
@@ -9894,7 +9864,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clfamidashcsides1-2-8",
@@ -9908,7 +9879,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Famidashcsides 1-2-8 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Famidashcsides 1-2-8 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clfamidashCSides1.2.8",
@@ -9921,7 +9893,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clfamidashdsides1-2-8",
@@ -9935,7 +9908,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Famidashdsides 1-2-8 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Famidashdsides 1-2-8 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clfamidashDSides1.2.8",
@@ -9948,7 +9922,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clfamilyguycorrupted",
@@ -10296,15 +10271,6 @@
     ]
   },
   {
-    "id": "clfifa07",
-    "title": "FIFA 07",
-    "category": "Other",
-    "path": "games/clFIFA07.html",
-    "tags": [
-      "sports"
-    ]
-  },
-  {
     "id": "clFIFA07",
     "title": "FIFA 07",
     "category": "Retro",
@@ -10373,15 +10339,6 @@
     ]
   },
   {
-    "id": "clfifa99",
-    "title": "FIFA 99",
-    "category": "Other",
-    "path": "games/clFIFA99.html",
-    "tags": [
-      "sports"
-    ]
-  },
-  {
     "id": "clFIFA99",
     "title": "FIFA 99",
     "category": "Retro",
@@ -10393,15 +10350,6 @@
       "retro",
       "sports",
       "mobile"
-    ]
-  },
-  {
-    "id": "clfifainternationalsoccer",
-    "title": "Fifainternationalsoccer",
-    "category": "Sports",
-    "path": "games/clFIFAinternationalsoccer.html",
-    "tags": [
-      "sports"
     ]
   },
   {
@@ -10419,12 +10367,6 @@
     ]
   },
   {
-    "id": "clfifaroadtoworldcup98",
-    "title": "Fifaroadtoworldcup 98",
-    "category": "Other",
-    "path": "games/clFIFAroadtoworldcup98.html"
-  },
-  {
     "id": "clFIFAroadtoworldcup98",
     "title": "FIFA: Road to World Cup 98",
     "category": "Retro",
@@ -10439,15 +10381,6 @@
     ]
   },
   {
-    "id": "clfifasoccer06",
-    "title": "Fifasoccer 06",
-    "category": "Sports",
-    "path": "games/clFIFAsoccer06.html",
-    "tags": [
-      "sports"
-    ]
-  },
-  {
     "id": "clFIFAsoccer06",
     "title": "Fifasoccer 06",
     "category": "Retro",
@@ -10457,15 +10390,7 @@
     "tags": [
       "nds",
       "retro",
-      "mobile"
-    ]
-  },
-  {
-    "id": "clfifasoccer95",
-    "title": "Fifasoccer 95",
-    "category": "Sports",
-    "path": "games/clFIFAsoccer95.html",
-    "tags": [
+      "mobile",
       "sports"
     ]
   },
@@ -10484,15 +10409,6 @@
     ]
   },
   {
-    "id": "clfifasoccer96",
-    "title": "Fifasoccer 96",
-    "category": "Sports",
-    "path": "games/clFIFAsoccer96.html",
-    "tags": [
-      "sports"
-    ]
-  },
-  {
     "id": "clFIFAsoccer96",
     "title": "FIFA Soccer 96",
     "category": "Retro",
@@ -10504,15 +10420,6 @@
       "snes",
       "sports",
       "mobile"
-    ]
-  },
-  {
-    "id": "clfifasoccer97",
-    "title": "Fifasoccer 97",
-    "category": "Sports",
-    "path": "games/clFIFAsoccer97.html",
-    "tags": [
-      "sports"
     ]
   },
   {
@@ -10578,7 +10485,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clfinalfantasy3nes",
@@ -10594,23 +10502,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
-  },
-  {
-    "id": "clfinalfantasyii",
-    "title": "Finalfantasyii",
-    "category": "Other",
-    "path": "games/clfinalfantasyII.html",
-    "tags": [
-      "jrpg",
-      "rpg",
-      "turn-based",
-      "arcade",
-      "classic",
-      "flash",
-      "ruffle"
     ],
-    "description": "Finalfantasyii — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "broken": true
   },
   {
     "id": "clfinalfantasyII",
@@ -10625,8 +10518,13 @@
       "rpg",
       "snes",
       "turn-based",
-      "mobile"
-    ]
+      "mobile",
+      "arcade",
+      "classic",
+      "flash",
+      "ruffle"
+    ],
+    "description": "Finalfantasyii — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
     "id": "clfinalfantasyix",
@@ -10663,22 +10561,6 @@
     "description": "Finalfantasytactics — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clfinalfantasyvi",
-    "title": "Finalfantasyvi",
-    "category": "Other",
-    "path": "games/clfinalfantasyVI.html",
-    "tags": [
-      "jrpg",
-      "rpg",
-      "turn-based",
-      "arcade",
-      "classic",
-      "flash",
-      "ruffle"
-    ],
-    "description": "Finalfantasyvi — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
     "id": "clfinalfantasyVI",
     "title": "Final Fantasy VI",
     "category": "Retro",
@@ -10691,24 +10573,13 @@
       "rpg",
       "snes",
       "turn-based",
-      "mobile"
-    ]
-  },
-  {
-    "id": "clfinalfantasyvii",
-    "title": "Finalfantasyvii",
-    "category": "Other",
-    "path": "games/clfinalfantasyVII.html",
-    "tags": [
-      "jrpg",
-      "rpg",
-      "turn-based",
+      "mobile",
       "arcade",
       "classic",
       "flash",
       "ruffle"
     ],
-    "description": "Finalfantasyvii — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Finalfantasyvi — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
     "id": "clfinalfantasyVII",
@@ -10723,24 +10594,13 @@
       "retro",
       "rpg",
       "turn-based",
-      "mobile"
-    ]
-  },
-  {
-    "id": "clfinalfantasyviid2",
-    "title": "Finalfantasyviid 2",
-    "category": "Other",
-    "path": "games/clfinalfantasyVIId2.html",
-    "tags": [
-      "jrpg",
-      "rpg",
-      "turn-based",
+      "mobile",
       "arcade",
       "classic",
       "flash",
       "ruffle"
     ],
-    "description": "Finalfantasyviid 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Finalfantasyvii — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
     "id": "clfinalfantasyVIId2",
@@ -10755,24 +10615,13 @@
       "retro",
       "rpg",
       "turn-based",
-      "mobile"
-    ]
-  },
-  {
-    "id": "clfinalfantasyviid3",
-    "title": "Finalfantasyviid 3",
-    "category": "Other",
-    "path": "games/clfinalfantasyVIId3.html",
-    "tags": [
-      "jrpg",
-      "rpg",
-      "turn-based",
+      "mobile",
       "arcade",
       "classic",
       "flash",
       "ruffle"
     ],
-    "description": "Finalfantasyviid 3 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Finalfantasyviid 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
     "id": "clfinalfantasyVIId3",
@@ -10787,8 +10636,13 @@
       "retro",
       "rpg",
       "turn-based",
-      "mobile"
-    ]
+      "mobile",
+      "arcade",
+      "classic",
+      "flash",
+      "ruffle"
+    ],
+    "description": "Finalfantasyviid 3 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
     "id": "clfinalfantasyviitheothertetrr",
@@ -13465,12 +13319,6 @@
     "description": "Goldensunnds — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clgoldensunthelostage",
-    "title": "Golden Sun The Lost Age",
-    "category": "Other",
-    "path": "games/clGoldenSunTheLostAge.html"
-  },
-  {
     "id": "clGoldenSunTheLostAge",
     "title": "Golden Sun: The Lost Age",
     "category": "Retro",
@@ -14325,7 +14173,8 @@
       "nes",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clhackertype",
@@ -14547,7 +14396,8 @@
       "gba",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clharoldsbadday",
@@ -14651,7 +14501,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Heartandsoul 1-2-1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Heartandsoul 1-2-1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clheartandsoul1.2.1",
@@ -14664,7 +14515,8 @@
       "gba",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clhei-t",
@@ -14806,12 +14658,6 @@
       "ruffle"
     ],
     "description": "Hextris — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "clhighspeed",
-    "title": "High Speed",
-    "category": "Other",
-    "path": "games/clHighSpeed.html"
   },
   {
     "id": "clHighSpeed",
@@ -15103,12 +14949,6 @@
     ]
   },
   {
-    "id": "clhoennslastwish",
-    "title": "Hoenns Last Wish",
-    "category": "Other",
-    "path": "games/clHoennsLastWish.html"
-  },
-  {
     "id": "clHoennsLastWish",
     "title": "Hoenn's Last Wish",
     "category": "Retro",
@@ -15119,7 +14959,8 @@
       "gba",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clholebattle",
@@ -15965,7 +15806,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Jellytruck — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Jellytruck — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "cljellytruckgood",
@@ -15978,7 +15820,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Jellytruckgood — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Jellytruckgood — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "cljetforcegemini",
@@ -16084,7 +15927,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Jojobaps 1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Jojobaps 1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "cljourneyarcade",
@@ -16123,7 +15967,8 @@
       "arcade",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "cljsvecx",
@@ -16154,15 +15999,6 @@
     "description": "Clickteam Fusion Developer 2.5 HTML5 Runtime — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "cljump",
-    "title": "JUMP",
-    "category": "Platformer",
-    "path": "games/clJUMP.html",
-    "tags": [
-      "platformer"
-    ]
-  },
-  {
     "id": "clJUMP",
     "title": "JUMP",
     "category": "Retro",
@@ -16172,7 +16008,8 @@
     "tags": [
       "retro",
       "snes",
-      "mobile"
+      "mobile",
+      "platformer"
     ]
   },
   {
@@ -16352,15 +16189,6 @@
       "classic"
     ],
     "description": "KART BROS! - Free Online .io Kart Racing Game — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "clkengriffeyjrpresentsmajorleaguebaseball",
-    "title": "Ken Griffey Jr Presents Major League Baseball",
-    "category": "Sports",
-    "path": "games/clKenGriffeyJrPresentsMajorLeagueBaseball.html",
-    "tags": [
-      "sports"
-    ]
   },
   {
     "id": "clKenGriffeyJrPresentsMajorLeagueBaseball",
@@ -16954,7 +16782,8 @@
     "id": "cllearntofly3debug",
     "title": "Learn To Fly 3 Debug",
     "category": "Other",
-    "path": "games/clLearnToFly3Debug.html"
+    "path": "games/clLearnToFly3Debug.html",
+    "broken": true
   },
   {
     "id": "cllearntoflyidle",
@@ -16971,7 +16800,8 @@
       "classic",
       "ugs-pack"
     ],
-    "description": "Learn%20to%20Fly%20Idle%20(Ads%20removed%2C%20upgrade%20limit%20bypassed)%20(1) — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Learn%20to%20Fly%20Idle%20(Ads%20removed%2C%20upgrade%20limit%20bypassed)%20(1) — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "cllearntoflyidlehack",
@@ -16987,17 +16817,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "LtFI%20(Fast%20RP%2C%20all%20upgrades%20are%20free%20or%20cheap) — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "cllegacyofgoku",
-    "title": "Legacy Of Goku",
-    "category": "Other",
-    "path": "games/clLegacyOfGoku.html",
-    "tags": [
-      "dragon-ball",
-      "fighting"
-    ]
+    "description": "LtFI%20(Fast%20RP%2C%20all%20upgrades%20are%20free%20or%20cheap) — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clLegacyOfGoku",
@@ -17012,7 +16833,8 @@
       "gba",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "cllegobatman",
@@ -18268,16 +18090,6 @@
     ]
   },
   {
-    "id": "clmarioismissingdoneright",
-    "title": "Mariois Missing Done Right",
-    "category": "Mario",
-    "path": "games/clMarioisMissingDoneRight.html",
-    "tags": [
-      "mario",
-      "platformer"
-    ]
-  },
-  {
     "id": "clMarioisMissingDoneRight",
     "title": "Mario is Missing: Done Right!",
     "category": "Retro",
@@ -18539,17 +18351,6 @@
     "description": "Mario VS Luigi — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clmarvelsuperheroesarcade",
-    "title": "Marvel Super Heroes Arcade",
-    "category": "Retro",
-    "path": "games/clMarvelSuperHeroesArcade.html",
-    "tags": [
-      "fighting",
-      "retro",
-      "superhero"
-    ]
-  },
-  {
     "id": "clMarvelSuperHeroesArcade",
     "title": "Marvel Super Heroes Arcade",
     "category": "Retro",
@@ -18562,7 +18363,8 @@
       "retro",
       "superhero",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmarvelvscapcomps1",
@@ -18572,7 +18374,8 @@
     "tags": [
       "fighting",
       "superhero"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmarvelvsstreetfighter",
@@ -18582,7 +18385,8 @@
     "tags": [
       "fighting",
       "superhero"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmarvelvsstreetfighterjp",
@@ -18598,7 +18402,8 @@
       "ruffle",
       "classic"
     ],
-    "description": "Marvelvsstreetfighterjp — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Marvelvsstreetfighterjp — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clmaskedforcesunlimited",
@@ -18961,7 +18766,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmegamanbn5tc",
@@ -18977,7 +18783,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmegamanbn5tp",
@@ -18993,7 +18800,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmegamanbn6cf",
@@ -19009,7 +18817,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmegamanbn6cg",
@@ -19025,7 +18834,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmegamanlegends",
@@ -19313,17 +19123,6 @@
     "tags": [
       "retro",
       "mobile"
-    ]
-  },
-  {
-    "id": "clmetalsonichyperdrive",
-    "title": "Metal Sonic Hyperdrive",
-    "category": "Sonic",
-    "path": "games/clMetalSonicHyperdrive.html",
-    "tags": [
-      "platformer",
-      "sonic",
-      "speed"
     ]
   },
   {
@@ -19831,7 +19630,8 @@
       "n64",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmktrilogyps1",
@@ -19844,7 +19644,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Mktrilogyps 1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Mktrilogyps 1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clmmbn3b",
@@ -19909,7 +19710,8 @@
       "nds",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmmsf2zxs",
@@ -19922,7 +19724,8 @@
       "nds",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmmsf3ba",
@@ -19935,7 +19738,8 @@
       "nds",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmmsf3rj",
@@ -19948,7 +19752,8 @@
       "nds",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmmsfd",
@@ -19961,7 +19766,8 @@
       "nds",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmmsfl",
@@ -19974,7 +19780,8 @@
       "nds",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmmsfp",
@@ -19987,7 +19794,8 @@
       "nds",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmmwilywars",
@@ -20556,7 +20364,8 @@
       "arcade",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clmspacman(1)",
@@ -20747,12 +20556,6 @@
     "path": "games/clNautilusOS(1).html"
   },
   {
-    "id": "clnbahangtime",
-    "title": "Nbahangtime",
-    "category": "Other",
-    "path": "games/clNBAhangtime.html"
-  },
-  {
     "id": "clNBAhangtime",
     "title": "NBA Hangtime",
     "category": "Retro",
@@ -20764,15 +20567,6 @@
       "retro",
       "sports",
       "mobile"
-    ]
-  },
-  {
-    "id": "clnbajam",
-    "title": "Nbajam",
-    "category": "Other",
-    "path": "games/clNBAjam.html",
-    "tags": [
-      "sports"
     ]
   },
   {
@@ -20799,23 +20593,14 @@
       "arcade",
       "classic",
       "flash",
-      "ruffle"
-    ],
-    "description": "Nbajamte — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "clnbajamTE",
-    "title": "NBA Jam TE",
-    "category": "Retro",
-    "path": "games/clnbajamTE.html",
-    "thumbnail": "assets/thumbnails/platforms/atari.png",
-    "rom": "atari",
-    "tags": [
+      "ruffle",
       "atari",
       "retro",
-      "sports",
       "mobile"
-    ]
+    ],
+    "description": "Nbajamte — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "thumbnail": "assets/thumbnails/platforms/atari.png",
+    "rom": "atari"
   },
   {
     "id": "clnbalive2000",
@@ -20951,16 +20736,6 @@
       "platformer",
       "retro",
       "mobile"
-    ]
-  },
-  {
-    "id": "clnewsupermarioworld2aroundtheworld",
-    "title": "New Super Mario World 2 Aroundthe World",
-    "category": "Mario",
-    "path": "games/clNewSuperMarioWorld2AroundtheWorld.html",
-    "tags": [
-      "mario",
-      "platformer"
     ]
   },
   {
@@ -21200,12 +20975,6 @@
       "classic"
     ],
     "description": "Nickelodeonsuperbrawl 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "clnicktoonsfreezeframefrenzy",
-    "title": "Nicktoons Freeze Frame Frenzy",
-    "category": "Other",
-    "path": "games/clNicktoonsFreezeFrameFrenzy.html"
   },
   {
     "id": "clNicktoonsFreezeFrameFrenzy",
@@ -21874,7 +21643,8 @@
     "tags": [
       "casino",
       "gambling"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clorbofcreation",
@@ -21974,15 +21744,6 @@
     "description": "Ourpleguy — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "cloutrunarcade",
-    "title": "Outrun Arcade",
-    "category": "Platformer",
-    "path": "games/clOutrunArcade.html",
-    "tags": [
-      "platformer"
-    ]
-  },
-  {
     "id": "clOutrunArcade",
     "title": "OutRun (Arcade)",
     "category": "Retro",
@@ -21992,17 +21753,10 @@
     "tags": [
       "arcade",
       "retro",
-      "mobile"
-    ]
-  },
-  {
-    "id": "cloutrungenesis",
-    "title": "Outrun Genesis",
-    "category": "Platformer",
-    "path": "games/clOutrunGenesis.html",
-    "tags": [
+      "mobile",
       "platformer"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clOutrunGenesis",
@@ -22014,8 +21768,10 @@
     "tags": [
       "genesis",
       "retro",
-      "mobile"
-    ]
+      "mobile",
+      "platformer"
+    ],
+    "broken": true
   },
   {
     "id": "clovo",
@@ -22560,18 +22316,6 @@
     "description": "Papermario — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clpapermariodse",
-    "title": "Paper Mario DSE",
-    "category": "Mario",
-    "path": "games/clPaperMarioDSE.html",
-    "tags": [
-      "jrpg",
-      "mario",
-      "platformer",
-      "rpg"
-    ]
-  },
-  {
     "id": "clPaperMarioDSE",
     "title": "Paper Mario DSE",
     "category": "Retro",
@@ -22586,21 +22330,8 @@
       "retro",
       "rpg",
       "mobile"
-    ]
-  },
-  {
-    "id": "clpapermariopracticehack",
-    "title": "Paper Mario Practice Hack",
-    "category": "Mario",
-    "path": "games/clPaperMarioPracticeHack.html",
-    "tags": [
-      "hack",
-      "hacking",
-      "jrpg",
-      "mario",
-      "platformer",
-      "rpg"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clPaperMarioPracticeHack",
@@ -22619,7 +22350,8 @@
       "retro",
       "rpg",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpapermariopromode",
@@ -23869,7 +23601,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokecrystalclear",
@@ -23973,7 +23706,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokeelysiuma",
@@ -24096,7 +23830,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokeemeraldrandom",
@@ -24143,7 +23878,8 @@
       "meta-progression",
       "mobile"
     ],
-    "popular": true
+    "popular": true,
+    "broken": true
   },
   {
     "id": "clpokeemeraldrogueex",
@@ -24169,30 +23905,6 @@
     "rom": "gba",
     "popular": true,
     "thumbnail": "https://pokemonrom.net/wp-content/uploads/2023/04/Pokemon_Emerald_Rogue_ROM.png"
-  },
-  {
-    "id": "clPokeEmeraldRogueEX",
-    "title": "Pokemon Emerald Rogue EX",
-    "category": "Pokemon",
-    "path": "games/clPokeEmeraldRogueEX.html",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
-    "rom": "gba",
-    "tags": [
-      "pokemon",
-      "jrpg",
-      "monster-tamer",
-      "rpg",
-      "turn-based",
-      "gba",
-      "rom-hack",
-      "roguelite",
-      "run-based",
-      "permadeath",
-      "monster-tamer-roguelite",
-      "meta-progression",
-      "mobile"
-    ],
-    "description": "Expanded successor to Emerald Rogue — more starters, more difficulty modifiers, optional fakedex packs, brand-new run modifiers."
   },
   {
     "id": "clpokeemeraldz",
@@ -24276,7 +23988,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokefuseddimension",
@@ -24299,20 +24012,6 @@
     ]
   },
   {
-    "id": "clpokefusion3",
-    "title": "Pokemon Fusion 3",
-    "category": "Pokemon",
-    "path": "games/clPokeFusion3.html",
-    "description": "The third installment in the Pokemon Fusion series with even more fusion combinations. Fuse any two Pokemon together to create unique hybrids. Features improved fusion sprites, a new region, updated mechanics, and thousands of possible fusion combinations to discover.",
-    "tags": [
-      "jrpg",
-      "monster-tamer",
-      "pokemon",
-      "rpg",
-      "turn-based"
-    ]
-  },
-  {
     "id": "clPokeFusion3",
     "title": "Pokemon Fusion 3",
     "category": "Retro",
@@ -24329,7 +24028,9 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "description": "The third installment in the Pokemon Fusion series with even more fusion combinations. Fuse any two Pokemon together to create unique hybrids. Features improved fusion sprites, a new region, updated mechanics, and thousands of possible fusion combinations to discover.",
+    "broken": true
   },
   {
     "id": "clpokegaia",
@@ -24370,7 +24071,8 @@
       "pokemon",
       "rpg",
       "turn-based"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokegschronicles",
@@ -24424,7 +24126,8 @@
       "pokemon",
       "rpg",
       "turn-based"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokelightplatinum",
@@ -24956,7 +24659,8 @@
       "pokemon",
       "rpg",
       "turn-based"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokemonperfectemerald5.5",
@@ -24975,7 +24679,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokemonplatinum",
@@ -25059,27 +24764,12 @@
       "monster-tamer",
       "pokemon",
       "rpg",
-      "turn-based"
-    ]
-  },
-  {
-    "id": "clPokemonrocketedition",
-    "title": "Pokemon Rocket Edition",
-    "category": "Retro",
-    "path": "games/clPokemonrocketedition.html",
-    "thumbnail": "assets/thumbnails/platforms/gba.png",
-    "rom": "gba",
-    "tags": [
-      "gba",
-      "hack",
-      "jrpg",
-      "monster-tamer",
-      "pokemon",
-      "retro",
-      "rpg",
       "turn-based",
+      "gba",
+      "retro",
       "mobile"
-    ]
+    ],
+    "rom": "gba"
   },
   {
     "id": "clpokemonruby",
@@ -25467,7 +25157,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokemysteryexplorersofsky",
@@ -25699,7 +25390,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokepuregreen",
@@ -25719,7 +25411,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokepurered",
@@ -25739,7 +25432,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpokeradicalred",
@@ -26015,20 +25709,6 @@
     ]
   },
   {
-    "id": "clpokethetaemeraldex",
-    "title": "Pokemon Theta Emerald EX",
-    "category": "Pokemon",
-    "path": "games/clPokeThetaEmeraldEX.html",
-    "description": "One of the most comprehensive Emerald hacks featuring 721 Pokemon from Gens 1-6, Mega Evolutions, Primal Reversion, updated moves and abilities, Fairy type, reusable TMs, and the Exp. Share as an on/off toggle. A must-play for fans wanting the complete Pokemon experience on GBA.",
-    "tags": [
-      "jrpg",
-      "monster-tamer",
-      "pokemon",
-      "rpg",
-      "turn-based"
-    ]
-  },
-  {
     "id": "clPokeThetaEmeraldEX",
     "title": "Pokemon Theta Emerald EX",
     "category": "Retro",
@@ -26045,7 +25725,9 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "description": "One of the most comprehensive Emerald hacks featuring 721 Pokemon from Gens 1-6, Mega Evolutions, Primal Reversion, updated moves and abilities, Fairy type, reusable TMs, and the Exp. Share as an on/off toggle. A must-play for fans wanting the complete Pokemon experience on GBA.",
+    "broken": true
   },
   {
     "id": "clpoketoomanytypes2",
@@ -26066,7 +25748,8 @@
       "rpg",
       "turn-based",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clpoketourmaline",
@@ -28992,17 +28675,6 @@
     ]
   },
   {
-    "id": "clsegasonicthehedgehog",
-    "title": "Sega Sonic The Hedgehog",
-    "category": "Sonic",
-    "path": "games/clSegaSonicTheHedgehog.html",
-    "tags": [
-      "platformer",
-      "sonic",
-      "speed"
-    ]
-  },
-  {
     "id": "clSegaSonicTheHedgehog",
     "title": "Sega Sonic The Hedgehog",
     "category": "Retro",
@@ -29016,7 +28688,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clself",
@@ -29791,7 +29464,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "about:blank — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "about:blank — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clskywire2",
@@ -29805,7 +29479,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "Fireboy & Watergirl 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Fireboy & Watergirl 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clslenderman",
@@ -30051,7 +29726,8 @@
     "id": "clsm64land",
     "title": "SM 64 Land",
     "category": "Other",
-    "path": "games/clSM64Land.html"
+    "path": "games/clSM64Land.html",
+    "broken": true
   },
   {
     "id": "clsm64lastimpact",
@@ -30064,7 +29740,8 @@
       "n64",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsm64liminaldream",
@@ -30077,7 +29754,8 @@
       "n64",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsmadvance2",
@@ -30488,15 +30166,6 @@
     "description": "Snowbros-1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clsnowbrosgenesis",
-    "title": "Snow Bros Genesis",
-    "category": "Retro",
-    "path": "games/clSnowBrosGenesis.html",
-    "tags": [
-      "retro"
-    ]
-  },
-  {
     "id": "clSnowBrosGenesis",
     "title": "Snow Bros (Genesis)",
     "category": "Retro",
@@ -30507,7 +30176,8 @@
       "genesis",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsnowbrothers",
@@ -30536,7 +30206,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "about:blank — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "about:blank — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clsnowrid",
@@ -30795,7 +30466,8 @@
       "n64",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clSonic & Knuckles + Sonic The Hedgehog 3",
@@ -30841,17 +30513,6 @@
     ]
   },
   {
-    "id": "clsonic1scorerush",
-    "title": "Sonic 1 Score Rush",
-    "category": "Sonic",
-    "path": "games/clSonic1ScoreRush.html",
-    "tags": [
-      "platformer",
-      "sonic",
-      "speed"
-    ]
-  },
-  {
     "id": "clSonic1ScoreRush",
     "title": "Sonic 1: Score Rush",
     "category": "Retro",
@@ -30868,17 +30529,6 @@
     ]
   },
   {
-    "id": "clsonic1thesuperchallenges",
-    "title": "Sonic 1 The Super Challenges",
-    "category": "Sonic",
-    "path": "games/clSonic1TheSuperChallenges.html",
-    "tags": [
-      "platformer",
-      "sonic",
-      "speed"
-    ]
-  },
-  {
     "id": "clSonic1TheSuperChallenges",
     "title": "Sonic 1: Super Challenges",
     "category": "Retro",
@@ -30892,7 +30542,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsonic2pinkedition",
@@ -30908,18 +30559,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
-  },
-  {
-    "id": "clsonic2scorerush",
-    "title": "Sonic 2 Score Rush",
-    "category": "Sonic",
-    "path": "games/clSonic2ScoreRush.html",
-    "tags": [
-      "platformer",
-      "sonic",
-      "speed"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clSonic2ScoreRush",
@@ -30951,7 +30592,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsonic3andknuckles",
@@ -30983,7 +30625,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsonic3complete",
@@ -31177,7 +30820,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsoniccd",
@@ -31193,7 +30837,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Soniccd — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Soniccd — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clsoniccdmobile",
@@ -31225,7 +30870,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsonicclassiccollection",
@@ -31260,17 +30906,6 @@
     ]
   },
   {
-    "id": "clsonicclassics",
-    "title": "Sonic Classics",
-    "category": "Sonic",
-    "path": "games/clSonicClassics.html",
-    "tags": [
-      "platformer",
-      "sonic",
-      "speed"
-    ]
-  },
-  {
     "id": "clSonicClassics",
     "title": "Sonic Classics",
     "category": "Retro",
@@ -31284,7 +30919,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsoniccolors",
@@ -31348,7 +30984,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsonicgg",
@@ -31367,18 +31004,6 @@
     ]
   },
   {
-    "id": "clsonichellfiresaga",
-    "title": "Sonic Hellfire Saga",
-    "category": "Sonic",
-    "path": "games/clSonicHellfireSaga.html",
-    "tags": [
-      "hard",
-      "platformer",
-      "sonic",
-      "speed"
-    ]
-  },
-  {
     "id": "clSonicHellfireSaga",
     "title": "Sonic: Hellfire Saga",
     "category": "Retro",
@@ -31389,7 +31014,10 @@
       "genesis",
       "hard",
       "retro",
-      "mobile"
+      "mobile",
+      "platformer",
+      "sonic",
+      "speed"
     ]
   },
   {
@@ -31422,7 +31050,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsonicmania",
@@ -31503,7 +31132,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsonicr",
@@ -31601,7 +31231,8 @@
       "sonic",
       "speed",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsonicspinball",
@@ -31708,7 +31339,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Sotn — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Sotn — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clsouljumper",
@@ -31749,7 +31381,8 @@
       "n64",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsovereignoftheskys",
@@ -31983,7 +31616,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Spidermanps 1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Spidermanps 1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clspiralroll",
@@ -32028,7 +31662,8 @@
     "path": "games/clSportsHeadsIceHockey.html",
     "tags": [
       "sports"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsprinter",
@@ -32118,15 +31753,6 @@
     "description": "CalmarPG — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clssf2arcade",
-    "title": "SSF 2 Arcade",
-    "category": "Retro",
-    "path": "games/clSSF2Arcade.html",
-    "tags": [
-      "retro"
-    ]
-  },
-  {
     "id": "clSSF2Arcade",
     "title": "SSF 2 Arcade",
     "category": "Retro",
@@ -32137,16 +31763,8 @@
       "arcade",
       "retro",
       "mobile"
-    ]
-  },
-  {
-    "id": "clssf2tarcade",
-    "title": "SSF 2 Tarcade",
-    "category": "Retro",
-    "path": "games/clSSF2TArcade.html",
-    "tags": [
-      "retro"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clSSF2TArcade",
@@ -32159,7 +31777,8 @@
       "arcade",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clstack",
@@ -32879,15 +32498,6 @@
     "description": "Streangeropepolice — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clstreetfighter1arcade",
-    "title": "Street Fighter 1 Arcade",
-    "category": "Fighting",
-    "path": "games/clStreetFighter1Arcade.html",
-    "tags": [
-      "fighting"
-    ]
-  },
-  {
     "id": "clStreetFighter1Arcade",
     "title": "Street Fighter 1 Arcade",
     "category": "Retro",
@@ -32899,7 +32509,8 @@
       "fighting",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clstreetfighter2",
@@ -32916,17 +32527,6 @@
     ]
   },
   {
-    "id": "clstreetfighter2arcade",
-    "title": "Street Fighter 2 Arcade",
-    "category": "Fighting",
-    "path": "games/clStreetFighter2Arcade.html",
-    "popular": true,
-    "tags": [
-      "fighting",
-      "popular"
-    ]
-  },
-  {
     "id": "clStreetFighter2Arcade",
     "title": "Street Fighter 2 Arcade",
     "category": "Retro",
@@ -32937,17 +32537,11 @@
       "arcade",
       "fighting",
       "retro",
-      "mobile"
-    ]
-  },
-  {
-    "id": "clstreetfighter2cearcade",
-    "title": "Street Fighter 2 Cearcade",
-    "category": "Fighting",
-    "path": "games/clStreetFighter2CEArcade.html",
-    "tags": [
-      "fighting"
-    ]
+      "mobile",
+      "popular"
+    ],
+    "popular": true,
+    "broken": true
   },
   {
     "id": "clStreetFighter2CEArcade",
@@ -32961,16 +32555,8 @@
       "fighting",
       "retro",
       "mobile"
-    ]
-  },
-  {
-    "id": "clstreetfighter2hfarcade",
-    "title": "Street Fighter 2 Hfarcade",
-    "category": "Fighting",
-    "path": "games/clStreetFighter2HFArcade.html",
-    "tags": [
-      "fighting"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clStreetFighter2HFArcade",
@@ -32984,7 +32570,8 @@
       "fighting",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clstreetfighter2turbo",
@@ -33609,23 +33196,6 @@
     "description": "Super Car Rush — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clsupercastlevaniavi",
-    "title": "Supercastlevaniavi",
-    "category": "Other",
-    "path": "games/clsupercastlevaniaVI.html",
-    "tags": [
-      "action",
-      "castlevania",
-      "metroidvania",
-      "platformer",
-      "arcade",
-      "classic",
-      "flash",
-      "ruffle"
-    ],
-    "description": "Supercastlevaniavi — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
     "id": "clsupercastlevaniaVI",
     "title": "Super Castlevania IV",
     "category": "Retro",
@@ -33639,8 +33209,13 @@
       "platformer",
       "retro",
       "snes",
-      "mobile"
-    ]
+      "mobile",
+      "arcade",
+      "classic",
+      "flash",
+      "ruffle"
+    ],
+    "description": "Supercastlevaniavi — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
     "id": "clsuperchibiknight",
@@ -33870,7 +33445,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsupermario63",
@@ -34069,7 +33645,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsupermariolanddx",
@@ -34084,7 +33661,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsupermariomon",
@@ -34131,7 +33709,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsupermariostarroadretooled",
@@ -34146,7 +33725,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsupermarioworld",
@@ -34241,23 +33821,15 @@
       "arcade",
       "classic",
       "flash",
-      "ruffle"
-    ],
-    "description": "Supernoahsark 3D — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "clsupernoahsark3D",
-    "title": "Super Noah's Ark 3D",
-    "category": "Retro",
-    "path": "games/clsupernoahsark3D.html",
-    "thumbnail": "assets/thumbnails/platforms/snes.png",
-    "rom": "snes",
-    "tags": [
+      "ruffle",
       "3d",
       "retro",
       "snes",
       "mobile"
-    ]
+    ],
+    "description": "Supernoahsark 3D — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "thumbnail": "assets/thumbnails/platforms/snes.png",
+    "rom": "snes"
   },
   {
     "id": "clsuperoliverworld",
@@ -34314,15 +33886,6 @@
     ]
   },
   {
-    "id": "clsuperpunchouten",
-    "title": "Super Punch Out EN",
-    "category": "Other",
-    "path": "games/clSuperPunchOutEN.html",
-    "tags": [
-      "fighting"
-    ]
-  },
-  {
     "id": "clSuperPunchOutEN",
     "title": "Super Punch-Out!!",
     "category": "Retro",
@@ -34332,8 +33895,10 @@
     "tags": [
       "retro",
       "snes",
-      "mobile"
-    ]
+      "mobile",
+      "fighting"
+    ],
+    "broken": true
   },
   {
     "id": "clsuperpuzzlefighter2turbo",
@@ -34490,7 +34055,8 @@
       "fighting",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clsupertiltbros",
@@ -34549,7 +34115,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "survev.io — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "survev.io — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clsurvivalracev2",
@@ -34988,7 +34555,8 @@
       "ruffle",
       "ugs-pack"
     ],
-    "description": "about:blank — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "about:blank — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "cltanktrouble2",
@@ -35109,7 +34677,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Tekken 2ps 1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Tekken 2ps 1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "cltelephonetrouble",
@@ -35565,12 +35134,6 @@
     "description": "Deep Sleep 1 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "cltheloneranger",
-    "title": "The Lone Ranger",
-    "category": "Other",
-    "path": "games/clTheLoneRanger.html"
-  },
-  {
     "id": "clTheLoneRanger",
     "title": "The Lone Ranger",
     "category": "Retro",
@@ -35683,7 +35246,8 @@
     "path": "games/clTheSunForTheVampire.html",
     "tags": [
       "horror"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "cltheyarecoming",
@@ -36075,7 +35639,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Toomanytypes — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Toomanytypes — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "cltopspeedracing3d",
@@ -36975,7 +36540,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Umjammerlammy — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Umjammerlammy — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clumstickmangameidkiforgor",
@@ -37601,16 +37167,6 @@
     "description": "Friday Night Funkin' Vs Nonsense — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
-    "id": "clvssmb",
-    "title": "VSSMB",
-    "category": "Mario",
-    "path": "games/clVSSMB.html",
-    "tags": [
-      "mario",
-      "platformer"
-    ]
-  },
-  {
     "id": "clVSSMB",
     "title": "VS Super Mario Bros",
     "category": "Retro",
@@ -37623,7 +37179,8 @@
       "platformer",
       "retro",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clvvvvvv",
@@ -37917,7 +37474,8 @@
       "retro",
       "snes",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clwheeliebike",
@@ -38356,7 +37914,8 @@
       "flash",
       "ruffle"
     ],
-    "description": "Wwfsmackdown 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
+    "description": "Wwfsmackdown 2 — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
+    "broken": true
   },
   {
     "id": "clxevent",
@@ -38372,12 +37931,6 @@
       "classic"
     ],
     "description": "Friday Night Funkin' The X-Mod — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "clxevious",
-    "title": "Xevious",
-    "category": "Other",
-    "path": "games/clXevious.html"
   },
   {
     "id": "clXevious",
@@ -38407,16 +37960,6 @@
     ]
   },
   {
-    "id": "clxmenchildrenoftheatomarcade",
-    "title": "Xmen Children Of The Atom Arcade",
-    "category": "Retro",
-    "path": "games/clXMenChildrenOfTheAtomArcade.html",
-    "tags": [
-      "retro",
-      "superhero"
-    ]
-  },
-  {
     "id": "clXMenChildrenOfTheAtomArcade",
     "title": "Xmen Children Of The Atom Arcade",
     "category": "Retro",
@@ -38428,17 +37971,8 @@
       "retro",
       "superhero",
       "mobile"
-    ]
-  },
-  {
-    "id": "clxmenvsstreetfighter",
-    "title": "Xmen Vsstreet Fighter",
-    "category": "Fighting",
-    "path": "games/clXMenVSStreetFighter.html",
-    "tags": [
-      "fighting",
-      "superhero"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clXMenVSStreetFighter",
@@ -38453,7 +37987,8 @@
       "retro",
       "superhero",
       "mobile"
-    ]
+    ],
+    "broken": true
   },
   {
     "id": "clyanderesimulator",
@@ -38509,12 +38044,6 @@
       "ruffle"
     ],
     "description": "Yohoho.io — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "clyoshisstrangequest",
-    "title": "Yoshis Strange Quest",
-    "category": "Other",
-    "path": "games/clYoshisStrangeQuest.html"
   },
   {
     "id": "clYoshisStrangeQuest",

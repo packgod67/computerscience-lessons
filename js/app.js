@@ -44,6 +44,14 @@
         } catch {
             games = [];
         }
+        // Filter out `broken: true` games up front. These are entries
+        // whose wrapper references a known-dead external repo (audited
+        // by fix-catalog-issues.mjs). Admins see them in the Catalog
+        // Health view; everyone else has them silently hidden so they
+        // don't click into a dead game.
+        if (!window.ArcadeAuth?.isAdmin?.()) {
+            games = games.filter(g => !g.broken);
+        }
         buildCategories();
         buildRomSubBar();
         buildPokemonSubBar();
