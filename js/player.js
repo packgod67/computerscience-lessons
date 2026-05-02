@@ -53,7 +53,17 @@
             return;
         }
 
-        const game = games.find(g => g.id === gameId);
+        let game = games.find(g => g.id === gameId);
+
+        // Custom-game fallback: not in static games.json — try the
+        // Firestore customGames collection. These have HTML stored as
+        // a string field rather than a file on disk.
+        if (!game && window.ArcadeCustomGames) {
+            try {
+                const c = await window.ArcadeCustomGames.getById(gameId);
+                if (c) game = c;
+            } catch {}
+        }
 
         if (!game) {
             gameTitle.textContent = 'Game not found';
@@ -151,7 +161,15 @@
             showError('The game file could not be loaded.');
         });
 
-        gameFrame.src = game.path;
+        // Custom games store their HTML in Firestore (no file on disk).
+        // Use the srcdoc attribute to load it inline rather than src.
+        if (game.custom && game._html) {
+            gameFrame.removeAttribute('src');
+            gameFrame.srcdoc = game._html;
+        } else {
+            gameFrame.removeAttribute('srcdoc');
+            gameFrame.src = game.path;
+        }
     }
 
     function showError(msg) {

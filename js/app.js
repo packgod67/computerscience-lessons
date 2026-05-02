@@ -52,6 +52,21 @@
         if (!window.ArcadeAuth?.isAdmin?.()) {
             games = games.filter(g => !g.broken);
         }
+        // Merge admin-uploaded custom games. We strip the embedded
+        // _html field from the merged catalog so it doesn't bloat the
+        // shared list — player.js refetches the full doc when launching.
+        if (window.ArcadeAuth?.waitForAuth) {
+            try {
+                await window.ArcadeAuth.waitForAuth();
+                if (window.ArcadeCustomGames) {
+                    const customs = await window.ArcadeCustomGames.fetch();
+                    for (const c of customs) {
+                        const { _html, ...stripped } = c;
+                        games.push(stripped);
+                    }
+                }
+            } catch {}
+        }
         buildCategories();
         buildRomSubBar();
         buildPokemonSubBar();

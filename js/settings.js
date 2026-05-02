@@ -1045,6 +1045,7 @@
                 <div class="arcade-settings-row">
                     <button class="auth-submit-secondary" id="setBrandingAdmin">Site branding…</button>
                     <button class="auth-submit-secondary" id="setBadgesAdmin">Manage badges…</button>
+                    <button class="auth-submit-secondary" id="setCustomGamesAdmin">Custom games…</button>
                 </div>
             </section>` : ''}
 
@@ -1069,6 +1070,9 @@
         });
         pane.querySelector('#setBadgesAdmin')?.addEventListener('click', () => {
             window.ArcadeBadgesAdmin?.showBadgeAdminModal?.();
+        });
+        pane.querySelector('#setCustomGamesAdmin')?.addEventListener('click', () => {
+            window.ArcadeCustomGamesAdmin?.showCustomGamesModal?.();
         });
         const ta = pane.querySelector('#setCustomCss');
         const len = pane.querySelector('#setCssLen');
