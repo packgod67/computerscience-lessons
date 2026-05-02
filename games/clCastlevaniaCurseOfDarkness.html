@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Castlevania: Curse of Darkness</title>
+<script>
+// PS2 game — escape the arcade's iframe by redirecting the TOP frame
+// to /play/ which runs cross-origin-isolated for SharedArrayBuffer access.
+// The SLUS-21168 Enhanced 1.3.2 ISO is a 2.7GB USA build with widescreen
+// + 60Hz patches. Streams via the Cloudflare worker /rom proxy.
+(function () {
+    var target = '/play/index.html?name=Castlevania%3A+Curse+of+Darkness&rom=https%3A%2F%2Farcad-groq.gatabanumai.workers.dev%2From%3Fsrc%3Dhttps%253A%252F%252Farchive.org%252Fdownload%252Fslus-21168-enhanced-curse-1.3.2%252FSLUS-21168%252520Enhanced%252520Curse%2525201.3.2.zip';
+    try {
+        if (window.top && window.top !== window.self) {
+            window.top.location.replace(target);
+            return;
+        }
+    } catch (e) {}
+    window.location.replace(target);
+})();
+</script>
+<style>
+  html, body { margin:0; padding:0; width:100%; height:100%; background:#0a0a0f; color:#e5e5e5; font-family:Arial,sans-serif; display:flex; align-items:center; justify-content:center; }
+</style>
+</head>
+<body>
+<div style="text-align:center;padding:20px;">
+  <p>Opening Play! PS2 emulator…</p>
+  <p style="opacity:.6;font-size:0.85rem;">This is a 2.7GB ISO — initial load will take several minutes on a typical connection.</p>
+  <p style="opacity:.6;font-size:0.85rem;">
+    If this doesn't redirect, <a href="/play/index.html?name=Castlevania%3A+Curse+of+Darkness&rom=https%3A%2F%2Farcad-groq.gatabanumai.workers.dev%2From%3Fsrc%3Dhttps%253A%252F%252Farchive.org%252Fdownload%252Fslus-21168-enhanced-curse-1.3.2%252FSLUS-21168%252520Enhanced%252520Curse%2525201.3.2.zip" target="_top" style="color:#a5b4fc;">click here</a>.
+  </p>
+</div>
+</body>
+</html>

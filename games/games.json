@@ -43619,5 +43619,65 @@
       "added-controls"
     ],
     "addedAt": "2026-04-27T14:00:00.000Z"
+  },
+  {
+    "id": "clCastlevaniaLegacyOfDarkness",
+    "title": "Castlevania: Legacy of Darkness",
+    "category": "Adventure",
+    "path": "games/clCastlevaniaLegacyOfDarkness.html",
+    "rom": "n64",
+    "description": "3D action-platformer follow-up to Castlevania 64. Whip through Dracula's castle as one of four playable characters in this 1999 N64 sequel — bigger levels, smoother controls, and a darker plot than the original.",
+    "tags": [
+      "castlevania",
+      "n64",
+      "3d-platformer",
+      "action",
+      "adventure",
+      "vampires",
+      "konami",
+      "retro"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Nintendo%2064/Named_Boxarts/Castlevania%20-%20Legacy%20of%20Darkness%20(USA).png",
+    "addedAt": "2026-05-02T11:32:00.852Z"
+  },
+  {
+    "id": "clCastlevaniaCurseOfDarkness",
+    "title": "Castlevania: Curse of Darkness",
+    "category": "Adventure",
+    "path": "games/clCastlevaniaCurseOfDarkness.html",
+    "rom": "ps2",
+    "description": "3D action-RPG set three years after Castlevania III. Play as Hector, a former devil forgemaster hunting his rival Isaac through Dracula's castle. Real-time combat with Innocent Devil monster crafting. (USA SLUS-21168 Enhanced 1.3.2 with widescreen patch — 2.7GB ISO, takes a minute to load.)",
+    "tags": [
+      "castlevania",
+      "ps2",
+      "3d",
+      "action-rpg",
+      "combat",
+      "vampires",
+      "konami"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation%202/Named_Boxarts/Castlevania%20-%20Curse%20of%20Darkness%20(USA).png",
+    "addedAt": "2026-05-02T11:32:00.852Z"
+  },
+  {
+    "id": "clCastlevaniaSymphonyOfTheNight",
+    "title": "Castlevania: Symphony of the Night",
+    "category": "Platformer",
+    "path": "games/clCastlevaniaSymphonyOfTheNight.html",
+    "rom": "psx",
+    "description": "The all-time classic that defined the metroidvania genre. Play as Alucard exploring Dracula's shifting castle — RPG progression, hundreds of items, two castles, multiple endings. PSX 1997 USA release. (367MB CHD — minute or two to load.)",
+    "tags": [
+      "castlevania",
+      "psx",
+      "playstation",
+      "metroidvania",
+      "platformer",
+      "rpg",
+      "vampires",
+      "konami",
+      "classic"
+    ],
+    "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Castlevania%20-%20Symphony%20of%20the%20Night%20(USA).png",
+    "addedAt": "2026-05-02T11:32:00.852Z"
   }
 ]

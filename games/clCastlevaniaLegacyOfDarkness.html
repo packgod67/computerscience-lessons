@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Castlevania: Legacy of Darkness</title>
+  <style>
+    html, body { margin: 0; padding: 0; height: 100%; background: #000; overflow: hidden; color: #fff; font-family: system-ui, sans-serif; }
+    #game { width: 100vw; height: 100vh; }
+    #startButton {
+      display: block; margin: 40vh auto 0;
+      padding: 14px 28px; background: #4CAF50; color: #fff;
+      border: none; border-radius: 8px; cursor: pointer;
+      font-size: 16px; box-shadow: 0 0 14px rgba(0,0,0,0.6);
+    }
+    #loading-progress {
+      position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%);
+      color: #fff; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <div id="game"></div>
+  <button id="startButton">▶ PLAY</button>
+  <div id="loading-progress" style="display:none;">Loading…</div>
+  <script>
+    document.getElementById('startButton').addEventListener('click', startGame);
+    function startGame() {
+      document.getElementById('startButton').style.display = 'none';
+      document.getElementById('loading-progress').style.display = 'block';
+      window.EJS_player        = '#game';
+      window.EJS_core          = 'n64';
+      window.EJS_color         = '#000000';
+      window.EJS_startOnLoaded = true;
+      window.EJS_pathtodata    = 'https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@main/data/';
+      window.EJS_netplayServer = 'https://netplay.emulatorjs.org';
+      window.EJS_gameName      = 'Castlevania: Legacy of Darkness';
+      window.EJS_gameUrl       = 'https://arcad-groq.gatabanumai.workers.dev/rom?src=https%3A%2F%2Farchive.org%2Fdownload%2Fcastlevania-legacy-of-darkness-usa%2FCastlevania%2520-%2520Legacy%2520of%2520Darkness%2520(USA).zip';
+      window.EJS_onGameStart   = function () {
+        document.getElementById('loading-progress')?.remove();
+      };
+      const s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/gh/EmulatorJS/EmulatorJS@main/data/loader.js';
+      document.body.appendChild(s);
+    }
+  </script>
+</body>
+</html>
