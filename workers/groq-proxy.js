@@ -704,6 +704,36 @@ export default {
         }
 
         // ───────────────────────────────────────────────────────────
+        // Multi-file game upload: POST /upload
+        //
+        // Accepts a JSON body { gameId, files: [{ relpath, contentB64 }] }
+        // and commits all files atomically to the GitHub repo at
+        // games/uploads/<gameId>/<relpath>. The arcade auto-deploys on
+        // every push to main, so games are playable ~1 minute after
+        // upload finishes.
+        //
+        // Auth: requires Authorization: Bearer <Firebase ID token>
+        // from an admin user. We verify by decoding the token's UID
+        // (no crypto needed — Firestore checks the signature for us)
+        // then fetching the user's doc with the same token. If the
+        // doc says role: 'admin', we proceed.
+        //
+        // Required env / secrets (set via wrangler):
+        //   GITHUB_TOKEN          — fine-grained PAT with contents:write
+        //   GITHUB_OWNER          — repo owner (e.g. "packgod67")
+        //   GITHUB_REPO           — repo name (e.g. "computerscience-lessons")
+        //   GITHUB_BRANCH         — usually "main"
+        //   FIREBASE_PROJECT_ID   — your Firebase project id
+        // ───────────────────────────────────────────────────────────
+        if (reqUrl.pathname === '/upload' && request.method === 'POST') {
+            return handleUpload(request, env);
+        }
+        if (reqUrl.pathname.startsWith('/uploads/') && request.method === 'DELETE') {
+            const gameId = reqUrl.pathname.slice('/uploads/'.length).replace(/\/$/, '');
+            return handleUploadDelete(request, env, gameId);
+        }
+
+        // ───────────────────────────────────────────────────────────
         // ROM proxy: GET /rom?src=<url>
         // Forwards a request to archive.org (and friends) with CORS
         // headers added. Needed because EmulatorJS fetches the ROM
@@ -984,4 +1014,210 @@ function json(obj, status) {
             'Content-Type': 'application/json',
         },
     });
+}
+
+// ─── Multi-file game upload handlers ───────────────────────────────
+// Used by /upload and /uploads/<id> DELETE. Both require admin auth
+// via Firebase, then talk to GitHub's git-data API to commit a tree.
+
+// Decode a JWT's payload without verifying the signature. We don't
+// trust this for auth — Firestore's REST API verifies the token
+// cryptographically when we use it as Bearer. We only decode here
+// to extract the uid for the Firestore path lookup.
+function decodeJwtPayload(token) {
+    try {
+        const [, payload] = token.split('.');
+        const padded = payload.replace(/-/g, '+').replace(/_/g, '/');
+        const json = atob(padded + '==='.slice((padded.length + 3) % 4));
+        return JSON.parse(json);
+    } catch { return null; }
+}
+
+// Returns the uid if the token is valid AND the user has role 'admin'
+// in Firestore. Returns null otherwise. Firestore performs the
+// cryptographic JWT verification (we just decode to get the uid path).
+async function verifyAdmin(request, env) {
+    const auth = request.headers.get('Authorization') || '';
+    if (!auth.startsWith('Bearer ')) return null;
+    const token = auth.slice(7);
+    const claims = decodeJwtPayload(token);
+    if (!claims?.user_id && !claims?.sub) return null;
+    const uid = claims.user_id || claims.sub;
+
+    const projectId = env.FIREBASE_PROJECT_ID;
+    if (!projectId) return null;
+
+    const r = await fetch(
+        `https://firestore.googleapis.com/v1/projects/${projectId}/databases/(default)/documents/users/${uid}`,
+        { headers: { Authorization: `Bearer ${token}` } }
+    );
+    if (!r.ok) return null;
+    const doc = await r.json();
+    if (doc?.fields?.role?.stringValue !== 'admin') return null;
+    return uid;
+}
+
+// Commit a batch of files to GitHub atomically. Uses the git-data API
+// (blobs → tree → commit → ref) so all files land in one commit
+// regardless of how many there are. Returns the new commit SHA.
+async function githubCommit(env, paths, message) {
+    const owner  = env.GITHUB_OWNER;
+    const repo   = env.GITHUB_REPO;
+    const branch = env.GITHUB_BRANCH || 'main';
+    const token  = env.GITHUB_TOKEN;
+    if (!owner || !repo || !token) {
+        throw new Error('GitHub worker secrets missing (GITHUB_OWNER/REPO/TOKEN)');
+    }
+
+    const headers = {
+        Authorization: `token ${token}`,
+        'User-Agent': 'arcade-uploader',
+        Accept: 'application/vnd.github+json',
+    };
+    const api = `https://api.github.com/repos/${owner}/${repo}`;
+
+    // 1. Get the latest commit SHA on the branch
+    const refResp = await fetch(`${api}/git/refs/heads/${branch}`, { headers });
+    if (!refResp.ok) throw new Error(`refs lookup failed: ${refResp.status}`);
+    const ref = await refResp.json();
+    const baseCommitSha = ref.object.sha;
+
+    // 2. Get its tree SHA
+    const baseCommit = await fetch(`${api}/git/commits/${baseCommitSha}`, { headers })
+        .then(r => r.json());
+    const baseTreeSha = baseCommit.tree.sha;
+
+    // 3. Create a blob per file (parallel)
+    const treeEntries = await Promise.all(paths.map(async (p) => {
+        const blobResp = await fetch(`${api}/git/blobs`, {
+            method: 'POST',
+            headers: { ...headers, 'Content-Type': 'application/json' },
+            body: JSON.stringify({ content: p.contentB64, encoding: 'base64' }),
+        });
+        if (!blobResp.ok) throw new Error(`blob create failed for ${p.path}: ${blobResp.status}`);
+        const blob = await blobResp.json();
+        return {
+            path: p.path,
+            mode: '100644',
+            type: 'blob',
+            sha: p.delete ? null : blob.sha,
+        };
+    }));
+
+    // 4. Create a new tree based on the existing one
+    const newTreeResp = await fetch(`${api}/git/trees`, {
+        method: 'POST',
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ base_tree: baseTreeSha, tree: treeEntries }),
+    });
+    if (!newTreeResp.ok) throw new Error(`tree create failed: ${newTreeResp.status}`);
+    const newTree = await newTreeResp.json();
+
+    // 5. Create a commit
+    const commitResp = await fetch(`${api}/git/commits`, {
+        method: 'POST',
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+            message,
+            tree: newTree.sha,
+            parents: [baseCommitSha],
+        }),
+    });
+    if (!commitResp.ok) throw new Error(`commit create failed: ${commitResp.status}`);
+    const newCommit = await commitResp.json();
+
+    // 6. Update the branch ref
+    const updateResp = await fetch(`${api}/git/refs/heads/${branch}`, {
+        method: 'PATCH',
+        headers: { ...headers, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ sha: newCommit.sha }),
+    });
+    if (!updateResp.ok) throw new Error(`ref update failed: ${updateResp.status}`);
+
+    return newCommit.sha;
+}
+
+// List files under a path in the repo (for delete: we need to know
+// which paths to remove from the tree).
+async function githubListFiles(env, path) {
+    const owner  = env.GITHUB_OWNER;
+    const repo   = env.GITHUB_REPO;
+    const branch = env.GITHUB_BRANCH || 'main';
+    const token  = env.GITHUB_TOKEN;
+    const headers = {
+        Authorization: `token ${token}`,
+        'User-Agent': 'arcade-uploader',
+        Accept: 'application/vnd.github+json',
+    };
+    const api = `https://api.github.com/repos/${owner}/${repo}`;
+
+    // Use the recursive tree API to grab everything under `path` in one call
+    const refResp = await fetch(`${api}/git/refs/heads/${branch}`, { headers });
+    const ref = await refResp.json();
+    const treeResp = await fetch(`${api}/git/trees/${ref.object.sha}?recursive=1`, { headers });
+    const tree = await treeResp.json();
+    return tree.tree.filter(t => t.type === 'blob' && t.path.startsWith(path + '/'));
+}
+
+async function handleUpload(request, env) {
+    const uid = await verifyAdmin(request, env);
+    if (!uid) return json({ error: 'admin auth required' }, 403);
+
+    let body;
+    try { body = await request.json(); }
+    catch { return json({ error: 'invalid json' }, 400); }
+
+    const gameId = String(body.gameId || '').replace(/[^a-zA-Z0-9_-]/g, '');
+    if (!gameId) return json({ error: 'invalid gameId' }, 400);
+    if (!Array.isArray(body.files) || !body.files.length) {
+        return json({ error: 'no files' }, 400);
+    }
+    if (body.files.length > 500) {
+        return json({ error: 'too many files (cap 500)' }, 400);
+    }
+
+    // Translate each { relpath, contentB64 } into a tree entry path.
+    const paths = [];
+    let totalBytes = 0;
+    for (const f of body.files) {
+        const relpath = String(f.relpath || '').replace(/^\/+/, '');
+        if (!relpath || relpath.includes('..')) {
+            return json({ error: `invalid path: ${relpath}` }, 400);
+        }
+        const b64 = String(f.contentB64 || '');
+        // Approximate size: base64 → bytes ≈ b64.length * 3/4
+        totalBytes += Math.floor(b64.length * 0.75);
+        paths.push({
+            path: `games/uploads/${gameId}/${relpath}`,
+            contentB64: b64,
+        });
+    }
+    if (totalBytes > 100 * 1024 * 1024) {
+        return json({ error: 'total upload exceeds 100MB' }, 400);
+    }
+
+    try {
+        const sha = await githubCommit(env, paths, `Upload custom game: ${gameId}`);
+        return json({ ok: true, commitSha: sha, gameId, fileCount: paths.length }, 200);
+    } catch (e) {
+        return json({ error: e.message || 'commit failed' }, 500);
+    }
+}
+
+async function handleUploadDelete(request, env, gameId) {
+    const uid = await verifyAdmin(request, env);
+    if (!uid) return json({ error: 'admin auth required' }, 403);
+    const safeId = gameId.replace(/[^a-zA-Z0-9_-]/g, '');
+    if (!safeId) return json({ error: 'invalid gameId' }, 400);
+
+    try {
+        const files = await githubListFiles(env, `games/uploads/${safeId}`);
+        if (!files.length) return json({ ok: true, removed: 0 }, 200);
+        // Mark each for deletion (sha: null in tree entry)
+        const paths = files.map(f => ({ path: f.path, contentB64: '', delete: true }));
+        const sha = await githubCommit(env, paths, `Remove custom game: ${safeId}`);
+        return json({ ok: true, commitSha: sha, removed: files.length }, 200);
+    } catch (e) {
+        return json({ error: e.message || 'delete failed' }, 500);
+    }
 }

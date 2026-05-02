@@ -36,6 +36,13 @@
                 return snap.docs.map(d => {
                     const data = d.data();
                     const isMulti = !!data.isMulti;
+                    // Multi-file games are committed to the arcade's git repo
+                    // by the upload worker. Their files live at the relative
+                    // path the doc records and are served by the same hosts
+                    // that serve the rest of the arcade — so iframe src is
+                    // just the same-origin path.
+                    const entry = data.entry || 'index.html';
+                    const repoPath = data.repoPath || `games/uploads/${d.id}/`;
                     return {
                         id: d.id,
                         title: data.title || d.id,
@@ -45,22 +52,13 @@
                         thumbnail: data.thumbnail || '',
                         addedAt: data.addedAt || null,
                         custom: true,
-                        // Single-file games carry HTML inline (Firestore string).
-                        // Multi-file games carry the entry-point URL synthesized
-                        // from Storage — player.js iframes that URL directly.
                         _html: data.html || '',
                         _isMulti: isMulti,
-                        _entry: data.entry || 'index.html',
-                        _storagePrefix: data.storagePrefix || `customGames/${d.id}/`,
-                        // For multi-file games, expose the entry URL so player
-                        // can set iframe.src to the Storage download URL.
-                        _entryUrl: isMulti
-                            ? `https://firebasestorage.googleapis.com/v0/b/${
-                                firebase.app().options.storageBucket
-                              }/o/${
-                                encodeURIComponent((data.storagePrefix || `customGames/${d.id}/`) + (data.entry || 'index.html'))
-                              }?alt=media`
-                            : '',
+                        _entry: entry,
+                        _repoPath: repoPath,
+                        // Same-origin URL — relative paths inside the entry
+                        // HTML resolve naturally to other files in the folder.
+                        _entryUrl: isMulti ? (repoPath + entry) : '',
                     };
                 });
             } catch (e) {

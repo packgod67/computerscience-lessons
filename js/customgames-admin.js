@@ -65,14 +65,8 @@
                 </div>
                 <div class="cg-toolbar">
                     <button class="auth-submit" id="cgNewBtn">+ Single HTML file</button>
+                    <button class="auth-submit" id="cgNewMultiBtn">+ Multi-file folder/zip</button>
                     <button class="auth-submit-secondary" id="cgRefreshBtn">Refresh</button>
-                </div>
-                <div class="cg-toolbar-help">
-                    <strong>Multi-file games?</strong> Storage-based upload disabled — needs
-                    Firebase Blaze plan. For multi-file projects, host on GitHub Pages /
-                    jsdelivr / Netlify and use the single-HTML upload above with a wrapper
-                    that iframes your hosted URL. See <code>games/clCardlike.html</code>
-                    for an example wrapper.
                 </div>
                 <div id="cgPane"></div>
             </div>
@@ -129,6 +123,21 @@
                 const id = b.dataset.del;
                 if (!confirm(`Delete custom game "${id}"? This cannot be undone.`)) return;
                 try {
+                    const game = games.find(g => g.id === id);
+                    // Multi-file games also have files committed to the
+                    // repo — ask the worker to remove them in the same
+                    // commit as the doc deletion. Single-file games only
+                    // need the Firestore doc gone.
+                    if (game?._isMulti) {
+                        const me = getMe();
+                        const idToken = me ? await me.getIdToken() : null;
+                        if (idToken) {
+                            await fetch(`https://arcad-groq.gatabanumai.workers.dev/uploads/${encodeURIComponent(id)}`, {
+                                method: 'DELETE',
+                                headers: { Authorization: `Bearer ${idToken}` },
+                            }).catch(() => {});
+                        }
+                    }
                     await getDb().collection('customGames').doc(id).delete();
                     window.ArcadeCustomGames?.invalidate?.();
                     await renderListView(overlay);
@@ -581,24 +590,43 @@
             const text = pane.querySelector('#cgText');
 
             try {
-                const storage = firebase.storage();
-                const prefix = `customGames/${id}/`;
-                let done = 0;
-                for (const f of pickedFiles) {
-                    const ref = storage.ref(prefix + f.relpath);
-                    await ref.put(f.file);
-                    done++;
-                    text.textContent = `Uploading ${done} / ${pickedFiles.length}: ${f.relpath}`;
-                    fill.style.width = (done / pickedFiles.length * 100) + '%';
+                // Read every file into base64 in parallel
+                text.textContent = `Reading ${pickedFiles.length} files...`;
+                const filesPayload = await Promise.all(pickedFiles.map(async (f, i) => {
+                    const buf = await f.file.arrayBuffer();
+                    return { relpath: f.relpath, contentB64: bufferToBase64(buf) };
+                }));
+
+                // Get the user's Firebase ID token to authorize the upload
+                const me = getMe();
+                if (!me) throw new Error('not signed in');
+                const idToken = await me.getIdToken();
+
+                text.textContent = `Pushing ${pickedFiles.length} files to GitHub via worker...`;
+                fill.style.width = '50%';
+
+                const WORKER_URL = 'https://arcad-groq.gatabanumai.workers.dev/upload';
+                const resp = await fetch(WORKER_URL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${idToken}`,
+                    },
+                    body: JSON.stringify({ gameId: id, files: filesPayload }),
+                });
+                if (!resp.ok) {
+                    const err = await resp.json().catch(() => ({}));
+                    throw new Error(err.error || `worker returned ${resp.status}`);
                 }
+                const result = await resp.json();
+                fill.style.width = '85%';
 
                 // Auto-pick a thumbnail if cover.png/.jpg/.webp is present
                 let thumbnail = pane.querySelector('#cgMultiThumb').value.trim();
                 if (!thumbnail) {
                     const cover = pickedFiles.find(f => /(^|\/)cover\.(png|jpg|jpeg|webp|gif)$/i.test(f.relpath));
                     if (cover) {
-                        const bucket = firebase.app().options.storageBucket;
-                        thumbnail = `https://firebasestorage.googleapis.com/v0/b/${bucket}/o/${encodeURIComponent(prefix + cover.relpath)}?alt=media`;
+                        thumbnail = `games/uploads/${id}/${cover.relpath}`;
                     }
                 }
 
@@ -607,7 +635,6 @@
                 if (!tags.includes('html5')) tags.push('html5');
                 if (!tags.includes('browser-native')) tags.push('browser-native');
 
-                const me = getMe();
                 const myProfile = me ? await window.ArcadeAuth.getProfile(me.uid).catch(() => null) : null;
 
                 await getDb().collection('customGames').doc(id).set({
@@ -618,9 +645,10 @@
                     thumbnail,
                     isMulti: true,
                     entry: entrySel.value,
-                    storagePrefix: prefix,
+                    repoPath: `games/uploads/${id}/`,
                     fileCount: pickedFiles.length,
                     totalBytes,
+                    commitSha: result.commitSha,
                     authorUid: me?.uid || null,
                     authorName: myProfile?.username || null,
                     createdAt: firebase.firestore.FieldValue.serverTimestamp(),
@@ -628,14 +656,26 @@
                 });
 
                 window.ArcadeCustomGames?.invalidate?.();
-                text.textContent = `\u{2705} Done. Game playable now.`;
+                text.textContent = `\u{2705} Pushed to GitHub (commit ${result.commitSha.slice(0,7)}). Game playable in ~1 min once deploy lands.`;
                 fill.style.width = '100%';
-                setTimeout(() => renderListView(overlay), 800);
+                setTimeout(() => renderListView(overlay), 1500);
             } catch (e) {
                 text.textContent = '\u{274C} Upload failed: ' + e.message;
                 btn.disabled = false;
             }
         });
+    }
+
+    // ArrayBuffer → base64 — chunked to avoid call-stack overflow on
+    // large files when using String.fromCharCode.apply.
+    function bufferToBase64(buffer) {
+        const bytes = new Uint8Array(buffer);
+        const CHUNK = 0x8000;
+        let str = '';
+        for (let i = 0; i < bytes.length; i += CHUNK) {
+            str += String.fromCharCode.apply(null, bytes.subarray(i, i + CHUNK));
+        }
+        return btoa(str);
     }
 
     function formatBytes(n) {
