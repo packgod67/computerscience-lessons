@@ -7606,8 +7606,7 @@
       "platformer",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "cldoblox",
@@ -8573,8 +8572,7 @@
       "nes",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "cldud",
@@ -9326,8 +9324,7 @@
       "nes",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clelytraflight",
@@ -10502,8 +10499,7 @@
       "rpg",
       "turn-based",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clfinalfantasyII",
@@ -15967,8 +15963,7 @@
       "arcade",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "cljsvecx",
@@ -16833,8 +16828,7 @@
       "gba",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "cllegobatman",
@@ -18363,8 +18357,7 @@
       "retro",
       "superhero",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clmarvelvscapcomps1",
@@ -20364,8 +20357,7 @@
       "arcade",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clmspacman(1)",
@@ -21755,8 +21747,7 @@
       "retro",
       "mobile",
       "platformer"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clOutrunGenesis",
@@ -21770,8 +21761,7 @@
       "retro",
       "mobile",
       "platformer"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clovo",
@@ -22330,8 +22320,7 @@
       "retro",
       "rpg",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clPaperMarioPracticeHack",
@@ -22350,8 +22339,7 @@
       "retro",
       "rpg",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clpapermariopromode",
@@ -23601,8 +23589,7 @@
       "rpg",
       "turn-based",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clpokecrystalclear",
@@ -23878,8 +23865,7 @@
       "meta-progression",
       "mobile"
     ],
-    "popular": true,
-    "broken": true
+    "popular": true
   },
   {
     "id": "clpokeemeraldrogueex",
@@ -24029,8 +24015,7 @@
       "turn-based",
       "mobile"
     ],
-    "description": "The third installment in the Pokemon Fusion series with even more fusion combinations. Fuse any two Pokemon together to create unique hybrids. Features improved fusion sprites, a new region, updated mechanics, and thousands of possible fusion combinations to discover.",
-    "broken": true
+    "description": "The third installment in the Pokemon Fusion series with even more fusion combinations. Fuse any two Pokemon together to create unique hybrids. Features improved fusion sprites, a new region, updated mechanics, and thousands of possible fusion combinations to discover."
   },
   {
     "id": "clpokegaia",
@@ -25157,8 +25142,7 @@
       "rpg",
       "turn-based",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clpokemysteryexplorersofsky",
@@ -25726,8 +25710,7 @@
       "turn-based",
       "mobile"
     ],
-    "description": "One of the most comprehensive Emerald hacks featuring 721 Pokemon from Gens 1-6, Mega Evolutions, Primal Reversion, updated moves and abilities, Fairy type, reusable TMs, and the Exp. Share as an on/off toggle. A must-play for fans wanting the complete Pokemon experience on GBA.",
-    "broken": true
+    "description": "One of the most comprehensive Emerald hacks featuring 721 Pokemon from Gens 1-6, Mega Evolutions, Primal Reversion, updated moves and abilities, Fairy type, reusable TMs, and the Exp. Share as an on/off toggle. A must-play for fans wanting the complete Pokemon experience on GBA."
   },
   {
     "id": "clpoketoomanytypes2",
@@ -30176,8 +30159,7 @@
       "genesis",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsnowbrothers",
@@ -30542,8 +30524,7 @@
       "sonic",
       "speed",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsonic2pinkedition",
@@ -30559,8 +30540,7 @@
       "sonic",
       "speed",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clSonic2ScoreRush",
@@ -30592,8 +30572,7 @@
       "sonic",
       "speed",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsonic3andknuckles",
@@ -30625,8 +30604,7 @@
       "sonic",
       "speed",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsonic3complete",
@@ -30919,8 +30897,7 @@
       "sonic",
       "speed",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsoniccolors",
@@ -31050,8 +31027,7 @@
       "sonic",
       "speed",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsonicmania",
@@ -31132,8 +31108,7 @@
       "sonic",
       "speed",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsonicr",
@@ -31231,8 +31206,7 @@
       "sonic",
       "speed",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsonicspinball",
@@ -32509,8 +32483,7 @@
       "fighting",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clstreetfighter2",
@@ -32540,8 +32513,7 @@
       "mobile",
       "popular"
     ],
-    "popular": true,
-    "broken": true
+    "popular": true
   },
   {
     "id": "clStreetFighter2CEArcade",
@@ -32555,8 +32527,7 @@
       "fighting",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clStreetFighter2HFArcade",
@@ -32570,8 +32541,7 @@
       "fighting",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clstreetfighter2turbo",
@@ -33645,8 +33615,7 @@
       "platformer",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsupermariolanddx",
@@ -33661,8 +33630,7 @@
       "platformer",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsupermariomon",
@@ -33897,8 +33865,7 @@
       "snes",
       "mobile",
       "fighting"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsuperpuzzlefighter2turbo",
@@ -34055,8 +34022,7 @@
       "fighting",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clsupertiltbros",
@@ -37179,8 +37145,7 @@
       "platformer",
       "retro",
       "mobile"
-    ],
-    "broken": true
+    ]
   },
   {
     "id": "clvvvvvv",
@@ -39916,7 +39881,8 @@
       "mobile"
     ],
     "thumbnail": "https://thumbnails.libretro.com/Sony%20-%20PlayStation/Named_Boxarts/Need%20for%20Speed%20-%20Porsche%20Unleashed%20(USA).png",
-    "addedAt": "2026-04-23T20:23:19.410Z"
+    "addedAt": "2026-04-23T20:23:19.410Z",
+    "broken": true
   },
   {
     "id": "clnfsunderground2ps2",
