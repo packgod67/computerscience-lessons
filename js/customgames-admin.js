@@ -592,7 +592,7 @@
             try {
                 // Read every file into base64 in parallel
                 text.textContent = `Reading ${pickedFiles.length} files...`;
-                const filesPayload = await Promise.all(pickedFiles.map(async (f, i) => {
+                const filesPayload = await Promise.all(pickedFiles.map(async (f) => {
                     const buf = await f.file.arrayBuffer();
                     return { relpath: f.relpath, contentB64: bufferToBase64(buf) };
                 }));
@@ -602,24 +602,71 @@
                 if (!me) throw new Error('not signed in');
                 const idToken = await me.getIdToken();
 
-                text.textContent = `Pushing ${pickedFiles.length} files to GitHub via worker...`;
-                fill.style.width = '50%';
+                const WORKER = 'https://arcad-groq.gatabanumai.workers.dev';
+                const auth = { 'Content-Type': 'application/json', Authorization: `Bearer ${idToken}` };
 
-                const WORKER_URL = 'https://arcad-groq.gatabanumai.workers.dev/upload';
-                const resp = await fetch(WORKER_URL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        Authorization: `Bearer ${idToken}`,
-                    },
-                    body: JSON.stringify({ gameId: id, files: filesPayload }),
+                // Phase 1: init — get base ref + tree SHA
+                text.textContent = `Initializing upload session...`;
+                fill.style.width = '5%';
+                const initResp = await fetch(`${WORKER}/upload/init`, {
+                    method: 'POST', headers: auth,
+                    body: JSON.stringify({ gameId: id }),
                 });
-                if (!resp.ok) {
-                    const err = await resp.json().catch(() => ({}));
-                    throw new Error(err.error || `worker returned ${resp.status}`);
+                if (!initResp.ok) {
+                    const err = await initResp.json().catch(() => ({}));
+                    throw new Error('init failed: ' + (err.error || initResp.status));
                 }
-                const result = await resp.json();
-                fill.style.width = '85%';
+                const init = await initResp.json();
+
+                // Phase 2: create one blob per file. Each call is one
+                // worker invocation, each invocation does one GitHub
+                // subrequest — well under the 50-subrequest free limit.
+                // Run with limited parallelism so we don't drown the
+                // worker rate limit either.
+                text.textContent = `Uploading ${pickedFiles.length} files...`;
+                const blobs = new Array(filesPayload.length);
+                let done = 0;
+                const PARALLEL = 6;
+                for (let i = 0; i < filesPayload.length; i += PARALLEL) {
+                    const slice = filesPayload.slice(i, i + PARALLEL);
+                    const results = await Promise.all(slice.map(async (f, j) => {
+                        const r = await fetch(`${WORKER}/upload/blob`, {
+                            method: 'POST', headers: auth,
+                            body: JSON.stringify({ contentB64: f.contentB64 }),
+                        });
+                        if (!r.ok) {
+                            const err = await r.json().catch(() => ({}));
+                            throw new Error(`blob ${f.relpath} failed: ${err.error || r.status}`);
+                        }
+                        const b = await r.json();
+                        return { path: f.relpath, sha: b.sha };
+                    }));
+                    for (let j = 0; j < results.length; j++) {
+                        blobs[i + j] = results[j];
+                    }
+                    done += results.length;
+                    text.textContent = `Uploaded ${done} / ${filesPayload.length} files...`;
+                    fill.style.width = (5 + (done / filesPayload.length * 80)) + '%';
+                }
+
+                // Phase 3: assemble tree + commit + update branch ref
+                text.textContent = `Creating commit...`;
+                fill.style.width = '90%';
+                const finalResp = await fetch(`${WORKER}/upload/finalize`, {
+                    method: 'POST', headers: auth,
+                    body: JSON.stringify({
+                        gameId: id,
+                        baseSha: init.baseSha,
+                        baseTreeSha: init.baseTreeSha,
+                        blobs,
+                    }),
+                });
+                if (!finalResp.ok) {
+                    const err = await finalResp.json().catch(() => ({}));
+                    throw new Error('finalize failed: ' + (err.error || finalResp.status));
+                }
+                const result = await finalResp.json();
+                fill.style.width = '95%';
 
                 // Auto-pick a thumbnail if cover.png/.jpg/.webp is present
                 let thumbnail = pane.querySelector('#cgMultiThumb').value.trim();

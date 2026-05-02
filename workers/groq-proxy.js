@@ -60,8 +60,11 @@ const CORS_HEADERS = {
     'Access-Control-Allow-Origin': ALLOWED_ORIGIN,
     // GET/HEAD so the ROM proxy accepts range probes + actual downloads.
     // Range is in Allow-Headers so Play!'s parallel downloader can send it.
-    'Access-Control-Allow-Methods': 'GET, HEAD, POST, OPTIONS',
-    'Access-Control-Allow-Headers': 'Content-Type, Range',
+    'Access-Control-Allow-Methods': 'GET, HEAD, POST, DELETE, OPTIONS',
+    // Authorization is in here so the /upload + /uploads endpoints can
+    // accept the Firebase ID token from the browser. Range stays for
+    // the ROM proxy's parallel-downloader probes.
+    'Access-Control-Allow-Headers': 'Content-Type, Range, Authorization',
     'Access-Control-Max-Age': '86400',
 };
 
@@ -728,6 +731,19 @@ export default {
         if (reqUrl.pathname === '/upload' && request.method === 'POST') {
             return handleUpload(request, env);
         }
+        // Three-phase chunked upload — works around Cloudflare's
+        // free-tier 50-subrequests-per-invocation limit. Big projects
+        // (>40 files) need to split blob creation across many small
+        // worker invocations.
+        if (reqUrl.pathname === '/upload/init' && request.method === 'POST') {
+            return handleUploadInit(request, env);
+        }
+        if (reqUrl.pathname === '/upload/blob' && request.method === 'POST') {
+            return handleUploadBlob(request, env);
+        }
+        if (reqUrl.pathname === '/upload/finalize' && request.method === 'POST') {
+            return handleUploadFinalize(request, env);
+        }
         if (reqUrl.pathname.startsWith('/uploads/') && request.method === 'DELETE') {
             const gameId = reqUrl.pathname.slice('/uploads/'.length).replace(/\/$/, '');
             return handleUploadDelete(request, env, gameId);
@@ -1201,6 +1217,146 @@ async function handleUpload(request, env) {
         return json({ ok: true, commitSha: sha, gameId, fileCount: paths.length }, 200);
     } catch (e) {
         return json({ error: e.message || 'commit failed' }, 500);
+    }
+}
+
+// ─── Three-phase chunked upload (free-tier safe) ────────────────────
+//
+// Phase 1: /upload/init  — get the base ref + tree SHA (2 subrequests)
+// Phase 2: /upload/blob  — create one blob, return SHA (1 subrequest)
+// Phase 3: /upload/finalize — assemble tree + commit + update ref
+//                              (3 subrequests)
+//
+// Client makes one /init call, N parallel /blob calls (one per file),
+// and one /finalize call. Each worker invocation stays well under
+// the 50-subrequest free-tier limit regardless of project size.
+
+async function handleUploadInit(request, env) {
+    const uid = await verifyAdmin(request, env);
+    if (!uid) return json({ error: 'admin auth required' }, 403);
+
+    const owner  = env.GITHUB_OWNER;
+    const repo   = env.GITHUB_REPO;
+    const branch = env.GITHUB_BRANCH || 'main';
+    const headers = {
+        Authorization: `token ${env.GITHUB_TOKEN}`,
+        'User-Agent': 'arcade-uploader',
+        Accept: 'application/vnd.github+json',
+    };
+    const api = `https://api.github.com/repos/${owner}/${repo}`;
+
+    try {
+        const refResp = await fetch(`${api}/git/refs/heads/${branch}`, { headers });
+        if (!refResp.ok) throw new Error(`refs lookup failed: ${refResp.status}`);
+        const ref = await refResp.json();
+        const baseCommit = await fetch(`${api}/git/commits/${ref.object.sha}`, { headers })
+            .then(r => r.json());
+        return json({
+            ok: true,
+            baseSha: ref.object.sha,
+            baseTreeSha: baseCommit.tree.sha,
+        }, 200);
+    } catch (e) {
+        return json({ error: e.message || 'init failed' }, 500);
+    }
+}
+
+async function handleUploadBlob(request, env) {
+    const uid = await verifyAdmin(request, env);
+    if (!uid) return json({ error: 'admin auth required' }, 403);
+
+    let body;
+    try { body = await request.json(); }
+    catch { return json({ error: 'invalid json' }, 400); }
+
+    const contentB64 = String(body.contentB64 || '');
+    if (!contentB64) return json({ error: 'no content' }, 400);
+
+    const headers = {
+        Authorization: `token ${env.GITHUB_TOKEN}`,
+        'User-Agent': 'arcade-uploader',
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+    };
+    const api = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}`;
+
+    try {
+        const blobResp = await fetch(`${api}/git/blobs`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({ content: contentB64, encoding: 'base64' }),
+        });
+        if (!blobResp.ok) throw new Error(`blob create failed: ${blobResp.status}`);
+        const blob = await blobResp.json();
+        return json({ ok: true, sha: blob.sha }, 200);
+    } catch (e) {
+        return json({ error: e.message || 'blob failed' }, 500);
+    }
+}
+
+async function handleUploadFinalize(request, env) {
+    const uid = await verifyAdmin(request, env);
+    if (!uid) return json({ error: 'admin auth required' }, 403);
+
+    let body;
+    try { body = await request.json(); }
+    catch { return json({ error: 'invalid json' }, 400); }
+
+    const gameId = String(body.gameId || '').replace(/[^a-zA-Z0-9_-]/g, '');
+    const baseSha = body.baseSha;
+    const baseTreeSha = body.baseTreeSha;
+    const blobs = body.blobs;
+    if (!gameId || !baseSha || !baseTreeSha || !Array.isArray(blobs) || !blobs.length) {
+        return json({ error: 'missing or invalid finalize payload' }, 400);
+    }
+
+    const headers = {
+        Authorization: `token ${env.GITHUB_TOKEN}`,
+        'User-Agent': 'arcade-uploader',
+        Accept: 'application/vnd.github+json',
+        'Content-Type': 'application/json',
+    };
+    const api = `https://api.github.com/repos/${env.GITHUB_OWNER}/${env.GITHUB_REPO}`;
+    const branch = env.GITHUB_BRANCH || 'main';
+
+    try {
+        const tree = blobs.map(b => ({
+            path: `games/uploads/${gameId}/${b.path}`,
+            mode: '100644',
+            type: 'blob',
+            sha: b.sha,
+        }));
+
+        const treeResp = await fetch(`${api}/git/trees`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({ base_tree: baseTreeSha, tree }),
+        });
+        if (!treeResp.ok) throw new Error(`tree create failed: ${treeResp.status}`);
+        const newTree = await treeResp.json();
+
+        const commitResp = await fetch(`${api}/git/commits`, {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({
+                message: `Upload custom game: ${gameId}`,
+                tree: newTree.sha,
+                parents: [baseSha],
+            }),
+        });
+        if (!commitResp.ok) throw new Error(`commit failed: ${commitResp.status}`);
+        const newCommit = await commitResp.json();
+
+        const updateResp = await fetch(`${api}/git/refs/heads/${branch}`, {
+            method: 'PATCH',
+            headers,
+            body: JSON.stringify({ sha: newCommit.sha }),
+        });
+        if (!updateResp.ok) throw new Error(`ref update failed: ${updateResp.status}`);
+
+        return json({ ok: true, commitSha: newCommit.sha, fileCount: blobs.length }, 200);
+    } catch (e) {
+        return json({ error: e.message || 'finalize failed' }, 500);
     }
 }
 
