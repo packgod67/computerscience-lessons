@@ -43963,5 +43963,25 @@
     ],
     "thumbnail": "games/clHempuliBaba-cover.svg",
     "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clDolaChat",
+    "title": "Dola AI Chat",
+    "category": "Other",
+    "path": "games/clDolaChat.html",
+    "description": "ByteDance's Cici / Doubao AI chat assistant (formerly Dola). Browser-based chatbot for general queries, writing help, and conversation. Not a game — included as a tool entry. Login + conversation history may behave oddly in iframe due to third-party cookie restrictions.",
+    "tags": [
+      "ai",
+      "chatbot",
+      "tool",
+      "utility",
+      "bytedance",
+      "doubao",
+      "cici",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clDolaChat-cover.svg",
+    "addedAt": "2026-05-06T19:26:48.520Z"
   }
 ]
