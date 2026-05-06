@@ -71,6 +71,16 @@
         } catch { return false; }
     }
     async function cachePut(key, blob) {
+        // PS2 ISOs are 2-4GB. Default per-origin IndexedDB quotas can
+        // be as low as 1-2GB on some browsers. Request persistent
+        // storage first — sites granted persistence get a much larger
+        // quota share (Chrome: up to 60% of available disk).
+        try {
+            if (navigator.storage?.persist && !(await navigator.storage.persisted())) {
+                await navigator.storage.persist();
+            }
+        } catch {}
+
         const db = await openDb();
         await new Promise((resolve, reject) => {
             const tx = db.transaction(STORE, 'readwrite');
@@ -79,6 +89,20 @@
             tx.onerror = () => reject(tx.error);
             tx.onabort = () => reject(tx.error);
         });
+    }
+
+    // Estimate available IDB quota and how much we'd need. Used to give
+    // the user a clear "you don't have room for this" message before we
+    // burn an hour streaming a 3GB ROM.
+    async function checkQuotaForBytes(bytesNeeded) {
+        if (!navigator.storage?.estimate) return { ok: true, free: Infinity };
+        try {
+            const e = await navigator.storage.estimate();
+            const free = (e.quota || 0) - (e.usage || 0);
+            return { ok: free >= bytesNeeded, free, quota: e.quota, usage: e.usage };
+        } catch {
+            return { ok: true, free: Infinity };
+        }
     }
 
     // ─── Build the same worker URL /play/'s loader receives ───────────
@@ -321,13 +345,36 @@
     async function cacheUploadedFile(gameId, archiveRomUrl, file) {
         const key = workerUrlFor(archiveRomUrl);
         setState(gameId, { state: 'saving', _key: key });
+        // Pre-flight: check that we have room for this file. Better to
+        // tell the user "your browser only has 800 MB free and this is
+        // a 3 GB game" than to half-write and IOError.
+        try {
+            const q = await checkQuotaForBytes(file.size);
+            if (!q.ok) {
+                const freeMB = Math.round((q.free || 0) / 1024 / 1024);
+                const needMB = Math.round(file.size / 1024 / 1024);
+                const msg = `Browser storage too small: you have ~${freeMB} MB free but this ROM is ${needMB} MB. Free up site data (DevTools → Application → Storage → Clear) or use a different browser.`;
+                setState(gameId, { state: 'error', error: msg, _key: key });
+                throw new Error(msg);
+            }
+        } catch (e) {
+            // checkQuotaForBytes failure → fall through and try the
+            // write anyway (no estimate API available).
+            if (/storage too small/i.test(e?.message || '')) throw e;
+        }
         try {
             await cachePut(key, file);
             setState(gameId, { state: 'cached', _key: key });
             return true;
         } catch (e) {
             console.warn('[ps2-preload] manual cache write failed:', e);
-            setState(gameId, { state: 'error', error: 'storage full', _key: key });
+            // QuotaExceededError gets translated into something the user
+            // can act on. Other DataErrors get a generic but clearer msg.
+            const isQuota = /Quota|storage|exceed/i.test(e?.name || '') || /Quota|storage|exceed/i.test(e?.message || '');
+            const msg = isQuota
+                ? 'Your browser ran out of storage. Clear other site data or use Chrome with more free disk.'
+                : `Save failed (${e?.name || 'IOError'}: ${e?.message || 'unknown'}). Try a different browser.`;
+            setState(gameId, { state: 'error', error: msg, _key: key });
             throw e;
         }
     }

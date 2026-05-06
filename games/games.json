@@ -20752,7 +20752,7 @@
     "category": "Racing",
     "path": "games/clnfscarbonowncity.html",
     "rom": "gba",
-    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20Carbon%20-%20Own%20the%20City%20(USA).png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Carbon%20-%20Own%20the%20City%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CEs%2CIt).png",
     "tags": [
       "racing",
       "cars",
@@ -20771,7 +20771,7 @@
     "category": "Racing",
     "path": "games/clnfsmostwanted.html",
     "rom": "gba",
-    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Most%20Wanted%20(USA).png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Most%20Wanted%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CIt).png",
     "tags": [
       "racing",
       "cars",
@@ -20809,7 +20809,7 @@
     "category": "Racing",
     "path": "games/clnfsunderground.html",
     "rom": "gba",
-    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Underground%20(USA).png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Underground%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CIt).png",
     "tags": [
       "racing",
       "cars",
@@ -20829,7 +20829,7 @@
     "category": "Racing",
     "path": "games/clnfsunderground2.html",
     "rom": "gba",
-    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Underground%202%20(USA).png",
+    "thumbnail": "https://thumbnails.libretro.com/Nintendo%20-%20Game%20Boy%20Advance/Named_Boxarts/Need%20for%20Speed%20-%20Underground%202%20(USA%2C%20Europe)%20(En%2CFr%2CDe%2CIt).png",
     "tags": [
       "racing",
       "cars",
@@ -43781,8 +43781,7 @@
     "id": "clDrawasaurus",
     "title": "Drawasaurus",
     "category": "Multiplayer",
-    "path": "games/clDrawasaurus.html",
-    "description": "Multiplayer Pictionary-style drawing + guessing game. Free public rooms or invite-only with friends. No login required.",
+    "description": "Opens in a new tab — this game has anti-iframe protection. Multiplayer Pictionary-style drawing + guessing game. Free public rooms or invite-only with friends. No login required.",
     "tags": [
       "multiplayer",
       "drawing",
@@ -43790,17 +43789,20 @@
       "casual",
       "real-time",
       "html5",
-      "browser-native"
+      "browser-native",
+      "external"
     ],
     "thumbnail": "https://www.drawasaurus.org/_next/static/media/cover.b97fbc1a.png",
-    "addedAt": "2026-05-06T19:11:38.978Z"
+    "addedAt": "2026-05-06T19:11:38.978Z",
+    "external": {
+      "url": "https://drawasaurus.org/"
+    }
   },
   {
     "id": "clSkribblIo",
     "title": "Skribbl.io",
     "category": "Multiplayer",
-    "path": "games/clSkribblIo.html",
-    "description": "The other big multiplayer drawing-guessing game. Quick rounds, public lobbies, custom rooms with friends.",
+    "description": "Opens in a new tab — this game has anti-iframe protection. The other big multiplayer drawing-guessing game. Quick rounds, public lobbies, custom rooms with friends.",
     "tags": [
       "multiplayer",
       "drawing",
@@ -43809,17 +43811,20 @@
       "real-time",
       "io",
       "html5",
-      "browser-native"
+      "browser-native",
+      "external"
     ],
     "thumbnail": "https://skribbl.io/img/thumbnail.png",
-    "addedAt": "2026-05-06T19:11:38.978Z"
+    "addedAt": "2026-05-06T19:11:38.978Z",
+    "external": {
+      "url": "https://skribbl.io/"
+    }
   },
   {
     "id": "clGarticIo",
     "title": "Gartic.io",
     "category": "Multiplayer",
-    "path": "games/clGarticIo.html",
-    "description": "Pictionary-style drawing game with bigger lobbies + variants (animation, telephone). Free, browser-only.",
+    "description": "Opens in a new tab — this game has anti-iframe protection. Pictionary-style drawing game with bigger lobbies + variants (animation, telephone). Free, browser-only.",
     "tags": [
       "multiplayer",
       "drawing",
@@ -43828,10 +43833,14 @@
       "real-time",
       "io",
       "html5",
-      "browser-native"
+      "browser-native",
+      "external"
     ],
     "thumbnail": "https://gartic.io/static/images/thumb.png?v=10",
-    "addedAt": "2026-05-06T19:11:38.978Z"
+    "addedAt": "2026-05-06T19:11:38.978Z",
+    "external": {
+      "url": "https://gartic.io/"
+    }
   },
   {
     "id": "clTrimps",
@@ -43873,8 +43882,7 @@
     "id": "clShellShockIo",
     "title": "ShellShock.io",
     "category": "Shooter",
-    "path": "games/clShellShockIo.html",
-    "description": "Multiplayer egg shooter. Sounds dumb, plays great. Quick public lobbies, surprisingly tactical.",
+    "description": "Opens in a new tab — this game has anti-iframe protection. Multiplayer egg shooter. Sounds dumb, plays great. Quick public lobbies, surprisingly tactical.",
     "tags": [
       "multiplayer",
       "shooter",
@@ -43883,17 +43891,20 @@
       "io",
       "real-time",
       "html5",
-      "browser-native"
+      "browser-native",
+      "external"
     ],
     "thumbnail": "https://www.shellshock.io/img/previewImage_shellShockers.webp",
-    "addedAt": "2026-05-06T19:11:38.978Z"
+    "addedAt": "2026-05-06T19:11:38.978Z",
+    "external": {
+      "url": "https://shellshock.io/"
+    }
   },
   {
     "id": "clKrunkerIo",
     "title": "Krunker.io",
     "category": "Shooter",
-    "path": "games/clKrunkerIo.html",
-    "description": "Browser FPS that feels like classic Quake. Multiple game modes, low-poly art, free public servers.",
+    "description": "Opens in a new tab — this game has anti-iframe protection. Browser FPS that feels like classic Quake. Multiple game modes, low-poly art, free public servers.",
     "tags": [
       "multiplayer",
       "shooter",
@@ -43902,17 +43913,20 @@
       "io",
       "real-time",
       "html5",
-      "browser-native"
+      "browser-native",
+      "external"
     ],
     "thumbnail": "https://assets.krunker.io/promo/og.png",
-    "addedAt": "2026-05-06T19:11:38.978Z"
+    "addedAt": "2026-05-06T19:11:38.978Z",
+    "external": {
+      "url": "https://krunker.io/"
+    }
   },
   {
     "id": "clSurvevIo",
     "title": "Survev.io",
     "category": "Shooter",
-    "path": "games/clSurvevIo.html",
-    "description": "Browser-based 2D battle royale. Top-down combat, large lobbies, fast rounds. Spiritual successor to surviv.io.",
+    "description": "Opens in a new tab — this game has anti-iframe protection. Browser-based 2D battle royale. Top-down combat, large lobbies, fast rounds. Spiritual successor to surviv.io.",
     "tags": [
       "multiplayer",
       "shooter",
@@ -43921,10 +43935,14 @@
       "io",
       "real-time",
       "html5",
-      "browser-native"
+      "browser-native",
+      "external"
     ],
     "thumbnail": "https://surviv.io/img/title.png",
-    "addedAt": "2026-05-06T19:11:38.978Z"
+    "addedAt": "2026-05-06T19:11:38.978Z",
+    "external": {
+      "url": "https://surviv.io/"
+    }
   },
   {
     "id": "clCelesteClassic",
