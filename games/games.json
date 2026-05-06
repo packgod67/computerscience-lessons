@@ -43968,8 +43968,7 @@
     "id": "clDolaChat",
     "title": "Dola AI Chat",
     "category": "Other",
-    "path": "games/clDolaChat.html",
-    "description": "ByteDance's Cici / Doubao AI chat assistant (formerly Dola). Browser-based chatbot for general queries, writing help, and conversation. Not a game — included as a tool entry. Login + conversation history may behave oddly in iframe due to third-party cookie restrictions.",
+    "description": "ByteDance's Cici / Doubao AI chat assistant. Click to open in a new tab — Dola does not work inside an iframe (cookie + auth restrictions in third-party context).",
     "tags": [
       "ai",
       "chatbot",
@@ -43979,9 +43978,13 @@
       "doubao",
       "cici",
       "html5",
-      "browser-native"
+      "browser-native",
+      "external"
     ],
     "thumbnail": "games/clDolaChat-cover.svg",
-    "addedAt": "2026-05-06T19:26:48.520Z"
+    "addedAt": "2026-05-06T19:26:48.520Z",
+    "external": {
+      "url": "https://www.dola.com/chat/"
+    }
   }
 ]

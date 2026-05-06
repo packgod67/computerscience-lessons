@@ -979,7 +979,21 @@
             const descAttr = g.description
                 ? ` data-card-desc="${esc((g.description || '').slice(0, 220))}"`
                 : '';
-            html += `<a class="game-card${pinClass}" href="play.html?game=${encodeURIComponent(g.id)}" data-game-id="${esc(g.id)}"${descAttr}>${thumb}${newBadge}${favBtn}${infoBtn}${ps2PreloadBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
+            // External-link cards: catalog entries with an `external`
+            // field open the URL in a new tab instead of the iframe
+            // player. Useful for tools/SaaS apps that don't survive
+            // third-party-iframe context (cookie restrictions, Referer
+            // checks, ByteDance-style runtime gates), and for Steam /
+            // itch / Newgrounds product pages we want to "feature"
+            // without embedding.
+            const isExternal = g.external && g.external.url;
+            const cardHref = isExternal ? g.external.url : `play.html?game=${encodeURIComponent(g.id)}`;
+            const targetAttr = isExternal ? ' target="_blank" rel="noopener"' : '';
+            const externalClass = isExternal ? ' is-external' : '';
+            const externalBadge = isExternal
+                ? `<span class="external-badge" title="Opens ${esc(new URL(g.external.url).host)} in a new tab">↗</span>`
+                : '';
+            html += `<a class="game-card${pinClass}${externalClass}" href="${cardHref}"${targetAttr} data-game-id="${esc(g.id)}"${descAttr}>${thumb}${newBadge}${externalBadge}${favBtn}${infoBtn}${ps2PreloadBtn}<div class="card-body"><span class="card-category">${esc(g.category)}</span><h3 class="card-title">${esc(g.title)}</h3></div></a>`;
         }
 
         gameGrid.insertAdjacentHTML('beforeend', html);
