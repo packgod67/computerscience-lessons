@@ -365,33 +365,49 @@
                 req.onerror = () => resolve(null);
             });
             if (single) return single;
-            // Chunked manifest? (See ps2-preload.js cachePut for the
-            // 1.5GB-threshold reason — large PS2 ISOs are sharded.)
+            // Manifest (either chunked-IDB or OPFS marker)?
             const meta = await new Promise((resolve) => {
                 const tx = db.transaction(STORE, 'readonly');
                 const req = tx.objectStore(STORE).get(key + '#meta');
                 req.onsuccess = () => resolve(req.result || null);
                 req.onerror = () => resolve(null);
             });
-            if (!meta || !meta.chunked) return null;
-            // Read all chunks (in order) and assemble into one Blob.
-            // Blob constructor with multiple parts is lazy — chunks
-            // stay disk-backed, no 4GB-into-RAM moment.
-            const parts = [];
-            for (let i = 0; i < meta.chunkCount; i++) {
-                const chunk = await new Promise((resolve) => {
-                    const tx = db.transaction(STORE, 'readonly');
-                    const req = tx.objectStore(STORE).get(key + '#' + i);
-                    req.onsuccess = () => resolve(req.result || null);
-                    req.onerror = () => resolve(null);
-                });
-                if (!chunk) {
-                    console.warn('[arcade-play] missing chunk', i, 'for', key);
+            if (!meta) return null;
+
+            // OPFS path — Origin Private File System holds the actual
+            // bytes; meta is just a pointer (filename + size + type).
+            if (meta.opfs && navigator.storage?.getDirectory) {
+                try {
+                    const root = await navigator.storage.getDirectory();
+                    const handle = await root.getFileHandle(meta.name, { create: false });
+                    const file = await handle.getFile();
+                    if (file.size > 0) return file;
+                } catch (e) {
+                    console.warn('[arcade-play] OPFS read failed for', key, e);
                     return null;
                 }
-                parts.push(chunk);
             }
-            return new Blob(parts, { type: meta.type || 'application/octet-stream' });
+
+            // Chunked-IDB path — see ps2-preload.js cachePut.
+            if (meta.chunked) {
+                const parts = [];
+                for (let i = 0; i < meta.chunkCount; i++) {
+                    const chunk = await new Promise((resolve) => {
+                        const tx = db.transaction(STORE, 'readonly');
+                        const req = tx.objectStore(STORE).get(key + '#' + i);
+                        req.onsuccess = () => resolve(req.result || null);
+                        req.onerror = () => resolve(null);
+                    });
+                    if (!chunk) {
+                        console.warn('[arcade-play] missing chunk', i, 'for', key);
+                        return null;
+                    }
+                    parts.push(chunk);
+                }
+                return new Blob(parts, { type: meta.type || 'application/octet-stream' });
+            }
+
+            return null;
         } catch { return null; }
     }
     async function cachePut(key, blob) {

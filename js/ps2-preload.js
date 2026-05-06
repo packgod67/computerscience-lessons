@@ -64,9 +64,12 @@
             const db = await openDb();
             return await new Promise((resolve) => {
                 const tx = db.transaction(STORE, 'readonly');
-                // Hit if either the single-blob entry exists OR the
-                // chunked manifest exists. (We never have both — the
-                // writer deletes the other when switching mode.)
+                // Hit if any of these exists:
+                //   ${key}        single-blob entry
+                //   ${key}#meta   either chunked-IDB manifest or
+                //                 OPFS-marker (both stored under the
+                //                 same suffix; cacheGet disambiguates
+                //                 by reading the marker's `opfs` flag)
                 const a = tx.objectStore(STORE).getKey(key);
                 const b = tx.objectStore(STORE).getKey(key + '#meta');
                 let aDone = false, bDone = false, found = false;
@@ -80,13 +83,51 @@
             });
         } catch { return false; }
     }
-    // Chrome rejects single-blob IDB writes around 2GB even with quota
-    // headroom — the structured-clone serializer / blob storage path
-    // has hard caps. So we shard files larger than this threshold into
-    // 256MB chunks, stored under keys `${key}#0`, `${key}#1`, ..., with
-    // a manifest at `${key}#meta`. The reader (play/index.html
-    // cacheGet) glues them back into a single Blob on demand —
-    // browsers do that lazily, so no 4GB-into-RAM moment.
+    // ─── OPFS path (preferred for large files) ─────────────────────
+    // IndexedDB rejects multi-GB blob writes in Chrome with a generic
+    // DataError even when there's plenty of free space — its
+    // structured-clone serializer + blob storage path have hard caps.
+    // OPFS (Origin Private File System) is designed for big files,
+    // streams writes via WritableStream, and has its own larger quota.
+    // Available in all modern browsers (Chrome 86+, Firefox 111+,
+    // Safari 15.2+). We try OPFS first; fall back to IDB only if the
+    // browser doesn't expose it or it errors.
+    //
+    // OPFS filenames can't contain '/' or '?' — we SHA-256 the key to
+    // get a deterministic safe filename and remember the mapping in
+    // IDB so cacheHas / cacheGet can find it.
+    async function keyToOpfsName(key) {
+        const bytes = new TextEncoder().encode(key);
+        const hash = await crypto.subtle.digest('SHA-256', bytes);
+        const hex = Array.from(new Uint8Array(hash)).map(b => b.toString(16).padStart(2, '0')).join('');
+        return 'ps2-' + hex.slice(0, 32);  // first 16 bytes = plenty unique
+    }
+
+    async function opfsAvailable() {
+        return !!(navigator.storage && navigator.storage.getDirectory);
+    }
+
+    async function opfsPut(key, blob) {
+        const root = await navigator.storage.getDirectory();
+        const name = await keyToOpfsName(key);
+        const handle = await root.getFileHandle(name, { create: true });
+        const writer = await handle.createWritable();
+        // Pipe the file straight through — never load the whole thing
+        // into RAM. Works for files of any size the disk holds.
+        await blob.stream().pipeTo(writer);
+        // Drop a small marker in IDB so cacheHas/cacheGet know to look
+        // in OPFS for this key rather than IDB.
+        const db = await openDb();
+        await new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE, 'readwrite');
+            tx.objectStore(STORE).put({ opfs: true, name, size: blob.size, type: blob.type || 'application/octet-stream' }, key + '#meta');
+            tx.oncomplete = resolve; tx.onerror = () => reject(tx.error);
+        });
+    }
+
+    // ─── IDB fallback path (small files + browsers without OPFS) ───
+    // Files larger than this get sharded into chunks because Chrome's
+    // single-blob IDB write fails around 2GB even when there's quota.
     const CHUNK_THRESHOLD = 1500 * 1024 * 1024;   // 1.5 GB
     const CHUNK_SIZE      =  256 * 1024 * 1024;   // 256 MB
 
@@ -100,6 +141,29 @@
                 await navigator.storage.persist();
             }
         } catch {}
+
+        // For files >1.5GB on browsers that support OPFS, write there
+        // instead of IDB. OPFS handles multi-GB files cleanly — IDB
+        // doesn't on Chrome regardless of chunking strategy.
+        if (blob.size > CHUNK_THRESHOLD && await opfsAvailable()) {
+            try {
+                // Erase any prior IDB-stored version of this key so we
+                // don't have stale single-blob OR chunked entries
+                // lying around.
+                const db = await openDb();
+                await new Promise((resolve) => {
+                    const tx = db.transaction(STORE, 'readwrite');
+                    tx.objectStore(STORE).delete(key);
+                    for (let i = 0; i < 32; i++) tx.objectStore(STORE).delete(key + '#' + i);
+                    tx.oncomplete = resolve; tx.onerror = resolve;
+                });
+                await opfsPut(key, blob);
+                return;
+            } catch (e) {
+                console.warn('[ps2-preload] OPFS write failed, falling back to IDB chunks:', e);
+                // Fall through to IDB chunked path below
+            }
+        }
 
         // Small enough for one transaction → fast path.
         if (blob.size <= CHUNK_THRESHOLD) {
