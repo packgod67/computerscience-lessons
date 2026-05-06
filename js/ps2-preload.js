@@ -368,14 +368,18 @@
             return true;
         } catch (e) {
             console.warn('[ps2-preload] manual cache write failed:', e);
-            // QuotaExceededError gets translated into something the user
-            // can act on. Other DataErrors get a generic but clearer msg.
-            const isQuota = /Quota|storage|exceed/i.test(e?.name || '') || /Quota|storage|exceed/i.test(e?.message || '');
-            const msg = isQuota
-                ? 'Your browser ran out of storage. Clear other site data or use Chrome with more free disk.'
-                : `Save failed (${e?.name || 'IOError'}: ${e?.message || 'unknown'}). Try a different browser.`;
-            setState(gameId, { state: 'error', error: msg, _key: key });
-            throw e;
+            // Translate the raw IDB error into something actionable. The
+            // dialog at app.js:1179 displays e.message, so we have to
+            // throw a NEW Error with the friendly text rather than
+            // re-throwing the original.
+            const isQuota =
+                /Quota|storage|exceed/i.test(e?.name || '') ||
+                /Quota|storage|exceed/i.test(e?.message || '');
+            const friendly = isQuota
+                ? 'Browser ran out of storage. PS2 ROMs are 2-4 GB — clear other site data (DevTools → Application → Storage) or use Chrome with more free disk.'
+                : `IDB write rejected (${e?.name || 'IOError'}). Try a different browser, or clear site data and retry.`;
+            setState(gameId, { state: 'error', error: friendly, _key: key });
+            throw new Error(friendly);
         }
     }
 
