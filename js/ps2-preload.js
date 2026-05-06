@@ -64,30 +64,99 @@
             const db = await openDb();
             return await new Promise((resolve) => {
                 const tx = db.transaction(STORE, 'readonly');
-                const req = tx.objectStore(STORE).getKey(key);
-                req.onsuccess = () => resolve(req.result !== undefined);
-                req.onerror = () => resolve(false);
+                // Hit if either the single-blob entry exists OR the
+                // chunked manifest exists. (We never have both — the
+                // writer deletes the other when switching mode.)
+                const a = tx.objectStore(STORE).getKey(key);
+                const b = tx.objectStore(STORE).getKey(key + '#meta');
+                let aDone = false, bDone = false, found = false;
+                function maybeResolve() {
+                    if (aDone && bDone) resolve(found);
+                }
+                a.onsuccess = () => { if (a.result !== undefined) found = true; aDone = true; maybeResolve(); };
+                a.onerror   = () => { aDone = true; maybeResolve(); };
+                b.onsuccess = () => { if (b.result !== undefined) found = true; bDone = true; maybeResolve(); };
+                b.onerror   = () => { bDone = true; maybeResolve(); };
             });
         } catch { return false; }
     }
+    // Chrome rejects single-blob IDB writes around 2GB even with quota
+    // headroom — the structured-clone serializer / blob storage path
+    // has hard caps. So we shard files larger than this threshold into
+    // 256MB chunks, stored under keys `${key}#0`, `${key}#1`, ..., with
+    // a manifest at `${key}#meta`. The reader (play/index.html
+    // cacheGet) glues them back into a single Blob on demand —
+    // browsers do that lazily, so no 4GB-into-RAM moment.
+    const CHUNK_THRESHOLD = 1500 * 1024 * 1024;   // 1.5 GB
+    const CHUNK_SIZE      =  256 * 1024 * 1024;   // 256 MB
+
     async function cachePut(key, blob) {
         // PS2 ISOs are 2-4GB. Default per-origin IndexedDB quotas can
-        // be as low as 1-2GB on some browsers. Request persistent
-        // storage first — sites granted persistence get a much larger
-        // quota share (Chrome: up to 60% of available disk).
+        // be low. Request persistent storage first — sites granted
+        // persistence get a much larger quota share (Chrome: up to 60%
+        // of available disk).
         try {
             if (navigator.storage?.persist && !(await navigator.storage.persisted())) {
                 await navigator.storage.persist();
             }
         } catch {}
 
+        // Small enough for one transaction → fast path.
+        if (blob.size <= CHUNK_THRESHOLD) {
+            const db = await openDb();
+            await new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE, 'readwrite');
+                // Clean up any prior chunked write under this key
+                tx.objectStore(STORE).delete(key + '#meta');
+                tx.objectStore(STORE).put(blob, key);
+                tx.oncomplete = () => resolve();
+                tx.onerror = () => reject(tx.error);
+                tx.onabort = () => reject(tx.error);
+            });
+            return;
+        }
+
+        // Large file: shard into chunks. Each chunk is its own IDB
+        // entry — the browser stores them on disk independently, so
+        // the 2GB single-blob ceiling doesn't apply.
+        const chunkCount = Math.ceil(blob.size / CHUNK_SIZE);
         const db = await openDb();
+        // Wipe any prior single-blob entry (and prior chunks) for
+        // this key so we don't leave orphans.
         await new Promise((resolve, reject) => {
             const tx = db.transaction(STORE, 'readwrite');
-            tx.objectStore(STORE).put(blob, key);
-            tx.oncomplete = () => resolve();
-            tx.onerror = () => reject(tx.error);
-            tx.onabort = () => reject(tx.error);
+            tx.objectStore(STORE).delete(key);
+            for (let i = 0; i < 32; i++) tx.objectStore(STORE).delete(key + '#' + i);
+            tx.objectStore(STORE).delete(key + '#meta');
+            tx.oncomplete = resolve; tx.onerror = () => reject(tx.error);
+        });
+        // Write chunks one at a time (separate transactions so we
+        // don't hold a giant write-lock for many minutes on a 4GB
+        // file — and so a single chunk failure doesn't roll back
+        // every chunk).
+        for (let i = 0; i < chunkCount; i++) {
+            const start = i * CHUNK_SIZE;
+            const end = Math.min(start + CHUNK_SIZE, blob.size);
+            const chunk = blob.slice(start, end);
+            await new Promise((resolve, reject) => {
+                const tx = db.transaction(STORE, 'readwrite');
+                tx.objectStore(STORE).put(chunk, key + '#' + i);
+                tx.oncomplete = resolve; tx.onerror = () => reject(tx.error);
+                tx.onabort = () => reject(tx.error);
+            });
+        }
+        // Write the manifest LAST so a partially-written file never
+        // looks complete. cacheHas checks for the manifest.
+        await new Promise((resolve, reject) => {
+            const tx = db.transaction(STORE, 'readwrite');
+            tx.objectStore(STORE).put({
+                chunked: true,
+                size: blob.size,
+                chunkSize: CHUNK_SIZE,
+                chunkCount,
+                type: blob.type || 'application/octet-stream',
+            }, key + '#meta');
+            tx.oncomplete = resolve; tx.onerror = () => reject(tx.error);
         });
     }
 
