@@ -539,13 +539,6 @@
     ]
   },
   {
-    "id": "cladarkroom",
-    "title": "Adark Room",
-    "category": "Other",
-    "path": "games/clADarkRoom.html",
-    "thumbnail": "assets/thumbnails/cladarkroom.jpg"
-  },
-  {
     "id": "cladatewithdeath",
     "title": "A Date with Death",
     "category": "Other",
@@ -1244,20 +1237,6 @@
       "classic"
     ],
     "description": "Antarttycoon — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "clantimatterdimensions",
-    "title": "Antimatter Dimensions",
-    "category": "Other",
-    "path": "games/clantimatterdimensions.html",
-    "thumbnail": "assets/thumbnails/clantimatterdimensions.jpg",
-    "tags": [
-      "arcade",
-      "classic",
-      "flash",
-      "ruffle"
-    ],
-    "description": "Antimatter Dimensions — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
     "id": "clapesvshelium",
@@ -5833,26 +5812,6 @@
       "classic"
     ],
     "description": "Cookie Clicker — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
-  },
-  {
-    "id": "clcookieclicker",
-    "title": "0 cookies - Cookie Clicker",
-    "category": "Simulation",
-    "path": "games/clcookieclicker.html",
-    "thumbnail": "assets/thumbnails/clcookieclicker.jpg",
-    "popular": true,
-    "tags": [
-      "clicker",
-      "idle",
-      "popular",
-      "simulation",
-      "mobile",
-      "management",
-      "flash",
-      "ruffle",
-      "classic"
-    ],
-    "description": "0 cookies - Cookie Clicker — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed."
   },
   {
     "id": "clcookieclickergood",
@@ -34071,20 +34030,6 @@
     "path": "games/clSupremeDuelist2019.html"
   },
   {
-    "id": "clsurvevio",
-    "title": "survev.io",
-    "category": "Other",
-    "path": "games/clsurvevio.html",
-    "tags": [
-      "arcade",
-      "classic",
-      "flash",
-      "ruffle"
-    ],
-    "description": "survev.io — a Flash game preserved in the arcade. Runs in your browser via the Ruffle emulator, no plugins needed.",
-    "broken": true
-  },
-  {
     "id": "clsurvivalracev2",
     "title": "Survival Race 2",
     "category": "Racing",
@@ -43739,5 +43684,284 @@
     ],
     "addedAt": "2026-05-02T12:59:26.742Z",
     "thumbnail": "games/sample-game/cover.svg"
+  },
+  {
+    "id": "clUniversalPaperclips",
+    "title": "Universal Paperclips",
+    "category": "Simulation",
+    "path": "games/clUniversalPaperclips.html",
+    "description": "Existential clicker about an AI tasked with making paperclips. Starts as text + buttons, ends... elsewhere. Genre-defining incremental.",
+    "tags": [
+      "incremental",
+      "clicker",
+      "idle",
+      "narrative",
+      "sci-fi",
+      "ai",
+      "text-game",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clUniversalPaperclips-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clADarkRoom",
+    "title": "A Dark Room",
+    "category": "Adventure",
+    "path": "games/clADarkRoom.html",
+    "description": "Minimalist text adventure. Starts cold by a fire, ends in a way you will not predict. Open-source, played in the browser, takes ~3 hours.",
+    "tags": [
+      "text-adventure",
+      "survival",
+      "narrative",
+      "minimalist",
+      "open-source",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clADarkRoom-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clCandyBox2",
+    "title": "Candy Box 2",
+    "category": "Adventure",
+    "path": "games/clCandyBox2.html",
+    "description": "ASCII-art incremental RPG that gets weirder the longer you play. Starts with one candy and ends with a sword. Free, open-source.",
+    "tags": [
+      "incremental",
+      "rpg",
+      "ascii",
+      "narrative",
+      "open-source",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clCandyBox2-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clTheWikipediaGame",
+    "title": "The Wikipedia Game",
+    "category": "Puzzle",
+    "path": "games/clTheWikipediaGame.html",
+    "description": "Click-only navigation race: get from one Wikipedia article to another using only the links inside. Solo or multiplayer.",
+    "tags": [
+      "puzzle",
+      "wikipedia",
+      "race",
+      "multiplayer",
+      "casual",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clTheWikipediaGame-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clCookieClicker",
+    "title": "Cookie Clicker",
+    "category": "Simulation",
+    "path": "games/clCookieClicker.html",
+    "description": "The defining incremental. Click cookies, buy grandmas, ascend, prestige, repeat. By Orteil. Free + saved in localStorage.",
+    "tags": [
+      "incremental",
+      "clicker",
+      "idle",
+      "casual",
+      "classic",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clCookieClicker-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clDrawasaurus",
+    "title": "Drawasaurus",
+    "category": "Multiplayer",
+    "path": "games/clDrawasaurus.html",
+    "description": "Multiplayer Pictionary-style drawing + guessing game. Free public rooms or invite-only with friends. No login required.",
+    "tags": [
+      "multiplayer",
+      "drawing",
+      "party",
+      "casual",
+      "real-time",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clDrawasaurus-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clSkribblIo",
+    "title": "Skribbl.io",
+    "category": "Multiplayer",
+    "path": "games/clSkribblIo.html",
+    "description": "The other big multiplayer drawing-guessing game. Quick rounds, public lobbies, custom rooms with friends.",
+    "tags": [
+      "multiplayer",
+      "drawing",
+      "party",
+      "casual",
+      "real-time",
+      "io",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clSkribblIo-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clGarticIo",
+    "title": "Gartic.io",
+    "category": "Multiplayer",
+    "path": "games/clGarticIo.html",
+    "description": "Pictionary-style drawing game with bigger lobbies + variants (animation, telephone). Free, browser-only.",
+    "tags": [
+      "multiplayer",
+      "drawing",
+      "party",
+      "casual",
+      "real-time",
+      "io",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clGarticIo-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clTrimps",
+    "title": "Trimps",
+    "category": "Simulation",
+    "path": "games/clTrimps.html",
+    "description": "Deep incremental city-builder + monster-fighter hybrid. Hundreds of hours of progression. Free, open-source.",
+    "tags": [
+      "incremental",
+      "idle",
+      "city-builder",
+      "rpg",
+      "open-source",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clTrimps-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clAntimatterDimensions",
+    "title": "Antimatter Dimensions",
+    "category": "Simulation",
+    "path": "games/clAntimatterDimensions.html",
+    "description": "Numbers go up forever. Layered prestige incremental that goes from antimatter to dimensions to dilation. Beloved by genre fans.",
+    "tags": [
+      "incremental",
+      "idle",
+      "prestige",
+      "numbers",
+      "open-source",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clAntimatterDimensions-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clShellShockIo",
+    "title": "ShellShock.io",
+    "category": "Shooter",
+    "path": "games/clShellShockIo.html",
+    "description": "Multiplayer egg shooter. Sounds dumb, plays great. Quick public lobbies, surprisingly tactical.",
+    "tags": [
+      "multiplayer",
+      "shooter",
+      "fps",
+      "casual",
+      "io",
+      "real-time",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clShellShockIo-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clKrunkerIo",
+    "title": "Krunker.io",
+    "category": "Shooter",
+    "path": "games/clKrunkerIo.html",
+    "description": "Browser FPS that feels like classic Quake. Multiple game modes, low-poly art, free public servers.",
+    "tags": [
+      "multiplayer",
+      "shooter",
+      "fps",
+      "arena",
+      "io",
+      "real-time",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clKrunkerIo-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clSurvevIo",
+    "title": "Survev.io",
+    "category": "Shooter",
+    "path": "games/clSurvevIo.html",
+    "description": "Browser-based 2D battle royale. Top-down combat, large lobbies, fast rounds. Spiritual successor to surviv.io.",
+    "tags": [
+      "multiplayer",
+      "shooter",
+      "battle-royale",
+      "top-down",
+      "io",
+      "real-time",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clSurvevIo-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clCelesteClassic",
+    "title": "Celeste Classic (Pico-8)",
+    "category": "Platformer",
+    "path": "games/clCelesteClassic.html",
+    "description": "The original Pico-8 prototype that became Celeste. 30 screens, mountain climb, dash + jump. Tight, tiny, brilliant.",
+    "tags": [
+      "platformer",
+      "pico-8",
+      "pixel-art",
+      "precision",
+      "classic",
+      "free",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clCelesteClassic-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
+  },
+  {
+    "id": "clHempuliBaba",
+    "title": "Hempuli Baba Experiments",
+    "category": "Puzzle",
+    "path": "games/clHempuliBaba.html",
+    "description": "Hempuli (Baba Is You creator) hosts dozens of small puzzle prototypes — early ideas + experiments + minigames in his Baba style.",
+    "tags": [
+      "puzzle",
+      "hempuli",
+      "baba-is-you",
+      "sokoban",
+      "logic",
+      "experimental",
+      "html5",
+      "browser-native"
+    ],
+    "thumbnail": "games/clHempuliBaba-cover.svg",
+    "addedAt": "2026-05-06T19:11:38.978Z"
   }
 ]
