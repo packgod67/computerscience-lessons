@@ -11171,6 +11171,128 @@ html[data-theme="blackhole"] .main { position: relative; z-index: 1; }
     box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
 }
 
+/* AI Image Generator (aigen tab) */
+.aigen-panel {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 16px;
+}
+.aigen-header h2 { margin: 0 0 4px; }
+.aigen-help { color: var(--text-secondary); margin: 0 0 16px; font-size: 0.92rem; }
+.aigen-form {
+    display: flex; flex-direction: column; gap: 10px;
+    background: rgba(0, 0, 0, 0.25);
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.06);
+}
+.aigen-prompt {
+    width: 100%; min-height: 80px;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-radius: 6px;
+    padding: 10px 12px;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+}
+.aigen-form-row {
+    display: flex; flex-wrap: wrap; gap: 10px;
+    align-items: end;
+}
+.aigen-form-row label {
+    display: flex; flex-direction: column; gap: 4px;
+    color: var(--text-secondary);
+    font-size: 0.82rem;
+    flex: 1;
+    min-width: 110px;
+}
+.aigen-form-row select,
+.aigen-form-row input {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: var(--text-primary);
+    border-radius: 6px;
+    padding: 6px 10px;
+    font-size: 0.92rem;
+    font-family: inherit;
+}
+.aigen-result {
+    margin-top: 18px;
+    min-height: 100px;
+}
+.aigen-loading {
+    display: flex; flex-direction: column; align-items: center; gap: 12px;
+    padding: 40px;
+    color: var(--text-secondary);
+}
+.aigen-spinner {
+    width: 40px; height: 40px;
+    border: 3px solid rgba(124, 58, 237, 0.2);
+    border-top-color: var(--accent, #7c3aed);
+    border-radius: 50%;
+    animation: aigen-spin 1s linear infinite;
+}
+@keyframes aigen-spin { to { transform: rotate(360deg); } }
+.aigen-image-wrap {
+    display: flex; flex-direction: column; gap: 10px;
+}
+.aigen-image {
+    width: 100%; max-height: 70vh;
+    object-fit: contain;
+    background: #000;
+    border-radius: 8px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
+}
+.aigen-image-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 10px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+}
+.aigen-image-actions { display: flex; gap: 6px; flex-wrap: wrap; }
+.aigen-error {
+    color: #fca5a5;
+    background: rgba(239, 68, 68, 0.1);
+    border: 1px solid rgba(239, 68, 68, 0.3);
+    border-radius: 6px;
+    padding: 12px;
+    text-align: center;
+}
+.aigen-history { margin-top: 30px; }
+.aigen-history-title {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    margin: 0 0 10px;
+}
+.aigen-history-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+}
+.aigen-history-tile {
+    display: flex; flex-direction: column;
+    background: rgba(255, 255, 255, 0.04);
+    border-radius: 8px;
+    overflow: hidden;
+    text-decoration: none;
+    transition: transform 0.15s;
+}
+.aigen-history-tile:hover { transform: scale(1.03); }
+.aigen-history-tile img {
+    width: 100%; aspect-ratio: 1; object-fit: cover;
+    display: block;
+}
+.aigen-history-prompt {
+    padding: 6px 8px;
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 /* ── Profile font presets ──────────────────────────────────────── */
 .profile-font-pixel       { font-family: 'Press Start 2P', monospace; }
 .profile-font-pixel .profile-name      { font-size: 1.05rem; }

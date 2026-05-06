@@ -12,6 +12,7 @@
     const friendsView = document.getElementById('friendsView');
     const cataloghealthView = document.getElementById('cataloghealthView');
     const errorsadminView = document.getElementById('errorsadminView');
+    const aigenView = document.getElementById('aigenView');
 
     const views = {
         games: gamesView,
@@ -26,6 +27,7 @@
         cheats: cheatsView,
         cataloghealth: cataloghealthView,
         errorsadmin: errorsadminView,
+        aigen: aigenView,
     };
     let activeTab = 'games';
     let usersLoaded = false;
@@ -160,6 +162,9 @@
         }
         if (tab === 'errorsadmin' && window.ArcadeErrorsAdmin) {
             ArcadeErrorsAdmin.renderErrorsAdminView();
+        }
+        if (tab === 'aigen' && window.ArcadeAigen) {
+            ArcadeAigen.renderAigenView();
         }
     });
 })();
