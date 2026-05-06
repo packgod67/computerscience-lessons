@@ -707,6 +707,89 @@ export default {
         }
 
         // ───────────────────────────────────────────────────────────
+        // 3kh0 anti-iframe bypass: GET /3kh0/<path>
+        //
+        // Many .io / school-unblock games on the arcade iframe pages
+        // hosted at 3kh0.github.io. Each page loads /js/main.js which
+        // is 3kh0's ad-injection + analytics layer. That script reads
+        // the parent frame's URL via window.top and either redirects
+        // away from 3kh0 OR fails in a way that prevents the game from
+        // running when iframed cross-origin.
+        //
+        // Same problem itch.io has with htmlgame.js — and same fix:
+        // proxy the page through, strip the offending script tag, and
+        // inject a <base href> so the surviving relative URLs route
+        // back to the real 3kh0 origin (not our proxy origin).
+        //
+        // Route mapping:
+        //   /3kh0/projects/foo/index.html
+        //     → fetches https://3kh0.github.io/projects/foo/index.html
+        //     → strips <script src="/js/main.js"> and similar 3kh0 ad code
+        //     → injects <base href="https://3kh0.github.io/projects/foo/">
+        //   /3kh0/projects/foo/game.js
+        //     → straight pass-through with CORS headers added (Range etc.)
+        // ───────────────────────────────────────────────────────────
+        if (reqUrl.pathname.startsWith('/3kh0/')) {
+            const subpath = reqUrl.pathname.slice('/3kh0/'.length);
+            const targetUrl = 'https://3kh0.github.io/' + subpath +
+                (reqUrl.search || '');
+            try {
+                const upstream = await fetch(targetUrl, {
+                    headers: { 'User-Agent': 'arcade-3kh0-proxy' },
+                });
+                const ct = upstream.headers.get('content-type') || '';
+                const respHeaders = new Headers(upstream.headers);
+                // Force CORS-open + drop any X-Frame-Options that
+                // might have snuck in.
+                respHeaders.set('Access-Control-Allow-Origin', '*');
+                respHeaders.delete('x-frame-options');
+                respHeaders.delete('content-security-policy');
+
+                // Only HTML pages need rewriting. Everything else
+                // (JS, CSS, images, audio, ROMs) streams through.
+                if (!/text\/html/i.test(ct)) {
+                    return new Response(upstream.body, {
+                        status: upstream.status,
+                        headers: respHeaders,
+                    });
+                }
+
+                let html = await upstream.text();
+
+                // Strip the ad-injection script. 3kh0's main.js is
+                // the one that reads window.top + breaks iframes.
+                html = html.replace(/<script[^>]+src=["'][^"']*\/js\/main\.js["'][^>]*><\/script>\s*/gi, '');
+                // Also strip any inline script that references main.js
+                html = html.replace(/<script[^>]*>[^<]*\/js\/main\.js[^<]*<\/script>\s*/gi, '');
+                // Strip Google Tag Manager init tags too — they're
+                // useless to our users and often invoke 3kh0's ad code.
+                html = html.replace(/<script[^>]+googletagmanager\.com[^>]*><\/script>\s*/gi, '');
+
+                // Compute base href so relative URLs in the page
+                // resolve to 3kh0.github.io rather than our proxy
+                // origin. The base must end at the directory of the
+                // current path.
+                const baseDir = subpath.includes('/')
+                    ? subpath.slice(0, subpath.lastIndexOf('/') + 1)
+                    : '';
+                const baseTag = `<base href="https://3kh0.github.io/${baseDir}">`;
+
+                if (/<head[^>]*>/i.test(html)) {
+                    html = html.replace(/<head[^>]*>/i, m => m + '\n' + baseTag);
+                } else {
+                    html = baseTag + html;
+                }
+
+                return new Response(html, {
+                    status: upstream.status,
+                    headers: { ...Object.fromEntries(respHeaders), 'Content-Type': 'text/html; charset=utf-8' },
+                });
+            } catch (e) {
+                return json({ error: '3kh0 proxy failed: ' + e.message }, 500);
+            }
+        }
+
+        // ───────────────────────────────────────────────────────────
         // Multi-file game upload: POST /upload
         //
         // Accepts a JSON body { gameId, files: [{ relpath, contentB64 }] }
