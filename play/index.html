@@ -328,9 +328,24 @@
 
     function filenameFromUrl(u) {
         try {
-            const p = new URL(u).pathname;
-            const base = p.split('/').pop() || 'game.iso';
-            return decodeURIComponent(base.split('?')[0]);
+            const url = new URL(u);
+            // Worker-proxy URLs (arcad-groq.../rom?src=...) have a
+            // pathname of just '/rom', which would yield 'rom' as the
+            // filename — Play! rejects files without an extension. Peek
+            // at the embedded `src=` to get the real archive.org URL
+            // and pull the filename from THERE.
+            let target = url;
+            const src = url.searchParams.get('src');
+            if (src) {
+                try { target = new URL(src); } catch {}
+            }
+            const base = target.pathname.split('/').pop() || 'game.iso';
+            const name = decodeURIComponent(base.split('?')[0]);
+            // Final safety net: if we still don't have an extension,
+            // append .iso (PS2's most common format, what Play! expects
+            // by default) so the emulator doesn't bail on the filename
+            // check.
+            return /\.[a-z0-9]{1,5}$/i.test(name) ? name : name + '.iso';
         } catch { return 'game.iso'; }
     }
     const filename = filenameFromUrl(romUrl);
