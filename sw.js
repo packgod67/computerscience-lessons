@@ -7,7 +7,7 @@
 // - Never touch cross-origin requests (CDNs like libretro, jsdelivr handle
 //   their own caching via HTTP headers)
 
-const CACHE_NAME = 'arcade-shell-v121';
+const CACHE_NAME = 'arcade-shell-v122';
 const SHELL_ASSETS = [
     './',
     './index.html',
@@ -205,7 +205,15 @@ self.addEventListener('fetch', (event) => {
     // /itch/ responses.
     const needsCoi = url.pathname === '/play.html'
                   || url.pathname.endsWith('/play.html')
-                  || /\/games\/[^/]+\.html$/.test(url.pathname);
+                  || /\/games\/[^/]+\.html$/.test(url.pathname)
+                  // /play/ subdir hosts the Play! PS2 emulator —
+                  // it needs SharedArrayBuffer (Play.wasm threads).
+                  // Apply COI to every asset under it including
+                  // index.html, Play.js, Play.wasm, and the
+                  // coi-serviceworker itself, otherwise the root
+                  // SW (this file) intercepts /play/index.html
+                  // first and silently strips it of isolation.
+                  || url.pathname.startsWith('/play/');
     if (req.mode === 'navigate' || req.destination === 'document') {
         event.respondWith((async () => {
             let resp;
