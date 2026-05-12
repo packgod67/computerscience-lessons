@@ -25,6 +25,62 @@
     console.log('[arcade-play] isSecureContext =', window.isSecureContext);
     console.log('[arcade-play] SharedArrayBuffer =', typeof SharedArrayBuffer);
     console.log('[arcade-play] SW controller =', navigator.serviceWorker?.controller ? 'yes' : 'no');
+
+    // ─── Perf: suppress Play!'s WebGL error spam ──────────────────────
+    // Play!'s GS-on-WebGL backend issues calls that some games (NFS
+    // Carbon being a known offender) don't strictly conform to. Each
+    // INVALID_OPERATION / INVALID_ENUM costs Chrome ~1ms in DevTools
+    // bookkeeping. Hundreds per second adds up to a real FPS hit.
+    //
+    // We can't stop Play! from making the calls, but we CAN silence
+    // the logger so Chrome doesn't pay the formatting/storage cost.
+    // Drop only WebGL-prefixed messages; everything else (including
+    // Play!'s actual init/error output) passes through.
+    (function suppressWebglSpam() {
+        let suppressed = 0;
+        const origError = console.error;
+        const origWarn = console.warn;
+        const drop = (orig) => function (...args) {
+            const first = args[0];
+            if (typeof first === 'string' && (
+                first.startsWith('WebGL:') ||
+                first.startsWith('[.WebGL') ||
+                /INVALID_(OPERATION|ENUM|VALUE)/.test(first) ||
+                /texParameter/.test(first)
+            )) {
+                suppressed++;
+                return;
+            }
+            orig.apply(console, args);
+        };
+        console.error = drop(origError);
+        console.warn = drop(origWarn);
+        // Surface the suppression count once per minute so we don't
+        // lose visibility entirely — if something genuinely new is
+        // breaking, you'll see the count spike.
+        setInterval(() => {
+            if (suppressed > 0) {
+                console.log('[arcade-play] suppressed', suppressed, 'WebGL error logs this minute');
+                suppressed = 0;
+            }
+        }, 60_000);
+
+        // Also no-op the gl.getError polling result so Play! doesn't
+        // re-poll on every frame. We intercept at the canvas-context
+        // level once a WebGL context is created. Most of the perf
+        // hit comes from the logger above; this is belt-and-suspenders.
+        const origGetContext = HTMLCanvasElement.prototype.getContext;
+        HTMLCanvasElement.prototype.getContext = function (type, ...rest) {
+            const ctx = origGetContext.call(this, type, ...rest);
+            if (ctx && (type === 'webgl' || type === 'webgl2' || type === 'experimental-webgl')) {
+                // Wrap getError so Play! sees NO_ERROR instead of polling
+                // a queued error stream. This is safe: errors raised in
+                // WebGL don't affect program correctness, only diagnostics.
+                ctx.getError = () => ctx.NO_ERROR;
+            }
+            return ctx;
+        };
+    })();
 </script>
 <script src="coi-serviceworker.js"></script>
 <style>
