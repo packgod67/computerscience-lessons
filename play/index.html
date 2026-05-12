@@ -65,21 +65,13 @@
             }
         }, 60_000);
 
-        // Also no-op the gl.getError polling result so Play! doesn't
-        // re-poll on every frame. We intercept at the canvas-context
-        // level once a WebGL context is created. Most of the perf
-        // hit comes from the logger above; this is belt-and-suspenders.
-        const origGetContext = HTMLCanvasElement.prototype.getContext;
-        HTMLCanvasElement.prototype.getContext = function (type, ...rest) {
-            const ctx = origGetContext.call(this, type, ...rest);
-            if (ctx && (type === 'webgl' || type === 'webgl2' || type === 'experimental-webgl')) {
-                // Wrap getError so Play! sees NO_ERROR instead of polling
-                // a queued error stream. This is safe: errors raised in
-                // WebGL don't affect program correctness, only diagnostics.
-                ctx.getError = () => ctx.NO_ERROR;
-            }
-            return ctx;
-        };
+        // DO NOT stub gl.getError() — Play!'s GS backend uses it as
+        // part of its state machine (texture-upload completion checks,
+        // context-loss recovery, shader-link validation). Returning
+        // NO_ERROR unconditionally makes the emulator think ops
+        // succeeded when they didn't and it hangs waiting on incoherent
+        // VRAM. The console-logger suppression above is the only safe
+        // perf intervention; the rest is in Play!'s court.
     })();
 </script>
 <script src="coi-serviceworker.js"></script>
