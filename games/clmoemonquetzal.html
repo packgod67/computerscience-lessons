@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Moemon Quetzal (English Alpha 8v4)</title>
+<style>
+  body, html { margin:0; padding:0; height:100%; background:#121212; color:#fff;
+               font-family:Arial,sans-serif; display:flex; align-items:center;
+               justify-content:center; }
+  #game-container { width:100%; height:100%; text-align:center; }
+  #loading-progress { font-size:18px; margin-top:20px; padding:10px;
+                      background:rgba(255,255,255,0.1); border-radius:8px;
+                      display:inline-block; }
+</style>
+</head>
+<body>
+  <div id="game-container">
+    <div id="game"></div>
+    <div id="loading-progress">Loading…</div>
+  </div>
+  <script>
+    document.getElementById("loading-progress").remove();
+    EJS_player = "#game";
+    EJS_core = "gba";
+    EJS_gameName = "Moemon Quetzal (English Alpha 8v4)";
+    EJS_color = "#0064ff";
+    EJS_startOnLoaded = true;
+    EJS_cacheLimit = 0;
+    EJS_pathtodata = "https://cdn.jsdelivr.net/gh/genizy/emu@master/";
+    EJS_netplayServer = "https://netplay.emulatorjs.org";
+    EJS_gameUrl = "https://arcad-groq.gatabanumai.workers.dev/rom?src=https%3A%2F%2Farchive.org%2Fdownload%2Fmoemon-quetzal-english-alpha-8v-4%2FMoemonQuetzalEnglishAlpha8v4.zip";
+
+    var script = document.createElement("script");
+    script.src = EJS_pathtodata + "loader.js";
+    document.body.appendChild(script);
+  </script>
+  <script>
+    // Cloud save (robust - polls for emulator)
+    (function () {
+        var GAME_ID = "clmoemonquetzal";
+        var saveStarted = false;
+
+        function saveToCloud() {
+            try {
+                var state = EJS_emulator.gameManager.getState();
+                if (state && state.byteLength > 0) {
+                    var bytes = new Uint8Array(state);
+                    var binary = '';
+                    for (var i = 0; i < bytes.length; i++) binary += String.fromCharCode(bytes[i]);
+                    window.parent.postMessage({ type: 'save-data', gameId: GAME_ID, data: btoa(binary) }, '*');
+                }
+            } catch (e) {}
+        }
+
+        function startCloudSave() {
+            if (saveStarted) return;
+            saveStarted = true;
+            window.parent.postMessage({ type: 'emu-ready', gameId: GAME_ID }, '*');
+            setTimeout(saveToCloud, 10000);
+            setInterval(saveToCloud, 60000);
+        }
+
+        EJS_onGameStart = function () { startCloudSave(); };
+
+        var poll = setInterval(function () {
+            try {
+                if (typeof EJS_emulator !== 'undefined' && EJS_emulator.gameManager) {
+                    clearInterval(poll);
+                    startCloudSave();
+                }
+            } catch (e) {}
+        }, 2000);
+        setTimeout(function () { clearInterval(poll); }, 300000);
+
+        window.addEventListener('message', function (e) {
+            if (e.data && e.data.type === 'load-save' && e.data.data) {
+                try {
+                    var binary = atob(e.data.data);
+                    var bytes = new Uint8Array(binary.length);
+                    for (var i = 0; i < binary.length; i++) bytes[i] = binary.charCodeAt(i);
+                    EJS_emulator.gameManager.loadState(bytes.buffer);
+                } catch (e) {}
+            }
+        });
+
+        window.addEventListener('beforeunload', function () { saveToCloud(); });
+    })();
+  </script>
+</body>
+</html>
