@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Pokemon Save Editor — Arcade</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Edit Pokemon Gen 3 save files (Ruby, Sapphire, Emerald, FireRed, LeafGreen + all Moemon and other Gen 3 ROM hacks) — load .sav, edit party / bag / money, download.">
+<link rel="icon" href="assets/logo.png">
+
+<style>
+:root {
+  --bg: #0d0d12;
+  --panel: #161620;
+  --panel-2: #1f1f2d;
+  --border: #2a2a3a;
+  --accent: #ff5c5c;
+  --accent-2: #5b9dff;
+  --text: #f0f0f3;
+  --muted: #a0a0b0;
+  --good: #4ade80;
+  --warn: #f59e0b;
+  --bad:  #ef4444;
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; background: var(--bg); color: var(--text);
+             font-family: system-ui, -apple-system, sans-serif; min-height: 100vh; }
+
+header.topbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 14px 24px; background: var(--panel); border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
+}
+header.topbar a { color: var(--muted); text-decoration: none; font-size: 14px; }
+header.topbar h1 { margin: 0; font-size: 18px; }
+header.topbar .actions { display: flex; gap: 12px; }
+header.topbar button {
+  background: var(--accent); border: none; color: white; padding: 8px 16px;
+  border-radius: 6px; font-weight: 600; cursor: pointer; font-size: 13px;
+}
+header.topbar button:disabled { background: #444; cursor: not-allowed; }
+header.topbar button.secondary { background: var(--panel-2); border: 1px solid var(--border); }
+
+main { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+/* ---- Upload state ---- */
+.dropzone {
+  border: 2px dashed var(--border); border-radius: 12px; padding: 60px 20px;
+  text-align: center; cursor: pointer; transition: all 0.15s;
+}
+.dropzone:hover, .dropzone.dragover { border-color: var(--accent); background: rgba(255,92,92,0.05); }
+.dropzone .icon { font-size: 48px; margin-bottom: 16px; }
+.dropzone h2 { margin: 0 0 8px; font-size: 22px; }
+.dropzone p { color: var(--muted); margin: 4px 0; }
+.dropzone input { display: none; }
+.dropzone .examples { font-size: 12px; color: var(--muted); margin-top: 16px; }
+
+.error {
+  background: rgba(239,68,68,0.15); border: 1px solid var(--bad); color: #fca5a5;
+  padding: 12px 16px; border-radius: 8px; margin: 16px 0;
+}
+
+/* ---- Trainer header ---- */
+.trainer-header {
+  display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 16px;
+  background: var(--panel); padding: 20px; border-radius: 12px; margin-bottom: 24px;
+}
+.trainer-field { display: flex; flex-direction: column; gap: 4px; }
+.trainer-field label { font-size: 11px; text-transform: uppercase; color: var(--muted); letter-spacing: 0.5px; }
+.trainer-field .value { font-size: 18px; font-weight: 600; }
+.trainer-field input {
+  background: var(--bg); border: 1px solid var(--border); color: var(--text);
+  padding: 6px 10px; border-radius: 6px; font: inherit;
+}
+.game-badge {
+  display: inline-block; padding: 3px 8px; border-radius: 4px; font-size: 11px;
+  font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px;
+}
+.game-badge.emerald { background: #047857; }
+.game-badge.frlg    { background: #dc2626; }
+.game-badge.rs      { background: #2563eb; }
+
+/* ---- Party grid ---- */
+section h2 { margin: 24px 0 12px; font-size: 18px; color: var(--text); }
+.party-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 12px;
+}
+.party-card {
+  background: var(--panel); border: 1px solid var(--border); border-radius: 10px;
+  padding: 12px; cursor: pointer; transition: all 0.15s; text-align: center;
+  position: relative;
+}
+.party-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+.party-card.empty { opacity: 0.4; cursor: default; }
+.party-card.empty:hover { border-color: var(--border); transform: none; }
+.party-card .sprite {
+  width: 64px; height: 64px; image-rendering: pixelated;
+  margin: 0 auto; display: block; background: var(--panel-2); border-radius: 8px;
+}
+.party-card .nickname { font-weight: 600; margin-top: 8px; font-size: 14px; }
+.party-card .species  { color: var(--muted); font-size: 11px; margin-top: 2px; }
+.party-card .level    { color: var(--accent-2); font-size: 12px; margin-top: 4px; }
+.party-card .shiny-star { position: absolute; top: 6px; right: 8px; color: gold; font-size: 14px; }
+
+/* ---- Bag tabs ---- */
+.bag-tabs { display: flex; gap: 8px; margin-bottom: 12px; flex-wrap: wrap; }
+.bag-tabs button {
+  background: var(--panel); border: 1px solid var(--border); color: var(--text);
+  padding: 6px 14px; border-radius: 6px; cursor: pointer; font-size: 13px;
+}
+.bag-tabs button.active { background: var(--accent); border-color: var(--accent); }
+
+.bag-list { background: var(--panel); border-radius: 10px; padding: 8px; }
+.bag-list .row {
+  display: grid; grid-template-columns: 1fr 100px 32px; gap: 8px; padding: 6px 8px;
+  border-bottom: 1px solid var(--border); align-items: center;
+}
+.bag-list .row:last-child { border-bottom: none; }
+.bag-list select, .bag-list input {
+  background: var(--bg); border: 1px solid var(--border); color: var(--text);
+  padding: 6px 8px; border-radius: 4px; font: inherit; width: 100%;
+}
+.bag-list button.remove {
+  background: transparent; border: none; color: var(--bad); cursor: pointer; font-size: 16px;
+}
+.bag-list .add-row {
+  display: flex; gap: 8px; padding: 8px; border-top: 1px solid var(--border);
+}
+.bag-list .add-row button {
+  background: var(--accent-2); border: none; color: white; padding: 6px 12px;
+  border-radius: 4px; cursor: pointer; font-size: 13px;
+}
+
+/* ---- Edit modal ---- */
+.modal-overlay {
+  position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none;
+  align-items: center; justify-content: center; z-index: 100;
+}
+.modal-overlay.open { display: flex; }
+.modal {
+  background: var(--panel); border-radius: 12px; padding: 0; max-width: 720px;
+  width: 92%; max-height: 90vh; overflow-y: auto; border: 1px solid var(--border);
+}
+.modal header {
+  display: flex; align-items: center; justify-content: space-between; padding: 16px 20px;
+  border-bottom: 1px solid var(--border); position: sticky; top: 0;
+  background: var(--panel); z-index: 1;
+}
+.modal header h3 { margin: 0; font-size: 16px; }
+.modal header button.close {
+  background: transparent; border: none; color: var(--muted); font-size: 22px; cursor: pointer;
+}
+.modal .body { padding: 20px; }
+.modal .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.modal .grid-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+.modal .field { display: flex; flex-direction: column; gap: 4px; }
+.modal .field label { font-size: 11px; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+.modal input, .modal select {
+  background: var(--bg); border: 1px solid var(--border); color: var(--text);
+  padding: 7px 10px; border-radius: 6px; font: inherit;
+}
+.modal input[type=number] { width: 100%; }
+.modal h4 {
+  margin: 18px 0 8px; font-size: 13px; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.5px;
+}
+.modal .checkbox-row { display: flex; align-items: center; gap: 8px; margin: 8px 0; }
+.modal .actions {
+  display: flex; gap: 10px; justify-content: flex-end; padding: 16px 20px;
+  border-top: 1px solid var(--border);
+}
+.modal .actions button {
+  padding: 8px 18px; border-radius: 6px; font-weight: 600; cursor: pointer; border: none;
+}
+.modal .actions .save  { background: var(--accent); color: white; }
+.modal .actions .cancel{ background: var(--panel-2); color: var(--text); border: 1px solid var(--border); }
+.modal .actions .delete{ background: var(--bad); color: white; }
+
+.modal .sprite-large {
+  width: 96px; height: 96px; image-rendering: pixelated;
+  background: var(--panel-2); border-radius: 12px; margin: 0 auto 12px; display: block;
+}
+
+@media (max-width: 720px) {
+  .party-grid { grid-template-columns: repeat(3, 1fr); }
+  .trainer-header { grid-template-columns: 1fr 1fr; }
+  .modal .grid-2, .modal .grid-3 { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<header class="topbar">
+  <div style="display:flex;align-items:center;gap:14px;">
+    <a href="./">← Back to arcade</a>
+    <h1>Pokemon Save Editor</h1>
+    <span id="gameBadge" class="game-badge" style="display:none;"></span>
+  </div>
+  <div class="actions">
+    <button class="secondary" id="resetBtn" style="display:none;">Reset</button>
+    <button id="downloadBtn" disabled>Download .sav</button>
+  </div>
+</header>
+
+<main>
+  <div id="dropzone" class="dropzone">
+    <div class="icon">📁</div>
+    <h2>Drop a Pokemon save file here</h2>
+    <p>Or click to browse. Supports Gen 3 GBA saves: Ruby, Sapphire, Emerald, FireRed, LeafGreen + every ROM hack on the same engine (Moemon, Unbound, Radical Red, Glazed, Gaia, etc.)</p>
+    <p class="examples">128KB .sav file from EmulatorJS / VBA / mGBA. Battery saves, not save-states.</p>
+    <input type="file" id="fileInput" accept=".sav,.SAV,.fla,.flash,application/octet-stream">
+  </div>
+
+  <div id="error" class="error" style="display:none;"></div>
+
+  <div id="editor" style="display:none;">
+    <div class="trainer-header">
+      <div class="trainer-field">
+        <label>Trainer Name</label>
+        <input type="text" id="trainerName" maxlength="7">
+      </div>
+      <div class="trainer-field">
+        <label>Trainer ID / Secret</label>
+        <div class="value" id="trainerId">—</div>
+      </div>
+      <div class="trainer-field">
+        <label>Money</label>
+        <input type="number" id="money" min="0" max="999999">
+      </div>
+      <div class="trainer-field">
+        <label>Playtime</label>
+        <div class="value" id="playtime">—</div>
+      </div>
+    </div>
+
+    <section>
+      <h2>Party (<span id="partyCount">0</span>/6)</h2>
+      <div class="party-grid" id="partyGrid"></div>
+    </section>
+
+    <section>
+      <h2>Bag</h2>
+      <div class="bag-tabs" id="bagTabs"></div>
+      <div class="bag-list" id="bagList"></div>
+    </section>
+  </div>
+</main>
+
+<!-- Edit Pokemon modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <header>
+      <h3 id="modalTitle">Edit Pokemon</h3>
+      <button class="close" id="modalClose">×</button>
+    </header>
+    <div class="body" id="modalBody"></div>
+    <div class="actions">
+      <button class="cancel" id="modalCancel">Cancel</button>
+      <button class="save"   id="modalSave">Save changes</button>
+    </div>
+  </div>
+</div>
+
+<script src="js/save-editor-gen3.js"></script>
+<script src="js/save-editor.js"></script>
+</body>
+</html>

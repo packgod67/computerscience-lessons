@@ -103,6 +103,13 @@
     tabBar.addEventListener('click', (e) => {
         const btn = e.target.closest('.tab-btn');
         if (!btn) return;
+        // Tab buttons with data-href are external-style links (e.g. Save
+        // Editor on its own page). Navigate and bail before touching the
+        // tab state, otherwise we'd deactivate the current tab on the way out.
+        if (btn.dataset.href) {
+            window.location.href = btn.dataset.href;
+            return;
+        }
         const tab = btn.dataset.tab;
         if (tab === activeTab) return;
 
