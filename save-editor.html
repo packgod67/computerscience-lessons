@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <title>Pokemon Save Editor — Arcade</title>
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="description" content="Edit Pokemon Gen 3 save files (Ruby, Sapphire, Emerald, FireRed, LeafGreen + all Moemon and other Gen 3 ROM hacks) — load .sav, edit party / bag / money, download.">
+<meta name="description" content="Edit Pokemon Gen 3 GBA + Gen 4/5 NDS save files (Ruby, Sapphire, Emerald, FireRed, LeafGreen, Diamond, Pearl, Platinum, HeartGold, SoulSilver, Black, White, Black 2, White 2 + every Moemon and Gen 3-5 ROM hack) — load .sav, edit party, PC boxes, money, download.">
 <link rel="icon" href="assets/logo.png">
 
 <style>
@@ -244,8 +244,10 @@ section h2 { margin: 24px 0 12px; font-size: 18px; color: var(--text); }
   <div id="dropzone" class="dropzone">
     <div class="icon">📁</div>
     <h2>Drop a Pokemon save file here</h2>
-    <p>Or click to browse. Supports Gen 3 GBA saves: Ruby, Sapphire, Emerald, FireRed, LeafGreen + every ROM hack on the same engine (Moemon, Unbound, Radical Red, Glazed, Gaia, etc.)</p>
-    <p class="examples">128KB .sav file from EmulatorJS / VBA / mGBA. Battery saves, not save-states.</p>
+    <p>Or click to browse. Supports <b>Gen 3 GBA</b> (Ruby / Sapphire / Emerald / FireRed / LeafGreen + Moemon, Unbound, Radical Red, Glazed, Gaia, …),
+       <b>Gen 4 NDS</b> (Diamond / Pearl / Platinum / HeartGold / SoulSilver),
+       and <b>Gen 5 NDS</b> (Black / White / Black 2 / White 2). All Moemon NDS hacks too — Vanilla+ doesn't touch save layout.</p>
+    <p class="examples">Battery save: 64-128 KB (GBA) or 512 KB (NDS). Not a save-state.</p>
     <input type="file" id="fileInput" accept=".sav,.SAV,.fla,.flash,application/octet-stream">
   </div>
 
@@ -312,6 +314,8 @@ section h2 { margin: 24px 0 12px; font-size: 18px; color: var(--text); }
 </div>
 
 <script src="js/save-editor-gen3.js"></script>
+<script src="js/save-editor-gen4.js"></script>
+<script src="js/save-editor-gen5.js"></script>
 <script src="js/save-editor.js"></script>
 </body>
 </html>

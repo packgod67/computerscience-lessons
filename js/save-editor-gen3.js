@@ -796,25 +796,23 @@
         return (tid ^ sid ^ lo ^ hi) < 8;
     }
 
-    // Force shiny by tweaking PID's low half until shiny check passes.
+    // Force shiny by tweaking PID. Step by 25 to preserve nature (which
+    // is encoded as pid % 25), so we only have to scan for the shiny
+    // XOR condition; ~16K iterations covers the relevant PID-lo space.
     function setShiny(pk, on) {
         const tid = pk.otid & 0xFFFF;
         const sid = (pk.otid >> 16) & 0xFFFF;
-        // Need lo ^ hi ^ tid ^ sid < 8  OR  >= 8
-        // Preserve nature (pid % 25) — search both halves until ok.
-        const wantedNature = pk.pid % 25;
         let pid = pk.pid;
-        for (let attempt = 0; attempt < 200000; attempt++) {
+        for (let attempt = 0; attempt < 1_000_000; attempt++) {
             const lo = pid & 0xFFFF;
             const hi = (pid >>> 16) & 0xFFFF;
-            const shinyVal = (tid ^ sid ^ lo ^ hi);
-            const isCurrentlyShiny = shinyVal < 8;
-            if (on === isCurrentlyShiny && pid % 25 === wantedNature) {
+            const isCurrentlyShiny = (tid ^ sid ^ lo ^ hi) < 8;
+            if (on === isCurrentlyShiny) {
                 pk.pid = pid;
                 pk.key = (pid ^ pk.otid) >>> 0;
                 return true;
             }
-            pid = (pid + 1) >>> 0;
+            pid = (pid + 25) >>> 0;
         }
         return false;
     }

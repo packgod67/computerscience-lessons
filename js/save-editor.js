@@ -6,6 +6,9 @@
     'use strict';
 
     const G3 = window.SaveEditorGen3;
+    const G4 = window.SaveEditorGen4;
+    const G5 = window.SaveEditorGen5;
+    let G = null;         // active parser (pointer to G3/G4/G5)
     let pokedata = null;  // loaded from games/save-editor-pokedata.json
     let save = null;      // parsed save (or null)
     let originalBytes = null; // pristine copy for Reset
@@ -40,17 +43,18 @@
         });
     }
 
-    // Pokemon Showdown gen3 sprite CDN — uses lowercase species name with
-    // hyphens stripped. Showdown's "name" matches PokeAPI's for everything
-    // in Gen 3, so we can derive directly.
+    // Pokemon Showdown sprite CDN. Use gen-appropriate sprites where
+    // possible (gen3 for Gen 3 saves, gen5 for everything else since
+    // gen5 sprites cover all 1-649 mons). Showdown's "name" matches
+    // PokeAPI's for everything in Gen 1-5, so we can derive directly.
     function spriteUrl(speciesId) {
         const s = speciesById.get(speciesId);
         if (!s || speciesId === 0) {
-            // Egg / unknown sprite — falls back to a generic monster
-            return 'https://play.pokemonshowdown.com/sprites/gen3/0.png';
+            return 'https://play.pokemonshowdown.com/sprites/gen5/0.png';
         }
         const slug = s.name.replace(/[^a-z0-9]/gi, '').toLowerCase();
-        return `https://play.pokemonshowdown.com/sprites/gen3/${slug}.png`;
+        const dir = (save && save._gen === 3 && speciesId <= 386) ? 'gen3' : 'gen5';
+        return `https://play.pokemonshowdown.com/sprites/${dir}/${slug}.png`;
     }
 
     function speciesName(id) {
@@ -107,6 +111,22 @@
         });
     }
 
+    // Pick the right parser by file size and presence of magic bytes.
+    // Gen 3 GBA: 64KB or 128KB
+    // Gen 4 NDS: 512KB, slot-magic 0x20060623 at known offsets
+    // Gen 5 NDS: 512KB, box-layout CRC mirror in checksum block
+    function detectGen(bytes) {
+        const size = bytes.length;
+        if (size <= 0x20000) return { gen: 3, parser: G3 };
+        // 0x80000 = 524288 — could be Gen 4 or Gen 5
+        if (size >= 0x40000) {
+            // Try Gen 4 first (magic check is cheap)
+            if (G4 && G4._detectGame(bytes)) return { gen: 4, parser: G4 };
+            if (G5) return { gen: 5, parser: G5 };
+        }
+        return { gen: 3, parser: G3 };
+    }
+
     async function loadFile(file) {
         clearError();
         try {
@@ -114,25 +134,28 @@
             const bytes = new Uint8Array(buf);
             // Keep pristine copy for the Reset button
             originalBytes = new Uint8Array(bytes);
-            save = G3.parse(bytes);
+            const detected = detectGen(bytes);
+            G = detected.parser;
+            save = G.parse(bytes);
+            save._gen = detected.gen;
             renderAll();
             document.getElementById('dropzone').style.display = 'none';
             document.getElementById('editor').style.display = 'block';
             document.getElementById('downloadBtn').disabled = false;
             document.getElementById('resetBtn').style.display = 'inline-block';
             const badge = document.getElementById('gameBadge');
-            badge.textContent = save.game;
+            badge.textContent = `Gen ${detected.gen} ${save.game}`;
             badge.className = `game-badge ${save.game}`;
             badge.style.display = 'inline-block';
         } catch (e) {
             console.error(e);
-            showError(`Couldn't parse save file: ${e.message}. Make sure this is a Gen 3 GBA .sav file (battery save, not save-state).`);
+            showError(`Couldn't parse save file: ${e.message}. Supported: Gen 3 GBA (.sav 64-128KB), Gen 4 NDS (.sav 512KB — Diamond/Pearl/Platinum/HeartGold/SoulSilver), Gen 5 NDS (.sav 512KB — Black/White/Black 2/White 2).`);
         }
     }
 
     function resetSave() {
         if (!originalBytes) return;
-        save = G3.parse(new Uint8Array(originalBytes));
+        save = G.parse(new Uint8Array(originalBytes));
         renderAll();
     }
 
@@ -162,13 +185,13 @@
                     <div class="species">Empty slot</div>
                 `;
             } else {
-                const shiny = G3.isShiny(pk);
+                const shiny = G.isShiny(pk);
                 card.className = 'party-card';
                 card.innerHTML = `
                     ${shiny ? '<div class="shiny-star">★</div>' : ''}
                     <img class="sprite" src="${spriteUrl(pk.growth.species)}" alt="" onerror="this.style.visibility='hidden'">
                     <div class="nickname">${escape(pk.nickname || speciesName(pk.growth.species))}</div>
-                    <div class="species">${speciesName(pk.growth.species)} · ${G3.getNature(pk)}</div>
+                    <div class="species">${speciesName(pk.growth.species)} · ${G.getNature(pk)}</div>
                     <div class="level">Lv ${pk.level}</div>
                 `;
                 card.addEventListener('click', () => openPokemonModal(i));
@@ -194,6 +217,14 @@
     let activeBagCat = 'items';
 
     function renderBag() {
+        // Gen 4/5 bag editing isn't supported yet — hide the section
+        // entirely so users don't get a misleading empty UI.
+        const bagSection = document.querySelector('section:has(#bagTabs)');
+        if (save._gen && save._gen >= 4) {
+            if (bagSection) bagSection.style.display = 'none';
+            return;
+        }
+        if (bagSection) bagSection.style.display = '';
         const tabs = document.getElementById('bagTabs');
         tabs.innerHTML = '';
         for (const cat of BAG_CATEGORIES) {
@@ -266,12 +297,13 @@
             return;
         }
         document.getElementById('pcSection').style.display = '';
+        const boxCount = save.pc.boxes.length;
         activeBoxIdx = save.pc.currentBox || 0;
-        if (activeBoxIdx < 0 || activeBoxIdx >= 14) activeBoxIdx = 0;
+        if (activeBoxIdx < 0 || activeBoxIdx >= boxCount) activeBoxIdx = 0;
 
         const picker = document.getElementById('boxPicker');
         picker.innerHTML = '';
-        for (let i = 0; i < 14; i++) {
+        for (let i = 0; i < boxCount; i++) {
             const opt = document.createElement('option');
             opt.value = i;
             const liveName = save.pc.names[i] || `Box ${i + 1}`;
@@ -295,8 +327,8 @@
                 cell.innerHTML = '<span style="color:var(--muted);font-size:10px;">—</span>';
             } else {
                 cell.className = 'box-slot';
-                const shiny = G3.isShiny(pk);
-                cell.title = `${speciesName(pk.growth.species)} · Lv ${pk.level} · ${G3.getNature(pk)}`;
+                const shiny = G.isShiny(pk);
+                cell.title = `${speciesName(pk.growth.species)} · Lv ${pk.level} · ${G.getNature(pk)}`;
                 cell.innerHTML = `
                     ${shiny ? '<span class="shiny-mini">★</span>' : ''}
                     <img src="${spriteUrl(pk.growth.species)}" alt="" onerror="this.style.visibility='hidden'">
@@ -313,12 +345,14 @@
 
     function wirePCControls() {
         document.getElementById('prevBox').addEventListener('click', () => {
-            activeBoxIdx = (activeBoxIdx + 13) % 14;
+            const n = save.pc.boxes.length;
+            activeBoxIdx = (activeBoxIdx + n - 1) % n;
             document.getElementById('boxPicker').value = activeBoxIdx;
             renderActiveBox();
         });
         document.getElementById('nextBox').addEventListener('click', () => {
-            activeBoxIdx = (activeBoxIdx + 1) % 14;
+            const n = save.pc.boxes.length;
+            activeBoxIdx = (activeBoxIdx + 1) % n;
             document.getElementById('boxPicker').value = activeBoxIdx;
             renderActiveBox();
         });
@@ -378,7 +412,7 @@
                 </div>
                 <div class="field">
                     <label>Nature</label>
-                    <select id="f_nature">${natureOptions(G3.getNature(pk))}</select>
+                    <select id="f_nature">${natureOptions(G.getNature(pk))}</select>
                 </div>
                 <div class="field">
                     <label>Friendship (0-255)</label>
@@ -421,7 +455,7 @@
             <div id="evTotal" style="font-size:12px;color:var(--muted);margin-top:6px;"></div>
 
             <div class="checkbox-row">
-                <input type="checkbox" id="f_shiny" ${G3.isShiny(pk) ? 'checked' : ''}>
+                <input type="checkbox" id="f_shiny" ${G.isShiny(pk) ? 'checked' : ''}>
                 <label for="f_shiny" style="cursor:pointer;">Force shiny (re-rolls PID, preserves nature)</label>
             </div>
         `;
@@ -470,7 +504,7 @@
     }
     function natureOptions(selectedName) {
         let out = '';
-        for (const n of G3.NATURE_NAMES) {
+        for (const n of G.NATURE_NAMES) {
             out += `<option value="${n}"${n === selectedName ? ' selected' : ''}>${n}</option>`;
         }
         return out;
@@ -506,20 +540,20 @@
 
         // Apply nature
         const wantNature = document.getElementById('f_nature').value;
-        if (wantNature !== G3.getNature(pk)) {
-            G3.setNature(pk, wantNature);
+        if (wantNature !== G.getNature(pk)) {
+            G.setNature(pk, wantNature);
         }
         // Apply shiny
         const wantShiny = document.getElementById('f_shiny').checked;
-        if (wantShiny !== G3.isShiny(pk)) {
-            G3.setShiny(pk, wantShiny);
+        if (wantShiny !== G.isShiny(pk)) {
+            G.setShiny(pk, wantShiny);
         }
         // Recalc EXP to match level — simple lookup using medium-fast curve
         pk.growth.exp = expForLevel(newLevel, 'medium-fast');
 
         // Recompute stats from base stats + IVs + EVs + nature
         const sp = speciesById.get(newSpecies);
-        if (sp) G3.recalcStats(pk, sp.base, G3.getNature(pk));
+        if (sp) G.recalcStats(pk, sp.base, G.getNature(pk));
 
         // Mark a PC slot live before we lose the ref to closeModal
         const wasPc = !isPartyRef(editingRef);
@@ -556,7 +590,7 @@
             save.pc.currentBox = activeBoxIdx;
             edits.pc = save.pc;
         }
-        const bytes = G3.write(save, edits);
+        const bytes = G.write(save, edits);
         const blob = new Blob([bytes], { type: 'application/octet-stream' });
         const url = URL.createObjectURL(blob);
         const a = document.createElement('a');
