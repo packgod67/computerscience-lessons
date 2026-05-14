@@ -257,15 +257,103 @@
         return out;
     }
 
-    // ---- Pokemon edit modal ----
-    let editingIdx = null;
+    // ---- PC Boxes ----
+    let activeBoxIdx = 0;
 
-    function openPokemonModal(idx) {
-        editingIdx = idx;
-        const pk = save.party[idx];
+    function renderPC() {
+        if (!save.pc) {
+            document.getElementById('pcSection').style.display = 'none';
+            return;
+        }
+        document.getElementById('pcSection').style.display = '';
+        activeBoxIdx = save.pc.currentBox || 0;
+        if (activeBoxIdx < 0 || activeBoxIdx >= 14) activeBoxIdx = 0;
+
+        const picker = document.getElementById('boxPicker');
+        picker.innerHTML = '';
+        for (let i = 0; i < 14; i++) {
+            const opt = document.createElement('option');
+            opt.value = i;
+            const liveName = save.pc.names[i] || `Box ${i + 1}`;
+            const filled = save.pc.boxes[i].filter((p) => !p.isEmpty).length;
+            opt.textContent = `${i + 1}. ${liveName} (${filled}/30)`;
+            if (i === activeBoxIdx) opt.selected = true;
+            picker.appendChild(opt);
+        }
+        renderActiveBox();
+    }
+
+    function renderActiveBox() {
+        const grid = document.getElementById('boxGrid');
+        const box = save.pc.boxes[activeBoxIdx];
+        grid.innerHTML = '';
+        for (let s = 0; s < 30; s++) {
+            const pk = box[s];
+            const cell = document.createElement('div');
+            if (pk.isEmpty) {
+                cell.className = 'box-slot empty';
+                cell.innerHTML = '<span style="color:var(--muted);font-size:10px;">—</span>';
+            } else {
+                cell.className = 'box-slot';
+                const shiny = G3.isShiny(pk);
+                cell.title = `${speciesName(pk.growth.species)} · Lv ${pk.level} · ${G3.getNature(pk)}`;
+                cell.innerHTML = `
+                    ${shiny ? '<span class="shiny-mini">★</span>' : ''}
+                    <img src="${spriteUrl(pk.growth.species)}" alt="" onerror="this.style.visibility='hidden'">
+                    <span class="lv-tag">Lv ${pk.level}</span>
+                `;
+                cell.addEventListener('click', () => openPokemonModal({ pc: true, box: activeBoxIdx, slot: s }));
+            }
+            grid.appendChild(cell);
+        }
+        const filled = box.filter((p) => !p.isEmpty).length;
+        document.getElementById('boxStats').textContent = `${filled} / 30 occupied`;
+        document.getElementById('boxName').value = save.pc.names[activeBoxIdx] || '';
+    }
+
+    function wirePCControls() {
+        document.getElementById('prevBox').addEventListener('click', () => {
+            activeBoxIdx = (activeBoxIdx + 13) % 14;
+            document.getElementById('boxPicker').value = activeBoxIdx;
+            renderActiveBox();
+        });
+        document.getElementById('nextBox').addEventListener('click', () => {
+            activeBoxIdx = (activeBoxIdx + 1) % 14;
+            document.getElementById('boxPicker').value = activeBoxIdx;
+            renderActiveBox();
+        });
+        document.getElementById('boxPicker').addEventListener('change', (e) => {
+            activeBoxIdx = +e.target.value;
+            renderActiveBox();
+        });
+        document.getElementById('boxName').addEventListener('input', (e) => {
+            // Limit to 8 chars (Gen 3 box names are 8 chars + 0xFF terminator)
+            save.pc.names[activeBoxIdx] = (e.target.value || '').slice(0, 8).toUpperCase();
+        });
+    }
+
+    // ---- Pokemon edit modal ----
+    // editingRef = number (party slot) or { pc:true, box, slot }
+    let editingRef = null;
+
+    function refToPokemon(ref) {
+        if (typeof ref === 'number') return save.party[ref];
+        return save.pc.boxes[ref.box][ref.slot];
+    }
+
+    function openPokemonModal(ref) {
+        editingRef = ref;
+        const pk = refToPokemon(ref);
         const sp = speciesById.get(pk.growth.species) || { name: '?', base: { hp: 1, atk: 1, def: 1, spe: 1, spa: 1, spd: 1 } };
 
-        document.getElementById('modalTitle').textContent = `Slot ${idx + 1}: ${pk.nickname || speciesName(pk.growth.species)}`;
+        const isParty = typeof ref === 'number';
+        const where = isParty
+            ? `Party slot ${ref + 1}`
+            : `Box ${ref.box + 1} slot ${ref.slot + 1}`;
+        const title = pk.isEmpty
+            ? `${where} — empty (assigning new)`
+            : `${where}: ${pk.nickname || speciesName(pk.growth.species)}`;
+        document.getElementById('modalTitle').textContent = title;
 
         const body = document.getElementById('modalBody');
         body.innerHTML = `
@@ -390,11 +478,11 @@
 
     function closeModal() {
         document.getElementById('modalOverlay').classList.remove('open');
-        editingIdx = null;
+        editingRef = null;
     }
 
     function savePokemonEdits() {
-        const pk = save.party[editingIdx];
+        const pk = refToPokemon(editingRef);
         const newSpecies = +document.getElementById('f_species').value;
         const newLevel = clamp(+document.getElementById('f_level').value, 1, 100);
 
@@ -433,9 +521,15 @@
         const sp = speciesById.get(newSpecies);
         if (sp) G3.recalcStats(pk, sp.base, G3.getNature(pk));
 
+        // Mark a PC slot live before we lose the ref to closeModal
+        const wasPc = !isPartyRef(editingRef);
+        if (wasPc && pk.growth.species > 0) pk.isEmpty = false;
         closeModal();
         renderParty();
+        if (save.pc) renderPC();
     }
+
+    function isPartyRef(ref) { return typeof ref === 'number'; }
 
     function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v | 0)); }
 
@@ -457,6 +551,11 @@
             party: save.party,
             bag: save.bag,
         };
+        if (save.pc) {
+            // Also update currentBox from picker
+            save.pc.currentBox = activeBoxIdx;
+            edits.pc = save.pc;
+        }
         const bytes = G3.write(save, edits);
         const blob = new Blob([bytes], { type: 'application/octet-stream' });
         const url = URL.createObjectURL(blob);
@@ -474,6 +573,7 @@
         renderTrainerHeader();
         renderParty();
         renderBag();
+        renderPC();
     }
 
     // ---- Init ----
@@ -500,6 +600,8 @@
         document.getElementById('modalOverlay').addEventListener('click', (e) => {
             if (e.target.id === 'modalOverlay') closeModal();
         });
+
+        wirePCControls();
     }
 
     init();

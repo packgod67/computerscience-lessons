@@ -251,15 +251,153 @@
             party.push(parsePokemon(buf, pkOff));
         }
 
+        // ---- PC Storage (sections 5-13 concatenated) ----
+        // 33,744 bytes total. The data is split across 9 sections but
+        // contiguous when concatenated in section-id order.
+        const pc = parsePCStorage(buf, byId);
+
         return {
             game, encryptionKey,
-            trainer, money, coins, bag, party, partyCount,
+            trainer, money, coins, bag, party, partyCount, pc,
             // Stash refs so we can write back later
             _raw: buf,
             _active: active,
             _byId: byId,
             _offsets: offsets,
             _slot: active === slotA ? 0 : 1,
+        };
+    }
+
+    // PC storage is split across 9 sections (5-13). Their data areas
+    // concatenated in section-id order give one flat 33,744-byte block:
+    //   0x0000  current box index (u32)
+    //   0x0004  14 boxes × 30 slots × 80 bytes/pkmn  (33,600 bytes)
+    //   0x8344  14 × 9-byte box names                (126 bytes)
+    //   0x83C2  14 × 1-byte wallpaper IDs            (14 bytes)
+    function parsePCStorage(buf, byId) {
+        const flat = new Uint8Array(33744);
+        let cursor = 0;
+        for (let id = 5; id <= 13; id++) {
+            const sec = byId[id];
+            if (!sec) return null;
+            const dataLen = SECTION_DATA_SIZE[id];
+            flat.set(buf.subarray(sec.offset, sec.offset + dataLen), cursor);
+            cursor += dataLen;
+        }
+
+        const currentBox = u32(flat, 0x0000);
+        const boxes = [];
+        for (let b = 0; b < 14; b++) {
+            const box = [];
+            for (let s = 0; s < 30; s++) {
+                const off = 0x0004 + (b * 30 + s) * 80;
+                const pk = parsePokemonPC(flat, off, b, s);
+                box.push(pk);
+            }
+            boxes.push(box);
+        }
+        const names = [];
+        for (let b = 0; b < 14; b++) {
+            const off = 0x8344 + b * 9;
+            names.push(decodeStr(flat.subarray(off, off + 9)));
+        }
+        const wallpapers = [];
+        for (let b = 0; b < 14; b++) wallpapers.push(flat[0x83C2 + b]);
+        return { currentBox, boxes, names, wallpapers, _flat: flat };
+    }
+
+    // PC Pokemon = first 80 bytes of party struct. Same encryption / shuffle.
+    // Level / HP / stats are NOT stored — they're computed from EXP + base
+    // stats at load-from-box time. We parse with placeholders so the editor
+    // can show them; on write we recompute and ignore the trailing 20 bytes.
+    function parsePokemonPC(flat, off, boxIdx, slotIdx) {
+        const pid = u32(flat, off + 0x00);
+        const otid = u32(flat, off + 0x04);
+        // Empty slot signal: PID=0 AND species=0 after decrypt.
+        // We still construct an object so the UI can show "empty" slots
+        // and let the user fill them; a "live" PC pokemon has species>0.
+        const nickRaw = flat.subarray(off + 0x08, off + 0x12);
+        const lang = flat[off + 0x12];
+        const otNameRaw = flat.subarray(off + 0x14, off + 0x1B);
+        const markings = flat[off + 0x1B];
+        const storedCk = u16(flat, off + 0x1C);
+
+        const key = (pid ^ otid) >>> 0;
+        const decrypted = new Uint8Array(48);
+        for (let i = 0; i < 48; i += 4) {
+            const v = (u32(flat, off + 0x20 + i) ^ key) >>> 0;
+            decrypted[i + 0] = v & 0xFF;
+            decrypted[i + 1] = (v >> 8) & 0xFF;
+            decrypted[i + 2] = (v >> 16) & 0xFF;
+            decrypted[i + 3] = (v >>> 24) & 0xFF;
+        }
+        let sum = 0;
+        for (let i = 0; i < 48; i += 2) sum = (sum + (decrypted[i] | (decrypted[i + 1] << 8))) & 0xFFFF;
+        const checksumValid = sum === storedCk;
+
+        const order = SUBSTRUCT_ORDER[pid % 24];
+        const sub = { G: null, A: null, E: null, M: null };
+        for (let i = 0; i < 4; i++) sub[order[i]] = decrypted.subarray(i * 12, (i + 1) * 12);
+
+        const growth = {
+            species:    u16(sub.G, 0x00),
+            heldItem:   u16(sub.G, 0x02),
+            exp:        u32(sub.G, 0x04),
+            ppBonuses:  sub.G[0x08],
+            friendship: sub.G[0x09],
+        };
+        const attacks = {
+            moves: [u16(sub.A, 0), u16(sub.A, 2), u16(sub.A, 4), u16(sub.A, 6)],
+            pp:    [sub.A[0x08], sub.A[0x09], sub.A[0x0A], sub.A[0x0B]],
+        };
+        const evs = {
+            hp: sub.E[0], atk: sub.E[1], def: sub.E[2],
+            spe: sub.E[3], spa: sub.E[4], spd: sub.E[5],
+            cool: sub.E[6], beauty: sub.E[7], cute: sub.E[8],
+            smart: sub.E[9], tough: sub.E[10], feel: sub.E[11],
+        };
+        const miscWord = u32(sub.M, 0x04);
+        const ivs = {
+            hp:  miscWord & 0x1F,
+            atk: (miscWord >> 5) & 0x1F,
+            def: (miscWord >> 10) & 0x1F,
+            spe: (miscWord >> 15) & 0x1F,
+            spa: (miscWord >> 20) & 0x1F,
+            spd: (miscWord >> 25) & 0x1F,
+        };
+        const isEgg   = (miscWord >> 30) & 1;
+        const ability = (miscWord >> 31) & 1;
+        const misc = {
+            pokerus: sub.M[0],
+            metLoc: sub.M[1],
+            originInfo: u16(sub.M, 2),
+            ivs, isEgg, ability,
+            ribbons: u32(sub.M, 0x08),
+        };
+
+        // Level computed from EXP (medium-fast curve approx: lv = floor(exp^(1/3)))
+        let level = Math.floor(Math.cbrt(growth.exp));
+        if (level < 1) level = 1;
+        if (level > 100) level = 100;
+        // Slots with species=0 are empty; mark them
+        const isEmpty = growth.species === 0 && pid === 0;
+
+        return {
+            isPC: true,
+            isEmpty,
+            boxIdx, slotIdx,
+            offset: off,             // offset within the flat PC array
+            pid, otid, key,
+            nickname: decodeStr(nickRaw),
+            language: lang,
+            otName: decodeStr(otNameRaw),
+            markings,
+            checksumValid,
+            growth, attacks, evs, misc,
+            // Placeholders so the same code paths can re-use party fields
+            status: 0, level,
+            currentHp: 0, maxHp: 0,
+            attack: 0, defense: 0, speed: 0, spAttack: 0, spDefense: 0,
         };
     }
 
@@ -391,6 +529,32 @@
             for (const pk of edits.party) writePokemon(buf, pk);
         }
 
+        if (edits.pc) {
+            // Re-serialize every PC pokemon into the flat 33,744 byte array,
+            // then split back across sections 5-13.
+            const flat = edits.pc._flat;
+            setU32(flat, 0x0000, edits.pc.currentBox || 0);
+            for (let b = 0; b < 14; b++) {
+                for (let s = 0; s < 30; s++) {
+                    const pk = edits.pc.boxes[b][s];
+                    const off = 0x0004 + (b * 30 + s) * 80;
+                    writePokemonPC(flat, off, pk);
+                }
+                const nameOff = 0x8344 + b * 9;
+                flat.set(encodeStr(edits.pc.names[b] || '', 9), nameOff);
+                flat[0x83C2 + b] = edits.pc.wallpapers[b] || 0;
+            }
+            // Split back across sections 5-13
+            let cursor = 0;
+            for (let id = 5; id <= 13; id++) {
+                const sec = save._byId[id];
+                if (!sec) continue;
+                const dataLen = SECTION_DATA_SIZE[id];
+                buf.set(flat.subarray(cursor, cursor + dataLen), sec.offset);
+                cursor += dataLen;
+            }
+        }
+
         if (edits.bag) {
             for (const cat of Object.keys(edits.bag)) {
                 const slots = edits.bag[cat];
@@ -488,6 +652,71 @@
         setU16(buf, off + 0x5E, pk.speed);
         setU16(buf, off + 0x60, pk.spAttack);
         setU16(buf, off + 0x62, pk.spDefense);
+    }
+
+    // PC variant: same as writePokemon but stops at byte 0x4F. Stats /
+    // level aren't stored on disk — when the user takes the pokemon out
+    // of the PC the game recomputes them from EXP + base stats.
+    function writePokemonPC(flat, off, pk) {
+        // Empty slot — zero it out and bail
+        if (pk.isEmpty) {
+            for (let i = 0; i < 80; i++) flat[off + i] = 0;
+            return;
+        }
+        flat.set(encodeStr(pk.nickname || '', 10), off + 0x08);
+        flat.set(encodeStr(pk.otName || '', 7), off + 0x14);
+        flat[off + 0x12] = pk.language || 2;
+        flat[off + 0x1B] = pk.markings || 0;
+
+        const sub = { G: new Uint8Array(12), A: new Uint8Array(12), E: new Uint8Array(12), M: new Uint8Array(12) };
+        setU16(sub.G, 0x00, pk.growth.species);
+        setU16(sub.G, 0x02, pk.growth.heldItem);
+        setU32(sub.G, 0x04, pk.growth.exp);
+        sub.G[0x08] = pk.growth.ppBonuses;
+        sub.G[0x09] = pk.growth.friendship;
+        for (let i = 0; i < 4; i++) {
+            setU16(sub.A, i * 2, pk.attacks.moves[i]);
+            sub.A[0x08 + i] = pk.attacks.pp[i];
+        }
+        sub.E[0] = pk.evs.hp;  sub.E[1] = pk.evs.atk; sub.E[2] = pk.evs.def;
+        sub.E[3] = pk.evs.spe; sub.E[4] = pk.evs.spa; sub.E[5] = pk.evs.spd;
+        sub.E[6] = pk.evs.cool || 0;   sub.E[7]  = pk.evs.beauty || 0;
+        sub.E[8] = pk.evs.cute || 0;   sub.E[9]  = pk.evs.smart || 0;
+        sub.E[10]= pk.evs.tough || 0;  sub.E[11] = pk.evs.feel || 0;
+        sub.M[0] = pk.misc.pokerus || 0;
+        sub.M[1] = pk.misc.metLoc || 0;
+        setU16(sub.M, 2, pk.misc.originInfo || 0);
+        const ivs = pk.misc.ivs;
+        const miscWord = (
+            (ivs.hp & 0x1F) |
+            ((ivs.atk & 0x1F) << 5) |
+            ((ivs.def & 0x1F) << 10) |
+            ((ivs.spe & 0x1F) << 15) |
+            ((ivs.spa & 0x1F) << 20) |
+            ((ivs.spd & 0x1F) << 25) |
+            ((pk.misc.isEgg & 1) << 30) |
+            ((pk.misc.ability & 1) << 31)
+        ) >>> 0;
+        setU32(sub.M, 0x04, miscWord);
+        setU32(sub.M, 0x08, pk.misc.ribbons || 0);
+
+        // PID / OTID write — shadow-write because the parser stored them
+        setU32(flat, off + 0x00, pk.pid);
+        setU32(flat, off + 0x04, pk.otid);
+
+        const order = SUBSTRUCT_ORDER[pk.pid % 24];
+        const decrypted = new Uint8Array(48);
+        for (let i = 0; i < 4; i++) decrypted.set(sub[order[i]], i * 12);
+        let sum = 0;
+        for (let i = 0; i < 48; i += 2) {
+            sum = (sum + (decrypted[i] | (decrypted[i + 1] << 8))) & 0xFFFF;
+        }
+        setU16(flat, off + 0x1C, sum);
+        for (let i = 0; i < 48; i += 4) {
+            const v = ((decrypted[i] | (decrypted[i + 1] << 8) | (decrypted[i + 2] << 16) | (decrypted[i + 3] << 24)) ^ pk.key) >>> 0;
+            setU32(flat, off + 0x20 + i, v);
+        }
+        // Bytes 0x50-0x4F are unused in PC storage — leave as zero
     }
 
     // ---- Stat recalculation ----

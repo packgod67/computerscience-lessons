@@ -131,6 +131,44 @@ section h2 { margin: 24px 0 12px; font-size: 18px; color: var(--text); }
   border-radius: 4px; cursor: pointer; font-size: 13px;
 }
 
+/* ---- PC boxes ---- */
+.box-controls {
+  display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  background: var(--panel); padding: 10px 14px; border-radius: 8px;
+}
+.box-controls button {
+  background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+  padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 16px; min-width: 36px;
+}
+.box-controls button:hover { background: var(--accent); border-color: var(--accent); }
+.box-controls select, .box-controls input {
+  background: var(--bg); border: 1px solid var(--border); color: var(--text);
+  padding: 6px 10px; border-radius: 6px; font: inherit;
+}
+.box-grid {
+  display: grid; grid-template-columns: repeat(6, 1fr); gap: 6px;
+  background: var(--panel); padding: 12px; border-radius: 10px;
+}
+.box-slot {
+  background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px;
+  aspect-ratio: 1 / 1; padding: 4px; cursor: pointer; display: flex;
+  align-items: center; justify-content: center; position: relative;
+  transition: transform 0.1s, border-color 0.1s;
+}
+.box-slot:hover { transform: scale(1.05); border-color: var(--accent); }
+.box-slot.empty { opacity: 0.25; cursor: default; }
+.box-slot.empty:hover { transform: none; border-color: var(--border); }
+.box-slot img { width: 100%; height: 100%; image-rendering: pixelated; }
+.box-slot .lv-tag {
+  position: absolute; bottom: 2px; right: 4px; font-size: 9px; font-weight: 700;
+  color: var(--accent-2); background: rgba(0,0,0,0.6); padding: 1px 4px;
+  border-radius: 3px;
+}
+.box-slot .shiny-mini {
+  position: absolute; top: 2px; left: 4px; color: gold; font-size: 12px;
+  text-shadow: 0 0 2px black;
+}
+
 /* ---- Edit modal ---- */
 .modal-overlay {
   position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none;
@@ -185,6 +223,7 @@ section h2 { margin: 24px 0 12px; font-size: 18px; color: var(--text); }
   .party-grid { grid-template-columns: repeat(3, 1fr); }
   .trainer-header { grid-template-columns: 1fr 1fr; }
   .modal .grid-2, .modal .grid-3 { grid-template-columns: 1fr; }
+  .box-grid { grid-template-columns: repeat(5, 1fr); }
 }
 </style>
 </head>
@@ -241,6 +280,18 @@ section h2 { margin: 24px 0 12px; font-size: 18px; color: var(--text); }
       <h2>Bag</h2>
       <div class="bag-tabs" id="bagTabs"></div>
       <div class="bag-list" id="bagList"></div>
+    </section>
+
+    <section id="pcSection">
+      <h2>PC Boxes</h2>
+      <div class="box-controls">
+        <button id="prevBox" title="Previous box">‹</button>
+        <select id="boxPicker"></select>
+        <button id="nextBox" title="Next box">›</button>
+        <input id="boxName" type="text" maxlength="8" placeholder="Box name">
+        <span style="color:var(--muted);font-size:12px;margin-left:auto;" id="boxStats"></span>
+      </div>
+      <div class="box-grid" id="boxGrid"></div>
     </section>
   </div>
 </main>

@@ -203,6 +203,50 @@ expect('new ev spa',  pk2.evs.spa, 252);
 expect('new move 1',  pk2.attacks.moves[1], 53);
 expect('PK checksum after mutate', pk2.checksumValid, true);
 
+// ---------- PC Boxes ----------
+console.log('\nPC Box tests...');
+expect('pc parsed',              !!save2.pc, true);
+expect('14 boxes',               save2.pc.boxes.length, 14);
+expect('30 slots per box',       save2.pc.boxes[0].length, 30);
+expect('all slots empty initially', save2.pc.boxes[0].every((p) => p.isEmpty), true);
+
+// Stuff a pokemon into box 3 slot 5
+const slot = save2.pc.boxes[3][5];
+slot.isEmpty = false;
+slot.pid = 0x12345678;
+slot.otid = OTID;
+slot.key = (slot.pid ^ slot.otid) >>> 0;
+slot.nickname = 'PCMON';
+slot.otName = 'ASH';
+slot.language = 2;
+slot.growth = { species: 150, heldItem: 0, exp: 125000, ppBonuses: 0, friendship: 100 };
+slot.attacks = { moves: [94, 0, 0, 0], pp: [10, 0, 0, 0] };
+slot.evs = { hp: 4, atk: 0, def: 0, spe: 252, spa: 252, spd: 0,
+             cool: 0, beauty: 0, cute: 0, smart: 0, tough: 0, feel: 0 };
+slot.misc = { pokerus: 0, metLoc: 0, originInfo: 0,
+              ivs: { hp: 31, atk: 0, def: 31, spe: 31, spa: 31, spd: 31 },
+              isEgg: 0, ability: 0, ribbons: 0 };
+save2.pc.names[3] = 'TESTBOX';
+save2.pc.wallpapers[3] = 5;
+save2.pc.currentBox = 3;
+
+const out2 = G3.write(save2, { trainerName: 'ASH', money: 99999, party: save2.party, bag: save2.bag, pc: save2.pc });
+const save3 = G3.parse(out2);
+const slot3 = save3.pc.boxes[3][5];
+expect('pc slot live',    slot3.isEmpty, false);
+expect('pc species',      slot3.growth.species, 150);
+expect('pc nickname',     slot3.nickname, 'PCMON');
+expect('pc move',         slot3.attacks.moves[0], 94);
+expect('pc ev spa',       slot3.evs.spa, 252);
+expect('pc iv hp',        slot3.misc.ivs.hp, 31);
+expect('pc box name',     save3.pc.names[3], 'TESTBOX');
+expect('pc wallpaper',    save3.pc.wallpapers[3], 5);
+expect('pc current box',  save3.pc.currentBox, 3);
+expect('pc checksum',     slot3.checksumValid, true);
+// Other slots still empty
+expect('other slot still empty', save3.pc.boxes[3][6].isEmpty, true);
+expect('other box still empty',  save3.pc.boxes[5][0].isEmpty, true);
+
 if (process.exitCode === 1) {
     console.error('\n✗ Tests failed');
 } else {
