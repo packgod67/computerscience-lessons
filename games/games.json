@@ -23663,7 +23663,7 @@
     "title": "Pokemon Elite Redux",
     "category": "Pokemon",
     "path": "games/clpokeeliteredux.html",
-    "description": "Difficulty hack where every Pokemon has up to FOUR abilities at once — a complete combat overhaul. Includes the full Gen 1-9 roster (every regional form, mythical, legendary) on a rebalanced Emerald engine with smarter AI, competitive movesets, and brutal Gym/E4 fights. The ability-stacking system enables wild build experimentation. Note: catalog version is the 2024 build (~2.5 era); newer 2.65.3b requires UPS patch via elite-redux.com.",
+    "description": "Difficulty hack where every Pokemon has up to FOUR abilities at once — a complete combat overhaul. Includes the full Gen 1-9 roster (every regional form, mythical, legendary) on a rebalanced Emerald engine with smarter AI, competitive movesets, and brutal Gym/E4 fights. The ability-stacking system enables wild build experimentation. Running the latest v2.65.3b (Mar 2026).",
     "thumbnail": "assets/thumbnails/clpokeeliteredux.png",
     "rom": "gba",
     "tags": [
