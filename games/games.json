@@ -44252,5 +44252,31 @@
       "unova",
       "retro"
     ]
+  },
+  {
+    "id": "clpokeinflamedred",
+    "title": "Pokemon Inflamed Red",
+    "category": "Pokemon",
+    "path": "games/clpokeinflamedred.html",
+    "description": "Pokemon FireRed difficulty hack \u2014 Radical Red's chiller sibling. Same multi-ability stacking and full Gen 1-9 roster, but with adjustable difficulty, easier AI, and more accessible items/encounters early. Perfect if Elite Redux/Radical Red felt too punishing but you still want the modern feature set (Megas, Z-moves, custom moves, Fairy type, expanded dex). Running v1.0.5.",
+    "thumbnail": "https://cdn.jsdelivr.net/gh/mastercodewolf/cdn-gba@main/Pokemon%20Inflamed%20Red%20v1.0.5.png",
+    "rom": "gba",
+    "addedAt": "2026-05-23T19:30:00.000Z",
+    "tags": [
+      "pokemon",
+      "gba",
+      "hack",
+      "rom-hack",
+      "difficulty-hack",
+      "monster-tamer",
+      "jrpg",
+      "rpg",
+      "turn-based",
+      "mega-evolution",
+      "fairy-type",
+      "modern",
+      "retro",
+      "mobile"
+    ]
   }
 ]
